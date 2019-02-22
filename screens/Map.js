@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 
 export default class Setting extends Component {
@@ -14,9 +14,10 @@ export default class Setting extends Component {
         }}>
             <Marker coordinate={{
               latitude: 10.762864,
-              longitude: 106.682229,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,}}
+              longitude: 106.682229,}}
+              title={"Khoa Học Tự Nhiên"}
+              description={"Trường Đại Học Khoa Học Tự Nhiên"}
+              onCalloutPress = {()=>{Alert.alert("Đây là trường KHTN")}}
             >
             </Marker>
         </MapView>
