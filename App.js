@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import AppNavigator from './AppNavigator';
+import AppNavigator from './src/AppNavigator';
 import {createAppContainer } from "react-navigation";
 
 const AppContainer = createAppContainer(AppNavigator);

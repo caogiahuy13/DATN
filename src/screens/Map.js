@@ -19,7 +19,7 @@ export default class Map extends Component {
               .then((responseJson) => {
                   this.setState({
                     isLoading: false,
-                    dataSource: responseJson.result,
+                    dataSource: responseJson.data,
                   });
               })
               .catch((error) => {
@@ -72,6 +72,7 @@ export default class Map extends Component {
         </View>
       )
     }
+    console.log(this.state.dataSource);
     let markers = this.state.dataSource.map((val,key)=>{
         return <Marker key={key} coordinate={{
                   latitude: val.latitude,
@@ -90,7 +91,7 @@ export default class Map extends Component {
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
           }}>
-            {markers}
+              {markers}
           </MapView>
     );
 
