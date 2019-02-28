@@ -4,7 +4,7 @@ import MapView, {Marker} from 'react-native-maps';
 
 export default class Map extends Component {
   getNearMe(lat, lng){
-    return fetch('http://10.0.3.2:5000/location/getNearMe', {
+    return fetch('http://10.0.3.2:5000/location/getNearMe?&tour=true', {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
@@ -54,13 +54,11 @@ export default class Map extends Component {
     }
   }
 
-  componentWillMount()
-  {
+  componentWillMount(){
     return this.getCurrentLocation();
   }
 
-  componentDidMount()
-  {
+  componentDidMount(){
     return this.getNearMe(this.state.region.latitude, this.state.region.longitude);
   }
 
@@ -72,7 +70,7 @@ export default class Map extends Component {
         </View>
       )
     }
-    console.log(this.state.dataSource);
+
     let markers = this.state.dataSource.map((val,key)=>{
         return <Marker key={key} coordinate={{
                   latitude: val.latitude,

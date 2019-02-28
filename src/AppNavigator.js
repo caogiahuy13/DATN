@@ -15,7 +15,6 @@ const MapStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -33,7 +32,6 @@ const ToursStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -52,7 +50,6 @@ const HistoryStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -70,7 +67,6 @@ const SettingStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
