@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
+import {createStackNavigator, createBottomTabNavigator, createSwitchNavigator} from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Login from './screens/Login';
@@ -84,7 +84,7 @@ const TabNavigator = createBottomTabNavigator({
   SettingStack,
 });
 
-const AppNavigator = createStackNavigator(
+const AppNavigator = createSwitchNavigator(
   {
     Login: {
       screen: Login
@@ -94,6 +94,7 @@ const AppNavigator = createStackNavigator(
   {
     /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
+      initialRouteName: 'Login',
       header: null,
     },
   }

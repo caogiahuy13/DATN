@@ -35,7 +35,7 @@ export default class CustomMarker extends Component{
       case "hotel":
         icon = require("../assets/images/markers/hotel.png");
         break;
-      case "location":
+      case "start_end":
         icon = require("../assets/images/markers/location.png");
         break;
       case "mall":
