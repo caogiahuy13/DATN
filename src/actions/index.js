@@ -28,3 +28,11 @@ export function changeCurrentRegion(lat, lng, latDelta, lngDelta){
     lngDelta,
   }
 }
+
+export function getNearLocation(data, count){
+  return {
+    type: types.GET_NEAR_LOCATION,
+    data,
+    count,
+  }
+}
