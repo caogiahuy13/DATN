@@ -18,3 +18,13 @@ export function changeCurrentLocation(lat, lng){
     lng,
   }
 }
+
+export function changeCurrentRegion(lat, lng, latDelta, lngDelta){
+  return {
+    type: types.CHANGE_CURRENT_REGION,
+    lat,
+    lng,
+    latDelta,
+    lngDelta,
+  }
+}

@@ -4,27 +4,26 @@ import MapView, {Marker} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {changeCurrentLocation } from '../actions/index.js';
+import {changeCurrentRegion, changeCurrentLocation } from '../actions/index.js';
 
-const window = Dimensions.get('window');
-const { width, height }  = window;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA + (width / height);
+// const window = Dimensions.get('window');
+// const { width, height }  = window;
+// const LATITUDE_DELTA = 0.0922;
+// const LONGITUDE_DELTA = LATITUDE_DELTA + (width / height);
 
 
 class Map extends Component {
-  // Lay dia diem xung quanh minh
+
+  // Lay dia diem xung quanh vi tri hien tai
   getNearMe(){
-    let {latitudeDelta, longitudeDelta } = this.state.region;
+    // Lay ban kinh tuong ung voi chieu doc man hinh
+    let {latitudeDelta, longitudeDelta } = this.props.region;
     let distance = 1.0;
-    if (latitudeDelta !== 0.01)
-    {
-      distance = longitudeDelta * 110;
-      console.log("Khac");
-      console.log(latitudeDelta);
+    if (latitudeDelta !== 0.01){
+      distance = latitudeDelta * 110;
     }
-    console.log(distance);
-    return fetch('http://10.0.3.2:5000/location/getNearMe?&tour=true', {
+
+    return fetch('http://10.0.3.2:5000/location/getNearMe', {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
@@ -48,29 +47,21 @@ class Map extends Component {
               });
   }
 
+  // Lay toa do cua vi tri hien tai
   getCurrentLocation(){
     navigator.geolocation.getCurrentPosition(
       position => {
           this.props.changeCurrentLocation(position.coords.latitude, position.coords.longitude);
-          console.log(JSON.stringify(position));
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   }
 
+  // Ham duoc goi khi nguoi dung di chuyen ban do
   _onRegionChange(e){
-    this.props.changeCurrentLocation(e.latitude, e.longitude);
-    this.setState({
-      region: {
-        ...this.state.region,
-        latitudeDelta: e.latitudeDelta,
-        longitudeDelta: e.longitudeDelta,
-      }
-    });
-    console.log(this.state.region);
+    this.props.changeCurrentRegion(e.latitude, e.longitude, e.latitudeDelta, e.longitudeDelta);
     this.getNearMe();
-    console.log("count: " + this.state.count);
   }
 
   constructor(props)
@@ -96,7 +87,7 @@ class Map extends Component {
   }
 
   componentDidMount(){
-    return this.getNearMe(this.state.region.latitude, this.state.region.longitude);
+    return this.getNearMe();
   }
 
   render() {
@@ -120,17 +111,11 @@ class Map extends Component {
     });
     return(
         <MapView style={styles.map}
-            // onRegionChangeComplete = {Alert.alert("ABC")}
             onRegionChange={e => this._onRegionChange(e)}
             showsUserLocation = {true}
             // toolbarEnabled = {true}
             moveOnMarkerPress = {true}
-            initialRegion={{
-              latitude: this.props.region.latitude,
-              longitude: this.props.region.longitude,
-              latitudeDelta: this.state.region.latitudeDelta,
-              longitudeDelta: this.state.region.longitudeDelta,
-          }}>
+            initialRegion={this.props.region}>
               {markers}
           </MapView>
     );
@@ -157,9 +142,11 @@ function mapStateToProps(state){
     region: state.region,
   };
 }
-function matchDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch){
   return bindActionCreators({
+    changeCurrentRegion: changeCurrentRegion,
     changeCurrentLocation: changeCurrentLocation,
   }, dispatch)
 }
-export default connect(mapStateToProps, matchDispatchToProps)(Map);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
