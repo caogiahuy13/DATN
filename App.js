@@ -32,10 +32,10 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <AppContainer/>
-      // <Provider store= {store}>
-      //   <Counter />
-      // </Provider>
+      // <AppContainer/>
+      <Provider store= {store}>
+        <AppContainer/>
+      </Provider>
     );
   }
 }
