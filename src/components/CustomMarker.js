@@ -36,7 +36,7 @@ export default class CustomMarker extends Component{
         icon = require("../assets/images/markers/hotel.png");
         break;
       case "start_end":
-        icon = require("../assets/images/markers/location.png");
+        icon = require("../assets/images/markers/start_end.png");
         break;
       case "mall":
         icon = require("../assets/images/markers/mall.png");
@@ -79,8 +79,6 @@ export default class CustomMarker extends Component{
     const {val} = this.props;
     let icon = React.createRef();
     icon = this.getImageUrl(val);
-
-
 
     return(
         <Marker

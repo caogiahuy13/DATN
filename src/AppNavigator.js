@@ -1,5 +1,11 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator, createSwitchNavigator} from "react-navigation";
+import {Dimensions, TouchableOpacity, Alert} from 'react-native';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createSwitchNavigator,
+  createDrawerNavigator
+} from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Login from './screens/Login';
@@ -7,6 +13,14 @@ import History from './screens/History';
 import Map from './screens/Map';
 import Setting from './screens/Setting';
 import Tours from './screens/Tours';
+import Profile from './screens/Profile';
+import ChangePassword from './screens/ChangePassword';
+
+const MenuButton = (props) => (
+    <TouchableOpacity onPress={()=>{Alert.alert("Test")}}>
+        <Icon name="ios-map" size={22}/>
+    </TouchableOpacity>
+);
 
 const MapStack = createStackNavigator(
   {
@@ -83,6 +97,7 @@ const TabNavigator = createBottomTabNavigator({
   HistoryStack,
   SettingStack,
 });
+
 
 const AppNavigator = createSwitchNavigator(
   {

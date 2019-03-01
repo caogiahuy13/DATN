@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
 
-// import * as imageMarkers from '../constants/image';
-import restaurant from '../constants/image';
-import img from '../assets/images/markers/bank.png';
 
 // const window = Dimensions.get('window');
 // const { width, height }  = window;
@@ -110,37 +108,9 @@ class Map extends Component {
     }
 
     let markers = this.state.dataSource.map((val,key)=>{
-        let markerUrl = '../assets/images/markers/' + val.type.marker + '.png';
-        console.log(restaurant);
-        console.log("URL: " + markerUrl);
-        let icon = "";
-
-        switch(val.type.marker)
-        {
-          case "hotel":
-            icon = require("../assets/images/markers/hotel.png");
-            break;
-          default:
-            break;
-        }
-
-        // return <Marker key={key} coordinate={{
-        //           latitude: val.latitude,
-        //           longitude: val.longitude,}}
-        //           title={val.name}
-        //           description={val.description}
-        //           onCalloutPress = {()=>{Alert.alert(val.address)}}
-        //           // image = {img}
-        //         >
-        //         <Image style={{width: 40, height: 40}}
-        //             // source={require("../assets/images/markers/bank.png")}
-        //             source = {icon}
-        //         >
-        //         </Image>
-        //         </Marker>
-
         return <CustomMarker key={key} val={val}></CustomMarker>
     });
+
     return(
         <MapView style={styles.map}
             onRegionChange={e => this._onRegionChange(e)}
