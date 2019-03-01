@@ -1,100 +1,84 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 
-export default class Map extends Component {
-  getNearMe(lat, lng){
-    return fetch('http://10.0.3.2:5000/location/getNearMe', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                lat: 10.762864,
-                lng: 106.682229,
-                distance: 2,
-              }),
-            }).then((response) => response.json())
-              .then((responseJson) => {
-                  this.setState({
-                    isLoading: false,
-                    dataSource: responseJson.data,
-                  });
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-  }
-  getCurrentLocation(){
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-            region: {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-            }
-        });
-      },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-  }
-
-  constructor(props)
-  {
-    super(props);
-    this.state = {
-      isLoading: true,
-      dataSource: null,
-      region: {
-        latitude:  10.762864,
-        longitude: 106.682229,
-      }
-    }
-  }
-
-  componentWillMount()
-  {
-    return this.getCurrentLocation();
-  }
-
-  componentDidMount()
-  {
-    return this.getNearMe(this.state.region.latitude, this.state.region.longitude);
-  }
-
+export default class Setting extends Component {
   render() {
-    if(this.state.isLoading){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
-    console.log(this.state.dataSource);
-    let markers = this.state.dataSource.map((val,key)=>{
-        return <Marker key={key} coordinate={{
-                  latitude: val.latitude,
-                  longitude: val.longitude,}}
-                  title={val.name}
-                  description={val.description}
-                  onCalloutPress = {()=>{Alert.alert(val.address)}}
-                >
-                </Marker>
-    });
-    return(
-        <MapView style={styles.map}
-            initialRegion={{
-              latitude: this.state.region.latitude,
-              longitude: this.state.region.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-          }}>
-              {markers}
-          </MapView>
-    );
+    return (
+      <MapView style={styles.map}
+          initialRegion={{
+            latitude: 10.762864,
+            longitude: 106.682229,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+        }}>
+            <Marker coordinate={{
+              latitude: 10.762864,
+              longitude: 106.682229,}}
+              title={"Khoa Học Tự Nhiên"}
+              description={"Trường Đại Học Khoa Học Tự Nhiên"}
+              onCalloutPress = {()=>{Alert.alert("Đây là School")}}
+            >
+            	<Image source={require("./../../assets/images/Location.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+            <Marker coordinate={{  
+              latitude: 10.763780,
+              longitude: 106.680818,}}
+              title={"NOWZONE Fashion Mall"}
+              description={"NOWZONE Fashion Mall"}
+              onCalloutPress = {()=>{Alert.alert("Đây là Entertainment")}}
+            >
+              <Image source={require("./../../assets/images/Entertainment.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+            <Marker coordinate={{ 
+              latitude: 10.764283,
+              longitude: 106.683003,}}
+              title={"Hotel Nikko Saigon"}
+              description={"Hotel Nikko Saigon"}
+              onCalloutPress = {()=>{Alert.alert("Đây là Hotel")}}
+            >
+              <Image source={require("./../../assets/images/Hotel.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+            <Marker coordinate={{
+              latitude: 10.764708,
+              longitude: 106.678909,}}
+              title={"Fuji Restaurant"}
+              description={"Fuji Restaurant"}
+              onCalloutPress = {()=>{Alert.alert("Đây là Restaurant")}}
+            >
+              <Image source={require("./../../assets/images/Restaurant.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+            <Marker coordinate={{
+              latitude: 10.760281,
+              longitude: 106.680647,}}
+              title={"Hotel Equatorial"}
+              description={"Hotel Equatorial Ho Chi Minh City"}
+              onCalloutPress = {()=>{Alert.alert("Đây là Hotel")}}
+            >
+              <Image source={require("./../../assets/images/Hotel.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+            <Marker coordinate={{
+              latitude: 10.763310,
+              longitude: 106.684609,}}
+              title={"Toi Caffe"}
+              description={"Coffe Toi Ho Chi Minh City"}
+              onCalloutPress = {()=>{Alert.alert("Đây là Caffe")}}
+            >
+              <Image source={require("./../../assets/images/Coffe.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+            <Marker coordinate={{
+              latitude: 10.762445,
+              longitude: 106.683061,}}
+              title={"Hotel Equatorial"}
+              description={"Hotel Equatorial Ho Chi Minh City"}
+              onCalloutPress = {()=>{Alert.alert("Đây là Hotel")}}
+            >
+              <Image source={require("./../../assets/images/Sport.png")} style={{ height: 50, width: 50 }} />
+            </Marker>
+        </MapView>
 
+
+    );
   }
 }
 
