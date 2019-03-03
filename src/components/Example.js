@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, View, Picker } from 'react-native';
 import Modal from 'react-native-modal';
 
 
@@ -19,7 +19,8 @@ export default class Example extends Component {
   _renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text>Hello!</Text>
-      {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+      <Text onPress={()=>{Alert.alert("T")}}>Male</Text>
+      <Text>Female</Text>
     </View>
   );
 
@@ -29,8 +30,6 @@ export default class Example extends Component {
         {this._renderButton('Sliding from the sides', () => this.setState({ visibleModal: 2 }))}
         <Modal
           isVisible={this.state.visibleModal === 2}
-          animationIn={'slideInLeft'}
-          animationOut={'slideOutRight'}
         >
           {this._renderModalContent()}
         </Modal>

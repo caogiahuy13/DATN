@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert, Dimensions } from 'react-nat
 import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
+import Modal from 'react-native-modal';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -12,31 +13,85 @@ export default class Setting extends Component {
     this.state = {
       isDateTimePickerVisible: false,
       birthday: '1997-07-30T00:00:00',
+      isGenderModalVisible: false,
+      isMale: true,
     }
   }
 
+  //Các hàm quản lý DateTimePicker*
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
-
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
-
   _handleDatePicked = (date) => {
-    console.log('A date has been picked: ', date);
     this.setState({birthday: date});
     this._hideDateTimePicker();
   };
+
+  //Các hàm quản lý GenderModal
+  _hideGenderModal = () => this.setState({ isGenderModalVisible: false });
+  _showGenderModal = () => this.setState({ isGenderModalVisible: true });
+  _handleGenderModal = (isMale) => {
+    this.setState({isMale: isMale});
+    this._hideGenderModal();
+  };
+
+  _renderModalContent = (isMale) => (
+    <View style={styles.modalGender}>
+        <View style={{position: 'relative', flexDirection: 'row'}}>
+          <ListItem
+            style={{flex: 1,}}
+            title="Choose Gender"
+            onPress={() => {this._hideGenderModal()}}
+            containerStyle={styles.listItemContainer}
+            rightIcon={<Icon
+              name='close'
+              type='FontAwesome'
+              color='#D1D1D6'/>}
+          />
+        </View>
+        <View style={{position: 'relative', flexDirection: 'row'}}>
+          <ListItem
+            style={{flex: 1,}}
+            title="Male"
+            onPress={() => {this._handleGenderModal(true)}}
+            containerStyle={styles.listItemContainer}
+            rightIcon={this.state.isMale && <Icon
+              name='check'
+              type='entypo'
+              color='#00BFFF' />}
+          />
+        </View>
+        <View style={{position: 'relative', flexDirection: 'row'}}>
+          <ListItem
+            style={{flex: 1,}}
+            title="Female"
+            onPress={() => {this._handleGenderModal(false)}}
+            containerStyle={styles.listItemContainer}
+            rightIcon={!this.state.isMale && <Icon
+              name='check'
+              type='entypo'
+              color='#00BFFF' />}
+          />
+        </View>
+    </View>
+  );
 
   render() {
     Moment.locale('en');
 
     return (
       <ScrollView style={styles.scroll}>
-      <DateTimePicker
-        datePickerModeAndroid='spinner'
-        isVisible={this.state.isDateTimePickerVisible}
-        onConfirm={this._handleDatePicked}
-        onCancel={this._hideDateTimePicker}
-
-      />
+        <DateTimePicker
+          datePickerModeAndroid='spinner'
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+        />
+        <Modal
+          isVisible={this.state.isGenderModalVisible}
+          onBackdropPress={()=>{this.setState({isGenderModalVisible: false})}}
+        >
+          {this._renderModalContent()}
+        </Modal>
         <View style={styles.userRow}>
           <View style={styles.userImage}>
             <Avatar
@@ -87,9 +142,9 @@ export default class Setting extends Component {
         />
         <ListItem
           title="Gender"
-          rightTitle="Male"
+          rightTitle={this.state.isMale ? "Male" : "Female"}
           rightTitleStyle={{ fontSize: 15}}
-          onPress={() => {Alert.alert("ABC")}}
+          onPress={() => {this.setState({isGenderModalVisible: true})}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
@@ -173,5 +228,12 @@ const styles = StyleSheet.create({
     },
     scroll: {
       backgroundColor: '#F4F5F4',
+    },
+    modalGender: {
+      backgroundColor: 'white',
+      alignItems: 'center',
+      borderRadius: 4,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+      borderWidth: 1,
     },
 })
