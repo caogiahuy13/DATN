@@ -16,6 +16,7 @@ import Tours from './screens/Tours';
 import Profile from './screens/Profile';
 import ChangePassword from './screens/ChangePassword';
 
+
 const MenuButton = (props) => (
     <TouchableOpacity onPress={()=>{Alert.alert("Test")}}>
         <Icon name="ios-map" size={22}/>
