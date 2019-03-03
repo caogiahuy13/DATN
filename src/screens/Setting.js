@@ -1,13 +1,42 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, Dimensions } from 'react-native';
 import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import Moment from 'moment';
 
 const deviceWidth = Dimensions.get("window").width;
 
 export default class Setting extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isDateTimePickerVisible: false,
+      birthday: '1997-07-30T00:00:00',
+    }
+  }
+
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    this.setState({birthday: date});
+    this._hideDateTimePicker();
+  };
+
   render() {
+    Moment.locale('en');
+
     return (
       <ScrollView style={styles.scroll}>
+      <DateTimePicker
+        datePickerModeAndroid='spinner'
+        isVisible={this.state.isDateTimePickerVisible}
+        onConfirm={this._handleDatePicked}
+        onCancel={this._hideDateTimePicker}
+
+      />
         <View style={styles.userRow}>
           <View style={styles.userImage}>
             <Avatar
@@ -66,9 +95,9 @@ export default class Setting extends Component {
         />
         <ListItem
           title="Birthday"
-          rightTitle="01/01/1997"
+          rightTitle={Moment(this.state.birthday).format('DD/MM/YYYY')}
           rightTitleStyle={{ fontSize: 15}}
-          onPress={() => {Alert.alert("ABC")}}
+          onPress={() => {this._showDateTimePicker()}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
@@ -78,6 +107,7 @@ export default class Setting extends Component {
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
           onPress={()=>{Alert.alert("Loged out")}}
         />
+
       </ScrollView>
     );
   }
