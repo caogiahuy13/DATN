@@ -11,6 +11,7 @@ export default class Setting extends Component {
             <Avatar
               rounded
               size="large"
+              onPress={()=>{Alert.alert("Test")}}
               source={{
                 uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
               }}
@@ -45,6 +46,13 @@ export default class Setting extends Component {
             }
             rightIcon={<Chevron />}
           />
+        <Space/>
+        <ListItem
+            // chevron
+            title="Log out"
+            titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
+            onPress={()=>{Alert.alert("Loged out")}}
+          />
       </ScrollView>
     );
   }
@@ -53,6 +61,11 @@ export default class Setting extends Component {
 const InfoText = ({ text }) => (
   <View style={styles.containerInfoText}>
     <Text style={styles.infoText}>{text}</Text>
+  </View>
+)
+
+const Space = () => (
+  <View style={styles.containerInfoText}>
   </View>
 )
 
@@ -92,6 +105,7 @@ const styles = StyleSheet.create({
       paddingLeft: 15,
       paddingRight: 15,
       paddingTop: 6,
+      backgroundColor: 'white'
     },
     userImage: {
       marginRight: 12,
@@ -102,6 +116,6 @@ const styles = StyleSheet.create({
       borderColor: '#ECECEC',
     },
     scroll: {
-      backgroundColor: 'white',
+      backgroundColor: '#F4F5F4',
     },
 })
