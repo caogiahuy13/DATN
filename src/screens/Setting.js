@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, Dimensions } from 'react-native';
 import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
+
+const deviceWidth = Dimensions.get("window").width;
 
 export default class Setting extends Component {
   render() {
@@ -33,26 +35,49 @@ export default class Setting extends Component {
         <InfoText text="Account"/>
 
         <ListItem
-            // chevron
-            title="Currency"
-            rightTitleStyle={{ fontSize: 15 }}
-            onPress={() => {Alert.alert("ABC")}}
-            containerStyle={styles.listItemContainer}
-            leftIcon={
-              <Icon
-                name='log-out'
-                type='entypo'
-                color='#00aced' />
-            }
-            rightIcon={<Chevron />}
-          />
+          title="Currency"
+          onPress={() => {Alert.alert("ABC")}}
+          containerStyle={styles.listItemContainer}
+          leftIcon={
+            <Icon
+              name='log-out'
+              type='entypo'
+              color='#00aced' />
+          }
+          rightIcon={<Chevron />}
+        />
+
+        <InfoText text="Account"/>
+        <ListItem
+          title="Email"
+          rightTitle="caogiahuy13@gmail.com"
+          rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
+          onPress={() => {Alert.alert("ABC")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+        />
+        <ListItem
+          title="Gender"
+          rightTitle="Male"
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {Alert.alert("ABC")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+        />
+        <ListItem
+          title="Birthday"
+          rightTitle="01/01/1997"
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {Alert.alert("ABC")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+        />
         <Space/>
         <ListItem
-            // chevron
-            title="Log out"
-            titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
-            onPress={()=>{Alert.alert("Loged out")}}
-          />
+          title="Log out"
+          titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
+          onPress={()=>{Alert.alert("Loged out")}}
+        />
       </ScrollView>
     );
   }
@@ -69,6 +94,7 @@ const Space = () => (
   </View>
 )
 
+// Dấu '>' phía cuối ListItem
 const Chevron = () => (
   <Icon
     name="chevron-right"
