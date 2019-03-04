@@ -92,6 +92,7 @@ export default class Setting extends Component {
         >
           {this._renderModalContent()}
         </Modal>
+
         <View style={styles.userRow}>
           <View style={styles.userImage}>
             <Avatar
@@ -115,21 +116,6 @@ export default class Setting extends Component {
             </Text>
           </View>
         </View>
-
-        <InfoText text="Account"/>
-
-        <ListItem
-          title="Currency"
-          onPress={() => {Alert.alert("ABC")}}
-          containerStyle={styles.listItemContainer}
-          leftIcon={
-            <Icon
-              name='log-out'
-              type='entypo'
-              color='#00aced' />
-          }
-          rightIcon={<Chevron />}
-        />
 
         <InfoText text="Account"/>
         <ListItem
@@ -156,7 +142,18 @@ export default class Setting extends Component {
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
+
         <Space/>
+
+        <ListItem
+          title="Change Password"
+          onPress={() => {Alert.alert()}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+        />
+
+        <Space/>
+
         <ListItem
           title="Log out"
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
@@ -175,8 +172,7 @@ const InfoText = ({ text }) => (
 )
 
 const Space = () => (
-  <View style={styles.containerInfoText}>
-  </View>
+  <View style={styles.containerInfoText}></View>
 )
 
 // Dấu '>' phía cuối ListItem
