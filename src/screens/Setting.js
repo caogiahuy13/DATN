@@ -4,6 +4,7 @@ import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
+import Dialog from "react-native-dialog";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -15,10 +16,12 @@ export default class Setting extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isDateTimePickerVisible: false,
       birthday: '1997-07-30T00:00:00',
-      isGenderModalVisible: false,
       isMale: true,
+      email: "caogiahuy13@gmail.com",
+      isGenderModalVisible: false,
+      isDateTimePickerVisible: false,
+      isEmailModalVisible: false,
     }
   }
 
@@ -28,6 +31,14 @@ export default class Setting extends Component {
   _handleDatePicked = (date) => {
     this.setState({birthday: date});
     this._hideDateTimePicker();
+  };
+
+  //Các hàm quản lý GenderModal
+  _hideEmailModal = () => this.setState({ isEmailModalVisible: false });
+  _showEmailModal = () => this.setState({ isEmailModalVisible: true });
+  _handleEmailModal = (email) => {
+    this.setState({email: email});
+    this._hideEmailModal();
   };
 
   //Các hàm quản lý GenderModal
@@ -81,7 +92,7 @@ export default class Setting extends Component {
 
   render() {
     Moment.locale('en');
-
+    let tmpEmail = "";
     return (
       <ScrollView style={styles.scroll}>
         <DateTimePicker
@@ -96,6 +107,18 @@ export default class Setting extends Component {
         >
           {this._renderModalContent()}
         </Modal>
+        <Dialog.Container visible={this.state.isEmailModalVisible}>
+            <Dialog.Title>Email</Dialog.Title>
+            <Dialog.Description>
+                Please insert your email
+            </Dialog.Description>
+            <Dialog.Input
+                wrapperStyle={{borderBottomWidth: 1, opacity: 0.3}}
+                onChangeText={(email) => {this.tmpEmail = email}}
+            />
+            <Dialog.Button label="Cancel" onPress={()=>{this._hideEmailModal()}}/>
+            <Dialog.Button label="OK" onPress={()=>{this._handleEmailModal(this.tmpEmail)}}/>
+        </Dialog.Container>
 
         <View style={styles.userRow}>
           <View style={styles.userImage}>
@@ -124,9 +147,9 @@ export default class Setting extends Component {
         <InfoText text="Account"/>
         <ListItem
           title="Email"
-          rightTitle="caogiahuy13@gmail.com"
+          rightTitle={this.state.email}
           rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
-          onPress={() => {Alert.alert("ABC")}}
+          onPress={() => {this._showEmailModal()}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
