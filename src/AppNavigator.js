@@ -1,6 +1,9 @@
 import React from 'react';
 import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Login from './screens/Login';
 import History from './screens/History';
@@ -22,8 +25,8 @@ const MapStack = createStackNavigator(
   }
 );
 MapStack.navigationOptions = {
-    tabBarLabel: 'Map',
-    tabBarIcon: ({ tintColor }) => (<Icon name="ios-map" size={22}/>),
+  tabBarLabel: 'Map',
+  tabBarIcon: ({ tintColor }) => (<FontAwesome name="map" color={tintColor} size={30}/>),
 };
 
 const ToursStack = createStackNavigator(
@@ -41,7 +44,7 @@ const ToursStack = createStackNavigator(
 );
 ToursStack.navigationOptions = {
     tabBarLabel: 'Tours',
-    tabBarIcon: ({ tintColor }) => (<Icon name="ios-car" size={22}/>),
+    tabBarIcon: ({ tintColor }) => (<MaterialIcon name="map-marker-distance" color={tintColor} size={30}/>),
 };
 
 
@@ -60,7 +63,7 @@ const HistoryStack = createStackNavigator(
 );
 HistoryStack.navigationOptions = {
     tabBarLabel: 'History',
-    tabBarIcon: ({ tintColor }) => (<Icon name="ios-time" size={22}/>),
+    tabBarIcon: ({ tintColor }) => (<FontAwesome name="history" color={tintColor} size={30}/>),
 };
 
 const SettingStack = createStackNavigator(
@@ -78,15 +81,29 @@ const SettingStack = createStackNavigator(
 );
 SettingStack.navigationOptions = {
     tabBarLabel: 'Setting',
-    tabBarIcon: ({ tintColor }) => (<Icon name="ios-settings" size={22}/>),
+    tabBarIcon: ({ tintColor }) => (<Icon name="md-settings" color={tintColor} size={30}/>),
 };
 
-const TabNavigator = createBottomTabNavigator({
-  MapStack,
-  ToursStack,
-  HistoryStack,
-  SettingStack,
-});
+const TabNavigator = createBottomTabNavigator(
+  {
+    MapStack,
+    ToursStack,
+    HistoryStack,
+    SettingStack,
+  },
+  {
+    tabBarOptions: {
+      showLabel: false,
+      showIcon: true,
+      activeTintColor: 'tomato',
+      inactiveTintColor: '#FFFFFF',
+      style: {
+        backgroundColor: '#324A5E',
+        height: 60,
+      },
+    },
+  }
+);
 
 const AppNavigator = createStackNavigator(
   {
