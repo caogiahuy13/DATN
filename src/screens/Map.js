@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
@@ -101,7 +101,7 @@ class Map extends Component {
   componentDidMount(){
     return this.getNearMe();
   }
-  
+
   render() {
     if(this.state.isLoading){
       return(
@@ -117,7 +117,7 @@ class Map extends Component {
 
     return(
         <MapView style={styles.map}
-            onRegionChangeComplete={e => this._onRegionChange(e)}
+            onRegionChange={e => this._onRegionChange(e)}
             showsUserLocation = {true}
             // toolbarEnabled = {true}
             moveOnMarkerPress = {true}
@@ -132,7 +132,9 @@ class Map extends Component {
               strokeWidth={3}
               strokeColor="blue"
               onReady={(result) => {
-                this.mapView.fitToCoordinates(result.coordinates);
+                this.mapView.fitToCoordinates(result.coordinates,{
+                  edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
+                });
               }}
             />
           </MapView>
