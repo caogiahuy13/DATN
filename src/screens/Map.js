@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
+import Modal from "react-native-modal";
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
@@ -72,8 +73,10 @@ class Map extends Component {
     this.getNearMe();
   }
 
-  constructor(props)
-  {
+  _hideLocationModal = () => this.setState({ isLocationModalVisible: false });
+  _showLocationModal = () => this.setState({ isLocationModalVisible: true });
+
+  constructor(props){
     super(props);
     this.state = {
       isLoading: true,
@@ -91,6 +94,7 @@ class Map extends Component {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
       },
+      isLocationModalVisible: false,
     }
   }
 
@@ -112,49 +116,74 @@ class Map extends Component {
     }
 
     let markers = this.state.dataSource.map((val,key)=>{
-        return <CustomMarker key={key} val={val}></CustomMarker>
+        return <CustomMarker key={key} val={val} handle={this._showLocationModal.bind(this)}></CustomMarker>
     });
 
     return(
-        <MapView style={styles.map}
-            onRegionChange={e => this._onRegionChange(e)}
-            showsUserLocation = {true}
-            // toolbarEnabled = {true}
-            moveOnMarkerPress = {true}
-            initialRegion={this.props.region}
-            ref={c => this.mapView = c}
-        >
-            {markers}
-            <MapViewDirections
-              origin={origin}
-              destination={destination}
-              apikey={GOOGLE_MAPS_APIKEY}
-              strokeWidth={3}
-              strokeColor="blue"
-              onReady={(result) => {
-                this.mapView.fitToCoordinates(result.coordinates,{
-                  edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
-                });
-              }}
-            />
-          </MapView>
+        <View style={styles.container}>
+            <Modal
+              isVisible={this.state.isLocationModalVisible}
+              onBackdropPress={()=>{this.setState({isLocationModalVisible: false})}}
+              style={styles.modal}
+              animationIn="slideInDown"
+              animationOut="slideOutUp"
+              useNativeDriver={false}
+              backdropOpacity={0.5}
+            >
+              <View style={styles.modalView}>
+                <Text>ABC</Text>
+              </View>
+            </Modal>
+            <MapView style={styles.map}
+                onRegionChange={e => this._onRegionChange(e)}
+                showsUserLocation = {true}
+                // toolbarEnabled = {true}
+                moveOnMarkerPress = {true}
+                initialRegion={this.props.region}
+                ref={c => this.mapView = c}
+            >
+                {markers}
+                {/*<MapViewDirections
+                  origin={origin}
+                  destination={destination}
+                  apikey={GOOGLE_MAPS_APIKEY}
+                  strokeWidth={3}
+                  strokeColor="blue"
+                  onReady={(result) => {
+                    this.mapView.fitToCoordinates(result.coordinates,{
+                      edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
+                    });
+                  }}
+                />*/}
+            </MapView>
+        </View>
     );
-
   }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     text: {
       fontSize: 20,
     },
     map: {
         ...StyleSheet.absoluteFillObject,
-      },
+    },
+    modal: {
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+    },
+    modalView: {
+      justifyContent: 'flex-start',
+      backgroundColor: 'white',
+      alignItems: 'center',
+      borderRadius: 4,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+      borderWidth: 1,
+      flex: 1,
+    },
 })
 
 function mapStateToProps(state){

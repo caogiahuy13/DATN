@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 export default class CustomMarker extends Component{
+
   getImageUrl(val){
     switch(val.type.marker)
     {
@@ -75,8 +76,7 @@ export default class CustomMarker extends Component{
   }
 
   render(){
-
-    const {val} = this.props;
+    const {val, isLocationModalVisible} = this.props;
     let icon = React.createRef();
     icon = this.getImageUrl(val);
 
@@ -88,7 +88,7 @@ export default class CustomMarker extends Component{
           }}
           title={val.name}
           description={val.description}
-          onCalloutPress = {()=>{Alert.alert(val.address)}}
+          onCalloutPress = {()=>{this.props.handle()}}
         >
             <Image style={{width: 32, height: 32}} source = {icon}/>
         </Marker>
