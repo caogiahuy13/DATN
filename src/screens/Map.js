@@ -4,6 +4,7 @@ import MapView, {Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import MapViewDirections from 'react-native-maps-directions';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
@@ -14,6 +15,9 @@ import CustomMarker from '../components/CustomMarker';
 // const LATITUDE_DELTA = 0.0922;
 // const LONGITUDE_DELTA = LATITUDE_DELTA + (width / height);
 
+const origin = {latitude: 10.762864, longitude: 106.682229};
+const destination = {latitude: 10.773831, longitude: 106.704895};
+const GOOGLE_MAPS_APIKEY = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
 class Map extends Component {
 
@@ -113,12 +117,24 @@ class Map extends Component {
 
     return(
         <MapView style={styles.map}
-            onRegionChange={e => this._onRegionChange(e)}
+            onRegionChangeComplete={e => this._onRegionChange(e)}
             showsUserLocation = {true}
             // toolbarEnabled = {true}
             moveOnMarkerPress = {true}
-            initialRegion={this.props.region}>
-              {markers}
+            initialRegion={this.props.region}
+            ref={c => this.mapView = c}
+        >
+            {markers}
+            <MapViewDirections
+              origin={origin}
+              destination={destination}
+              apikey={GOOGLE_MAPS_APIKEY}
+              strokeWidth={3}
+              strokeColor="blue"
+              onReady={(result) => {
+                this.mapView.fitToCoordinates(result.coordinates);
+              }}
+            />
           </MapView>
     );
 

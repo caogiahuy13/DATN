@@ -90,7 +90,7 @@ export default class CustomMarker extends Component{
           description={val.description}
           onCalloutPress = {()=>{Alert.alert(val.address)}}
         >
-            <Image style={{width: 40, height: 40}} source = {icon}/>
+            <Image style={{width: 32, height: 32}} source = {icon}/>
         </Marker>
     );
   }
