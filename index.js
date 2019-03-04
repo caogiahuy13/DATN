@@ -10,4 +10,4 @@ import Setting from './src/screens/Setting';
 import Example from './src/components/Example';
 import DateTimePickerTester from './src/components/DateTimePickerTester';
 
-AppRegistry.registerComponent(appName, () => Setting);
+AppRegistry.registerComponent(appName, () => App);
