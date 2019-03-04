@@ -8,6 +8,10 @@ import Modal from 'react-native-modal';
 const deviceWidth = Dimensions.get("window").width;
 
 export default class Setting extends Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   constructor(props){
     super(props);
     this.state = {
@@ -147,7 +151,7 @@ export default class Setting extends Component {
 
         <ListItem
           title="Change Password"
-          onPress={() => {Alert.alert()}}
+          onPress={() => {this.props.navigation.navigate("ChangePassword")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
@@ -157,7 +161,7 @@ export default class Setting extends Component {
         <ListItem
           title="Log out"
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
-          onPress={()=>{Alert.alert("Loged out")}}
+          onPress={()=>{this.props.navigation.navigate("Login")}}
         />
 
       </ScrollView>
