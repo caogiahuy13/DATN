@@ -1,106 +1,127 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
-export default class Map extends Component {
-  constructor(props) {
-    super(props);
+import {changeCurrentRegion, changeCurrentLocation, getNearLocation } from '../actions/index.js';
+import CustomMarker from '../components/CustomMarker';
 
-    this.state = {
-      latitude: null,
-      longitude: null,
-      error: null,
-    };
+
+// const window = Dimensions.get('window');
+// const { width, height }  = window;
+// const LATITUDE_DELTA = 0.0922;
+// const LONGITUDE_DELTA = LATITUDE_DELTA + (width / height);
+
+
+class Map extends Component {
+
+  // Lay dia diem xung quanh vi tri hien tai
+  getNearMe(){
+    // Lay ban kinh tuong ung voi chieu doc man hinh
+    let {latitudeDelta, longitudeDelta } = this.props.region;
+    let distance = 1.0;
+    if (latitudeDelta !== 0.01){
+      distance = latitudeDelta * 110;
+    }
+
+    return fetch('http://10.0.3.2:5000/location/getNearMe', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                lat: this.props.region.latitude,
+                lng: this.props.region.longitude,
+                distance: distance,
+              }),
+            }).then((response) => response.json())
+              .then((responseJson) => {
+                  this.setState({
+                    isLoading: false,
+                    dataSource: responseJson.data,
+                    count: responseJson.itemCount,
+                  });
+                  // this.props.getNearLocation(responseJson.data, responseJson.itemCount);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
   }
-  componentDidMount() {
+
+  // Lay toa do cua vi tri hien tai
+  getCurrentLocation(){
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        });
+      position => {
+          this.props.changeCurrentLocation(position.coords.latitude, position.coords.longitude);
       },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   }
+
+  // Ham duoc goi khi nguoi dung di chuyen ban do
+  _onRegionChange(e){
+    this.props.changeCurrentRegion(e.latitude, e.longitude, e.latitudeDelta, e.longitudeDelta);
+    this.getNearMe();
+  }
+
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      isLoading: true,
+      nearLocation: {
+        data: [],
+        count: 0,
+      },
+      dataSource: null,
+      count: 0,
+      region: {
+        // latitude:  10.762864,
+        // longitude: 106.682229,
+        latitude:  10,
+        longitude: 100,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      },
+    }
+  }
+
+  componentWillMount(){
+    return this.getCurrentLocation();
+  }
+
+  componentDidMount(){
+    return this.getNearMe();
+  }
+  
   render() {
-    return (
-      <MapView style={styles.map}
-          initialRegion={{
-            latitude: 10.762864,
-            longitude: 106.682229,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-        }}>
-            <Marker coordinate={{
-              latitude: 10.762864,
-              longitude: 106.682229,}}
-              title={"Khoa Học Tự Nhiên"}
-              description={"Trường Đại Học Khoa Học Tự Nhiên"}
-              onCalloutPress = {()=>{Alert.alert("Đây là School")}}
-            >
-            	<Image source={require("./../../assets/images/Location.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-            <Marker coordinate={{  
-              latitude: 10.763780,
-              longitude: 106.680818,}}
-              title={"NOWZONE Fashion Mall"}
-              description={"NOWZONE Fashion Mall"}
-              onCalloutPress = {()=>{Alert.alert("Đây là Entertainment")}}
-            >
-              <Image source={require("./../../assets/images/Entertainment.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-            <Marker coordinate={{ 
-              latitude: 10.764283,
-              longitude: 106.683003,}}
-              title={"Hotel Nikko Saigon"}
-              description={"Hotel Nikko Saigon"}
-              onCalloutPress = {()=>{Alert.alert("Đây là Hotel")}}
-            >
-              <Image source={require("./../../assets/images/Hotel.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-            <Marker coordinate={{
-              latitude: 10.764708,
-              longitude: 106.678909,}}
-              title={"Fuji Restaurant"}
-              description={"Fuji Restaurant"}
-              onCalloutPress = {()=>{Alert.alert("Đây là Restaurant")}}
-            >
-              <Image source={require("./../../assets/images/Restaurant.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-            <Marker coordinate={{
-              latitude: 10.760281,
-              longitude: 106.680647,}}
-              title={"Hotel Equatorial"}
-              description={"Hotel Equatorial Ho Chi Minh City"}
-              onCalloutPress = {()=>{Alert.alert("Đây là Hotel")}}
-            >
-              <Image source={require("./../../assets/images/Hotel.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-            <Marker coordinate={{
-              latitude: 10.763310,
-              longitude: 106.684609,}}
-              title={"Toi Caffe"}
-              description={"Coffe Toi Ho Chi Minh City"}
-              onCalloutPress = {()=>{Alert.alert("Đây là Caffe")}}
-            >
-              <Image source={require("./../../assets/images/Coffe.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-            <Marker coordinate={{
-              latitude: 10.762445,
-              longitude: 106.683061,}}
-              title={"Hotel Equatorial"}
-              description={"Hotel Equatorial Ho Chi Minh City"}
-              onCalloutPress = {()=>{Alert.alert("Đây là Hotel")}}
-            >
-              <Image source={require("./../../assets/images/Sport.png")} style={{ height: 50, width: 50 }} />
-            </Marker>
-        </MapView>
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
 
+    let markers = this.state.dataSource.map((val,key)=>{
+        return <CustomMarker key={key} val={val}></CustomMarker>
+    });
 
+    return(
+        <MapView style={styles.map}
+            onRegionChange={e => this._onRegionChange(e)}
+            showsUserLocation = {true}
+            // toolbarEnabled = {true}
+            moveOnMarkerPress = {true}
+            initialRegion={this.props.region}>
+              {markers}
+          </MapView>
     );
+
   }
 }
 
@@ -117,3 +138,19 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
       },
 })
+
+function mapStateToProps(state){
+  return{
+    nearLocation: state.nearLocation,
+    region: state.region,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    changeCurrentRegion: changeCurrentRegion,
+    changeCurrentLocation: changeCurrentLocation,
+    getNearLocation: getNearLocation,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

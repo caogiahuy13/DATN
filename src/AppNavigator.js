@@ -1,5 +1,11 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
+import {Dimensions, TouchableOpacity, Alert} from 'react-native';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createSwitchNavigator,
+  createDrawerNavigator
+} from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -10,6 +16,15 @@ import History from './screens/History';
 import Map from './screens/Map';
 import Setting from './screens/Setting';
 import Tours from './screens/Tours';
+import Profile from './screens/Profile';
+import ChangePassword from './screens/ChangePassword';
+
+
+const MenuButton = (props) => (
+    <TouchableOpacity onPress={()=>{Alert.alert("Test")}}>
+        <Icon name="ios-map" size={22}/>
+    </TouchableOpacity>
+);
 
 const MapStack = createStackNavigator(
   {
@@ -18,7 +33,6 @@ const MapStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -36,7 +50,6 @@ const ToursStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -55,7 +68,6 @@ const HistoryStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -73,7 +85,6 @@ const SettingStack = createStackNavigator(
     },
   },
   {
-    /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
       header: null,
     },
@@ -105,7 +116,8 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-const AppNavigator = createStackNavigator(
+
+const AppNavigator = createSwitchNavigator(
   {
     Login: {
       screen: Login
@@ -115,6 +127,7 @@ const AppNavigator = createStackNavigator(
   {
     /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
+      initialRouteName: 'Login',
       header: null,
     },
   }

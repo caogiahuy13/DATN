@@ -9,8 +9,15 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import AppNavigator from './src/AppNavigator';
 import {createAppContainer } from "react-navigation";
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+import AppNavigator from './src/navigators/AppNavigator';
+import allReducers from './src/reducers/index';
+import Counter from './src/components/counter';
+
+const store = createStore(allReducers);
 
 const AppContainer = createAppContainer(AppNavigator);
 
@@ -18,7 +25,10 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <AppContainer/>
+      // <AppContainer/>
+      <Provider store= {store}>
+        <AppContainer/>
+      </Provider>
     );
   }
 }
