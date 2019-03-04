@@ -101,7 +101,7 @@ class Map extends Component {
   componentDidMount(){
     return this.getNearMe();
   }
-
+  
   render() {
     if(this.state.isLoading){
       return(
