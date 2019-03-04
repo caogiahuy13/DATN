@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from "react-navigation";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Map from '../screens/Map';
 
@@ -18,7 +19,7 @@ const MapStack = createStackNavigator(
 );
 MapStack.navigationOptions = {
     tabBarLabel: 'Map',
-    tabBarIcon: ({ tintColor }) => (<Icon name="ios-map" size={22}/>),
+    tabBarIcon: ({ tintColor }) => (<FontAwesome name="map" color={tintColor} size={30}/>),
 };
 
 export default MapStack;
