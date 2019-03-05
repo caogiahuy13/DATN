@@ -131,7 +131,8 @@ class Map extends Component {
               backdropOpacity={0.5}
             >
               <View style={styles.modalView}>
-                <Text>ABC</Text>
+                <Text>{this.state.dataSource[0].name}</Text>
+                <Text>{this.state.dataSource[0].address}</Text>
               </View>
             </Modal>
             <MapView style={styles.map}
