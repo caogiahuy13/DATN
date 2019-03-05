@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {Text, Button, View, Alert, Image, StyleSheet} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import * as Animatable from 'react-native-animatable';
 
 import {handleModalLocation} from '../actions/index.js';
 
 class LocationDetail extends Component {
   render(){
     return(
-      <View style={styles.detail}>
+      <Animatable.View animation="slideInDown" style={styles.detail}>
         <View style={{flexDirection: 'row'}}>
           <Image style={styles.image} source={{uri:'http://10.0.3.2:5000/assets/images/locationFeatured/SorrentoCafeHoaHung.jpg'}}/>
           <View style={styles.text}>
@@ -16,7 +17,7 @@ class LocationDetail extends Component {
             <Text>227 đường Nguyễn Văn Cừ, Phường 4, Quận 5, Hồ Chí Minh, Việt Nam</Text>
           </View>
         </View>
-      </View>
+      </Animatable.View>
     )
   }
 }

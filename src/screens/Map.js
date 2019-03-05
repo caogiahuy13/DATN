@@ -119,8 +119,6 @@ class Map extends Component {
         return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
-    console.log(this.props.modalLocation.isVisible);
-
     return(
         <View style={styles.container}>
             <MapView style={styles.map}
@@ -129,7 +127,7 @@ class Map extends Component {
                 // toolbarEnabled = {true}
                 moveOnMarkerPress = {true}
                 initialRegion={this.props.region}
-                onMarkerPress={()=>{this.props.handleModalLocation(true)}}
+                // onMarkerPress={()=>{this.props.handleModalLocation(true)}}
                 ref={c => this.mapView = c}
             >
                 {markers}

@@ -109,18 +109,13 @@ class CustomMarker extends Component{
               ref={_marker => {
                 this.marker = _marker;
               }}
-              // onPress={() => {this.props.handleModalLocation(true);}}
+              onPress={() => {this.props.handleModalLocation(true);}}
               // onCalloutPress={() => {
               //   this.marker.hideCallout();
               // }}
-              >
-              <Image
-                source={icon}
-                style={{ width: 32, height: 32 }}
-              />
-              <Callout
-                tooltip={true}>
-              </Callout>
+            >
+              <Image source={icon} style={{ width: 32, height: 32 }}/>
+              <Callout tooltip={true}></Callout>
             </Marker>
         </View>
     );
