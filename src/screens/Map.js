@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, Image} from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
-import Modal from "react-native-modal";
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
@@ -31,7 +30,7 @@ class Map extends Component {
       distance = latitudeDelta * 110;
     }
 
-    return fetch('http://10.0.3.2:5000/location/getNearMe', {
+    return fetch('http://10.0.3.2:5000/location/getNearMe?&tour=true', {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
@@ -127,7 +126,6 @@ class Map extends Component {
                 // toolbarEnabled = {true}
                 moveOnMarkerPress = {true}
                 initialRegion={this.props.region}
-                // onMarkerPress={()=>{this.props.handleModalLocation(true)}}
                 ref={c => this.mapView = c}
             >
                 {markers}
@@ -160,19 +158,6 @@ const styles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
-    },
-    modal: {
-      alignItems: 'flex-start',
-      flexDirection: 'row',
-    },
-    modalView: {
-      justifyContent: 'flex-start',
-      backgroundColor: 'white',
-      alignItems: 'center',
-      borderRadius: 4,
-      borderColor: 'rgba(0, 0, 0, 0.1)',
-      borderWidth: 1,
-      flex: 1,
     },
 })
 

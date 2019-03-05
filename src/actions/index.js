@@ -32,3 +32,10 @@ export function handleModalLocation(visible){
     visible,
   }
 }
+
+export function changeSelectedLocation(location){
+  return {
+    type: types.CHANGE_SELECTED_LOCATION,
+    location,
+  }
+}
