@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import Modal from "react-native-modal";
 
-import {changeCurrentRegion, changeCurrentLocation, getNearLocation } from '../actions/index.js';
+import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
 
 
@@ -73,8 +73,8 @@ class Map extends Component {
     this.getNearMe();
   }
 
-  _hideLocationModal = () => this.setState({ isLocationModalVisible: false });
-  _showLocationModal = () => this.setState({ isLocationModalVisible: true });
+  // _hideLocationModal = () => this.setState({ isLocationModalVisible: false });
+  // _showLocationModal = () => this.setState({ isLocationModalVisible: true });
 
   constructor(props){
     super(props);
@@ -94,7 +94,9 @@ class Map extends Component {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
       },
-      isLocationModalVisible: false,
+      modalLocation: {
+        isVisible: false,
+      }
     }
   }
 
@@ -116,14 +118,16 @@ class Map extends Component {
     }
 
     let markers = this.state.dataSource.map((val,key)=>{
-        return <CustomMarker key={key} val={val} handle={this._showLocationModal.bind(this)}></CustomMarker>
+        return <CustomMarker key={key} val={val}></CustomMarker>
     });
+
+    console.log(this.props.modalLocation.isVisible);
 
     return(
         <View style={styles.container}>
             <Modal
-              isVisible={this.state.isLocationModalVisible}
-              onBackdropPress={()=>{this.setState({isLocationModalVisible: false})}}
+              isVisible={this.props.modalLocation.isVisible}
+              onBackdropPress={()=>{this.props.handleModalLocation(false)}}
               style={styles.modal}
               animationIn="slideInDown"
               animationOut="slideOutUp"
@@ -191,6 +195,7 @@ function mapStateToProps(state){
   return{
     nearLocation: state.nearLocation,
     region: state.region,
+    modalLocation: state.modalLocation,
   };
 }
 function mapDispatchToProps(dispatch){
@@ -198,6 +203,7 @@ function mapDispatchToProps(dispatch){
     changeCurrentRegion: changeCurrentRegion,
     changeCurrentLocation: changeCurrentLocation,
     getNearLocation: getNearLocation,
+    handleModalLocation: handleModalLocation,
   }, dispatch)
 }
 

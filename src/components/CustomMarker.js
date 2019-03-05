@@ -3,8 +3,9 @@ import {Text, Button, View, Alert, Image} from 'react-native';
 import {Marker} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {handleModalLocation} from '../actions/index.js';
 
-export default class CustomMarker extends Component{
+class CustomMarker extends Component{
 
   getImageUrl(val){
     switch(val.type.marker)
@@ -76,22 +77,37 @@ export default class CustomMarker extends Component{
   }
 
   render(){
-    const {val, isLocationModalVisible} = this.props;
+    const {val} = this.props;
     let icon = React.createRef();
     icon = this.getImageUrl(val);
 
     return(
-        <Marker
-          coordinate={{
-            latitude: val.latitude,
-            longitude: val.longitude,
-          }}
-          title={val.name}
-          description={val.description}
-          onCalloutPress = {()=>{this.props.handle()}}
-        >
-            <Image style={{width: 32, height: 32}} source = {icon}/>
-        </Marker>
+        <View>
+            <Marker
+              coordinate={{
+                latitude: val.latitude,
+                longitude: val.longitude,
+              }}
+              title={val.name}
+              description={val.description}
+              onCalloutPress = {()=>{this.props.handleModalLocation(true)}}
+            >
+                <Image style={{width: 32, height: 32}} source = {icon}/>
+            </Marker>
+        </View>
     );
   }
 }
+
+function mapStateToProps(state){
+  return{
+    modalLocation: state.modalLocation,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    handleModalLocation: handleModalLocation,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomMarker);

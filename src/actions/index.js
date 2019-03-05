@@ -25,3 +25,10 @@ export function getNearLocation(data, count){
     count,
   }
 }
+
+export function handleModalLocation(visible){
+  return {
+    type: types.HANDLE_MODAL_LOCATION,
+    visible,
+  }
+}
