@@ -9,7 +9,7 @@ import Modal from "react-native-modal";
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
-
+import LocationDetail from '../components/LocationDetail';
 
 // const window = Dimensions.get('window');
 // const { width, height }  = window;
@@ -119,29 +119,17 @@ class Map extends Component {
         return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
+    console.log(this.props.modalLocation.isVisible);
 
     return(
         <View style={styles.container}>
-          <Modal
-            isVisible={this.props.modalLocation.isVisible}
-            onBackdropPress={()=>{this.props.handleModalLocation(false)}}
-            style={styles.modal}
-            animationIn="slideInDown"
-            animationOut="slideOutUp"
-            useNativeDriver={false}
-            backdropOpacity={0.5}
-          >
-            <View style={styles.modalView}>
-              <Text>TEST</Text>
-              <Text>TEST</Text>
-            </View>
-          </Modal>
             <MapView style={styles.map}
                 onRegionChange={e => {this._onRegionChange(e)}}
                 showsUserLocation = {true}
                 // toolbarEnabled = {true}
                 moveOnMarkerPress = {true}
                 initialRegion={this.props.region}
+                onMarkerPress={()=>{this.props.handleModalLocation(true)}}
                 ref={c => this.mapView = c}
             >
                 {markers}
@@ -158,16 +146,8 @@ class Map extends Component {
                   }}
                 />*/}
             </MapView>
-            <View style={styles.detail}>
-                <View style={{flexDirection: 'row'}}>
-                    <Image style={{flex: 0.4, width: undefined, height: undefined, marginRight: 6, borderRadius: 5}} source={{uri:'http://10.0.3.2:5000/assets/images/locationFeatured/SorrentoCafeHoaHung.jpg'}}/>
-                    <View style={{flex: 0.6, marginLeft: 2}}>
-                        <Text style={{fontWeight: 'bold'}}>Đại học Khoa Học Tự Nhiên Đại Học Quốc Gia, TPHCM</Text>
-                        <Text>227 đường Nguyễn Văn Cừ, Phường 4, Quận 5, Hồ Chí Minh, Việt Nam</Text>
-                    </View>
-                </View>
+            {this.props.modalLocation.isVisible && <LocationDetail/>}
 
-            </View>
         </View>
     );
   }
@@ -196,15 +176,6 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       flex: 1,
     },
-    detail: {
-      backgroundColor: 'white',
-      justifyContent: 'center',
-      margin: 10,
-      elevation: 2,
-      borderRadius: 5,
-      padding: 8,
-
-    }
 })
 
 function mapStateToProps(state){

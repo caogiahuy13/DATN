@@ -15,7 +15,6 @@ import {Provider} from 'react-redux';
 
 import AppNavigator from './src/navigators/AppNavigator';
 import allReducers from './src/reducers/index';
-import Counter from './src/components/counter';
 
 const store = createStore(allReducers);
 

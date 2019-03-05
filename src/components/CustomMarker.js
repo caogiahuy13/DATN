@@ -127,13 +127,6 @@ class CustomMarker extends Component{
   }
 }
 
-const styles = StyleSheet.create({
-    callout: {
-      backgroundColor: 'white',
-
-    }
-})
-
 
 function mapStateToProps(state){
   return{
