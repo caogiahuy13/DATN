@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import {Text, Button, View, Alert, Image} from 'react-native';
-import {Marker} from 'react-native-maps';
+import {Text, Button, View, Alert, Image, StyleSheet} from 'react-native';
+import {Marker, Callout} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import Modal from "react-native-modal";
+
 import {handleModalLocation} from '../actions/index.js';
 
 class CustomMarker extends Component{
@@ -83,21 +85,55 @@ class CustomMarker extends Component{
 
     return(
         <View>
-            <Marker
+            {/*<Marker
               coordinate={{
                 latitude: val.latitude,
                 longitude: val.longitude,
               }}
               title={val.name}
               description={val.description}
-              onCalloutPress = {()=>{this.props.handleModalLocation(true)}}
+              ref={_marker => {
+                this.marker = _marker;
+              }}
+              onCalloutPress={() => {
+                this.props.handleModalLocation(true);
+              }}
             >
-                <Image style={{width: 32, height: 32}} source = {icon}/>
+                <Image style={{width: 32, height: 32}} source = {require("../assets/images/markers/bank20.png")}/>
+            </Marker>*/}
+            <Marker
+              coordinate={{
+                latitude: val.latitude,
+                longitude: val.longitude,
+              }}
+              ref={_marker => {
+                this.marker = _marker;
+              }}
+              // onPress={() => {this.props.handleModalLocation(true);}}
+              // onCalloutPress={() => {
+              //   this.marker.hideCallout();
+              // }}
+              >
+              <Image
+                source={icon}
+                style={{ width: 32, height: 32 }}
+              />
+              <Callout
+                tooltip={true}>
+              </Callout>
             </Marker>
         </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    callout: {
+      backgroundColor: 'white',
+
+    }
+})
+
 
 function mapStateToProps(state){
   return{

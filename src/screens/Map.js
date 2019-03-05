@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, Image} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
@@ -73,8 +73,6 @@ class Map extends Component {
     this.getNearMe();
   }
 
-  // _hideLocationModal = () => this.setState({ isLocationModalVisible: false });
-  // _showLocationModal = () => this.setState({ isLocationModalVisible: true });
 
   constructor(props){
     super(props);
@@ -118,29 +116,28 @@ class Map extends Component {
     }
 
     let markers = this.state.dataSource.map((val,key)=>{
-        return <CustomMarker key={key} val={val}></CustomMarker>
+        return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
-    console.log(this.props.modalLocation.isVisible);
 
     return(
         <View style={styles.container}>
-            <Modal
-              isVisible={this.props.modalLocation.isVisible}
-              onBackdropPress={()=>{this.props.handleModalLocation(false)}}
-              style={styles.modal}
-              animationIn="slideInDown"
-              animationOut="slideOutUp"
-              useNativeDriver={false}
-              backdropOpacity={0.5}
-            >
-              <View style={styles.modalView}>
-                <Text>{this.state.dataSource[0].name}</Text>
-                <Text>{this.state.dataSource[0].address}</Text>
-              </View>
-            </Modal>
+          <Modal
+            isVisible={this.props.modalLocation.isVisible}
+            onBackdropPress={()=>{this.props.handleModalLocation(false)}}
+            style={styles.modal}
+            animationIn="slideInDown"
+            animationOut="slideOutUp"
+            useNativeDriver={false}
+            backdropOpacity={0.5}
+          >
+            <View style={styles.modalView}>
+              <Text>TEST</Text>
+              <Text>TEST</Text>
+            </View>
+          </Modal>
             <MapView style={styles.map}
-                onRegionChange={e => this._onRegionChange(e)}
+                onRegionChange={e => {this._onRegionChange(e)}}
                 showsUserLocation = {true}
                 // toolbarEnabled = {true}
                 moveOnMarkerPress = {true}
@@ -161,6 +158,16 @@ class Map extends Component {
                   }}
                 />*/}
             </MapView>
+            <View style={styles.detail}>
+                <View style={{flexDirection: 'row'}}>
+                    <Image style={{flex: 0.4, width: undefined, height: undefined, marginRight: 6, borderRadius: 5}} source={{uri:'http://10.0.3.2:5000/assets/images/locationFeatured/SorrentoCafeHoaHung.jpg'}}/>
+                    <View style={{flex: 0.6, marginLeft: 2}}>
+                        <Text style={{fontWeight: 'bold'}}>Đại học Khoa Học Tự Nhiên Đại Học Quốc Gia, TPHCM</Text>
+                        <Text>227 đường Nguyễn Văn Cừ, Phường 4, Quận 5, Hồ Chí Minh, Việt Nam</Text>
+                    </View>
+                </View>
+
+            </View>
         </View>
     );
   }
@@ -189,6 +196,15 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       flex: 1,
     },
+    detail: {
+      backgroundColor: 'white',
+      justifyContent: 'center',
+      margin: 10,
+      elevation: 2,
+      borderRadius: 5,
+      padding: 8,
+
+    }
 })
 
 function mapStateToProps(state){
