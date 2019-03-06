@@ -7,9 +7,10 @@ import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import { SearchBar } from 'react-native-elements';
 
-import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation } from '../actions/index.js';
+import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
 import LocationDetail from '../components/LocationDetail';
+import TourCarousel from '../components/TourCarousel';
 
 // const window = Dimensions.get('window');
 // const { width, height }  = window;
@@ -28,7 +29,7 @@ class Map extends Component {
     let {latitudeDelta, longitudeDelta } = this.props.region;
     let distance = 1.0;
     if (latitudeDelta !== 0.01){
-      distance = latitudeDelta * 110;
+      distance = latitudeDelta * 65;
     }
 
     return fetch('http://10.0.3.2:5000/location/getNearMe?&tour=true', {
@@ -49,6 +50,7 @@ class Map extends Component {
                     dataSource: responseJson.data,
                     count: responseJson.itemCount,
                   });
+                  // console.log(responseJson.itemCount);
                   // this.props.getNearLocation(responseJson.data, responseJson.itemCount);
               })
               .catch((error) => {
@@ -132,6 +134,8 @@ class Map extends Component {
         return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
+    console.log(this.props.tourCarousel.isVisible);
+
     return(
         <View style={styles.container}>
             <MapView style={styles.map}
@@ -156,7 +160,8 @@ class Map extends Component {
                   }}
                 />*/}
             </MapView>
-            {this.props.modalLocation.isVisible && <LocationDetail/>}
+            {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
+            {this.props.tourCarousel.isVisible && <View style={styles.tourCarousel}><TourCarousel/></View>}
         </View>
     );
   }
@@ -172,10 +177,13 @@ const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject,
     },
-    search: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
+    locationDetail: {
+      flex: 1,
+      justifyContent: 'flex-start'
+    },
+    tourCarousel: {
+      justifyContent: 'flex-end',
+      marginBottom: 6,
     }
 })
 
@@ -184,6 +192,7 @@ function mapStateToProps(state){
     nearLocation: state.nearLocation,
     region: state.region,
     modalLocation: state.modalLocation,
+    tourCarousel: state.tourCarousel,
   };
 }
 function mapDispatchToProps(dispatch){
@@ -192,6 +201,7 @@ function mapDispatchToProps(dispatch){
     changeCurrentLocation: changeCurrentLocation,
     getNearLocation: getNearLocation,
     handleModalLocation: handleModalLocation,
+    handleTourCarousel: handleTourCarousel,
   }, dispatch)
 }
 

@@ -5,9 +5,16 @@ import {connect} from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { Button, Icon } from 'react-native-elements';
 
-import {handleModalLocation} from '../actions/index.js';
+import {handleModalLocation, handleTourCarousel} from '../actions/index.js';
 
 class LocationDetail extends Component {
+
+  //Khi người dùng nhấn close Handle Modal
+  _onCloseHandleModal(){
+    this.props.handleModalLocation(false);
+    this.props.handleTourCarousel(false);
+  }
+
   render(){
     const {location} = this.props.modalLocation;
     let link = "";
@@ -28,7 +35,7 @@ class LocationDetail extends Component {
               <View style={{marginBottom: 4}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.name}>{location.name}</Text>
-                  <Icon name="close" type="antdesign" color="gray" size={16} onPress={()=>{this.props.handleModalLocation(false)}}/>
+                  <Icon name="close" type="antdesign" color="gray" size={16} onPress={()=>{this._onCloseHandleModal()}}/>
                 </View>
                 <Text>{location.address}</Text>
               </View>
@@ -42,7 +49,7 @@ class LocationDetail extends Component {
                   title="2 tour đi qua"
                   titleStyle={{fontSize: 14}}
                   buttonStyle={styles.button}
-                  onPress={()=>{}}
+                  onPress={()=>{this.props.handleTourCarousel(true)}}
                 />
               }
             </View>
@@ -87,11 +94,13 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     modalLocation: state.modalLocation,
+    tourCarousel: state.tourCarousel,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleModalLocation: handleModalLocation,
+    handleTourCarousel: handleTourCarousel,
   }, dispatch)
 }
 
