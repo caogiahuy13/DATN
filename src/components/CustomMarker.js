@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Modal from "react-native-modal";
 
-import {handleModalLocation,changeSelectedLocation} from '../actions/index.js';
+import {handleModalLocation,changeSelectedLocation,handleTourCarousel} from '../actions/index.js';
 
 class CustomMarker extends Component{
 
@@ -80,6 +80,7 @@ class CustomMarker extends Component{
 
   _onMarkerPress(){
     this.props.handleModalLocation(true);
+    this.props.handleTourCarousel(false);
     this.props.changeSelectedLocation(this.props.val);
   }
 
@@ -117,6 +118,7 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleModalLocation: handleModalLocation,
     changeSelectedLocation: changeSelectedLocation,
+    handleTourCarousel: handleTourCarousel,
   }, dispatch)
 }
 

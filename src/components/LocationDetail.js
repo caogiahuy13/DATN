@@ -8,6 +8,13 @@ import { Button, Icon } from 'react-native-elements';
 import {handleModalLocation, handleTourCarousel} from '../actions/index.js';
 
 class LocationDetail extends Component {
+
+  //Khi người dùng nhấn close Handle Modal
+  _onCloseHandleModal(){
+    this.props.handleModalLocation(false);
+    this.props.handleTourCarousel(false);
+  }
+
   render(){
     const {location} = this.props.modalLocation;
     let link = "";
@@ -28,7 +35,7 @@ class LocationDetail extends Component {
               <View style={{marginBottom: 4}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.name}>{location.name}</Text>
-                  <Icon name="close" type="antdesign" color="gray" size={16} onPress={()=>{this.props.handleModalLocation(false)}}/>
+                  <Icon name="close" type="antdesign" color="gray" size={16} onPress={()=>{this._onCloseHandleModal()}}/>
                 </View>
                 <Text>{location.address}</Text>
               </View>
