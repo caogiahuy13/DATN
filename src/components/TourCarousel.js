@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { Button, Icon } from 'react-native-elements';
 
+import {handleModalLocation, handleTourCarousel} from '../actions/index.js';
+
 const window = Dimensions.get('window');
 const { width, height }  = window;
 
@@ -32,12 +34,14 @@ class TourCarousel extends Component {
     }
   }
 
+
+
   _renderItem ({item, index}) {
       return (
           <View style={styles.container}>
             <Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
             <View style={{paddingHorizontal: 6, paddingBottom: 7}}>
-              <Text style={styles.text}>{item.title}</Text>
+              <Text style={styles.text}>{item.name}</Text>
               <View style={{flexDirection: 'row'}}>
                 <Button
                   icon={<Icon name="directions" type="materialicons" size={18} color="white" iconStyle={{marginRight: 4}}/>}
@@ -62,10 +66,12 @@ class TourCarousel extends Component {
   }
 
   render(){
+    const {tours} = this.props.modalLocation.location;
+
     return(
       <Carousel
         ref={(c) => { this._carousel = c; }}
-        data={this.state.entries}
+        data={tours}
         renderItem={this._renderItem}
         sliderWidth={width}
         itemWidth={width/1.2}
@@ -105,4 +111,16 @@ const styles = StyleSheet.create({
 
 
 
-export default TourCarousel;
+function mapStateToProps(state){
+  return{
+    modalLocation: state.modalLocation,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    handleModalLocation: handleModalLocation,
+    handleTourCarousel: handleTourCarousel,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TourCarousel);

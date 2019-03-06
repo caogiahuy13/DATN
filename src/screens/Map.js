@@ -120,8 +120,6 @@ class Map extends Component {
         return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
-    console.log(this.props.tourCarousel.isVisible);
-
     return(
         <View style={styles.container}>
             <MapView style={styles.map}

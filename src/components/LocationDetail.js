@@ -18,11 +18,13 @@ class LocationDetail extends Component {
   render(){
     const {location} = this.props.modalLocation;
     let link = "";
+    let tourStr = '' + location.tours.length + ' tour đi qua';
 
     if (location.featured_img != null){
       link = location.featured_img;
       link = "http://10.0.3.2:5000/" + link.split("/").slice(1).join("/");
     }
+
 
     return(
       <Animatable.View animation="slideInDown" style={styles.detail}>
@@ -46,7 +48,7 @@ class LocationDetail extends Component {
                 <Button
                   icon={<Icon name="eye" type="feather" size={18} color="white" iconStyle={{marginRight: 4}}/>}
                   type="solid"
-                  title="2 tour đi qua"
+                  title= {tourStr}
                   titleStyle={{fontSize: 14}}
                   buttonStyle={styles.button}
                   onPress={()=>{this.props.handleTourCarousel(true)}}
