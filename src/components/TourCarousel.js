@@ -36,7 +36,7 @@ class TourCarousel extends Component {
       return (
           <View style={styles.container}>
             <Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
-            <View style={{paddingHorizontal: 6, paddingBottom: 6}}>
+            <View style={{paddingHorizontal: 6, paddingBottom: 7}}>
               <Text style={styles.text}>{item.title}</Text>
               <View style={{flexDirection: 'row'}}>
                 <Button
@@ -63,16 +63,14 @@ class TourCarousel extends Component {
 
   render(){
     return(
-      <View style={{marginTop: 10}}>
       <Carousel
         ref={(c) => { this._carousel = c; }}
         data={this.state.entries}
         renderItem={this._renderItem}
         sliderWidth={width}
         itemWidth={width/1.2}
-        layout={'stack'}
+        layout={'default'}
       />
-      </View>
     )
   }
 }
@@ -82,6 +80,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 2,
     borderRadius: 16,
+    borderWidth: 0.1,
+    borderColor: 'black',
   },
   image: {
     width: undefined,

@@ -39,3 +39,10 @@ export function changeSelectedLocation(location){
     location,
   }
 }
+
+export function handleTourCarousel(visible){
+  return {
+    type: types.HANDLE_TOUR_CAROUSEL,
+    visible,
+  }
+}

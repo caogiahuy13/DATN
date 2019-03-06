@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { Button, Icon } from 'react-native-elements';
 
-import {handleModalLocation} from '../actions/index.js';
+import {handleModalLocation, handleTourCarousel} from '../actions/index.js';
 
 class LocationDetail extends Component {
   render(){
@@ -42,7 +42,7 @@ class LocationDetail extends Component {
                   title="2 tour đi qua"
                   titleStyle={{fontSize: 14}}
                   buttonStyle={styles.button}
-                  onPress={()=>{}}
+                  onPress={()=>{this.props.handleTourCarousel(true)}}
                 />
               }
             </View>
@@ -87,11 +87,13 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     modalLocation: state.modalLocation,
+    tourCarousel: state.tourCarousel,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleModalLocation: handleModalLocation,
+    handleTourCarousel: handleTourCarousel,
   }, dispatch)
 }
 
