@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
+import { SearchBar } from 'react-native-elements';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
@@ -104,11 +105,24 @@ class Map extends Component {
   componentDidMount(){
     return this.getNearMe();
   }
-
+  state = {
+    search: '',
+  };
+  updateSearch = search => {
+    this.setState({ search });
+  };
   render() {
     if(this.state.isLoading){
+      const { search } = this.state;
       return(
         <View style={{flex: 1, padding: 20}}>
+          <Text style={styles.search}>Hello Thomas Wilson</Text>
+          <SearchBar
+            placeholder="Location ..."
+            /*placeholderTextColor="red"*/
+            onChangeText={this.updateSearch}
+            value={search}
+          />
           <ActivityIndicator/>
         </View>
       )
@@ -143,7 +157,6 @@ class Map extends Component {
                 />*/}
             </MapView>
             {this.props.modalLocation.isVisible && <LocationDetail/>}
-
         </View>
     );
   }
@@ -159,6 +172,11 @@ const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject,
     },
+    search: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 10,
+    }
 })
 
 function mapStateToProps(state){
