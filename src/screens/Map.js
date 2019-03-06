@@ -107,12 +107,14 @@ class Map extends Component {
   componentDidMount(){
     return this.getNearMe();
   }
+
   state = {
     search: '',
   };
   updateSearch = search => {
     this.setState({ search });
   };
+  
   render() {
     if(this.state.isLoading){
       const { search } = this.state;

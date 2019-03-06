@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { createStackNavigator, createAppContainer} from "react-navigation";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 export default class Login extends Component {
     constructor()
     {
