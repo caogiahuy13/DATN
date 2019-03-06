@@ -27,7 +27,7 @@ class Map extends Component {
     let {latitudeDelta, longitudeDelta } = this.props.region;
     let distance = 1.0;
     if (latitudeDelta !== 0.01){
-      distance = latitudeDelta * 110;
+      distance = latitudeDelta * 65;
     }
 
     return fetch('http://10.0.3.2:5000/location/getNearMe?&tour=true', {
@@ -48,6 +48,7 @@ class Map extends Component {
                     dataSource: responseJson.data,
                     count: responseJson.itemCount,
                   });
+                  // console.log(responseJson.itemCount);
                   // this.props.getNearLocation(responseJson.data, responseJson.itemCount);
               })
               .catch((error) => {
