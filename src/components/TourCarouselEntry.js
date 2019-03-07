@@ -4,11 +4,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Button, Icon } from 'react-native-elements';
 
-import {changeCurrentRoute} from '../actions/index.js';
+import {changeCurrentRoute, handleCurrentRoute} from '../actions/index.js';
 
 class TourCarouselEntry extends Component {
   _getRouteByTour(){
-    return fetch('http://localhost:5000/route/getByTour/4')
+    return fetch('http://10.0.3.2:5000/route/getByTour/4')
               .then((response) => response.json())
               .then((responseJson) => {
                   this.props.changeCurrentRoute(responseJson.data);
@@ -19,11 +19,15 @@ class TourCarouselEntry extends Component {
   }
 
   _onDirectionPress(e){
-    console.log("TEST");
+    console.log(this.props.currentRoute);
+    this.props.handleCurrentRoute(true);
   }
 
   render () {
     const {item} = this.props;
+
+    this._getRouteByTour();
+
     return (
       <View style={styles.container}>
         <Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
@@ -89,6 +93,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     changeCurrentRoute: changeCurrentRoute,
+    handleCurrentRoute: handleCurrentRoute,
   }, dispatch)
 }
 

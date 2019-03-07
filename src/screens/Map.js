@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 
-import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel } from '../actions/index.js';
+import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
 import CustomMarker from '../components/CustomMarker';
 import LocationDetail from '../components/LocationDetail';
 import TourCarousel from '../components/TourCarousel';
@@ -75,7 +75,6 @@ class Map extends Component {
     this.getNearMe();
   }
 
-
   constructor(props){
     super(props);
     this.state = {
@@ -132,7 +131,8 @@ class Map extends Component {
                 ref={c => this.mapView = c}
             >
                 {markers}
-                {/*<MapViewDirections
+                {this.props.currentRoute.isVisible &&
+                  <MapViewDirections
                   origin={origin}
                   destination={destination}
                   apikey={GOOGLE_MAPS_APIKEY}
@@ -143,7 +143,7 @@ class Map extends Component {
                       edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
                     });
                   }}
-                />*/}
+                />}
             </MapView>
             {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             {this.props.tourCarousel.isVisible && <View style={styles.tourCarousel}><TourCarousel/></View>}
@@ -178,6 +178,7 @@ function mapStateToProps(state){
     region: state.region,
     modalLocation: state.modalLocation,
     tourCarousel: state.tourCarousel,
+    currentRoute: state.currentRoute,
   };
 }
 function mapDispatchToProps(dispatch){
@@ -187,6 +188,7 @@ function mapDispatchToProps(dispatch){
     getNearLocation: getNearLocation,
     handleModalLocation: handleModalLocation,
     handleTourCarousel: handleTourCarousel,
+    handleCurrentRoute: handleCurrentRoute,
   }, dispatch)
 }
 

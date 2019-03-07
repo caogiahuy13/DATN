@@ -53,3 +53,9 @@ export function changeCurrentRoute(data){
     data,
   }
 }
+export function handleCurrentRoute(visible){
+  return {
+    type: types.HANDLE_CURRENT_ROUTE,
+    visible,
+  }
+}

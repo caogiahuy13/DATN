@@ -2,6 +2,7 @@ import * as types from '../actions/type';
 
 let currentRoute = {
   data: [],
+  isVisible: false,
 }
 
 export default function(state=currentRoute, action){
@@ -10,6 +11,12 @@ export default function(state=currentRoute, action){
       return {
         ...state,
         data: action.data,
+      };
+      break;
+    case types.HANDLE_CURRENT_ROUTE:
+      return {
+        ...state,
+        isVisible: action.visible,
       };
       break;
   }

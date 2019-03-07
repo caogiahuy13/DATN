@@ -15,9 +15,7 @@ const { width, height }  = window;
 class TourCarousel extends Component {
   // render tour carousel tương ứng với tour đi qua địa điểm
   _renderItem ({item, index}) {
-      return (
-          <TourCarouselEntry item={item}/>
-      );
+      return (<TourCarouselEntry item={item}/>);
   }
 
   render(){
