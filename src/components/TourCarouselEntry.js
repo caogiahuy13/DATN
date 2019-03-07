@@ -21,8 +21,16 @@ class TourCarouselEntry extends Component {
 
   _onDirectionPress(e){
     this._getRouteByTour();
-    console.log(this.props.currentRoute);
+    // console.log(this.props.currentRoute);
     this.props.handleCurrentRoute(true);
+    let coordinates = this.props.currentRoute.data.map((val,key)=>{
+      return{
+        latitude: val.location.latitude,
+        longitute: val.location.longitude
+      }
+    });
+
+    console.log(coordinates);
   }
 
   render () {
