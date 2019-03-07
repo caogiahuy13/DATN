@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {Text, Button, View, Alert, Image, StyleSheet} from 'react-native';
+import {Text, Button, View, Alert, Image, ImageBackground, StyleSheet} from 'react-native';
 import {Marker, Callout} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { Badge } from 'react-native-elements'
 
-import {handleModalLocation,changeSelectedLocation,handleTourCarousel} from '../actions/index.js';
+import { handleModalLocation, changeSelectedLocation, handleTourCarousel } from '../actions/index.js';
 
 class CustomMarker extends Component{
 
@@ -83,8 +84,15 @@ class CustomMarker extends Component{
     this.props.changeSelectedLocation(this.props.val);
   }
 
+  _isInRoute(id){
+    let idList = this.props.currentRoute.data.map((val,key)=>{
+      return(val.location.id);
+    });
+    return idList.indexOf(id);
+  }
+
   render(){
-    const {val} = this.props;
+    const {val, currentRoute} = this.props;
     let icon = React.createRef();
     icon = this.getImageUrl(val);
 
@@ -99,7 +107,16 @@ class CustomMarker extends Component{
               // ref={_marker => {this.marker = _marker;}}
               // onCalloutPress={() => {this.marker.hideCallout();}}
             >
+
                 <Image source={icon} style={{ width: 32, height: 32 }}/>
+                {currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
+                  <Badge
+                    status="error"
+                    value="A"
+                    containerStyle={{ position: 'absolute', alignSelf: 'flex-end', transform: [{scaleX: 0.7}, {scaleY: 0.7}, {translateY: -5}, {translateX: 5}]}}
+                  />
+                }
+
                 <Callout tooltip={true}></Callout>
             </Marker>
         </View>
@@ -111,6 +128,7 @@ class CustomMarker extends Component{
 function mapStateToProps(state){
   return{
     modalLocation: state.modalLocation,
+    currentRoute: state.currentRoute,
   };
 }
 function mapDispatchToProps(dispatch){

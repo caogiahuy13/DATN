@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { Button, Icon } from 'react-native-elements';
 
-import {handleModalLocation, handleTourCarousel} from '../actions/index.js';
+import {handleModalLocation, handleTourCarousel, handleCurrentRoute} from '../actions/index.js';
 
 class LocationDetail extends Component {
 
@@ -13,6 +13,7 @@ class LocationDetail extends Component {
   _onCloseHandleModal(){
     this.props.handleModalLocation(false);
     this.props.handleTourCarousel(false);
+    this.props.handleCurrentRoute(false);
   }
 
   render(){
@@ -22,7 +23,7 @@ class LocationDetail extends Component {
 
     if (location.featured_img != null){
       link = location.featured_img;
-      link = "http://10.0.3.2:5000/" + link.split("/").slice(1).join("/");
+      // link = "http://10.0.3.2:5000/" + link.split("/").slice(1).join("/");
     }
 
 
@@ -103,6 +104,7 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleModalLocation: handleModalLocation,
     handleTourCarousel: handleTourCarousel,
+    handleCurrentRoute: handleCurrentRoute,
   }, dispatch)
 }
 
