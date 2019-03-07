@@ -7,22 +7,39 @@ import { Button, Icon } from 'react-native-elements';
 
 import {handleModalLocation, handleTourCarousel, changeCurrentRoute} from '../actions/index.js';
 
+import SliderEntry from './SliderEntry';
+
 const window = Dimensions.get('window');
 const { width, height }  = window;
 
 class TourCarousel extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  _onDirectionPress(){
-    
+  _getRouteByTour(){
+    return fetch('http://localhost:5000/route/getByTour/4')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                  this.props.changeCurrentRoute(responseJson.data);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+  }
+
+  _onDirectionPress(e){
+    console.log("TEST");
   }
 
   // render tour carousel tương ứng với tour đi qua địa điểm
   _renderItem ({item, index}) {
       return (
           <View style={styles.container}>
-            <Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
+            <SliderEntry/>
+            {/*<Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
             <View style={{paddingHorizontal: 6, paddingBottom: 7}}>
-              <Text style={styles.text}>{item.name}</Text>
+              <Text onPress={this.test()} style={styles.text}>{item.name}</Text>
               <View style={{flexDirection: 'row'}}>
                 <Button
                   icon={<Icon name="directions" type="materialicons" size={18} color="white" iconStyle={{marginRight: 4}}/>}
@@ -30,7 +47,8 @@ class TourCarousel extends Component {
                   title="Direction"
                   titleStyle={{fontSize: 14}}
                   buttonStyle={styles.button}
-                  onPress={()=>{}}
+                  onPress={()=>{console.log("TEST")}}
+                  onLongPress={()=>{console.log("TEST2")}}
                 />
                 <Button
                   icon={<Icon name="rightcircle" type="antdesign" size={16} color="#2089DC" iconStyle={{marginRight: 4}}/>}
@@ -41,7 +59,7 @@ class TourCarousel extends Component {
                   onPress={()=>{}}
                 />
               </View>
-            </View>
+            </View>*/}
           </View>
       );
   }
@@ -53,7 +71,7 @@ class TourCarousel extends Component {
       <Carousel
         ref={(c) => { this._carousel = c; }}
         data={tours}
-        renderItem={this._renderItem}
+        renderItem={this._renderItem.bind(this)}
         sliderWidth={width}
         itemWidth={width/1.2}
         layout={'default'}
