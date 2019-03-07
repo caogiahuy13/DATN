@@ -25,12 +25,9 @@ class CustomMapDirection extends Component{
 
   render(){
     let coordinates = this._getCoordinates();
-    console.log(coordinates);
+
     return(
       <MapViewDirections
-        // origin={coordinates[0]}
-        // waypoints={(coordinates.length > 2) ? coordinates.slice(1, -1) : null}
-        // destination={coordinates[coordinates.length-1]}
         origin={coordinates[0]}
         waypoints={(coordinates.length > 2) ? coordinates.slice(1, -1) : null}
         destination={coordinates[coordinates.length-1]}
