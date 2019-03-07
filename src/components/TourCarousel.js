@@ -7,7 +7,7 @@ import { Button, Icon } from 'react-native-elements';
 
 import {handleModalLocation, handleTourCarousel, changeCurrentRoute} from '../actions/index.js';
 
-import SliderEntry from './SliderEntry';
+import TourCarouselEntry from './TourCarouselEntry';
 
 const window = Dimensions.get('window');
 const { width, height }  = window;
@@ -36,7 +36,7 @@ class TourCarousel extends Component {
   _renderItem ({item, index}) {
       return (
           <View style={styles.container}>
-            <SliderEntry/>
+            <TourCarouselEntry/>
             {/*<Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
             <View style={{paddingHorizontal: 6, paddingBottom: 7}}>
               <Text onPress={this.test()} style={styles.text}>{item.name}</Text>

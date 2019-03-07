@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import { Button, Icon } from 'react-native-elements';
 
-export default class SliderEntry extends Component {
+export default class TourCarouselEntry extends Component {
 
     testfunc(){
       console.log("TEST2");
