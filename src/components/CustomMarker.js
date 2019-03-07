@@ -3,7 +3,6 @@ import {Text, Button, View, Alert, Image, StyleSheet} from 'react-native';
 import {Marker, Callout} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Modal from "react-native-modal";
 
 import {handleModalLocation,changeSelectedLocation,handleTourCarousel} from '../actions/index.js';
 

@@ -7,9 +7,11 @@ import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
+
 import CustomMarker from '../components/CustomMarker';
 import LocationDetail from '../components/LocationDetail';
 import TourCarousel from '../components/TourCarousel';
+import CustomMapDirection from '../components/CustomMapDirection';
 
 // const window = Dimensions.get('window');
 // const { width, height }  = window;
@@ -131,19 +133,7 @@ class Map extends Component {
                 ref={c => this.mapView = c}
             >
                 {markers}
-                {this.props.currentRoute.isVisible &&
-                  <MapViewDirections
-                  origin={origin}
-                  destination={destination}
-                  apikey={GOOGLE_MAPS_APIKEY}
-                  strokeWidth={3}
-                  strokeColor="blue"
-                  onReady={(result) => {
-                    this.mapView.fitToCoordinates(result.coordinates,{
-                      edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
-                    });
-                  }}
-                />}
+                {this.props.currentRoute.isVisible && <CustomMapDirection parent={()=>this.mapView}/>}
             </MapView>
             {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             {this.props.tourCarousel.isVisible && <View style={styles.tourCarousel}><TourCarousel/></View>}
