@@ -3,11 +3,13 @@ import regionReducer from './regionReducer';
 import nearLocationReducer from './nearLocationReducer';
 import modalLocationReducer from './modalLocationReducer';
 import tourCarouselReducer from './tourCarouselReducer';
+import currentRouteReducer from './currentRouteReducer';
 
 const allReducers= combineReducers({
   region: regionReducer,
   nearLocation: nearLocationReducer,
   modalLocation: modalLocationReducer,
   tourCarousel: tourCarouselReducer,
+  currentRoute: currentRouteReducer,
 });
 export default allReducers;

@@ -46,3 +46,10 @@ export function handleTourCarousel(visible){
     visible,
   }
 }
+
+export function changeCurrentRoute(data){
+  return {
+    type: types.CHANGE_CURRENT_ROUTE,
+    data,
+  }
+}
