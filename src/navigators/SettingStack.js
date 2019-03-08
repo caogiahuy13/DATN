@@ -33,7 +33,7 @@ SettingStack.navigationOptions = ({ navigation }) => {
     return {
       tabBarVisible,
       tabBarLabel: 'Setting',
-      tabBarIcon: ({ tintColor }) => (<Icon name="md-settings" color={tintColor} size={30}/>),
+      tabBarIcon: ({ tintColor }) => (<Icon name="md-settings" color={tintColor} size={33}/>),
     };
 };
 
