@@ -49,7 +49,7 @@ class TourCarouselEntry extends Component {
               title="Detail"
               titleStyle={{fontSize: 14}}
               buttonStyle={styles.button}
-              onPress={()=>{this.props.navigation.navigate("TourDetail")}}
+              onPress={()=>{this.props.navigation.navigate("TourDetail",{id: item.id})}}
             />
           </View>
         </View>
