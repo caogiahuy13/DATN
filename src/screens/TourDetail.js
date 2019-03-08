@@ -19,7 +19,7 @@ class TourDetail extends Component{
               <Info firstText="Số chỗ còn lại" secondText="3/20"/>
             </View>
 
-            <Divider/>
+            <Divider style={{height: 1}}/>
 
             <View style={{marginVertical: 8}}>
               <TourRating/>
@@ -29,41 +29,45 @@ class TourDetail extends Component{
               </View>
             </View>
 
-            <Divider/>
-            <Divider/>
+            <Divider style={{height: 1}}/>
 
             <TourPrice/>
           </Card>
 
-          <Divider style={{ backgroundColor: 'blue' }} />
+          <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
+
           <Card
             containerStyle = {{margin: 0}}
-            title='HELLO WORLD'
-            image={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'}}>
+            title='GIỚI THIỆU'
+            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
+          >
             <Text style={{marginBottom: 10}}>
-              The idea with React Native Elements is more about component structure than actual design.
+            Tham quan những địa danh mang đậm dấu ấn lịch sử như Bảo tàng chứng tích chiến tranh, Dinh Độc Lập.
+Tìm hiểu nét văn hóa và một số kiến trúc độc đáo - điều tạo nên một phần linh hồn mảnh đất Sài Gòn: Nhà thờ Đức Bà, Bưu điện thành phố.
+
+Bạn được trải nghiệm những gì?
+Hành trình bắt đầu với chuyến thăm Bảo tàng chứng tích chiến tranh - top 5 trong số 25 bảo tàng hấp dẫn nhất châu Á. Đến với bảo tàng, bạn sẽ giật mình nhận ra đằng sau một cuộc sống hòa bình, yên ổn - mà bạn tưởng chừng như hiển nhiên này - là cả một chặng đường lịch sử thấm đẫm máu và nước mắt của dân tộc. Bảo tàng chứng tích chiến tranh như một nốt lặng tĩnh tâm giữa chốn phồn hoa đô hội, giúp bạn thêm yêu, thêm trân trọng cuộc sống thanh bình này.
+
+Điểm dừng chân tiếp theo của Tour tham quan Sài Gòn chính là Dinh Độc Lập - một di tích quốc gia đặc biệt, dấu son quyền lực của của quá khứ. Dinh Độc Lập còn cuốn hút bạn bởi những câu chuyện lịch sử thú vị về sự hình thành, sự tồn tại, ý nghĩa văn hóa trong lối kiến trúc độc đáo và những dấu mốc lịch sử của đất nước mà nó đã mang trong mình hàng trăm năm qua. Chỉ vài giờ tham quan ngắn ngủi nhưng đủ giúp bạn hình dung về một giai đoạn lịch sử đầy biến động, và thêm tự hào về chiến thắng lịch sử vẻ vang của dân tộc Việt Nam.
+
+Cuối hành trình, hãy trở về trung tâm thành phố để thăm Nhà thờ Đức Bà. Nơi giao hòa giữa nét cổ xưa và hiện đại, giữa kiến trúc phương Tây và văn hóa phương Đông. Bạn sẽ không khỏi trầm trồ thán phục trước màu gạch nơi đây vẫn giữ nguyên vẹn màu hồng tươi, chẳng bám chút bụi rêu, dẫu trải qua bao nắng mưa, thử thách. Nếu muốn tận hưởng hết vẻ đẹp của Nhà thờ Đức Bà, hãy dành chút thời gian ngồi lại, thưởng thức thú vui cà phê bệt trong ánh đèn lung linh phản chiếu từ các tòa cao ốc, cùng hòa nhịp sống với người Sài Gòn khi đêm về. Lúc đó bạn sẽ nhận ra Nhà thờ Đức Bà tựa như một nốt nhạc bình yên giữa bản nhạc xô bồ, vội vã của đất Sài Gòn này.
             </Text>
-            <Button
-              icon={<Icon name='code' color='#ffffff' />}
-              backgroundColor='#03A9F4'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-              title='VIEW NOW'
-            />
           </Card>
+
+          <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
+
           <Card
             containerStyle = {{margin: 0}}
-            title='HELLO WORLD'
-            image={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'}}>
+            title='CHƯƠNG TRÌNH TOUR'
+            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
+          >
             <Text style={{marginBottom: 10}}>
-              The idea with React Native Elements is more about component structure than actual design.
+            Ngày 1: Vũng Tàu - Đà Lạt - Khách sạn. (Ăn sáng, trưa chiều).
+            Ngày 2: Khách sạn - Nhà thờ Con Gà - Thiền viện Trúc Lâm - Dinh Bảo Đại - Showroom hoa nghệ thuật  - Khách sạn. (Ăn sáng, trưa).
+            Ngày 3: Khách sạn - Ga xe lửa cổ - Làng hoa Vạn Thành - Khách sạn (Đà lạt) - Vũng Tàu (Ăn sáng, trưa ,chiều).
             </Text>
-            <Button
-              icon={<Icon name='code' color='#ffffff' />}
-              backgroundColor='#03A9F4'
-              buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-              title='VIEW NOW'
-            />
           </Card>
+
         </ScrollView>
         <Button
           buttonStyle={{backgroundColor: '#C50000', borderRadius: 0}}
