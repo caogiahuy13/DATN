@@ -19,7 +19,7 @@ const ToursStack = createStackNavigator(
 );
 ToursStack.navigationOptions = {
     tabBarLabel: 'Tours',
-    tabBarIcon: ({ tintColor }) => (<MaterialIcon name="map-marker-distance" color={tintColor} size={30}/>),
+    tabBarIcon: ({ tintColor }) => (<MaterialIcon name="map-marker-distance" color={tintColor} size={33}/>),
 };
 
 export default ToursStack;
