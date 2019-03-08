@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
 
+import NumberFormat from 'react-number-format';
+
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
     title: 'Thông tin tour',
@@ -72,7 +74,7 @@ class TourDetail extends Component{
 
             <Divider style={{height: 1}}/>
 
-            <TourPrice/>
+            <TourPrice price={tour.price}/>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
@@ -151,7 +153,15 @@ class TourPrice extends Component {
   render(){
     return(
       <View style={{marginVertical: 8, alignItems: 'center'}}>
-        <Text style={{color:'#C50000', fontWeight: 'bold', fontSize: 24}}>200,000 đ</Text>
+        <Text style={{color:'#C50000', fontWeight: 'bold', fontSize: 24}}>
+          <NumberFormat
+            value={this.props.price}
+            displayType={'text'}
+            thousandSeparator={true}
+            suffix={' đ'}
+            renderText={value => <Text>{value}</Text>}
+          />
+        </Text>
       </View>
     )
   }
