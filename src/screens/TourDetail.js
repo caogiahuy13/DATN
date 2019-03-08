@@ -3,6 +3,18 @@ import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
 
 class TourDetail extends Component{
+  static navigationOptions = ({navigation}) => ({
+    title: 'Thông tin tour',
+    headerStyle: {
+      backgroundColor: '#324a5e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    tabBarVisible: false,
+  });
+
   render(){
     return(
       <View style={{flex: 1}}>

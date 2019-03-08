@@ -11,4 +11,4 @@ import ChangePassword from './src/screens/ChangePassword';
 import TourDetail from './src/screens/TourDetail';
 import TourCard from './src/components/TourCard';
 
-AppRegistry.registerComponent(appName, () => TourDetail);
+AppRegistry.registerComponent(appName, () => App);

@@ -2,24 +2,40 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from "react-navigation";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {fromRight} from 'react-navigation-transitions';
 
 import Map from '../screens/Map';
+import TourDetail from '../screens/TourDetail';
 
 const MapStack = createStackNavigator(
   {
-    Map: {
-      screen: Map
-    },
+    Map,
+    TourDetail,
   },
   {
     defaultNavigationOptions: {
-      header: null,
+      // header: null,
     },
-  }
+    transitionConfig: () => fromRight(),
+  },
 );
-MapStack.navigationOptions = {
-    tabBarLabel: 'Map',
-    tabBarIcon: ({ tintColor }) => (<FontAwesome name="map" color={tintColor} size={30}/>),
+MapStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible;
+    if (navigation.state.routes.length > 1) {
+      navigation.state.routes.map(route => {
+        if (route.routeName === "TourDetail") {
+          tabBarVisible = false;
+        } else {
+          tabBarVisible = true;
+        }
+      });
+    }
+
+    return {
+      tabBarVisible,
+      tabBarLabel: 'Map',
+      tabBarIcon: ({ tintColor }) => (<FontAwesome name="map" color={tintColor} size={30}/>),
+    };
 };
 
 export default MapStack;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Button, Icon } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 import {changeCurrentRoute, handleCurrentRoute} from '../actions/index.js';
 
@@ -23,14 +24,6 @@ class TourCarouselEntry extends Component {
     this._getRouteByTour();
     // console.log(this.props.currentRoute);
     this.props.handleCurrentRoute(true);
-    let coordinates = this.props.currentRoute.data.map((val,key)=>{
-      return{
-        latitude: val.location.latitude,
-        longitute: val.location.longitude
-      }
-    });
-
-    console.log(coordinates);
   }
 
   render () {
@@ -56,7 +49,7 @@ class TourCarouselEntry extends Component {
               title="Detail"
               titleStyle={{fontSize: 14}}
               buttonStyle={styles.button}
-              onPress={()=>{}}
+              onPress={()=>{this.props.navigation.navigate("TourDetail")}}
             />
           </View>
         </View>
@@ -105,4 +98,4 @@ function mapDispatchToProps(dispatch){
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TourCarouselEntry);
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(TourCarouselEntry));

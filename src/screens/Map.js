@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
+import { Button } from 'react-native-elements';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
 
@@ -24,6 +25,9 @@ const destination = {latitude: 10.773831, longitude: 106.704895};
 const GOOGLE_MAPS_APIKEY = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
 class Map extends Component {
+  static navigationOptions = {
+    header: null,
+  };
 
   // Lay dia diem xung quanh vi tri hien tai
   getNearMe(){
