@@ -93,8 +93,16 @@ class CustomMarker extends Component{
 
   render(){
     const {val, currentRoute} = this.props;
+
+    // Link ảnh địa điểm
     let icon = React.createRef();
     icon = this.getImageUrl(val);
+
+    // Ký tự cho địa điểm đi qua của tour ví dụ A, B, C, D
+    let char;
+    if (this._isInRoute(val.id)>=0){
+      char = String.fromCharCode(65 + this._isInRoute(val.id));
+    }
 
     return(
         <View>
@@ -112,7 +120,7 @@ class CustomMarker extends Component{
                 {currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
                   <Badge
                     status="error"
-                    value="A"
+                    value={char}
                     containerStyle={{ position: 'absolute', alignSelf: 'flex-end', transform: [{scaleX: 0.7}, {scaleY: 0.7}, {translateY: -5}, {translateX: 5}]}}
                   />
                 }
