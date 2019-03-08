@@ -9,6 +9,6 @@ import {name as appName} from './app.json';
 import Setting from './src/screens/Setting';
 import ChangePassword from './src/screens/ChangePassword';
 import TourDetail from './src/components/TourDetail';
-
+import TourCard from './src/components/TourCard';
 
 AppRegistry.registerComponent(appName, () => TourDetail);
