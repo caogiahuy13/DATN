@@ -19,11 +19,11 @@ export default class ChangePassword extends Component {
     return (
       <View style={styles.container}>
           <View style={{marginVertical: 10}}></View>
-          <Input placeholder='Insert old password' label="Old password"/>
+          <Input label="Old password"/>
           <View style={{marginVertical: 10}}></View>
-          <Input placeholder='Please insert new password' label="New Password"/>
+          <Input label="New Password"/>
           <View style={{marginVertical: 5}}></View>
-          <Input placeholder='Please verify new password' label="Verify New Password"/>
+          <Input label="Verify New Password"/>
           <View style={{marginVertical: 10}}></View>
           <Button
             title="CHANGE PASSWORD"

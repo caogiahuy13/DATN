@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
-
 import NumberFormat from 'react-number-format';
+import Moment from 'moment';
 
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
@@ -21,21 +21,25 @@ class TourDetail extends Component{
     super(props);
     this.state = {
       tour: {},
+      currentTurn: {},
+      dayDiff: 0,
     }
   }
 
-  _getTourById(id){
+  async _getTourById(id){
     let link = 'http://10.0.3.2:5000/tour/getById/' + id;
-    return fetch(link).then((response) => response.json())
+    return await fetch(link).then((response) => response.json())
                       .then((responseJson) => {
                         this.setState({tour: responseJson.data})
+                        this.setState({currentTurn: responseJson.data.tour_turns[0]});
+                        this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day})
                       })
                       .catch((error) => {
                         console.error(error);
                       });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.navigation.getParam("id");
     this._getTourById(id);
   }
@@ -45,7 +49,8 @@ class TourDetail extends Component{
   }
 
   render(){
-    const {tour} = this.state;
+    Moment.locale('en');
+    const {tour, currentTurn, dayDiff} = this.state;
 
     return(
       <View style={{flex: 1}}>
@@ -56,10 +61,10 @@ class TourDetail extends Component{
             titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
             image={require("../assets/images/tour-card-img.jpg")}>
             <View style={{marginBottom: 8}}>
-              <Info firstText="Ngày khởi hành" secondText="24/02/2019"/>
-              <Info firstText="Ngày kết thúc" secondText="24/02/2019"/>
-              <Info firstText="Thời gian" secondText="1 ngày"/>
-              <Info firstText="Số chỗ còn lại" secondText="3/20"/>
+              <Info firstText="Ngày khởi hành" secondText={Moment(currentTurn.start_date).format('DD/MM/YYYY')} type="day"/>
+              <Info firstText="Ngày kết thúc" secondText={Moment(currentTurn.end_date).format('DD/MM/YYYY')} type="day"/>
+              <Info firstText="Thời gian" secondText={dayDiff} type="day"/>
+              <Info firstText="Số chỗ còn lại" current={currentTurn.num_current_people} max={currentTurn.num_max_people} type="slot"/>
             </View>
 
             <Divider style={{height: 1}}/>
@@ -97,6 +102,16 @@ class TourDetail extends Component{
             <Text style={{marginBottom: 10}}>{tour.detail}</Text>
           </Card>
 
+          <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
+
+          <Card
+            containerStyle = {{margin: 0}}
+            title='GHI CHÚ'
+            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
+          >
+            <Text style={{marginBottom: 10}}>{tour.policy}</Text>
+          </Card>
+
         </ScrollView>
         <Button
           buttonStyle={{backgroundColor: '#C50000', borderRadius: 0}}
@@ -109,11 +124,13 @@ class TourDetail extends Component{
 }
 
 class Info extends Component{
+  remainSlot = () => {return this.props.max - this.props.current};
   render(){
     return(
       <View style={{flexDirection: 'row'}}>
         <Text style={{flex: 0.5}}>{this.props.firstText}</Text>
-        <Text style={{flex: 0.5}}>{this.props.secondText}</Text>
+        {this.props.type !== "slot" && <Text style={{flex: 0.5}}>{this.props.secondText}</Text>}
+        {this.props.type === "slot" && <Text style={{flex: 0.5}}>{this.remainSlot()}/{this.props.max}</Text>}
       </View>
     );
   }
