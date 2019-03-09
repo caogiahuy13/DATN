@@ -8,7 +8,75 @@ import {
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+const ERR_USERNAME = "Email or Phone number must be in right format";
+const ERR_PASSWORD = "Password is required";
+
 export default class Login extends Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        username: '',
+        password: '',
+        err: '',
+        isError: false,
+      }
+    }
+
+    setError(err, isError){
+      this.setState({err: err, isError: isError});
+    }
+
+    callLoginAPI(){
+      let status;
+      fetch('http://10.0.3.2:5000/user/login', {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password,
+                  }),
+                }).then((response) => {
+                    status = response.status;
+                    return response.json();
+                  })
+                  .then((responseJson) => {
+                    if (status != 200){
+                      this.setError(responseJson.msg,true);
+                    } else if (status == 200){
+                      AsyncStorage.setItem('userToken',responseJson.token);
+                      console.log(responseJson);
+                      // this.props.changeProfile(responseJson.profile);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                  });
+    }
+
+    checkUser(){
+      if (this.state.username == ''){
+        this.setError(ERR_USERNAME, true);
+        return false;
+      }
+      if (this.state.password == ''){
+        this.setError(ERR_PASSWORD, true);
+        return false;
+      }
+      this.setError('', false);
+      return true;
+    }
+
+    _onPressLogin(){
+      let validate = this.checkUser();
+      if (validate){
+        this.callLoginAPI();
+      }
+      console.log(this.state.err);
+      console.log(this.state.isError);
+    }
 
     render() {
         const { navigation } = this.props;
@@ -26,14 +94,15 @@ export default class Login extends Component {
                         <View style={styles.line}/>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.inputText}>Phone number *</Text>
+                        <Text style={styles.inputText}>Email or Phone number *</Text>
                         <TextInput style={styles.input}
                             placeholder=""
                             placeholderTextColor='rgba(255,255,255,0.8)'
                             keyboardType='email-address'
                             returnKeyType='next'
                             autoCorrect={false}
-                            onSubmitEditing={()=> this.refs.txtPassword.focus()}
+                            onChangeText={(value)=> this.setState({username: value})}
+                            // onSubmitEditing={()=> this.refs.txtPassword.focus()}
                         />
                         <Text style={styles.inputText}>Password *</Text>
                         <TextInput style={styles.input}
@@ -43,15 +112,17 @@ export default class Login extends Component {
                             secureTextEntry
                             autoCorrect={false}
                             ref={"txtPassword"}
+                            onChangeText={(value)=> this.setState({password: value})}
                         />
                         <View style={styles.notePassword}>
                             <Text style={styles.lostPassword}>Lost your password?</Text>
                         </View>
-                        <TouchableOpacity style={styles.buttonLogin} onPress={() => {AsyncStorage.setItem('userToken','123456');navigation.navigate('TabNavigator');}}>
+                        { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
+                        <TouchableOpacity style={styles.buttonLogin} onPress={() => {this._onPressLogin()}}>
                              <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>
-                        <TouchableOpacity style={styles.buttonFacebook} onPress={() => navigation.navigate('TabNavigator')}>
+                        <TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
                                 <Text>{"   "}</Text>
@@ -111,6 +182,11 @@ const styles = StyleSheet.create({
     inputText:
     {
         fontSize: 18,
+        marginTop: 10,
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 16,
         marginTop: 10,
     },
     input: {

@@ -20,17 +20,17 @@ const ERR_PHONE_LENGTH = "Phone number must be 10 digits!";
 
 class Register extends Component {
     constructor(props){
-    super(props);
-    this.state = {
-      fullname: '',
-      password: '',
-      confirmPassword: '',
-      phone: '',
-      email: '',
-      err: '',
-      isError: false,
+      super(props);
+      this.state = {
+        fullname: '',
+        password: '',
+        confirmPassword: '',
+        phone: '',
+        email: '',
+        err: '',
+        isError: false,
+      }
     }
-  }
 
     _onPressRegister(){
       let validate = this.checkUser();
