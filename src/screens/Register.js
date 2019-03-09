@@ -7,21 +7,62 @@ import {
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default class Login extends Component {
+const ERR_FULLNAME = "Fullname is required";
+const ERR_PASSWORD = "Password is required";
+const ERR_PHONE = "Phone number is required";
+const ERR_EMAIL = "Email is required";
+const ERR_CONFIRM_PASSWORD = "Password and Confirm password must be match!";
+const ERR_PHONE_LENGTH = "Phone number must be 10 digits!";
+
+export default class Register extends Component {
   constructor(props){
     super(props);
     this.state = {
       fullname: '',
       password: '',
+      confirmPassword: '',
       phone: '',
       email: '',
+      err: '',
+      isError: false,
     }
   }
     _onPressRegister(){
-      console.log(this.state.fullname);
-      console.log(this.state.password);
-      console.log(this.state.phone);
-      console.log(this.state.email);
+      let validate = this.checkUser();
+
+    }
+
+    checkUser(){
+      if (this.state.fullname == ''){
+        this.setError(true,ERR_FULLNAME);
+        return false;
+      }
+      if (this.state.password == ''){
+        this.setError(true,ERR_PASSWORD);
+        return false;
+      }
+      if (this.state.phone == ''){
+        this.setError(true,ERR_PHONE);
+        return false;
+      }
+      if (this.state.phone.length != 10){
+        this.setError(true, ERR_PHONE_LENGTH);
+        return false;
+      }
+      if (this.state.email == ''){
+        this.setError(true,ERR_EMAIL);
+        return false;
+      }
+      if (this.state.password !== this.state.confirmPassword){
+        this.setError(true,ERR_CONFIRM_PASSWORD);
+        return false;
+      }
+      this.setError(false,'');
+      return true;
+    }
+
+    setError(err, isError){
+      this.setState({isError: isError, err: err});
     }
 
     render() {
@@ -53,10 +94,10 @@ export default class Login extends Component {
                         <Text style={styles.inputText}>Confirm Password *</Text>
                         <TextInput style={styles.input}
                             placeholderTextColor='rgba(255,255,255,0.8)'
-                            secureTextEntry
                             returnKeyType='next'
+                            secureTextEntry
                             autoCorrect={false}
-                            ref={"txtConfirmPassword"}
+                            onChangeText={(value)=> this.setState({confirmPassword: value})}
                         />
                         <Text style={styles.inputText}>Phone number *</Text>
                         <TextInput style={styles.input}
