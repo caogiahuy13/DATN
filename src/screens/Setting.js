@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, AsyncStorage } from 'react-native';
 import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
@@ -184,9 +184,9 @@ export default class Setting extends Component {
         <ListItem
           title="Log out"
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
-          onPress={()=>{this.props.navigation.navigate("Login")}}
+          onPress={()=>{AsyncStorage.removeItem('userToken'); this.props.navigation.navigate("Map")}}
         />
-
+        
       </ScrollView>
     );
   }

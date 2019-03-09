@@ -4,7 +4,7 @@ import {
     TouchableWithoutFeedback, StatusBar,
     TextInput, TouchableOpacity,
     KeyboardAvoidingView, Button,
-    CheckBox,
+    CheckBox, AsyncStorage,
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -66,7 +66,7 @@ export default class Login extends Component {
                             </View>
                             <Text style={styles.lostPassword}>Password?</Text>
                         </View>
-                        <TouchableOpacity style={styles.buttonLogin} onPress={() => navigation.navigate('TabNavigator')}>
+                        <TouchableOpacity style={styles.buttonLogin} onPress={() => {AsyncStorage.setItem('userToken','123456');navigation.navigate('TabNavigator');}}>
                              <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>

@@ -20,8 +20,6 @@ import CustomMapDirection from '../components/CustomMapDirection';
 // const LONGITUDE_DELTA = LATITUDE_DELTA + (width / height);
 
 // key: AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q
-const origin = {latitude: 10.762864, longitude: 106.682229};
-const destination = {latitude: 10.773831, longitude: 106.704895};
 const GOOGLE_MAPS_APIKEY = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
 class Map extends Component {

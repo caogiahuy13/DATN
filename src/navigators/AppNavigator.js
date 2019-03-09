@@ -8,8 +8,8 @@ import AuthStack from './AuthStack';
 
 const AppNavigator = createSwitchNavigator(
   {
-    // AuthStack,
     TabNavigator,
+    AuthStack,
   },
   {
     /* The header config from HomeScreen is now here */
