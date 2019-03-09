@@ -2,13 +2,13 @@ import React from 'react';
 import {createSwitchNavigator} from "react-navigation";
 
 import Login from '../screens/Login';
+import Register from '../screens/Register';
 import TabNavigator from './TabNavigator';
 
 const AppNavigator = createSwitchNavigator(
   {
-    Login: {
-      screen: Login
-    },
+    Login,
+    Register,
     TabNavigator,
   },
   {

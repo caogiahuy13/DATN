@@ -8,6 +8,22 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      fullname: '',
+      password: '',
+      phone: '',
+      email: '',
+    }
+  }
+    _onPressRegister(){
+      console.log(this.state.fullname);
+      console.log(this.state.password);
+      console.log(this.state.phone);
+      console.log(this.state.email);
+    }
+
     render() {
         const { navigation } = this.props;
 
@@ -24,7 +40,7 @@ export default class Login extends Component {
                             placeholderTextColor='rgba(255,255,255,0.8)'
                             returnKeyType='next'
                             autoCorrect={false}
-                            ref={"txtFullname"}
+                            onChangeText={(value)=> this.setState({fullname: value})}
                         />
                         <Text style={styles.inputText}>Password *</Text>
                         <TextInput style={styles.input}
@@ -32,7 +48,7 @@ export default class Login extends Component {
                             returnKeyType='next'
                             secureTextEntry
                             autoCorrect={false}
-                            ref={"txtPassword"}
+                            onChangeText={(value)=> this.setState({password: value})}
                         />
                         <Text style={styles.inputText}>Confirm Password *</Text>
                         <TextInput style={styles.input}
@@ -48,7 +64,7 @@ export default class Login extends Component {
                             keyboardType='phone-pad'
                             returnKeyType='next'
                             autoCorrect={false}
-                            ref={"txtPhone"}
+                            onChangeText={(value)=> this.setState({phone: value})}
                         />
                         <Text style={styles.inputText}>Email *</Text>
                         <TextInput style={styles.input}
@@ -56,9 +72,9 @@ export default class Login extends Component {
                             keyboardType='email-address'
                             returnKeyType='go'
                             autoCorrect={false}
-                            ref={"txtEmail"}
+                            onChangeText={(value)=> this.setState({email: value})}
                         />
-                        <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('TabNavigator')}>
+                        <TouchableOpacity style={styles.buttonRegister} onPress={() => this._onPressRegister()}>
                              <Text style={styles.buttonText}>REGISTER</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>

@@ -9,20 +9,19 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {
-    constructor()
-    {
+    constructor(){
         super();
-        this.state =
-        {
+        this.state = {
             check: false
         }
     }
-    checkBoxTest()
-    {
+
+    checkBoxTest(){
         this.setState({
             check:!this.state.check
         })
     }
+
     render() {
         const { navigation } = this.props;
         return (
@@ -80,7 +79,7 @@ export default class Login extends Component {
                         </TouchableOpacity>
                         <View style={styles.register}>
                             <Text style={styles.registerText1}>You don't have an account? </Text>
-                            <Text style={styles.registerText2}>Register here </Text>
+                            <Text style={styles.registerText2} onPress={()=>{navigation.navigate('Register')}}>Register here </Text>
                         </View>
                     </View>
                 </KeyboardAvoidingView>
