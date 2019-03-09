@@ -1,30 +1,24 @@
 import React, { Component } from 'react'
 import {
-    StyleSheet, Text, View, Image,
-    TouchableWithoutFeedback, StatusBar,
-    TextInput, TouchableOpacity,
-    KeyboardAvoidingView, Button,
-    CheckBox,
+  StyleSheet, Text, View, Image,
+  TouchableWithoutFeedback, StatusBar,
+  TextInput, TouchableOpacity,
+  KeyboardAvoidingView, Button,
+  CheckBox,
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {
-    constructor()
-    {
+    constructor(){
         super();
-        this.state =
-        {
+        this.state ={
             check: false
         }
     }
-    checkBoxTest()
-    {
-        this.setState({
-            check:!this.state.check
-        })
-    }
+
     render() {
         const { navigation } = this.props;
+
         return (
             <View style={styles.container}>
                  <KeyboardAvoidingView behavior='padding' style={styles.container}>
