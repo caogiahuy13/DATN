@@ -4,11 +4,11 @@ import {createSwitchNavigator} from "react-navigation";
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import TabNavigator from './TabNavigator';
+import LoginStack from './LoginStack';
 
 const AppNavigator = createSwitchNavigator(
   {
-    Login,
-    Register,
+    LoginStack,
     TabNavigator,
   },
   {

@@ -6,7 +6,6 @@ import HistoryStack from './HistoryStack';
 import SettingStack from './SettingStack';
 import ToursStack from './ToursStack';
 
-
 const TabNavigator = createBottomTabNavigator(
   {
     MapStack,
