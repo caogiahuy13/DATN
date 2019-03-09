@@ -3,9 +3,13 @@ import {
   StyleSheet, Text, View,
   TouchableWithoutFeedback,
   TextInput, TouchableOpacity,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView, AsyncStorage,
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import { handleAccess, changeProfile } from '../actions/index.js';
 
 const ERR_FULLNAME = "Fullname is required";
 const ERR_PASSWORD = "Password is required";
@@ -14,7 +18,7 @@ const ERR_EMAIL = "Email is required";
 const ERR_CONFIRM_PASSWORD = "Password and Confirm password must be match!";
 const ERR_PHONE_LENGTH = "Phone number must be 10 digits!";
 
-export default class Register extends Component {
+class Register extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -29,11 +33,10 @@ export default class Register extends Component {
   }
     _onPressRegister(){
       let validate = this.checkUser();
-      console.log(this.state.isError);
       if (validate){
         this.callRegisterAPI();
         if (this.state.isError == false){
-          console.log("SUCCESS");
+          this.props.navigation.navigate("Map");
         }
       }
     }
@@ -61,8 +64,8 @@ export default class Register extends Component {
                       this.setError(responseJson.msg,true);
                     } else if (status == 200){
                       AsyncStorage.setItem('userToken',responseJson.token);
+                      this.props.changeProfile(responseJson.profile);
                     }
-                    console.log(responseJson);
                   })
                   .catch((error) => {
                     console.error(error);
@@ -101,8 +104,6 @@ export default class Register extends Component {
       this.setError('', false);
       return true;
     }
-
-
 
     render() {
         const { navigation } = this.props;
@@ -255,3 +256,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 })
+
+function mapStateToProps(state){
+  return{
+    access: state.access,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    handleAccess: handleAccess,
+    changeProfile: changeProfile,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

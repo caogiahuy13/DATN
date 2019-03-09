@@ -12,6 +12,6 @@ const allReducers= combineReducers({
   modalLocation: modalLocationReducer,
   tourCarousel: tourCarouselReducer,
   currentRoute: currentRouteReducer,
-  accessReducer: accessReducer,
+  access: accessReducer,
 });
 export default allReducers;

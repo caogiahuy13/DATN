@@ -67,3 +67,10 @@ export function handleAccess(log){
     log,
   }
 }
+
+export function changeProfile(profile){
+  return {
+    type: types.CHANGE_PROFILE,
+    profile,
+  }
+}
