@@ -29,41 +29,80 @@ export default class Register extends Component {
   }
     _onPressRegister(){
       let validate = this.checkUser();
+      console.log(this.state.isError);
+      if (validate){
+        this.callRegisterAPI();
+        if (this.state.isError == false){
+          console.log("SUCCESS");
+        }
+      }
+    }
 
+    callRegisterAPI(){
+      let status;
+      fetch('http://10.0.3.2:5000/user/register', {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    fullname: this.state.fullname,
+                    password: this.state.password,
+                    phone: this.state.phone,
+                    email: this.state.email,
+                  }),
+                }).then((response) => {
+                    status = response.status;
+                    return response.json();
+                  })
+                  .then((responseJson) => {
+                    if (status == 400){
+                      this.setError(responseJson.msg,true);
+                    } else if (status == 200){
+                      AsyncStorage.setItem('userToken',responseJson.token);
+                    }
+                    console.log(responseJson);
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                  });
+    }
+
+    setError(err, isError){
+      this.setState({err: err, isError: isError});
     }
 
     checkUser(){
       if (this.state.fullname == ''){
-        this.setError(true,ERR_FULLNAME);
+        this.setError(ERR_FULLNAME, true);
         return false;
       }
       if (this.state.password == ''){
-        this.setError(true,ERR_PASSWORD);
+        this.setError(ERR_PASSWORD, true);
         return false;
       }
       if (this.state.phone == ''){
-        this.setError(true,ERR_PHONE);
+        this.setError(ERR_PHONE, true);
         return false;
       }
       if (this.state.phone.length != 10){
-        this.setError(true, ERR_PHONE_LENGTH);
+        this.setError(ERR_PHONE_LENGTH, true);
         return false;
       }
       if (this.state.email == ''){
-        this.setError(true,ERR_EMAIL);
+        this.setError(ERR_EMAIL, true);
         return false;
       }
       if (this.state.password !== this.state.confirmPassword){
-        this.setError(true,ERR_CONFIRM_PASSWORD);
+        this.setError(ERR_CONFIRM_PASSWORD, true);
         return false;
       }
-      this.setError(false,'');
+      this.setError('', false);
       return true;
     }
 
-    setError(err, isError){
-      this.setState({isError: isError, err: err});
-    }
+
 
     render() {
         const { navigation } = this.props;
@@ -115,6 +154,7 @@ export default class Register extends Component {
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({email: value})}
                         />
+                        { this.state.isError && <Text style={styles.errorText}>*{this.state.err}</Text> }
                         <TouchableOpacity style={styles.buttonRegister} onPress={() => this._onPressRegister()}>
                              <Text style={styles.buttonText}>REGISTER</Text>
                         </TouchableOpacity>
@@ -173,6 +213,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 10,
         color: '#292929',
+    },
+    errorText: {
+        color: '#C50000',
+        fontSize: 14,
+        marginTop: 10,
     },
     input: {
         fontSize: 18,
