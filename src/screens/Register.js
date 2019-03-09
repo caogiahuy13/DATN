@@ -19,7 +19,7 @@ const ERR_CONFIRM_PASSWORD = "Password and Confirm password must be match!";
 const ERR_PHONE_LENGTH = "Phone number must be 10 digits!";
 
 class Register extends Component {
-  constructor(props){
+    constructor(props){
     super(props);
     this.state = {
       fullname: '',
@@ -31,6 +31,7 @@ class Register extends Component {
       isError: false,
     }
   }
+
     _onPressRegister(){
       let validate = this.checkUser();
       if (validate){
@@ -155,7 +156,7 @@ class Register extends Component {
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({email: value})}
                         />
-                        { this.state.isError && <Text style={styles.errorText}>*{this.state.err}</Text> }
+                        { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
                         <TouchableOpacity style={styles.buttonRegister} onPress={() => this._onPressRegister()}>
                              <Text style={styles.buttonText}>REGISTER</Text>
                         </TouchableOpacity>
@@ -169,7 +170,7 @@ class Register extends Component {
                         </TouchableOpacity>
                         <View style={styles.register}>
                             <Text style={{fontSize: 18}}>You have an account? </Text>
-                            <Text style={{fontSize: 18, color: '#5375D8'}}>Login here </Text>
+                            <Text style={{fontSize: 18, color: '#5375D8'}} onPress={()=>{navigation.navigate('Login');}}>Login here </Text>
                         </View>
                     </View>
                 </KeyboardAvoidingView>
@@ -213,11 +214,10 @@ const styles = StyleSheet.create({
     {
         fontSize: 18,
         marginTop: 10,
-        color: '#292929',
     },
     errorText: {
-        color: '#C50000',
-        fontSize: 14,
+        color: 'red',
+        fontSize: 16,
         marginTop: 10,
     },
     input: {
@@ -228,11 +228,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.02)',
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,0.05)',
-        color: '#000',
+        color: 'gray',
     },
     ORText:{
         fontSize: 17,
-        marginTop: 20,
+        marginTop: 15,
         textAlign: 'center',
     },
     buttonRegister: {
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     buttonFacebook: {
         backgroundColor: '#3B5998',
         paddingVertical: 10,
-        marginTop: 20,
+        marginTop: 15,
     },
     buttonText: {
         textAlign: 'center',

@@ -9,18 +9,6 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class Login extends Component {
-    constructor(){
-        super();
-        this.state = {
-            check: false
-        }
-    }
-
-    checkBoxTest(){
-        this.setState({
-            check:!this.state.check
-        })
-    }
 
     render() {
         const { navigation } = this.props;
@@ -57,14 +45,7 @@ export default class Login extends Component {
                             ref={"txtPassword"}
                         />
                         <View style={styles.notePassword}>
-                            <View style={styles.checkBox}>
-                                <CheckBox
-                                    value={this.state.check}
-                                    onChange={() => this.checkBoxTest()}
-                                />
-                                <Text style={styles.rememberMe}>Remember me</Text>
-                            </View>
-                            <Text style={styles.lostPassword}>Password?</Text>
+                            <Text style={styles.lostPassword}>Lost your password?</Text>
                         </View>
                         <TouchableOpacity style={styles.buttonLogin} onPress={() => {AsyncStorage.setItem('userToken','123456');navigation.navigate('TabNavigator');}}>
                              <Text style={styles.buttonText}>LOGIN</Text>
@@ -125,62 +106,46 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         paddingTop: 10,
-        height: '60%',
-        width: '100%',
+        marginHorizontal: 20,
     },
     inputText:
     {
         fontSize: 18,
         marginTop: 10,
-        marginHorizontal: 20,
-        color: '#292929',
     },
     input: {
         fontSize: 18,
         height: 40,
         marginTop: 10,
-        marginHorizontal: 20,
         paddingHorizontal: 10,
         backgroundColor: 'rgba(0,0,0,0.02)',
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,0.05)',
-        color: '#000',
+        color: 'gray',
     },
     notePassword:{
         marginTop: 10,
-        marginLeft: 13,
-        marginRight: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-    },
-    checkBox: {
-        flexDirection: 'row',
-    },
-    rememberMe: {
-        marginTop: 4,
-        fontSize: 18,
+        alignSelf: 'flex-end',
     },
     lostPassword: {
-        marginTop: 4,
         fontSize: 18,
-        right: 0,
     },
     ORText:{
-        fontSize: 18,
-        marginTop: 20,
+        fontSize: 17,
+        marginTop: 15,
         textAlign: 'center',
     },
     buttonLogin: {
         backgroundColor: '#1BBC9B',
         paddingVertical: 10,
         marginTop: 10,
-        marginHorizontal: 20,
     },
     buttonFacebook: {
         backgroundColor: '#3B5998',
         paddingVertical: 10,
-        marginTop: 20,
-        marginHorizontal: 20,
+        marginTop: 15,
     },
     buttonText: {
         textAlign: 'center',
@@ -190,12 +155,10 @@ const styles = StyleSheet.create({
     },
     register: {
         marginTop: 12,
-        marginHorizontal: 20,
         flexDirection: 'row',
     },
     registerText1: {
         fontSize: 18,
-
     },
     registerText2: {
         fontSize: 18,
