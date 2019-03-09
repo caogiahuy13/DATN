@@ -200,6 +200,6 @@ const styles = StyleSheet.create({
     },
     registerText2: {
         fontSize: 18,
-        color: 'blue',
+        color: '#5375D8',
     },
 })

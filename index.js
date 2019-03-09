@@ -10,5 +10,7 @@ import Setting from './src/screens/Setting';
 import ChangePassword from './src/screens/ChangePassword';
 import TourDetail from './src/screens/TourDetail';
 import TourCard from './src/components/TourCard';
+import Register from './src/screens/Register';
+import Login from './src/screens/Login';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => Register);
