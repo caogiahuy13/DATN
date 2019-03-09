@@ -8,10 +8,15 @@ import {
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import { handleAccess, changeProfile } from '../actions/index.js';
+
 const ERR_USERNAME = "Email or Phone number must be in right format";
 const ERR_PASSWORD = "Password is required";
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props){
       super(props);
       this.state = {
@@ -26,9 +31,9 @@ export default class Login extends Component {
       this.setState({err: err, isError: isError});
     }
 
-    callLoginAPI(){
+    async callLoginAPI(){
       let status;
-      fetch('http://10.0.3.2:5000/user/login', {
+      await fetch('http://10.0.3.2:5000/user/login', {
                   method: 'POST',
                   headers: {
                     Accept: 'application/json',
@@ -47,8 +52,8 @@ export default class Login extends Component {
                       this.setError(responseJson.msg,true);
                     } else if (status == 200){
                       AsyncStorage.setItem('userToken',responseJson.token);
-                      console.log(responseJson);
-                      // this.props.changeProfile(responseJson.profile);
+                      this.setError('',false);
+                      this.props.changeProfile(responseJson.profile);
                     }
                   })
                   .catch((error) => {
@@ -72,10 +77,12 @@ export default class Login extends Component {
     _onPressLogin(){
       let validate = this.checkUser();
       if (validate){
-        this.callLoginAPI();
+        this.callLoginAPI().then(()=>{
+          if (this.state.isError == false){
+            this.props.navigation.navigate("Map");
+          }
+        })
       }
-      console.log(this.state.err);
-      console.log(this.state.isError);
     }
 
     render() {
@@ -241,3 +248,17 @@ const styles = StyleSheet.create({
         color: '#5375D8',
     },
 })
+
+function mapStateToProps(state){
+  return{
+    access: state.access,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    handleAccess: handleAccess,
+    changeProfile: changeProfile,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -35,16 +35,17 @@ class Register extends Component {
     _onPressRegister(){
       let validate = this.checkUser();
       if (validate){
-        this.callRegisterAPI();
-        if (this.state.isError == false){
-          this.props.navigation.navigate("Map");
-        }
+        this.callRegisterAPI().then(()=>{
+          if (this.state.isError == false){
+            this.props.navigation.navigate("Map");
+          }
+        })
       }
     }
 
-    callRegisterAPI(){
+    async callRegisterAPI(){
       let status;
-      fetch('http://10.0.3.2:5000/user/register', {
+      await fetch('http://10.0.3.2:5000/user/register', {
                   method: 'POST',
                   headers: {
                     Accept: 'application/json',
@@ -65,6 +66,7 @@ class Register extends Component {
                       this.setError(responseJson.msg,true);
                     } else if (status == 200){
                       AsyncStorage.setItem('userToken',responseJson.token);
+                      this.setError('',false);
                       this.props.changeProfile(responseJson.profile);
                     }
                   })
