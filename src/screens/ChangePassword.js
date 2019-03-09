@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import {Input, Text, Button} from 'react-native-elements';
 
 export default class ChangePassword extends Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = {
     title: 'Change Password',
     headerStyle: {
       backgroundColor: '#324a5e',
@@ -13,7 +13,7 @@ export default class ChangePassword extends Component {
       fontWeight: 'bold',
     },
     tabBarVisible: false,
-  });
+  };
 
   render() {
     return (

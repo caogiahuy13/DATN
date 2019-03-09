@@ -4,17 +4,17 @@ import {createSwitchNavigator} from "react-navigation";
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import TabNavigator from './TabNavigator';
-import LoginStack from './LoginStack';
+import AuthStack from './AuthStack';
 
 const AppNavigator = createSwitchNavigator(
   {
-    LoginStack,
+    // AuthStack,
     TabNavigator,
   },
   {
     /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
-      initialRouteName: 'Login',
+      // initialRouteName: 'Login',
       header: null,
     },
   }

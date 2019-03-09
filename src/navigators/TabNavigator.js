@@ -25,7 +25,24 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
   }
-
 );
+TabNavigator.navigationOptions = ({ navigation }) => {
+    // if (navigation.state.index === 3){
+    //   navigation.navigate("HistoryStack");
+    // }
+    if (navigation.state.routes.length > 1) {
+      console.log(navigation.state);
+      navigation.state.routes.map(route => {
+        if (route.routeName === "SettingStack") {
+          tabBarVisible = false;
+        } else {
+          tabBarVisible = true;
+        }
+      });
+    }
+
+    return {
+    };
+};
 
 export default TabNavigator;

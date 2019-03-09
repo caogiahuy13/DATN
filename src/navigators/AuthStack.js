@@ -4,7 +4,7 @@ import {createStackNavigator} from "react-navigation";
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
-const LoginStack = createStackNavigator(
+const AuthStack = createStackNavigator(
   {
     Login,
     Register
@@ -16,4 +16,4 @@ const LoginStack = createStackNavigator(
   }
 );
 
-export default LoginStack;
+export default AuthStack;
