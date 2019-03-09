@@ -8,7 +8,7 @@ import Dialog from "react-native-dialog";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { } from '../actions/index.js';
+import { handleAccess } from '../actions/index.js';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -97,11 +97,11 @@ class Setting extends Component {
 
   async CheckLogedIn(){
     await AsyncStorage.getItem('userToken')
-                .then((data)=>{
-                  if (data != null){
-                    this.setState({isLogedIn: true})
-                  }
-                });
+                      .then((data)=>{
+                        if (data != null){
+                          this.setState({isLogedIn: true})
+                        }
+                      });
   }
 
   render() {
@@ -116,6 +116,7 @@ class Setting extends Component {
 
     Moment.locale('en');
     let tmpEmail = "";
+
     return (
       <ScrollView style={styles.scroll}>
         <DateTimePicker
@@ -207,7 +208,7 @@ class Setting extends Component {
         <ListItem
           title="Log out"
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
-          onPress={()=>{AsyncStorage.removeItem('userToken'); this.props.navigation.navigate("Map")}}
+          onPress={()=>{AsyncStorage.removeItem('userToken'); AsyncStorage.removeItem('profile'); this.props.navigation.navigate("Map")}}
         />
 
       </ScrollView>
@@ -286,12 +287,12 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return{
-
+    access: state.access,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    handleAccess: handleAccess,
   }, dispatch)
 }
 
