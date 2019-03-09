@@ -4,6 +4,7 @@ import nearLocationReducer from './nearLocationReducer';
 import modalLocationReducer from './modalLocationReducer';
 import tourCarouselReducer from './tourCarouselReducer';
 import currentRouteReducer from './currentRouteReducer';
+import accessReducer from './accessReducer';
 
 const allReducers= combineReducers({
   region: regionReducer,
@@ -11,5 +12,6 @@ const allReducers= combineReducers({
   modalLocation: modalLocationReducer,
   tourCarousel: tourCarouselReducer,
   currentRoute: currentRouteReducer,
+  accessReducer: accessReducer,
 });
 export default allReducers;
