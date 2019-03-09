@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, Dimensions, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, Dimensions, AsyncStorage } from 'react-native';
 import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
 import Dialog from "react-native-dialog";
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import { } from '../actions/index.js';
 
 const deviceWidth = Dimensions.get("window").width;
 
-export default class Setting extends Component {
+class Setting extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -22,6 +26,7 @@ export default class Setting extends Component {
       isGenderModalVisible: false,
       isDateTimePickerVisible: false,
       isEmailModalVisible: false,
+      isLogedIn: false,
     }
   }
 
@@ -90,7 +95,25 @@ export default class Setting extends Component {
     </View>
   );
 
+  async CheckLogedIn(){
+    await AsyncStorage.getItem('userToken')
+                .then((data)=>{
+                  if (data != null){
+                    this.setState({isLogedIn: true})
+                  }
+                });
+  }
+
   render() {
+    this.CheckLogedIn();
+    if (this.state.isLogedIn == false){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      );
+    }
+
     Moment.locale('en');
     let tmpEmail = "";
     return (
@@ -186,7 +209,7 @@ export default class Setting extends Component {
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
           onPress={()=>{AsyncStorage.removeItem('userToken'); this.props.navigation.navigate("Map")}}
         />
-        
+
       </ScrollView>
     );
   }
@@ -260,3 +283,16 @@ const styles = StyleSheet.create({
       borderWidth: 1,
     },
 })
+
+function mapStateToProps(state){
+  return{
+
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);
