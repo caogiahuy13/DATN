@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import {Input, Text, Button} from 'react-native-elements';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
-export default class ChangePassword extends Component {
+import { changePassword } from '../actions/index.js';
+
+class ChangePassword extends Component {
   static navigationOptions = {
     title: 'Change Password',
     headerStyle: {
@@ -19,11 +23,11 @@ export default class ChangePassword extends Component {
     return (
       <View style={styles.container}>
           <View style={{marginVertical: 10}}></View>
-          <Input label="Old password"/>
+          <Input inputStyle={styles.input} label="Old Password"/>
           <View style={{marginVertical: 10}}></View>
-          <Input label="New Password"/>
+          <Input inputStyle={styles.input} label="New Password"/>
           <View style={{marginVertical: 5}}></View>
-          <Input label="Verify New Password"/>
+          <Input inputStyle={styles.input} label="Confirm New Password"/>
           <View style={{marginVertical: 10}}></View>
           <Button
             title="CHANGE PASSWORD"
@@ -43,9 +47,25 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
     },
+    input: {
+      color: 'gray',
+    },
     text: {
       fontSize: 20,
       marginHorizontal: 12,
       fontWeight: 'bold',
     }
 })
+
+function mapStateToProps(state){
+  return{
+    access: state.access,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    changePassword: changePassword,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

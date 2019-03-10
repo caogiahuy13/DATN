@@ -30,13 +30,23 @@ export default function(state = access, action){
         }
       };
       break;
-      
+
     case types.CHANGE_BIRTHDAY:
       return {
         ...state,
         profile: {
           ...state.profile,
           birthday: action.birthday,
+        }
+      };
+      break;
+
+    case types.CHANGE_PASSWORD:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          password: action.password,
         }
       };
       break;

@@ -21,6 +21,7 @@ class Setting extends Component {
 
     AsyncStorage.getItem('profile').then((data)=>{
       this.props.changeProfile(JSON.parse(data));
+      console.log(this.props.access);
     })
 
     this.state = {

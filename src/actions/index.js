@@ -88,3 +88,10 @@ export function changeBirthday(birthday){
     birthday,
   }
 }
+
+export function changePassword(password){
+  return {
+    type: types.CHANGE_PASSWORD,
+    password,
+  }
+}
