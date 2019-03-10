@@ -12,9 +12,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { handleAccess, changeProfile } from '../actions/index.js';
-
-const ERR_USERNAME = "Email or Phone number must be in right format";
-const ERR_PASSWORD = "Password is required";
+import { login } from '../services/api';
+import { ERR_USERNAME, ERR_PASSWORD } from '../constants/index';
 
 class Login extends Component {
     constructor(props){
@@ -33,33 +32,24 @@ class Login extends Component {
 
     async callLoginAPI(){
       let status;
-      await fetch('http://10.0.3.2:5000/user/login', {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    username: this.state.username,
-                    password: this.state.password,
-                  }),
-                }).then((response) => {
-                    status = response.status;
-                    return response.json();
-                  })
-                  .then((responseJson) => {
-                    if (status != 200){
-                      this.setError(responseJson.msg,true);
-                    } else if (status == 200){
-                      AsyncStorage.setItem('userToken',responseJson.token);
-                      AsyncStorage.setItem('profile',JSON.stringify(responseJson.profile));
-                      this.setError('',false);
-                      this.props.changeProfile(responseJson.profile);
-                    }
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                  });
+      return login(this.state.username,this.state.password)
+            .then((response) => {
+                status = response.status;
+                return response.json();
+              })
+            .then((responseJson) => {
+              if (status != 200){
+                this.setError(responseJson.msg,true);
+              } else if (status == 200){
+                AsyncStorage.setItem('userToken',responseJson.token);
+                AsyncStorage.setItem('profile',JSON.stringify(responseJson.profile));
+                this.setError('',false);
+                this.props.changeProfile(responseJson.profile);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
     }
 
     checkUser(){
@@ -91,12 +81,6 @@ class Login extends Component {
         return (
             <View style={styles.container}>
                  <KeyboardAvoidingView behavior='padding' style={styles.container}>
-
-                    {/* <View style={styles.imageBackground}>
-                        <Image style={styles.logo}
-                            source={require('../assets/images/logo.png')}>
-                        </Image>
-                    </View> */}
                     <View style={styles.imageBackground}>
                         <Text style={styles.title}>LOGIN</Text>
                         <View style={styles.line}/>
