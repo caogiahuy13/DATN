@@ -8,6 +8,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
+import { me } from '../services/api';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -18,17 +19,13 @@ class Setting extends Component {
 
   constructor(props){
     super(props);
-
-    AsyncStorage.getItem('profile').then((data)=>{
-      this.props.changeProfile(JSON.parse(data));
-      console.log(this.props.access);
-    })
-
     this.state = {
       isGenderModalVisible: false,
       isDateTimePickerVisible: false,
       isLogedIn: false,
     }
+
+    this.CheckLogedIn();
   }
 
   //Các hàm quản lý DateTimePicker*
@@ -94,8 +91,26 @@ class Setting extends Component {
                       });
   }
 
+  async callMeAPI(){
+    return me()
+            .then((response) => {
+                return response.json();
+              })
+            .then((responseJson) => {
+              return responseJson;
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+  }
+
+  componentDidMount(){
+    this.callMeAPI().then((data)=>{
+      this.props.changeProfile(data.profile);
+    })
+  }
+
   render() {
-    this.CheckLogedIn();
     if (this.state.isLogedIn == false){
       return(
         <View style={{flex: 1, padding: 20}}>

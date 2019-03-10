@@ -1,5 +1,6 @@
-import { HOST } from '../constants/index';
+import { AsyncStorage } from 'react-native';
 
+import { HOST } from '../constants/index';
 
 export async function login(username, password){
   let URL = HOST + 'user/login';
@@ -31,4 +32,20 @@ export async function register(fullname, password, phone, email){
                         email: email,
                       }),
                     });
+}
+
+export async function me(){
+  let URL = HOST + 'user/me';
+  return await AsyncStorage.getItem('userToken')
+                            .then((data) => {
+                              return fetch(URL, {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': data,
+                                  'Content-Type': 'application/json',
+                                },
+                              });
+                            })
+
 }
