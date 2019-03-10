@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
-import { me, updateSex } from '../services/api';
+import { me, updateSex, updateBirthdate } from '../services/api';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -31,8 +31,10 @@ class Setting extends Component {
   //Các hàm quản lý DateTimePicker*
   _showDateTimePicker = (visible) => this.setState({ isDateTimePickerVisible: visible });
   _handleDatePicked = (date) => {
-    this.props.changeBirthday(date);
-    this._showDateTimePicker(false);
+    this.callUpdateBirthdateAPI(date).then(()=>{
+      this.props.changeBirthday(date);
+      this._showDateTimePicker(false);
+    })
   };
 
   //Các hàm quản lý GenderModal
@@ -109,12 +111,21 @@ class Setting extends Component {
             });
   }
 
+  // Gọi API cập nhật giới tính
   async callUpdateSexAPI(sex){
     return updateSex(sex)
             .then((response) => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => {console.error(error);});
 
+  }
+
+  // Gọi API cập nhật ngày sinh
+  async callUpdateBirthdateAPI(date){
+    return updateBirthdate(date)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {console.error(error);});
   }
 
   componentDidMount(){
@@ -185,7 +196,7 @@ class Setting extends Component {
         />
         <ListItem
           title="Birthday"
-          rightTitle={Moment(profile.birthday).format('DD/MM/YYYY')}
+          rightTitle={(typeof profile.birthdate == "string") ? ' ' : Moment(profile.birthdate).format('DD/MM/YYYY')}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showDateTimePicker(true)}}
           containerStyle={styles.listItemContainer}

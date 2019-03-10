@@ -36,7 +36,7 @@ export default function(state = access, action){
         ...state,
         profile: {
           ...state.profile,
-          birthday: action.birthday,
+          birthdate: action.birthday,
         }
       };
       break;
