@@ -13,18 +13,30 @@ export default function(state = access, action){
         isLoged: action.log,
       };
       break;
+
     case types.CHANGE_PROFILE:
       return {
         ...state,
         profile: action.profile,
       };
       break;
+
     case types.CHANGE_GENDER:
       return {
         ...state,
         profile: {
           ...state.profile,
           sex: action.gender,
+        }
+      };
+      break;
+      
+    case types.CHANGE_BIRTHDAY:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          birthday: action.birthday,
         }
       };
       break;

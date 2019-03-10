@@ -4,11 +4,10 @@ import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
-import Dialog from "react-native-dialog";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { handleAccess, changeProfile, changeGender } from '../actions/index.js';
+import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -25,8 +24,6 @@ class Setting extends Component {
     })
 
     this.state = {
-      birthday: '1997-07-30T00:00:00',
-      isMale: true,
       isGenderModalVisible: false,
       isDateTimePickerVisible: false,
       isLogedIn: false,
@@ -34,11 +31,10 @@ class Setting extends Component {
   }
 
   //Các hàm quản lý DateTimePicker*
-  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
-  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+  _showDateTimePicker = (visible) => this.setState({ isDateTimePickerVisible: visible });
   _handleDatePicked = (date) => {
-    this.setState({birthday: date});
-    this._hideDateTimePicker();
+    this.props.changeBirthday(date);
+    this._showDateTimePicker(false);
   };
 
   //Các hàm quản lý GenderModal
@@ -117,8 +113,8 @@ class Setting extends Component {
         <DateTimePicker
           datePickerModeAndroid='spinner'
           isVisible={this.state.isDateTimePickerVisible}
-          onConfirm={this._handleDatePicked}
-          onCancel={this._hideDateTimePicker}
+          onConfirm={(date)=>{this._handleDatePicked(date)}}
+          onCancel={()=>{this._showDateTimePicker(false)}}
         />
         <Modal
           isVisible={this.state.isGenderModalVisible}
@@ -133,9 +129,7 @@ class Setting extends Component {
               rounded
               size="large"
               onPress={()=>{Alert.alert("Test")}}
-              source={{
-                uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              }}
+              source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'}}
             />
           </View>
           <View>
@@ -162,9 +156,9 @@ class Setting extends Component {
         />
         <ListItem
           title="Birthday"
-          rightTitle={Moment(this.state.birthday).format('DD/MM/YYYY')}
+          rightTitle={Moment(profile.birthday).format('DD/MM/YYYY')}
           rightTitleStyle={{ fontSize: 15}}
-          onPress={() => {this._showDateTimePicker()}}
+          onPress={() => {this._showDateTimePicker(true)}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
@@ -270,6 +264,7 @@ function mapDispatchToProps(dispatch){
     handleAccess: handleAccess,
     changeProfile: changeProfile,
     changeGender: changeGender,
+    changeBirthday: changeBirthday,
   }, dispatch)
 }
 

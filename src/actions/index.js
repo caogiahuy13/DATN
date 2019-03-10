@@ -81,3 +81,10 @@ export function changeGender(gender){
     gender,
   }
 }
+
+export function changeBirthday(birthday){
+  return {
+    type: types.CHANGE_BIRTHDAY,
+    birthday,
+  }
+}
