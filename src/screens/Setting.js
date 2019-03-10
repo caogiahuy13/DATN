@@ -144,8 +144,6 @@ class Setting extends Component {
 
     const {profile} = this.props.access;
 
-    console.log(Moment(profile.birthdate).format('DD/MM/YYYY')=='Invalid date');
-
     Moment.locale('en');
     let tmpEmail = "";
 
@@ -174,7 +172,7 @@ class Setting extends Component {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 16 }}>{profile.fullname}</Text>
+            <Text style={{ fontSize: 16 }} onPress={()=>{Alert.alert("TEST")}}>{profile.fullname}</Text>
             <Text style={{ color: 'gray', fontSize: 14, }}>{profile.phone}</Text>
           </View>
         </View>

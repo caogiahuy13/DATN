@@ -4,6 +4,8 @@ import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-
 import NumberFormat from 'react-number-format';
 import Moment from 'moment';
 
+import { getTourById } from '../services/api';
+
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
     title: 'Thông tin tour',
@@ -26,22 +28,22 @@ class TourDetail extends Component{
     }
   }
 
-  async _getTourById(id){
-    let link = 'http://10.0.3.2:5000/tour/getById/' + id;
-    return await fetch(link).then((response) => response.json())
-                      .then((responseJson) => {
-                        this.setState({tour: responseJson.data})
-                        this.setState({currentTurn: responseJson.data.tour_turns[0]});
-                        this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day})
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                      });
+  async callGetTourByIdAPI(id){
+    return getTourById(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.setState({tour: responseJson.data})
+              this.setState({currentTurn: responseJson.data.tour_turns[0]});
+              this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day})
+            })
+            .catch((error) => {
+              console.error(error);
+            });
   }
 
   componentWillMount() {
     const id = this.props.navigation.getParam("id");
-    this._getTourById(id);
+    this.callGetTourByIdAPI(id);
   }
 
   componentWillUnmount() {

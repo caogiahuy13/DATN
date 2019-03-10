@@ -104,3 +104,8 @@ export async function updatePassword(old_password, new_password){
                               });
                             })
 }
+
+export async function getTourById(id){
+  let URL = HOST + 'tour/getById/' + id;
+  return await fetch(URL);
+}
