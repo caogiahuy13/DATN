@@ -43,6 +43,7 @@ class Setting extends Component {
     this._showGenderModal(false);
   };
 
+  // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
     let isMale;
     if (this.props.access.profile.sex != null){
@@ -82,6 +83,7 @@ class Setting extends Component {
     );
   }
 
+  // Kiểm tra đã đăng nhập
   async CheckLogedIn(){
     await AsyncStorage.getItem('userToken')
                       .then((data)=>{
@@ -91,6 +93,7 @@ class Setting extends Component {
                       });
   }
 
+  // Gọi API me lấy thông tin người dùng
   async callMeAPI(){
     return me()
             .then((response) => {

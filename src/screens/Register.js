@@ -15,7 +15,6 @@ import { ERR_FULLNAME, ERR_PASSWORD, ERR_PHONE,
         ERR_EMAIL, ERR_CONFIRM_PASSWORD, ERR_PHONE_LENGTH,
 } from '../constants/index';
 
-
 class Register extends Component {
     constructor(props){
       super(props);
@@ -30,6 +29,7 @@ class Register extends Component {
       }
     }
 
+    // Hàm gọi khi nhấn đăng ký
     _onPressRegister(){
       let validate = this.checkUser();
       if (validate){
@@ -41,6 +41,7 @@ class Register extends Component {
       }
     }
 
+    // Gọi Register API
     async callRegisterAPI(){
       let status;
       return register(this.state.fullname, this.state.password, this.state.phone, this.state.email)
@@ -63,10 +64,12 @@ class Register extends Component {
             });
     }
 
+    // Thay đổi error hiển thị
     setError(err, isError){
       this.setState({err: err, isError: isError});
     }
 
+    // Kiểm tra thông tin người dùng
     checkUser(){
       if (this.state.fullname == ''){
         this.setError(ERR_FULLNAME, true);

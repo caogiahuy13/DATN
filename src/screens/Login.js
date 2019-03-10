@@ -26,10 +26,12 @@ class Login extends Component {
       }
     }
 
+    // Thay đổi state của error
     setError(err, isError){
       this.setState({err: err, isError: isError});
     }
 
+    // Gọi login API
     async callLoginAPI(){
       let status;
       return login(this.state.username,this.state.password)
@@ -52,6 +54,7 @@ class Login extends Component {
             });
     }
 
+    // Kiểm tra thông tin người dùng
     checkUser(){
       if (this.state.username == ''){
         this.setError(ERR_USERNAME, true);
@@ -65,6 +68,7 @@ class Login extends Component {
       return true;
     }
 
+    // Hàm gọi thi nhấn nút đăng nhập
     _onPressLogin(){
       let validate = this.checkUser();
       if (validate){
@@ -78,6 +82,7 @@ class Login extends Component {
 
     render() {
         const { navigation } = this.props;
+        
         return (
             <View style={styles.container}>
                  <KeyboardAvoidingView behavior='padding' style={styles.container}>
