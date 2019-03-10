@@ -8,7 +8,7 @@ import Dialog from "react-native-dialog";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { handleAccess } from '../actions/index.js';
+import { handleAccess, changeProfile } from '../actions/index.js';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -19,10 +19,14 @@ class Setting extends Component {
 
   constructor(props){
     super(props);
+
+    AsyncStorage.getItem('profile').then((data)=>{
+      this.props.changeProfile(JSON.parse(data));
+    })
+
     this.state = {
       birthday: '1997-07-30T00:00:00',
       isMale: true,
-      email: "caogiahuy13@gmail.com",
       isGenderModalVisible: false,
       isDateTimePickerVisible: false,
       isEmailModalVisible: false,
@@ -114,6 +118,7 @@ class Setting extends Component {
       );
     }
 
+    const {profile} = this.props.access;
     Moment.locale('en');
     let tmpEmail = "";
 
@@ -156,22 +161,16 @@ class Setting extends Component {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 16 }}>Cao Gia Huy</Text>
-            <Text
-              style={{
-                color: 'gray',
-                fontSize: 14,
-              }}
-            >
-              "caogiahuy13@gmail.com"
-            </Text>
+            <Text style={{ fontSize: 16 }}>{profile.fullname}</Text>
+            <Text style={{ color: 'gray', fontSize: 14, }}>{profile.phone}</Text>
           </View>
         </View>
 
         <InfoText text="Account"/>
+
         <ListItem
           title="Email"
-          rightTitle={this.state.email}
+          rightTitle={profile.email}
           rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
           onPress={() => {this._showEmailModal()}}
           containerStyle={styles.listItemContainer}
@@ -179,7 +178,7 @@ class Setting extends Component {
         />
         <ListItem
           title="Gender"
-          rightTitle={this.state.isMale ? "Male" : "Female"}
+          rightTitle={profile.sex}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.setState({isGenderModalVisible: true})}}
           containerStyle={styles.listItemContainer}
@@ -293,6 +292,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleAccess: handleAccess,
+    changeProfile: changeProfile,
   }, dispatch)
 }
 
