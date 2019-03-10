@@ -15,3 +15,20 @@ export async function login(username, password){
                             }),
                           });
 }
+
+export async function register(fullname, password, phone, email){
+  let URL = HOST + 'user/register';
+  return await fetch(URL, {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        fullname: fullname,
+                        password: password,
+                        phone: phone,
+                        email: email,
+                      }),
+                    });
+}

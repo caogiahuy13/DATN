@@ -10,13 +10,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { handleAccess, changeProfile } from '../actions/index.js';
+import { register } from '../services/api';
+import { ERR_FULLNAME, ERR_PASSWORD, ERR_PHONE,
+        ERR_EMAIL, ERR_CONFIRM_PASSWORD, ERR_PHONE_LENGTH,
+} from '../constants/index';
 
-const ERR_FULLNAME = "Fullname is required";
-const ERR_PASSWORD = "Password is required";
-const ERR_PHONE = "Phone number is required";
-const ERR_EMAIL = "Email is required";
-const ERR_CONFIRM_PASSWORD = "Password and Confirm password must be match!";
-const ERR_PHONE_LENGTH = "Phone number must be 10 digits!";
 
 class Register extends Component {
     constructor(props){
@@ -45,35 +43,24 @@ class Register extends Component {
 
     async callRegisterAPI(){
       let status;
-      await fetch('http://10.0.3.2:5000/user/register', {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    fullname: this.state.fullname,
-                    password: this.state.password,
-                    phone: this.state.phone,
-                    email: this.state.email,
-                  }),
-                }).then((response) => {
-                    status = response.status;
-                    return response.json();
-                  })
-                  .then((responseJson) => {
-                    if (status == 400){
-                      this.setError(responseJson.msg,true);
-                    } else if (status == 200){
-                      AsyncStorage.setItem('userToken',responseJson.token);
-                      AsyncStorage.setItem('profile',JSON.stringify(responseJson.profile));
-                      this.setError('',false);
-                      this.props.changeProfile(responseJson.profile);
-                    }
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                  });
+      return register(this.state.fullname, this.state.password, this.state.phone, this.state.email)
+            .then((response) => {
+              status = response.status;
+              return response.json();
+             })
+             .then((responseJson) => {
+               if (status == 400){
+                 this.setError(responseJson.msg,true);
+               } else if (status == 200){
+                 AsyncStorage.setItem('userToken',responseJson.token);
+                 AsyncStorage.setItem('profile',JSON.stringify(responseJson.profile));
+                 this.setError('',false);
+                 this.props.changeProfile(responseJson.profile);
+               }
+             })
+            .catch((error) => {
+              console.error(error);
+            });
     }
 
     setError(err, isError){
