@@ -40,16 +40,6 @@ export default function(state = access, action){
         }
       };
       break;
-
-    case types.CHANGE_PASSWORD:
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          password: action.password,
-        }
-      };
-      break;
   }
   return state;
 }

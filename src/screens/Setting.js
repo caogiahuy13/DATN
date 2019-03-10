@@ -117,7 +117,6 @@ class Setting extends Component {
             .then((response) => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => {console.error(error);});
-
   }
 
   // Gọi API cập nhật ngày sinh
@@ -144,6 +143,8 @@ class Setting extends Component {
     }
 
     const {profile} = this.props.access;
+
+    console.log(Moment(profile.birthdate).format('DD/MM/YYYY')=='Invalid date');
 
     Moment.locale('en');
     let tmpEmail = "";
@@ -196,7 +197,7 @@ class Setting extends Component {
         />
         <ListItem
           title="Birthday"
-          rightTitle={(typeof profile.birthdate == "string") ? ' ' : Moment(profile.birthdate).format('DD/MM/YYYY')}
+          rightTitle={(Moment(profile.birthdate).format('DD/MM/YYYY')=='Invalid date') ? '' : Moment(profile.birthdate).format('DD/MM/YYYY')}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showDateTimePicker(true)}}
           containerStyle={styles.listItemContainer}
