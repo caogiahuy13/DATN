@@ -74,3 +74,10 @@ export function changeProfile(profile){
     profile,
   }
 }
+
+export function changeGender(gender){
+  return {
+    type: types.CHANGE_GENDER,
+    gender,
+  }
+}

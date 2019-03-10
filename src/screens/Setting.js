@@ -8,7 +8,7 @@ import Dialog from "react-native-dialog";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { handleAccess, changeProfile } from '../actions/index.js';
+import { handleAccess, changeProfile, changeGender } from '../actions/index.js';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -42,53 +42,51 @@ class Setting extends Component {
   };
 
   //Các hàm quản lý GenderModal
-  _hideGenderModal = () => this.setState({ isGenderModalVisible: false });
-  _showGenderModal = () => this.setState({ isGenderModalVisible: true });
+  _showGenderModal = (visible) => this.setState({ isGenderModalVisible: visible });
   _handleGenderModal = (isMale) => {
-    this.setState({isMale: isMale});
-    this._hideGenderModal();
+    let sex = (isMale) ? 'Male' : 'Female';
+    this.props.changeGender(sex);
+    this._showGenderModal(false);
   };
 
-  _renderModalContent = (isMale) => (
-    <View style={styles.modalGender}>
-        <View style={{position: 'relative', flexDirection: 'row'}}>
-          <ListItem
-            style={{flex: 1,}}
-            title="Choose Gender"
-            onPress={() => {this._hideGenderModal()}}
-            containerStyle={styles.listItemContainer}
-            rightIcon={<Icon
-              name='close'
-              type='FontAwesome'
-              color='#D1D1D6'/>}
-          />
-        </View>
-        <View style={{position: 'relative', flexDirection: 'row'}}>
-          <ListItem
-            style={{flex: 1,}}
-            title="Male"
-            onPress={() => {this._handleGenderModal(true)}}
-            containerStyle={styles.listItemContainer}
-            rightIcon={this.state.isMale && <Icon
-              name='check'
-              type='entypo'
-              color='#00BFFF' />}
-          />
-        </View>
-        <View style={{position: 'relative', flexDirection: 'row'}}>
-          <ListItem
-            style={{flex: 1,}}
-            title="Female"
-            onPress={() => {this._handleGenderModal(false)}}
-            containerStyle={styles.listItemContainer}
-            rightIcon={!this.state.isMale && <Icon
-              name='check'
-              type='entypo'
-              color='#00BFFF' />}
-          />
-        </View>
-    </View>
-  );
+  _renderModalContent = () => {
+    let isMale;
+    if (this.props.access.profile.sex != null){
+      isMale = (this.props.access.profile.sex.toLowerCase() == 'male') ? true : false;
+    }
+
+    return(
+      <View style={styles.modalGender}>
+          <View style={{position: 'relative', flexDirection: 'row'}}>
+            <ListItem
+              style={{flex: 1,}}
+              title="Choose Gender"
+              onPress={() => {this._showGenderModal(false)}}
+              containerStyle={styles.listItemContainer}
+              rightIcon={<Icon name='close' type='FontAwesome' color='#D1D1D6'/>}
+            />
+          </View>
+          <View style={{position: 'relative', flexDirection: 'row'}}>
+            <ListItem
+              style={{flex: 1,}}
+              title="Male"
+              onPress={() => {this._handleGenderModal(true)}}
+              containerStyle={styles.listItemContainer}
+              rightIcon={isMale && <Icon name='check' type='entypo' color='#00BFFF'/>}
+            />
+          </View>
+          <View style={{position: 'relative', flexDirection: 'row'}}>
+            <ListItem
+              style={{flex: 1,}}
+              title="Female"
+              onPress={() => {this._handleGenderModal(false)}}
+              containerStyle={styles.listItemContainer}
+              rightIcon={isMale == false && <Icon name='check' type='entypo' color='#00BFFF'/>}
+            />
+          </View>
+      </View>
+    );
+  }
 
   async CheckLogedIn(){
     await AsyncStorage.getItem('userToken')
@@ -110,6 +108,7 @@ class Setting extends Component {
     }
 
     const {profile} = this.props.access;
+
     Moment.locale('en');
     let tmpEmail = "";
 
@@ -123,7 +122,7 @@ class Setting extends Component {
         />
         <Modal
           isVisible={this.state.isGenderModalVisible}
-          onBackdropPress={()=>{this.setState({isGenderModalVisible: false})}}
+          onBackdropPress={()=>{this._showGenderModal(false)}}
         >
           {this._renderModalContent()}
         </Modal>
@@ -157,7 +156,7 @@ class Setting extends Component {
           title="Gender"
           rightTitle={profile.sex}
           rightTitleStyle={{ fontSize: 15}}
-          onPress={() => {this.setState({isGenderModalVisible: true})}}
+          onPress={() => {this._showGenderModal(true)}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
@@ -270,6 +269,7 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleAccess: handleAccess,
     changeProfile: changeProfile,
+    changeGender: changeGender,
   }, dispatch)
 }
 

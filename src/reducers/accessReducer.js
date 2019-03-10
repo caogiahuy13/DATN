@@ -19,6 +19,15 @@ export default function(state = access, action){
         profile: action.profile,
       };
       break;
+    case types.CHANGE_GENDER:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          sex: action.gender,
+        }
+      };
+      break;
   }
   return state;
 }
