@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
-import { me } from '../services/api';
+import { me, updateSex } from '../services/api';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -38,9 +38,11 @@ class Setting extends Component {
   //Các hàm quản lý GenderModal
   _showGenderModal = (visible) => this.setState({ isGenderModalVisible: visible });
   _handleGenderModal = (isMale) => {
-    let sex = (isMale) ? 'Male' : 'Female';
-    this.props.changeGender(sex);
-    this._showGenderModal(false);
+    let sex = (isMale) ? 'male' : 'female';
+    this.callUpdateSexAPI(sex).then(()=>{
+      this.props.changeGender(sex);
+      this._showGenderModal(false);
+    })
   };
 
   // Hiển thị modal chọn giới tính
@@ -105,6 +107,14 @@ class Setting extends Component {
             .catch((error) => {
               console.error(error);
             });
+  }
+
+  async callUpdateSexAPI(sex){
+    return updateSex(sex)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {console.error(error);});
+
   }
 
   componentDidMount(){

@@ -49,3 +49,21 @@ export async function me(){
                             })
 
 }
+
+export async function updateSex(sex){
+  let URL = HOST + 'user/updateSex';
+  return await AsyncStorage.getItem('userToken')
+                            .then((data) => {
+                              return fetch(URL, {
+                                method: 'PUT',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': data,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  sex: sex,
+                                }),
+                              });
+                            })
+}
