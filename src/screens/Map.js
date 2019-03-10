@@ -8,6 +8,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import { Button } from 'react-native-elements';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
+import { getNearMe } from '../services/api';
 
 import CustomMarker from '../components/CustomMarker';
 import LocationDetail from '../components/LocationDetail';
@@ -27,39 +28,28 @@ class Map extends Component {
     header: null,
   };
 
-  // Lay dia diem xung quanh vi tri hien tai
-  getNearMe(){
-    // Lay ban kinh tuong ung voi chieu doc man hinh
-    let {latitudeDelta, longitudeDelta } = this.props.region;
-    let distance = 1.0;
-    if (latitudeDelta !== 0.01){
-      distance = latitudeDelta * 70;
-    }
+  callGetNearMeAPI(){
+      // Lay ban kinh tuong ung voi chieu doc man hinh
+      let {latitudeDelta, longitudeDelta } = this.props.region;
+      let distance = 1.0;
+      if (latitudeDelta !== 0.01){
+        distance = latitudeDelta * 70;
+      }
 
-    return fetch('http://10.0.3.2:5000/location/getNearMe?&tour=true', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                lat: this.props.region.latitude,
-                lng: this.props.region.longitude,
-                distance: distance,
-              }),
-            }).then((response) => response.json())
-              .then((responseJson) => {
-                  this.setState({
-                    isLoading: false,
-                    dataSource: responseJson.data,
-                    count: responseJson.itemCount,
-                  });
-                  // console.log(responseJson.itemCount);
-                  // this.props.getNearLocation(responseJson.data, responseJson.itemCount);
-              })
-              .catch((error) => {
-                console.error(error);
-              });
+      return getNearMe(this.props.region.latitude, this.props.region.longitude, distance)
+              .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                      isLoading: false,
+                      dataSource: responseJson.data,
+                      count: responseJson.itemCount,
+                    });
+                    // console.log(responseJson.itemCount);
+                    // this.props.getNearLocation(responseJson.data, responseJson.itemCount);
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
   }
 
   // Lay toa do cua vi tri hien tai
@@ -76,7 +66,7 @@ class Map extends Component {
   // Ham duoc goi khi nguoi dung di chuyen ban do
   _onRegionChange(e){
     this.props.changeCurrentRegion(e.latitude, e.longitude, e.latitudeDelta, e.longitudeDelta);
-    this.getNearMe();
+    this.callGetNearMeAPI();
   }
 
   constructor(props){
@@ -108,7 +98,7 @@ class Map extends Component {
   }
 
   componentDidMount(){
-    return this.getNearMe();
+    return this.callGetNearMeAPI();
   }
 
   render() {

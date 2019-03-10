@@ -109,3 +109,19 @@ export async function getTourById(id){
   let URL = HOST + 'tour/getById/' + id;
   return await fetch(URL);
 }
+
+export async function getNearMe(latitude, longitude, distance){
+  let URL = HOST + 'location/getNearMe?&tour=true';
+  return await fetch(URL, {
+                            method: 'POST',
+                            headers: {
+                              Accept: 'application/json',
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              lat: latitude,
+                              lng: longitude,
+                              distance: distance,
+                            }),
+                          })
+}
