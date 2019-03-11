@@ -7,7 +7,7 @@ import {
     CheckBox, AsyncStorage,
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -99,6 +99,43 @@ class Login extends Component {
    }
  }
 
+    handleFacebookLogin () {
+     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
+       function (result) {
+         if (result.isCancelled) {
+           console.log('Login cancelled')
+         } else {
+           console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+         }
+       },
+       function (error) {
+         console.log('Login fail with error: ' + error)
+       }
+     ).then(()=>{
+       AccessToken.getCurrentAccessToken().then(
+         (data) => {
+           let meow_accesstoken = data.accessToken;
+           const infoRequest = new GraphRequest(
+             '/me',
+             {
+               parameters: {
+                 fields: {
+                   string: 'email,name,first_name,middle_name,last_name,birthday,picture' // what you want to get
+                 },
+                 access_token: {
+                   string: meow_accesstoken.toString() // put your accessToken here
+                 }
+               }
+             },
+             this._responseInfoCallback // make sure you define _responseInfoCallback in same class
+           );
+           console.log(data.accessToken.toString())
+           new GraphRequestManager().addRequest(infoRequest).start();
+         }
+       )
+     })
+    }
+
     render() {
         const { navigation } = this.props;
 
@@ -138,8 +175,8 @@ class Login extends Component {
                              <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>
-                        <LoginButton
-                            readPermissions={["email", "user_gender", "user_birthday","user_friends", "public_profile"]}
+                        {/*<LoginButton
+                            readPermissions={["email", "user_friends", "public_profile"]}
                             onLoginFinished={
                               (error, result) => {
                                 if (error) {
@@ -171,14 +208,14 @@ class Login extends Component {
                                 }
                               }
                             }
-                            onLogoutFinished={() => console.log("logout.")}/>
-                        {/*<TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>
+                            onLogoutFinished={() => console.log("logout.")}/>*/}
+                        <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.handleFacebookLogin()}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
                                 <Text>{"   "}</Text>
                                 LOGIN WITH FACEBOOK
                             </Text>
-                        </TouchableOpacity>*/}
+                        </TouchableOpacity>
                         <View style={styles.register}>
                             <Text style={styles.registerText1}>You don't have an account? </Text>
                             <Text style={styles.registerText2} onPress={()=>{navigation.navigate('Register')}}>Register here </Text>
