@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DATN</string>
+    <string name="facebook_app_id">410583719700840</string>
+    <string name="fb_login_protocol_scheme">fb410583719700840</string>
 </resources>

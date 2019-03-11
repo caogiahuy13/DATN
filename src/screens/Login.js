@@ -7,6 +7,7 @@ import {
     CheckBox, AsyncStorage,
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -82,7 +83,7 @@ class Login extends Component {
 
     render() {
         const { navigation } = this.props;
-        
+
         return (
             <View style={styles.container}>
                  <KeyboardAvoidingView behavior='padding' style={styles.container}>
@@ -119,13 +120,30 @@ class Login extends Component {
                              <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>
-                        <TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>
+                        <LoginButton
+                          onLoginFinished={
+                            (error, result) => {
+                              if (error) {
+                                console.log("login has error: " + result.error);
+                              } else if (result.isCancelled) {
+                                console.log("login is cancelled.");
+                              } else {
+                                AccessToken.getCurrentAccessToken().then(
+                                  (data) => {
+                                    console.log(data.accessToken.toString())
+                                  }
+                                )
+                              }
+                            }
+                          }
+                          onLogoutFinished={() => console.log("logout.")}/>
+                        {/*<TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
                                 <Text>{"   "}</Text>
                                 LOGIN WITH FACEBOOK
                             </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>*/}
                         <View style={styles.register}>
                             <Text style={styles.registerText1}>You don't have an account? </Text>
                             <Text style={styles.registerText2} onPress={()=>{navigation.navigate('Register')}}>Register here </Text>
