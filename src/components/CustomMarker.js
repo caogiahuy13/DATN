@@ -72,6 +72,9 @@ class CustomMarker extends Component{
       case "zoo":
         icon = require("../assets/images/markers/zoo.png");
         break;
+      case "airport":
+        icon = require("../assets/images/markers/airport.png");
+        break;
       default:
         break;
     }
