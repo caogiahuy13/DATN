@@ -31,7 +31,7 @@ class TourCarouselEntry extends Component {
 
     return (
       <View style={styles.container}>
-        <Image source={require("../assets/images/tour-card-img.jpg")} style={styles.image}/>
+        <Image source={{uri: item.featured_img}} style={styles.image}/>
         <View style={{paddingHorizontal: 6, paddingBottom: 7}}>
           <Text style={styles.text}>{item.name}</Text>
           <View style={{flexDirection: 'row'}}>

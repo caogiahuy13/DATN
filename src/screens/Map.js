@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
 import { getNearMe } from '../services/api';
@@ -127,7 +126,12 @@ class Map extends Component {
                 {markers}
                 {this.props.currentRoute.isVisible && <CustomMapDirection parent={()=>this.mapView}/>}
             </MapView>
-            {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
+
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon raised containerStyle={styles.filter} size={20} name='filter' type='font-awesome' color='#517fa4'/>
+              {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
+            </View>
+
             {this.props.tourCarousel.isVisible && <View style={styles.tourCarousel}><TourCarousel/></View>}
         </View>
     );
@@ -141,12 +145,18 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 20,
     },
+    filter: {
+      marginTop: 5
+    },
     map: {
         ...StyleSheet.absoluteFillObject,
     },
     locationDetail: {
+      marginVertical: 10,
+      marginRight: 10,
+      marginLeft: 5,
       flex: 1,
-      justifyContent: 'flex-start'
+      justifyContent: 'flex-start',
     },
     tourCarousel: {
       justifyContent: 'flex-end',

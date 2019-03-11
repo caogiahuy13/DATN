@@ -32,6 +32,7 @@ class TourDetail extends Component{
     return getTourById(id)
             .then((response) => response.json())
             .then((responseJson) => {
+              console.log(responseJson);
               this.setState({tour: responseJson.data})
               this.setState({currentTurn: responseJson.data.tour_turns[0]});
               this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day})
