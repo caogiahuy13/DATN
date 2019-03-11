@@ -6,6 +6,7 @@ import { Button, Icon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
 import {changeCurrentRoute, handleCurrentRoute} from '../actions/index.js';
+import { getRouteByTour } from '../services/api';
 
 class TourCarouselEntry extends Component {
   async _getRouteByTour(){
@@ -20,10 +21,22 @@ class TourCarouselEntry extends Component {
               });
   }
 
+  async callGetRouteByTourAPI(id){
+    return getRouteByTour(id)
+              .then((response) => response.json())
+              .then((responseJson) => {
+                  this.props.changeCurrentRoute(responseJson.data);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+  }
+
   _onDirectionPress(e){
-    this._getRouteByTour();
+    this.callGetRouteByTourAPI(this.props.item.id).then(()=>{
+      this.props.handleCurrentRoute(true);
+    })
     // console.log(this.props.currentRoute);
-    this.props.handleCurrentRoute(true);
   }
 
   render () {

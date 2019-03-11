@@ -139,3 +139,8 @@ export async function getNearMe(latitude, longitude, distance){
                             }),
                           })
 }
+
+export async function getRouteByTour(id){
+  let URL = HOST + 'route/getByTour/' + id;
+  return await fetch(URL);
+}
