@@ -211,12 +211,14 @@ class Setting extends Component {
 
         <Space/>
 
-        <ListItem
-          title="Change Password"
-          onPress={() => {this.props.navigation.navigate("ChangePassword")}}
-          containerStyle={styles.listItemContainer}
-          rightIcon={<Chevron />}
-        />
+        { profile.type != 'facebook' &&
+          <ListItem
+            title="Change Password"
+            onPress={() => {this.props.navigation.navigate("ChangePassword")}}
+            containerStyle={styles.listItemContainer}
+            rightIcon={<Chevron />}
+          />
+        }
 
         <Space/>
 
