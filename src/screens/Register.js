@@ -54,7 +54,6 @@ class Register extends Component {
                  this.setError(responseJson.msg,true);
                } else if (status == 200){
                  AsyncStorage.setItem('userToken',responseJson.token);
-                 AsyncStorage.setItem('profile',JSON.stringify(responseJson.profile));
                  this.setError('',false);
                  this.props.changeProfile(responseJson.profile);
                }

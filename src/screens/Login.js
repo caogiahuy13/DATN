@@ -45,7 +45,6 @@ class Login extends Component {
                 this.setError(responseJson.msg,true);
               } else if (status == 200){
                 AsyncStorage.setItem('userToken',responseJson.token);
-                AsyncStorage.setItem('profile',JSON.stringify(responseJson.profile));
                 this.setError('',false);
                 this.props.changeProfile(responseJson.profile);
               }
@@ -82,58 +81,55 @@ class Login extends Component {
     }
 
     _responseInfoCallback = function(error: ?Object, result: ?Object) {
-   alert("meow response");
-   if (error) {
-     alert('Error fetching data: ' + error.toString());
-     console.log(Object.keys(error));// print all enumerable
-     console.log(error.errorMessage); // print error message
-     // error.toString() will not work correctly in this case
-     // so let use JSON.stringify()
-     meow_json = JSON.stringify(error); // error object => json
-     console.log(meow_json); // print JSON
-   } else {
-     console.log('Success fetching data: ' + result.toString());
-     console.log(Object.keys(result));
-     meow_json = JSON.stringify(result); // result => JSON
-     console.log(meow_json); // print JSON
-   }
- }
+       if (error) {
+         // console.log(Object.keys(error));// print all enumerable
+         console.log(error.errorMessage); // print error message
+         // error.toString() will not work correctly in this case
+         // so let use JSON.stringify()
+         let json = JSON.stringify(error); // error object => json
+         console.log(json); // print JSON
+       } else {
+         // console.log('Success fetching data: ' + result.toString());
+         console.log(Object.keys(result));
+         let json = JSON.stringify(result); // result => JSON
+         console.log(result);
+       }
+     }
 
     handleFacebookLogin () {
-     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
-       function (result) {
-         if (result.isCancelled) {
-           console.log('Login cancelled')
-         } else {
-           console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+       LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
+         function (result) {
+           if (result.isCancelled) {
+             console.log('Login cancelled')
+           } else {
+             console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+           }
+         },
+         function (error) {
+           console.log('Login fail with error: ' + error)
          }
-       },
-       function (error) {
-         console.log('Login fail with error: ' + error)
-       }
-     ).then(()=>{
-       AccessToken.getCurrentAccessToken().then(
-         (data) => {
-           let meow_accesstoken = data.accessToken;
-           const infoRequest = new GraphRequest(
-             '/me',
-             {
-               parameters: {
-                 fields: {
-                   string: 'email,name,first_name,middle_name,last_name,birthday,picture' // what you want to get
-                 },
-                 access_token: {
-                   string: meow_accesstoken.toString() // put your accessToken here
+       ).then(()=>{
+         AccessToken.getCurrentAccessToken().then(
+           (data) => {
+             let token = data.accessToken;
+             const infoRequest = new GraphRequest(
+               '/me',
+               {
+                 parameters: {
+                   fields: {
+                     string: 'id,email,name,picture' // what you want to get
+                   },
+                   access_token: {
+                     string: token.toString() // put your accessToken here
+                   }
                  }
-               }
-             },
-             this._responseInfoCallback // make sure you define _responseInfoCallback in same class
-           );
-           console.log(data.accessToken.toString())
-           new GraphRequestManager().addRequest(infoRequest).start();
-         }
-       )
-     })
+               },
+               this._responseInfoCallback // make sure you define _responseInfoCallback in same class
+             );
+             new GraphRequestManager().addRequest(infoRequest).start();
+           }
+         )
+       })
     }
 
     render() {
@@ -175,40 +171,6 @@ class Login extends Component {
                              <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>
-                        {/*<LoginButton
-                            readPermissions={["email", "user_friends", "public_profile"]}
-                            onLoginFinished={
-                              (error, result) => {
-                                if (error) {
-                                  console.log("login has error: " + result.error);
-                                } else if (result.isCancelled) {
-                                  console.log("login is cancelled.");
-                                } else {
-                                  AccessToken.getCurrentAccessToken().then(
-                                    (data) => {
-                                      let meow_accesstoken = data.accessToken;
-                                      const infoRequest = new GraphRequest(
-                                        '/me',
-                                        {
-                                          parameters: {
-                                            fields: {
-                                              string: 'email,name,first_name,middle_name,last_name,birthday,picture' // what you want to get
-                                            },
-                                            access_token: {
-                                              string: meow_accesstoken.toString() // put your accessToken here
-                                            }
-                                          }
-                                        },
-                                        this._responseInfoCallback // make sure you define _responseInfoCallback in same class
-                                      );
-                                      console.log(data.accessToken.toString())
-                                      new GraphRequestManager().addRequest(infoRequest).start();
-                                    }
-                                  )
-                                }
-                              }
-                            }
-                            onLogoutFinished={() => console.log("logout.")}/>*/}
                         <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.handleFacebookLogin()}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
