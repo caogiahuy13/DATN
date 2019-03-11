@@ -88,3 +88,10 @@ export function changeBirthday(birthday){
     birthday,
   }
 }
+
+export function filterType(filterTypes){
+  return {
+    type: types.FILTER_TYPE,
+    filterTypes,
+  }
+}

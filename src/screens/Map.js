@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import { Button, Icon } from 'react-native-elements';
 
-import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
+import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute, filterType } from '../actions/index.js';
 import { getNearMe } from '../services/api';
 
 import CustomMarker from '../components/CustomMarker';
@@ -88,8 +88,15 @@ class Map extends Component {
       },
       modalLocation: {
         isVisible: false,
-      }
+      },
     }
+  }
+
+  _onFilterPress(){
+    this.props.filterType([1,2,4]);
+    let test = this.props.filterLocation.filterTypes;
+    console.log("TEST:" + test);
+    console.log(this.props.filterLocation);
   }
 
   componentWillMount(){
@@ -128,7 +135,7 @@ class Map extends Component {
             </MapView>
 
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <Icon raised containerStyle={styles.filter} size={20} name='filter' type='font-awesome' color='#517fa4'/>
+                <Icon raised containerStyle={styles.filter} size={20} name='filter' type='font-awesome' color='gray' onPress={()=>{this._onFilterPress()}}/>
               {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             </View>
 
@@ -146,7 +153,8 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     filter: {
-      marginTop: 5
+      marginTop: 5,
+      opacity: 0.8,
     },
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -161,7 +169,7 @@ const styles = StyleSheet.create({
     tourCarousel: {
       justifyContent: 'flex-end',
       marginBottom: 6,
-    }
+    },
 })
 
 function mapStateToProps(state){
@@ -171,6 +179,7 @@ function mapStateToProps(state){
     modalLocation: state.modalLocation,
     tourCarousel: state.tourCarousel,
     currentRoute: state.currentRoute,
+    filterLocation: state.filterLocation,
   };
 }
 function mapDispatchToProps(dispatch){
@@ -181,6 +190,7 @@ function mapDispatchToProps(dispatch){
     handleModalLocation: handleModalLocation,
     handleTourCarousel: handleTourCarousel,
     handleCurrentRoute: handleCurrentRoute,
+    filterType: filterType,
   }, dispatch)
 }
 
