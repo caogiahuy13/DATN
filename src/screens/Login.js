@@ -7,7 +7,7 @@ import {
     CheckBox, AsyncStorage,
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -81,6 +81,24 @@ class Login extends Component {
       }
     }
 
+    _responseInfoCallback = function(error: ?Object, result: ?Object) {
+   alert("meow response");
+   if (error) {
+     alert('Error fetching data: ' + error.toString());
+     console.log(Object.keys(error));// print all enumerable
+     console.log(error.errorMessage); // print error message
+     // error.toString() will not work correctly in this case
+     // so let use JSON.stringify()
+     meow_json = JSON.stringify(error); // error object => json
+     console.log(meow_json); // print JSON
+   } else {
+     console.log('Success fetching data: ' + result.toString());
+     console.log(Object.keys(result));
+     meow_json = JSON.stringify(result); // result => JSON
+     console.log(meow_json); // print JSON
+   }
+ }
+
     render() {
         const { navigation } = this.props;
 
@@ -121,22 +139,39 @@ class Login extends Component {
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>
                         <LoginButton
-                          onLoginFinished={
-                            (error, result) => {
-                              if (error) {
-                                console.log("login has error: " + result.error);
-                              } else if (result.isCancelled) {
-                                console.log("login is cancelled.");
-                              } else {
-                                AccessToken.getCurrentAccessToken().then(
-                                  (data) => {
-                                    console.log(data.accessToken.toString())
-                                  }
-                                )
+                            readPermissions={["email", "user_gender", "user_birthday","user_friends", "public_profile"]}
+                            onLoginFinished={
+                              (error, result) => {
+                                if (error) {
+                                  console.log("login has error: " + result.error);
+                                } else if (result.isCancelled) {
+                                  console.log("login is cancelled.");
+                                } else {
+                                  AccessToken.getCurrentAccessToken().then(
+                                    (data) => {
+                                      let meow_accesstoken = data.accessToken;
+                                      const infoRequest = new GraphRequest(
+                                        '/me',
+                                        {
+                                          parameters: {
+                                            fields: {
+                                              string: 'email,name,first_name,middle_name,last_name,birthday,picture' // what you want to get
+                                            },
+                                            access_token: {
+                                              string: meow_accesstoken.toString() // put your accessToken here
+                                            }
+                                          }
+                                        },
+                                        this._responseInfoCallback // make sure you define _responseInfoCallback in same class
+                                      );
+                                      console.log(data.accessToken.toString())
+                                      new GraphRequestManager().addRequest(infoRequest).start();
+                                    }
+                                  )
+                                }
                               }
                             }
-                          }
-                          onLogoutFinished={() => console.log("logout.")}/>
+                            onLogoutFinished={() => console.log("logout.")}/>
                         {/*<TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
