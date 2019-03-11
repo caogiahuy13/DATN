@@ -13,7 +13,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { handleAccess, changeProfile } from '../actions/index.js';
-import { login } from '../services/api';
+import { login, loginWithFacebook } from '../services/api';
 import { ERR_USERNAME, ERR_PASSWORD } from '../constants/index';
 
 class Login extends Component {
@@ -90,45 +90,75 @@ class Login extends Component {
          console.log(json); // print JSON
        } else {
          // console.log('Success fetching data: ' + result.toString());
-         console.log(Object.keys(result));
+         // console.log(Object.keys(result));
          let json = JSON.stringify(result); // result => JSON
-         console.log(result);
+
+         loginWithFacebook(result)
+               .then((response) => {
+                   status = response.status;
+                   return response.json();
+                 })
+               .then((responseJson) => {
+                 if (status != 200){
+                   this.setError(responseJson.msg,true);
+                 } else if (status == 200){
+                   AsyncStorage.setItem('userToken',responseJson.token);
+                   this.setError('',false);
+                   this.props.changeProfile(responseJson.profile);
+                 }
+               })
+               .then(()=>{
+                 if (this.state.isError == false){
+                   this.props.navigation.navigate("Map");
+                 }
+               })
+               .catch((error) => {
+                 console.error(error);
+               });
        }
+     }
+
+    callLoginFacebookAPI(){
+       AccessToken.getCurrentAccessToken().then(
+         (data) => {
+           let token = data.accessToken;
+           const infoRequest = new GraphRequest(
+             '/me',
+             {
+               parameters: {
+                 fields: {
+                   string: 'id,email,name,picture' // what you want to get
+                 },
+                 access_token: {
+                   string: token.toString() // put your accessToken here
+                 }
+               }
+             },
+             this._responseInfoCallback.bind(this), // make sure you define _responseInfoCallback in same class
+           );
+           new GraphRequestManager().addRequest(infoRequest).start();
+         }
+       )
      }
 
     handleFacebookLogin () {
        LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
          function (result) {
            if (result.isCancelled) {
-             console.log('Login cancelled')
+             console.log('Login cancelled');
+             return false;
            } else {
-             console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+             console.log('Login success with permissions: ' + result.grantedPermissions.toString());
+             return true;
            }
          },
          function (error) {
            console.log('Login fail with error: ' + error)
          }
-       ).then(()=>{
-         AccessToken.getCurrentAccessToken().then(
-           (data) => {
-             let token = data.accessToken;
-             const infoRequest = new GraphRequest(
-               '/me',
-               {
-                 parameters: {
-                   fields: {
-                     string: 'id,email,name,picture' // what you want to get
-                   },
-                   access_token: {
-                     string: token.toString() // put your accessToken here
-                   }
-                 }
-               },
-               this._responseInfoCallback // make sure you define _responseInfoCallback in same class
-             );
-             new GraphRequestManager().addRequest(infoRequest).start();
-           }
-         )
+       ).then((result)=>{
+         if (result){
+           this.callLoginFacebookAPI();
+         }
        })
     }
 

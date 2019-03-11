@@ -6,6 +6,7 @@ import Moment from 'moment';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 import { me, updateSex, updateBirthdate } from '../services/api';
@@ -85,6 +86,12 @@ class Setting extends Component {
           </View>
       </View>
     );
+  }
+
+  _onPressLogout(){
+    AsyncStorage.removeItem('userToken');
+    LoginManager.logOut();
+    this.props.navigation.navigate("Map")
   }
 
   // Kiểm tra đã đăng nhập
@@ -216,7 +223,7 @@ class Setting extends Component {
         <ListItem
           title="Log out"
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
-          onPress={()=>{AsyncStorage.removeItem('userToken'); AsyncStorage.removeItem('profile'); this.props.navigation.navigate("Map")}}
+          onPress={()=>{this._onPressLogout()}}
         />
 
       </ScrollView>

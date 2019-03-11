@@ -8,9 +8,10 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile } from '../actions/index.js';
-import { register } from '../services/api';
+import { register, loginWithFacebook } from '../services/api';
 import { ERR_FULLNAME, ERR_PASSWORD, ERR_PHONE,
         ERR_EMAIL, ERR_CONFIRM_PASSWORD, ERR_PHONE_LENGTH,
 } from '../constants/index';
@@ -98,6 +99,88 @@ class Register extends Component {
       return true;
     }
 
+    _responseInfoCallback = function(error: ?Object, result: ?Object) {
+       if (error) {
+         // console.log(Object.keys(error));// print all enumerable
+         console.log(error.errorMessage); // print error message
+         // error.toString() will not work correctly in this case
+         // so let use JSON.stringify()
+         let json = JSON.stringify(error); // error object => json
+         console.log(json); // print JSON
+       } else {
+         // console.log('Success fetching data: ' + result.toString());
+         // console.log(Object.keys(result));
+         let json = JSON.stringify(result); // result => JSON
+
+         loginWithFacebook(result)
+               .then((response) => {
+                   status = response.status;
+                   return response.json();
+                 })
+               .then((responseJson) => {
+                 if (status != 200){
+                   this.setError(responseJson.msg,true);
+                 } else if (status == 200){
+                   AsyncStorage.setItem('userToken',responseJson.token);
+                   this.setError('',false);
+                   this.props.changeProfile(responseJson.profile);
+                 }
+               })
+               .then(()=>{
+                 if (this.state.isError == false){
+                   this.props.navigation.navigate("Map");
+                 }
+               })
+               .catch((error) => {
+                 console.error(error);
+               });
+       }
+     }
+
+    callLoginFacebookAPI(){
+       AccessToken.getCurrentAccessToken().then(
+         (data) => {
+           let token = data.accessToken;
+           const infoRequest = new GraphRequest(
+             '/me',
+             {
+               parameters: {
+                 fields: {
+                   string: 'id,email,name,picture' // what you want to get
+                 },
+                 access_token: {
+                   string: token.toString() // put your accessToken here
+                 }
+               }
+             },
+             this._responseInfoCallback.bind(this), // make sure you define _responseInfoCallback in same class
+           );
+           new GraphRequestManager().addRequest(infoRequest).start();
+         }
+       )
+     }
+
+    handleFacebookLogin () {
+       LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
+         function (result) {
+           if (result.isCancelled) {
+             console.log('Login cancelled');
+             return false;
+           } else {
+             console.log('Login success with permissions: ' + result.grantedPermissions.toString());
+             return true;
+           }
+         },
+         function (error) {
+           console.log('Login fail with error: ' + error)
+         }
+       ).then((result)=>{
+         if (result){
+           this.callLoginFacebookAPI();
+         }
+       })
+    }
+
     render() {
         const { navigation } = this.props;
 
@@ -153,7 +236,7 @@ class Register extends Component {
                              <Text style={styles.buttonText}>REGISTER</Text>
                         </TouchableOpacity>
                         <Text style={styles.ORText}>OR</Text>
-                        <TouchableOpacity style={styles.buttonFacebook} onPress={() => navigation.navigate('TabNavigator')}>
+                        <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.handleFacebookLogin()}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
                                 <Text>{"   "}</Text>
