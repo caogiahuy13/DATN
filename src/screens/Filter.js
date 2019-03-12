@@ -53,6 +53,20 @@ class Filter extends Component {
       this.props.filterType(filterTypes);
     }
 
+    onCheckAll = () => {
+      for (i = 0; i<filterTypes.length; i++){
+        filterTypes[i] = true;
+      }
+      this.props.filterType(filterTypes);
+    }
+
+    onUncheckAll = () => {
+      for (i = 0; i<filterTypes.length; i++){
+        filterTypes[i] = false;
+      }
+      this.props.filterType(filterTypes);
+    }
+
     let filterTypes = this.props.filterLocation.filterTypes;
 
     let checkBoxes = this.state.types.map((val,key)=>{
@@ -65,9 +79,29 @@ class Filter extends Component {
     });
 
     return (
-      <ScrollView style={styles.container}>
-        {checkBoxes}
-      </ScrollView>
+      <View style={{flex: 1}}>
+        <View style={styles.container}>
+            <View style={{flexDirection: 'row'}}>
+                <Button
+                  containerStyle={styles.button}
+                  title='Check All'
+                  type='outline'
+                  onPress={()=>onCheckAll()}
+                />
+                <Button
+                  containerStyle={styles.button}
+                  buttonStyle={{borderColor: 'red'}}
+                  titleStyle={{color: 'red'}}
+                  title='Uncheck All'
+                  type='outline'
+                  onPress={()=>onUncheckAll()}
+                />
+            </View>
+            <ScrollView style={styles.scroll}>
+                {checkBoxes}
+            </ScrollView>
+        </View>
+      </View>
     );
   }
 }
@@ -75,9 +109,16 @@ class Filter extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 8,
-        marginTop: 5,
+        marginTop: 8,
     },
+    scroll: {
+      paddingHorizontal: 8,
+      marginTop: 8,
+    },
+    button: {
+      paddingHorizontal: 8,
+      flex: 1,
+    }
 })
 
 function mapStateToProps(state){
