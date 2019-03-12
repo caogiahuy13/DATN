@@ -2,6 +2,8 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import {createBottomTabNavigator} from "react-navigation";
 
+import TabBarComponent from '../components/TabBarComponent';
+
 import MapStack from './MapStack';
 import HistoryStack from './HistoryStack';
 import SettingStack from './SettingStack';
@@ -15,6 +17,8 @@ const TabNavigator = createBottomTabNavigator(
     SettingStack,
   },
   {
+    tabBarComponent: TabBarComponent,
+    tabBarPosition: 'bottom',
     tabBarOptions: {
       showLabel: false,
       showIcon: true,

@@ -24,7 +24,7 @@ const MapStack = createStackNavigator(
   },
 );
 MapStack.navigationOptions = ({ navigation }) => {
-    let tabBarVisible;
+    let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
         if (route.routeName === "TourDetail" || route.routeName === "Filter" || route.routeName === "FindGooglePlaces") {

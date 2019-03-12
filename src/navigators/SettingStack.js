@@ -19,7 +19,7 @@ const SettingStack = createStackNavigator(
   },
 );
 SettingStack.navigationOptions = ({ navigation }) => {
-    let tabBarVisible;
+    let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
         if (route.routeName === "ChangePassword") {
