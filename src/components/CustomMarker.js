@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Badge } from 'react-native-elements'
 
-import { handleModalLocation, changeSelectedLocation, handleTourCarousel } from '../actions/index.js';
+import { handleModalLocation, changeSelectedLocation, handleTourCarousel, filterLocation } from '../actions/index.js';
 
 class CustomMarker extends Component{
 
@@ -95,7 +95,7 @@ class CustomMarker extends Component{
   }
 
   render(){
-    const {val, currentRoute} = this.props;
+    const { val, currentRoute, filterLocation } = this.props;
 
     // Link ảnh địa điểm
     let icon = React.createRef();
@@ -109,6 +109,7 @@ class CustomMarker extends Component{
 
     return(
         <View>
+          { filterLocation.filterTypes[val.type.id] &&
             <Marker
               coordinate={{
                 latitude: val.latitude,
@@ -130,6 +131,7 @@ class CustomMarker extends Component{
 
                 <Callout tooltip={true}></Callout>
             </Marker>
+          }
         </View>
     );
   }
@@ -140,6 +142,7 @@ function mapStateToProps(state){
   return{
     modalLocation: state.modalLocation,
     currentRoute: state.currentRoute,
+    filterLocation: state.filterLocation,
   };
 }
 function mapDispatchToProps(dispatch){

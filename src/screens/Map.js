@@ -92,14 +92,6 @@ class Map extends Component {
     }
   }
 
-  _onFilterPress(){
-    // let test = this.props.filterLocation.filterTypes;
-    // console.log("TEST:" + test);
-    // console.log(this.props.filterLocation);
-
-    this.props.navigation.navigate("Filter");
-  }
-
   componentWillMount(){
     return this.getCurrentLocation();
   }
@@ -109,6 +101,8 @@ class Map extends Component {
   }
 
   render() {
+    const {navigation} = this.props;
+
     if(this.state.isLoading){
       return(
         <View style={{flex: 1, padding: 20}}>
@@ -136,8 +130,8 @@ class Map extends Component {
             </MapView>
 
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <Icon raised containerStyle={styles.filter} size={20} name='filter' type='font-awesome' color='gray' onPress={()=>{this._onFilterPress()}}/>
-              {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
+                <Icon raised containerStyle={styles.filter} size={20} name='filter' type='font-awesome' color='gray' onPress={()=>{navigation.navigate("Filter")}}/>
+                {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             </View>
 
             {this.props.tourCarousel.isVisible && <View style={styles.tourCarousel}><TourCarousel/></View>}
