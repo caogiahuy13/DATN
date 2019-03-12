@@ -1,7 +1,13 @@
 import * as types from '../actions/type';
 
 let filterLocation = {
-  filterTypes: [],
+  filterTypes: [
+    true,true,true,true,true,
+    true,true,true,true,true,
+    true,true,true,true,true,
+    true,true,true,true,true,
+    true,true,true
+  ],
 }
 
 export default function(state = filterLocation, action){
