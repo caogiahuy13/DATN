@@ -6,11 +6,13 @@ import {fromRight} from 'react-navigation-transitions';
 
 import Map from '../screens/Map';
 import TourDetail from '../screens/TourDetail';
+import Filter from '../screens/Filter';
 
 const MapStack = createStackNavigator(
   {
     Map,
     TourDetail,
+    Filter,
   },
   {
     defaultNavigationOptions: {
@@ -23,7 +25,7 @@ MapStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "TourDetail") {
+        if (route.routeName === "TourDetail" || route.routeName === "Filter") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

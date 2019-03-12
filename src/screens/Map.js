@@ -97,6 +97,8 @@ class Map extends Component {
     let test = this.props.filterLocation.filterTypes;
     console.log("TEST:" + test);
     console.log(this.props.filterLocation);
+
+    this.props.navigation.navigate("Filter");
   }
 
   componentWillMount(){
