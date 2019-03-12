@@ -16,9 +16,16 @@ class FindGooglePlaces extends Component {
           listViewDisplayed='auto'    // true/false/undefined
           fetchDetails={true}
           renderDescription={row => row.description} // custom description render
-          onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-            console.log(data, details);
-          }}
+          onPress={(data, details = null) => {
+                // 'details' is provided when fetchDetails = true
+                console.log(details)
+                this.setState(
+                  {
+                    address: data.description, // selected address
+                    coordinates: `${details.geometry.location.lat},${details.geometry.location.lng}` // selected coordinates
+                  }
+                );
+              }}
 
           getDefaultValue={() => ''}
 
@@ -26,41 +33,28 @@ class FindGooglePlaces extends Component {
             // available options: https://developers.google.com/places/web-service/autocomplete
             key: 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q',
             language: 'en', // language of the results
-            types: 'geocode', // default: 'geocode'
-
+            country: 'VN',
           }}
 
           styles={{
             textInputContainer: {
-              width: '100%'
+              backgroundColor: 'rgba(0,0,0,0)',
+              borderTopWidth: 0,
+              borderBottomWidth:0
             },
-            description: {
-              fontWeight: 'bold'
+            textInput: {
+              marginLeft: 0,
+              marginRight: 0,
+              height: 38,
+              color: '#5d5d5d',
+              fontSize: 16
             },
             predefinedPlacesDescription: {
               color: '#1faadb'
-            }
+            },
           }}
 
           currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
-          nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-          GoogleReverseGeocodingQuery={{
-            // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-          }}
-          GooglePlacesSearchQuery={{
-            // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-          }}
-
-          GooglePlacesDetailsQuery={{
-            // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-            fields: 'formatted_address',
-          }}
-
-          filterReverseGeocodingByTypes={['administrative_area_level_1']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-
-          debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
-          // renderLeftButton={()  => <Image source={require('path/custom/left-icon')} />}
-          // renderRightButton={() => <Text>Custom text after the input</Text>}
         />
       </View>
     )

@@ -25,7 +25,7 @@
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <meta-data
          android:name="com.google.android.maps.v2.API_KEY"
-         android:value="AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY"/>
+         android:value="AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q"/>
        <meta-data android:name="com.facebook.sdk.ApplicationId"
          android:value="@string/facebook_app_id"/>
          <activity android:name="com.facebook.FacebookActivity"
