@@ -29,15 +29,8 @@ class FindGooglePlaces extends Component {
           fetchDetails={true}
           renderDescription={row => row.description} // custom description render
           onPress={(data, details = null) => {
-                // 'details' is provided when fetchDetails = true
-                console.log(details)
+                this.props.navigation.state.params.move(details.geometry.location.lat, details.geometry.location.lng);
                 this.props.navigation.goBack();
-                this.setState(
-                  {
-                    address: data.description, // selected address
-                    coordinates: `${details.geometry.location.lat},${details.geometry.location.lng}` // selected coordinates
-                  }
-                );
               }}
 
           getDefaultValue={() => ''}

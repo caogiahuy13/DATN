@@ -68,6 +68,15 @@ class Map extends Component {
     this.callGetNearMeAPI();
   }
 
+  moveToLocation(lat, lng){
+    this.mapView.animateToRegion({
+      latitude: lat,
+      longitude: lng,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    }, 1000)
+  }
+
   constructor(props){
     super(props);
     this.state = {
@@ -90,6 +99,7 @@ class Map extends Component {
         isVisible: false,
       },
     }
+    this.mapView = React.createRef();
   }
 
   componentWillMount(){
@@ -115,6 +125,7 @@ class Map extends Component {
         return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
+    let coordinates = {latitude:  10.762864, longitude: 106.682229, latitudeDelta: 0.01, longitudeDelta: 0.01}
     return(
         <View style={styles.container}>
             <MapView style={styles.map}
@@ -131,12 +142,11 @@ class Map extends Component {
 
             <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{marginTop: 5}}>
-                    <Icon raised containerStyle={styles.search} size={18} name='search' type='font-awesome' onPress={()=>{navigation.navigate("FindGooglePlaces")}}/>
+                    <Icon raised containerStyle={styles.search} size={18} name='search' type='font-awesome' onPress={()=>{navigation.navigate("FindGooglePlaces",{move: this.moveToLocation.bind(this)})}}/>
                     <Icon raised containerStyle={styles.filter} size={18} name='filter' type='font-awesome' onPress={()=>{navigation.navigate("Filter")}}/>
                 </View>
                 {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             </View>
-
             {this.props.tourCarousel.isVisible && <View style={styles.tourCarousel}><TourCarousel/></View>}
         </View>
     );
