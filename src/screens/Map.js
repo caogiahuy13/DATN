@@ -130,7 +130,10 @@ class Map extends Component {
             </MapView>
 
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <Icon raised containerStyle={styles.filter} size={20} name='filter' type='font-awesome' color='gray' onPress={()=>{navigation.navigate("Filter")}}/>
+                <View style={{marginTop: 5}}>
+                    <Icon raised containerStyle={styles.search} size={18} name='search' type='font-awesome' onPress={()=>{navigation.navigate("FindGooglePlaces")}}/>
+                    <Icon raised containerStyle={styles.filter} size={18} name='filter' type='font-awesome' onPress={()=>{navigation.navigate("Filter")}}/>
+                </View>
                 {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             </View>
 
@@ -148,8 +151,10 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     filter: {
-      marginTop: 5,
-      opacity: 0.8,
+      opacity: 0.6,
+    },
+    search: {
+      opacity: 0.6,
     },
     map: {
         ...StyleSheet.absoluteFillObject,

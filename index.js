@@ -11,4 +11,4 @@ import Login from './src/screens/Login';
 import Setting from './src/screens/Setting';
 import FindGooglePlaces from './src/screens/FindGooglePlaces';
 
-AppRegistry.registerComponent(appName, () => FindGooglePlaces);
+AppRegistry.registerComponent(appName, () => App);

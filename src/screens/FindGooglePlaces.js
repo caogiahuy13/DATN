@@ -4,6 +4,18 @@ import { Text, Button, CheckBox } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 class FindGooglePlaces extends Component {
+  static navigationOptions = {
+    title: 'Search Location',
+    headerStyle: {
+      backgroundColor: '#324a5e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    tabBarVisible: false,
+  };
+
   render(){
     return(
       <View style={styles.container}>
@@ -19,6 +31,7 @@ class FindGooglePlaces extends Component {
           onPress={(data, details = null) => {
                 // 'details' is provided when fetchDetails = true
                 console.log(details)
+                this.props.navigation.goBack();
                 this.setState(
                   {
                     address: data.description, // selected address
@@ -40,14 +53,16 @@ class FindGooglePlaces extends Component {
             textInputContainer: {
               backgroundColor: 'rgba(0,0,0,0)',
               borderTopWidth: 0,
-              borderBottomWidth:0
+              margin: 8,
             },
             textInput: {
               marginLeft: 0,
               marginRight: 0,
               height: 38,
               color: '#5d5d5d',
-              fontSize: 16
+              fontSize: 16,
+              borderBottomWidth: 1,
+              borderColor: 'gray',
             },
             predefinedPlacesDescription: {
               color: '#1faadb'

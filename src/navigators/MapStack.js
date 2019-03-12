@@ -7,12 +7,14 @@ import {fromRight} from 'react-navigation-transitions';
 import Map from '../screens/Map';
 import TourDetail from '../screens/TourDetail';
 import Filter from '../screens/Filter';
+import FindGooglePlaces from '../screens/FindGooglePlaces';
 
 const MapStack = createStackNavigator(
   {
     Map,
     TourDetail,
     Filter,
+    FindGooglePlaces,
   },
   {
     defaultNavigationOptions: {
@@ -25,7 +27,7 @@ MapStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "TourDetail" || route.routeName === "Filter") {
+        if (route.routeName === "TourDetail" || route.routeName === "Filter" || route.routeName === "FindGooglePlaces") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;
