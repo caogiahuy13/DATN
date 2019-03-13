@@ -2,17 +2,28 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet,
         Animated, Dimensions, 
         Easing, PanResponder, 
-        ScrollView, } from 'react-native';
-
+        ScrollView, TouchableOpacity, } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Foundation from 'react-native-vector-icons/Foundation';
 export default class History extends Component {
-  state = {
-    tags: [
-      {'id': '1', 'bookingDay': '08/03/2019 10:04', 'title': 'Sai Gon', 'price': 1},
-      {'id': '2', 'bookingDay': '08/03/2019 10:04', 'title': 'Sai Gon', 'price': 1},
-      {'id': '3', 'bookingDay': '08/03/2019 10:04', 'title': 'Sai Gon', 'price': 1},
-      {'id': '4', 'bookingDay': '08/03/2019 10:04', 'title': 'Sai Gon', 'price': 1},
-      {'id': '5', 'bookingDay': '08/03/2019 10:04', 'title': 'Sai Gon', 'price': 1},
-    ]
+  constructor() {
+    super();
+    this.state = { 
+      startButtonVisible: true,
+      tags: [
+        {'id': '1', 'Code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'Status': 'New',  'title': 'Sai Gon'},
+        {'id': '2', 'Code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '12', 'totalMoney': '2.179.000 VND', 'Status': 'New',  'title': 'Ha Noi'},
+        {'id': '3', 'Code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '6', 'totalMoney': '2.179.000 VND', 'Status': 'New',  'title': 'Vung Tau'},
+        {'id': '4', 'Code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '11', 'totalMoney': '2.179.000 VND', 'Status': 'New',  'title': 'Da Nang'},
+        {'id': '5', 'Code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'Status': 'New',  'title': 'Vinh Ha Long'},
+      ], };
+  }
+  removeView(){
+    this.setState({
+      startButtonVisible: false
+    })
   }
   render() {
     return (
@@ -28,7 +39,16 @@ export default class History extends Component {
           {
             this.state.tags.map((tag, index) => (
                 <View key = {tag.id} style = {[styles.tag, ]}>
+                  <View  style={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Text style = {styles.bookingDayTag}>{tag.bookingDay}</Text>
+                    <TouchableOpacity style={styles.deleteTourTag} onPress={() => this.removeView()}>
+                      <Foundation name="x" size={35} color={"tomato"}/>
+                    </TouchableOpacity>
+                  </View>
                   <Text style = {styles.titleTag}>{tag.title}</Text>
+                  <View  style={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <MaterialCommunityIcons name="new-box" size={35} color={"tomato"}/>
+                  </View>
                 </View>
             ))
           }
@@ -96,6 +116,20 @@ const styles = StyleSheet.create({
         { rotateX: '-40deg'},
       ],
       elevation: 3,
+    },
+    bookingDayTag: {
+      marginLeft: 10,
+      marginTop: 10,
+      fontSize: 15,
+    },
+    deleteTourTag: {
+      marginTop: 3,
+      marginRight: 5,
+      //paddingTop: 5,
+      //paddingLeft: 5,
+      //height: 35,
+      //width: 35,
+      //backgroundColor: 'tomato',
     },
     titleTag: {
       textAlign: 'center',
