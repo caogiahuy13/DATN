@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Text, Button, View, Alert, Image, StyleSheet} from 'react-native';
-import {Marker, Callout} from 'react-native-maps';
+import {Marker, Callout, Polyline} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
@@ -27,19 +27,25 @@ class CustomMapDirection extends Component{
     let coordinates = this._getCoordinates();
 
     return(
-      <MapViewDirections
-        origin={coordinates[0]}
-        waypoints={(coordinates.length > 2) ? coordinates.slice(1, -1) : null}
-        destination={coordinates[coordinates.length-1]}
-        apikey={GOOGLE_MAPS_APIKEY}
-        strokeWidth={2}
-        strokeColor="rgba(66,133,244,0.5)"
-        onReady={(result) => {
-          this.props.parent().fitToCoordinates(result.coordinates,{
-            edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
-          });
-        }}
-      />
+      <View>
+        <MapViewDirections
+          origin={coordinates[0]}
+          waypoints={(coordinates.length > 2) ? coordinates.slice(1, -1) : null}
+          destination={coordinates[coordinates.length-1]}
+          apikey={GOOGLE_MAPS_APIKEY}
+          strokeWidth={2}
+          strokeColor="rgba(66,133,244,0.5)"
+          onReady={(result) => {
+            this.props.parent().fitToCoordinates(result.coordinates,{
+              edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
+            });
+          }}
+        />
+        {/*<Polyline
+      		coordinates={coordinates}
+      		strokeWidth={6}
+      	/>*/}
+      </View>
     );
   }
 }
