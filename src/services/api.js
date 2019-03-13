@@ -144,3 +144,8 @@ export async function getRouteByTour(id){
   let URL = HOST + 'route/getByTour/' + id;
   return await fetch(URL);
 }
+
+export async function getAllTour(){
+  let URL = HOST + 'tour/getAll';
+  return await fetch(URL);
+}

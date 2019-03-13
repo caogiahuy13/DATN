@@ -3,10 +3,39 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatLi
 import TourCard from '../components/TourCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import { getAllTour } from '../services/api';
+
 var { width } = Dimensions.get('window');
 var inputSearch_Width = width - 80;
 
 export default class Tours extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      tours: {},
+    }
+  }
+
+  async callGetAllTourAPI(){
+    return getAllTour()
+          .then((response) => {
+            return response.json();
+           })
+           .then((responseJson) => {
+             return responseJson.data;
+           })
+          .catch((error) => {
+            console.error(error);
+          });
+  }
+
+  componentDidMount(){
+    this.callGetAllTourAPI()
+        .then((data)=>{
+          this.setState({tours: data});
+        })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -23,19 +52,16 @@ export default class Tours extends Component {
             <FontAwesome name="search" size={30} color="#324A5E"/>
           </TouchableOpacity>
         </View>*/}
+
         <FlatList
-          data={[
-            {key: 'Devin'},
-            {key: 'Jackson'},
-            {key: 'James'},
-          ]}
-          renderItem={({item}) => <TourCard/>}
+          data={this.state.tours}
+          renderItem={(item) => <TourCard data={item.item}/>}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
     container: {

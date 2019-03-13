@@ -4,15 +4,15 @@ import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-
 import StarRating from 'react-native-star-rating';
 import NumberFormat from 'react-number-format';
 
-const cardImage = require("../assets/images/tour-card-img.jpg");
-
 export default class TourCard extends Component{
   render(){
+    const {data} = this.props;
+
     return(
       <View>
         <Card
-          title='Tour tham quan Sài Gòn (nửa ngày)'
-          image={cardImage}
+          title={data.name}
+          image={{uri: data.featured_img}}
           titleStyle={styles.title}
           containerStyle={{padding: 0}}
         >
