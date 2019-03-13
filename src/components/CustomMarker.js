@@ -3,11 +3,19 @@ import {Text, Button, View, Alert, Image, ImageBackground, StyleSheet} from 'rea
 import {Marker, Callout} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { Badge } from 'react-native-elements'
+import { Badge } from 'react-native-elements';
+import isEqual from 'lodash.isequal';
 
 import { handleModalLocation, changeSelectedLocation, handleTourCarousel, filterLocation } from '../actions/index.js';
 
 class CustomMarker extends Component{
+  constructor(props) {
+  	super(props);
+  	this.state = {
+      ...props,
+      tracksViewChanges: true,
+    };
+  }
 
   getImageUrl(val){
     switch(val.type.marker)
@@ -94,6 +102,33 @@ class CustomMarker extends Component{
     return idList.indexOf(id);
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  // 	return nextProps.val.latitude != this.state.val.latitude && nextProps.val.longitude != this.state.val.longitude;
+  // }
+  //
+  // componentDidUpdate(prevProps) {
+  //     if (prevProps.val !== this.props.val) {
+  //         this.setState({tracksViewChanges: true})
+  //     } else if (this.state.tracksViewChanges) {
+  //         this.setState({tracksViewChanges: false})
+  //     }
+  // }
+
+  componentWillReceiveProps(nextProps: any) {
+    if (!isEqual(this.props, nextProps)) {
+      this.setState(() => ({
+        tracksViewChanges: true,
+      }))
+    }
+  }
+  componentDidUpdate() {
+    if (this.state.tracksViewChanges) {
+      this.setState(() => ({
+        tracksViewChanges: false,
+      }))
+    }
+  }
+
   render(){
     const { val, currentRoute, filterLocation } = this.props;
 
@@ -116,10 +151,10 @@ class CustomMarker extends Component{
                 longitude: val.longitude,
               }}
               onPress={() => {this._onMarkerPress()}}
+              tracksViewChanges={this.state.tracksViewChanges}
               // ref={_marker => {this.marker = _marker;}}
               // onCalloutPress={() => {this.marker.hideCallout();}}
             >
-
                 <Image source={icon} style={{ width: 32, height: 32 }}/>
                 {currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
                   <Badge
@@ -128,7 +163,6 @@ class CustomMarker extends Component{
                     containerStyle={{ position: 'absolute', alignSelf: 'flex-end', transform: [{scaleX: 0.7}, {scaleY: 0.7}, {translateY: -5}, {translateX: 5}]}}
                   />
                 }
-
                 <Callout tooltip={true}></Callout>
             </Marker>
           }
