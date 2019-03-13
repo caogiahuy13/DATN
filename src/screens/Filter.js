@@ -9,14 +9,6 @@ import { filterType } from '../actions/index.js';
 class Filter extends Component {
   static navigationOptions = {
     title: 'Filter location type',
-    headerStyle: {
-      backgroundColor: '#324a5e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    tabBarVisible: false,
   };
 
   constructor(props){

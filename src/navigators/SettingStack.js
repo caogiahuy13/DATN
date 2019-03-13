@@ -14,6 +14,14 @@ const SettingStack = createStackNavigator(
   {
     defaultNavigationOptions: {
       // header: null,
+      headerStyle: {
+        backgroundColor: '#324a5e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      tabBarVisible: false,
     },
     transitionConfig: () => fromRight(),
   },

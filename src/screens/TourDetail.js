@@ -9,14 +9,6 @@ import { getTourById } from '../services/api';
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
     title: 'Thông tin tour',
-    headerStyle: {
-      backgroundColor: '#324a5e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    tabBarVisible: false,
   });
 
   constructor(props){

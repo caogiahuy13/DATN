@@ -6,14 +6,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 class FindGooglePlaces extends Component {
   static navigationOptions = {
     title: 'Search Location',
-    headerStyle: {
-      backgroundColor: '#324a5e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    tabBarVisible: false,
   };
 
   render(){
