@@ -10,7 +10,7 @@ export default class Tours extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.searchBar}>
+        {/*<View style={styles.searchBar}>
           <TextInput style={styles.inputSearch}
             placeholder = "Find Your Tour ..."
             placeholderTextColor = 'rgba(50,74,94,0.4)'
@@ -22,7 +22,7 @@ export default class Tours extends Component {
           <TouchableOpacity style={styles.buttonSearch}>
             <FontAwesome name="search" size={30} color="#324A5E"/>
           </TouchableOpacity>
-        </View>
+        </View>*/}
         <FlatList
           data={[
             {key: 'Devin'},
@@ -40,9 +40,7 @@ export default class Tours extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#D3D3D3',
+      backgroundColor: '#F4F5F4',
     },
     text: {
       fontSize: 20,

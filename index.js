@@ -10,5 +10,6 @@ import Register from './src/screens/Register';
 import Login from './src/screens/Login';
 import Setting from './src/screens/Setting';
 import FindGooglePlaces from './src/screens/FindGooglePlaces';
+import TourCard from './src/components/TourCard';
 
 AppRegistry.registerComponent(appName, () => App);
