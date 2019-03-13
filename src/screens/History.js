@@ -5,7 +5,10 @@ export default class History extends Component {
   render() {
     return (
       <View style={styles.container}>
-          <Text style={styles.text}> This is HISTORY Tab </Text>
+        <View style={styles.title}>
+          <Text style={styles.textTitle}> HISTORY </Text>
+        </View>
+        <Text style={styles.titleNotice}> Click to see details. </Text>
       </View>
     );
   }
@@ -13,11 +16,30 @@ export default class History extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+      flex: 1,
+      alignItems: 'center',
+      //justifyContent: 'center',
+      backgroundColor: '#CFCFCF',
     },
-    text: {
+    title: {
+      position: 'absolute',
+      zIndex: 1,
+      top: 0,
+      backgroundColor: '#fff',
+      width: '100%',
+      height: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+
+    },
+    textTitle: {
+      fontSize: 35,
+      fontWeight: 'bold',
+      color: '#324A5E',
+    },
+    titleNotice: {
+      marginTop: 66,
+      color: '#fff',
       fontSize: 20,
     }
 })
