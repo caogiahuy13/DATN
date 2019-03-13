@@ -112,7 +112,7 @@ class Map extends Component {
 
   render() {
     const {navigation} = this.props;
-    console.log(this.state.count);
+
     if(this.state.isLoading){
       return(
         <View style={{flex: 1, padding: 20}}>

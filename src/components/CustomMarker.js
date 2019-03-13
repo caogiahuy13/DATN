@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Text, Button, View, Alert, Image, ImageBackground, StyleSheet} from 'react-native';
+import {Text, Button, View, Image, ImageBackground, StyleSheet, Dimensions} from 'react-native';
 import {Marker, Callout} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { Badge } from 'react-native-elements';
+import { Badge, Icon} from 'react-native-elements';
 import isEqual from 'lodash.isequal';
 
 import { handleModalLocation, changeSelectedLocation, handleTourCarousel, filterLocation } from '../actions/index.js';
@@ -14,6 +14,8 @@ class CustomMarker extends Component{
   	this.state = {
       ...props,
       tracksViewChanges: true,
+      badge: null,
+      isOrderVisible: false,
     };
   }
 
@@ -90,6 +92,7 @@ class CustomMarker extends Component{
   }
 
   _onMarkerPress(){
+    this.setState({isOrderVisible: !this.state.isOrderVisible});
     this.props.handleModalLocation(true);
     this.props.handleTourCarousel(false);
     this.props.changeSelectedLocation(this.props.val);
@@ -100,6 +103,45 @@ class CustomMarker extends Component{
       return(val.location.id);
     });
     return idList.indexOf(id);
+  }
+
+  getBadge(id){
+    let idList = this.props.currentRoute.data.map((val,key)=>{
+      return(val.location.id);
+    });
+
+    let indexOfID = idList.indexOf(id);
+
+    if(indexOfID >= 0){
+      let indexes = [], i;
+      for(i = 0; i < idList.length; i++){
+        if (idList[i] == this.props.val.id){
+          indexes.push(i);
+        }
+      }
+
+      let labels = indexes.join();
+
+      if (indexes.length>1){
+        return {
+          label: '*',
+          isMultiple: true,
+          multipleLabel: labels,
+        };
+      } else {
+        return {
+          label: indexOfID,
+          isMultiple: false,
+          multipleLabel: '',
+        };
+      }
+    } else {
+      return {
+        label: '',
+        isMultiple: false,
+        multipleLabel: '',
+      };
+    }
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -137,10 +179,12 @@ class CustomMarker extends Component{
     icon = this.getImageUrl(val);
 
     // Ký tự cho địa điểm đi qua của tour ví dụ A, B, C, D
-    let char;
-    if (this._isInRoute(val.id)>=0){
-      char = String.fromCharCode(65 + this._isInRoute(val.id));
-    }
+    // let char;
+    // if (this._isInRoute(val.id)>=0){
+    //   char = String.fromCharCode(65 + this._isInRoute(val.id));
+    // }
+
+    let badge = this.getBadge(val.id);
 
     return(
         <View>
@@ -155,14 +199,19 @@ class CustomMarker extends Component{
               // ref={_marker => {this.marker = _marker;}}
               // onCalloutPress={() => {this.marker.hideCallout();}}
             >
-                <Image source={icon} style={{ width: 32, height: 32 }}/>
-                {currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
+                { this.state.isOrderVisible && currentRoute.isVisible && this._isInRoute(val.id)>=0 && badge.isMultiple &&
+                  <Text style={styles.callout}>Orders: {badge.multipleLabel}</Text>
+                }
+                <Image source={icon} style={styles.image}/>
+
+                {!this.state.isOrderVisible && currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
                   <Badge
                     status="error"
-                    value={char}
-                    containerStyle={{ position: 'absolute', alignSelf: 'flex-end', transform: [{scaleX: 0.7}, {scaleY: 0.7}, {translateY: -5}, {translateX: 5}]}}
+                    value={badge.label}
+                    containerStyle={styles.badge}
                   />
                 }
+
                 <Callout tooltip={true}></Callout>
             </Marker>
           }
@@ -171,6 +220,26 @@ class CustomMarker extends Component{
   }
 }
 
+const styles = StyleSheet.create({
+  badge: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    transform: [{scaleX: 0.7}, {scaleY: 0.7}, {translateY: -5}, {translateX: 5}],
+  },
+  image: {
+    width: 32,
+    height: 32,
+    alignSelf: 'center'
+  },
+  callout: {
+    backgroundColor: '#fff',
+    marginBottom: 4,
+    paddingHorizontal: 4,
+    borderRadius: 10,
+    elevation: 2,
+  },
+
+})
 
 function mapStateToProps(state){
   return{
