@@ -3,7 +3,7 @@ import { View, Text, StyleSheet,
         Animated, Dimensions, 
         Easing, PanResponder, 
         ScrollView, TouchableOpacity, 
-        TouchableHighlight, } from 'react-native';
+        TouchableHighlight, Image, } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -129,6 +129,7 @@ export default class History extends Component {
                       <Text style={{fontSize: 20, }}><MaterialCommunityIcons name="human-male" size={25}/>{tag.totalSlot}</Text>
                       <Text style={{fontSize: 20, }}>{tag.totalMoney} <MaterialCommunityIcons name="credit-card" size={25}/></Text>
                     </View>
+                    <Image source={{uri: './../assets/images/logo.png'}} style={{resizeMode: 'contain', width: '100%', height: '66%', backgroundColor: '#292929'}} />
                   </TouchableOpacity>
                 </Display>
               );
