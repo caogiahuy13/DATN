@@ -149,3 +149,13 @@ export async function getAllTour(){
   let URL = HOST + 'tour/getAll';
   return await fetch(URL);
 }
+
+export async function getAllTourTurnWithoutPagination(){
+  let URL = HOST + 'tour_turn/getAllWithoutPagination';
+  return await fetch(URL);
+}
+
+export async function getAllTourTurn(page=1,per_page=4,isUniqueTour=false){
+  let URL = HOST + 'tour_turn/getAll?page=' + page + '&per_page=' + per_page + '&isUniqueTour=' + isUniqueTour;
+  return await fetch(URL);
+}

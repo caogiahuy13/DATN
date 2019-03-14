@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -112,7 +112,6 @@ class Map extends Component {
 
   render() {
     const {navigation} = this.props;
-
     if(this.state.isLoading){
       return(
         <View style={{flex: 1, padding: 20}}>
@@ -129,7 +128,7 @@ class Map extends Component {
     return(
         <View style={styles.container}>
             <MapView style={styles.map}
-                onRegionChange={e => {this._onRegionChange(e)}}
+                onRegionChangeComplete={e => {this._onRegionChange(e)}}
                 showsUserLocation = {true}
                 // toolbarEnabled = {true}
                 moveOnMarkerPress = {true}

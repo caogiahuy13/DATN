@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatLi
 import TourCard from '../components/TourCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { getAllTour } from '../services/api';
+import { getAllTour, getAllTourTurn } from '../services/api';
 
 var { width } = Dimensions.get('window');
 var inputSearch_Width = width - 80;
@@ -29,8 +29,15 @@ export default class Tours extends Component {
           });
   }
 
+  async callGetAllTourTurnAPI(){
+    return getAllTourTurn()
+            .then((response) => response.json())
+            .then((responseJson) => responseJson.data)
+            .catch((error) => console.error(error));
+  }
+
   componentDidMount(){
-    this.callGetAllTourAPI()
+    this.callGetAllTourTurnAPI()
         .then((data)=>{
           this.setState({tours: data});
         })
