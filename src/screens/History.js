@@ -74,20 +74,24 @@ export default class History extends Component {
                   style = {[tag.choose ? styles.tag : styles.tagChoose]} 
                   onPress={() => this.chooseTag(tag.id)}>
                     <View  style={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                      <Text style = {styles.bookingDayTag}>{tag.bookingDay}</Text>
+                      <Text style = {styles.bookingDayTag1}>
+                        {tag.bookingDay}
+                        <Text style={{fontSize: 12, color: 'tomato'}}>{"\n"}{tag.code}</Text>
+                      </Text>
                       <View style={[tag.status === 'New' ? styles.flex : styles.none ]}>
                         <MaterialCommunityIcons name="new-box" size={40} color={"tomato"}/>
                       </View>
-                      <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag2 : styles.none]} onPress={() => this.showAlert(tag.id)}>
+                      <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag1 : styles.none]} onPress={() => this.showAlert(tag.id)}>
                         <Foundation name="x" size={35} color={"tomato"}/>
                       </TouchableOpacity>
-                      <TouchableOpacity style={[tag.status === 'New' ? styles.none : styles.deleteTourTag2]} onPress={() => {}}>
+                      <TouchableOpacity style={[tag.status === 'New' ? styles.none : styles.deleteTourTag1]} onPress={() => {}}>
                         <Foundation name="x" size={35} color={"#31495D"}/>
                       </TouchableOpacity>
                     </View>
                     <Text style = {styles.titleTag}>{tag.title}</Text>
-                    <View  style={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                      
+                    <View style={{width: '100%', height: 30, backgroundColor: '#cfcfcf', display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                      <Text style={{fontSize: 20, }}><MaterialCommunityIcons name="human-male" size={25}/>{tag.totalSlot}</Text>
+                      <Text style={{fontSize: 20, }}>{tag.totalMoney} <MaterialCommunityIcons name="credit-card" size={25}/></Text>
                     </View>
                   </TouchableOpacity>
                 </Display>
@@ -108,17 +112,23 @@ export default class History extends Component {
                   <View style = {[styles.tagDetail, ]} >
                     <View  style={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <TouchableOpacity style={styles.backTourTag} onPress={() => this.backTag(tag.id)}>
-                        <Ionicons name="md-arrow-round-back" size={35} color={"tomato"} fontWeight={"bold"}/>
+                        <Ionicons name="md-arrow-round-back" size={45} color={"tomato"} fontWeight={"bold"}/>
                       </TouchableOpacity>
-                      <Text style = {styles.bookingDayTag}>{tag.bookingDay}</Text>
+                      <Text style = {styles.bookingDayTag2}>
+                        {tag.bookingDay}
+                        <Text style={{fontSize: 12, color: 'tomato'}}>{"\n"}{tag.code}</Text>
+                      </Text>
                       <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag2 : styles.none]} onPress={() => this.showAlert(tag.id)}>
-                        <Foundation name="x" size={35} color={"tomato"}/>
+                        <Foundation name="x" size={45} color={"tomato"}/>
                       </TouchableOpacity>
                       <TouchableOpacity style={[tag.status === 'New' ? styles.none : styles.deleteTourTag2]} onPress={() => {}}>
-                        <Foundation name="x" size={35} color={"#DEE1E6"}/>
+                        <Foundation name="x" size={45} color={"#DEE1E6"}/>
                       </TouchableOpacity>
                     </View>
                     <Text style = {styles.titleTag}>{tag.title}</Text>
+                    <Text style = {styles.titleTag}>Checkout Information</Text>
+                    <Text>Contact Information</Text>
+                    <Text>Passenger Information</Text>
                   </View>
                 </Display>
               );
@@ -192,15 +202,15 @@ const styles = StyleSheet.create({
     zIndex: 0,
     //backgroundColor: '#292929',
     width: width,
-    height: height,
+    height: '100%',
   },
   tagPadding: {
-    height: 250,
+    height: 285,
     width: width,
     //backgroundColor: '#292929',
   },
   tag: {
-    marginTop: -200,
+    marginTop: -190,
     marginLeft: '12.5%',
     height: 300,
     width: '75%',
@@ -228,22 +238,27 @@ const styles = StyleSheet.create({
     height: height,
     width: width,
   },
-  bookingDayTag: {
+  bookingDayTag1: {
     marginLeft: 10,
-    marginTop: 10,
+    marginTop: 4,
     fontSize: 15,
+  },
+  bookingDayTag2: {
+    fontSize: 18,
+    marginTop: 4,
+    textAlign: 'center',
   },
   deleteTourTag1: {
     marginTop: 3,
     marginRight: 5,
   },
   backTourTag: {
-    marginTop: 3,
-    marginLeft: 10,
+    marginTop: 1,
+    marginLeft: 15,
   },
   deleteTourTag2: {
-    marginTop: 3,
-    marginRight: 10,
+    marginTop: 1,
+    marginRight: 15,
   },
   titleTag: {
     textAlign: 'center',
