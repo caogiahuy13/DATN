@@ -28,7 +28,7 @@ class LocationDetail extends Component {
 
 
     return(
-      <Animatable.View animation="slideInDown" style={styles.detail}>
+      <View style={styles.detail}>
         <View style={{flexDirection: 'row'}}>
             {/*Nếu có ảnh thì hiển thị ảnh*/}
             {(location.featured_img != null) && <Image style={styles.image} source={{uri: link}}/>}
@@ -57,7 +57,7 @@ class LocationDetail extends Component {
               }
             </View>
         </View>
-      </Animatable.View>
+      </View>
     )
   }
 }
