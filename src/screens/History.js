@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Foundation from 'react-native-vector-icons/Foundation';
 import Display from 'react-native-display';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -27,7 +28,22 @@ export default class History extends Component {
         {'choose': 'false', 'show': 'true', 'id': '3', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '6', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Vung Tau'},
         {'choose': 'false', 'show': 'true', 'id': '4', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '11', 'totalMoney': '2.179.000 VND', 'status': 'New',  'title': 'Da Nang'},
         {'choose': 'false', 'show': 'true', 'id': '5', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'New',  'title': 'Vinh Ha Long'},
-      ], };
+      ], 
+      tableHeadCheckout: ['', 'Price', 'Count'],
+      tableTitleCheckout: ['Adult', 'Children', 'Total'],
+      tableDataCheckout: [
+        ['2.179.000', '1'],
+        ['1.089.500', '0'],
+        ['2.179.000', '']
+      ],
+      infoContacts: [
+        {'id': '1', 'fullName': 'Thomas Wilson', 'phoneNumber': '(+555) 555 555', 'email': 'thomaswilson@gmail.com'},
+        {'id': '2', 'fullName': 'William King', 'phoneNumber': '(+555) 555 555', 'email': 'williamking@gmail.com'},
+        {'id': '3', 'fullName': 'Captain Marvel', 'phoneNumber': '(+555) 555 555', 'email': 'captainmarvel@gmail.com'},
+        {'id': '4', 'fullName': 'Noh Varr', 'phoneNumber': '(+555) 555 555', 'email': 'nohvarr@gmail.com'},
+        {'id': '5', 'fullName': 'ABC XYZ', 'phoneNumber': '(+555) 555 555', 'email': 'abcxyz@gmail.com'},
+      ], 
+    };
   }
   removeTag (id){
     let newArray = [...this.state.tags];
@@ -53,7 +69,7 @@ export default class History extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.title}>
+        <View style={styles.titleStack}>
           <Text style={styles.textTitle}> HISTORY </Text>
         </View>
         <Text style={styles.titleNotice}> Click to see details. </Text>
@@ -89,7 +105,8 @@ export default class History extends Component {
                       </TouchableOpacity>
                     </View>
                     <Text style = {styles.titleTag}>{tag.title}</Text>
-                    <View style={{width: '100%', height: 30, backgroundColor: '#cfcfcf', display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <View style={{width: '100%', height: 30, backgroundColor: '#cfcfcf', marginTop: 5,
+                                  display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <Text style={{fontSize: 20, }}><MaterialCommunityIcons name="human-male" size={25}/>{tag.totalSlot}</Text>
                       <Text style={{fontSize: 20, }}>{tag.totalMoney} <MaterialCommunityIcons name="credit-card" size={25}/></Text>
                     </View>
@@ -126,9 +143,34 @@ export default class History extends Component {
                       </TouchableOpacity>
                     </View>
                     <Text style = {styles.titleTag}>{tag.title}</Text>
-                    <Text style = {styles.titleTag}>Checkout Information</Text>
-                    <Text>Contact Information</Text>
-                    <Text>Passenger Information</Text>
+        {/* Checkout Information:  */}
+                    <Text style = {styles.titleTagDetail}>Checkout Information: </Text>
+                    <Table style = {styles.tableCheckout}>
+                      <Row data={this.state.tableHeadCheckout} flexArr={[1, 2, 1]} style={styles.headCheckout} textStyle={styles.textHeadCheckout}/>
+                      <TableWrapper style={styles.wrapperCheckout}>
+                        <Col data={this.state.tableTitleCheckout} heightArr={[28,28]} style={styles.titleCheckout} textStyle={styles.textTitleCheckout}/>
+                        <Rows data={this.state.tableDataCheckout} flexArr={[2, 1]} style={styles.rowCheckout} textStyle={styles.textDataCheckout}/>
+                      </TableWrapper>
+                    </Table>
+        {/* Contact Information:  */}
+                    <Text style = {styles.titleTagDetail}>Contact Information: </Text>
+                    <Text style = {styles.tableTitleContact}>Full Name: {"           "}
+                      <Text style = {styles.tableDataContact}>
+                        {this.state.infoContacts[tag.id-1].fullName}
+                      </Text>
+                    </Text>
+                    <Text style = {styles.tableTitleContact}>Phone number: {"  "}
+                      <Text style = {styles.tableDataContact}>
+                        {this.state.infoContacts[tag.id-1].phoneNumber}
+                      </Text>
+                    </Text>
+                    <Text style = {styles.tableTitleContact}>Email: {"                   "}
+                      <Text style = {styles.tableDataContact}>
+                        {this.state.infoContacts[tag.id-1].email}
+                      </Text>
+                    </Text>
+        {/* Passenger Information:  */}
+                    <Text style = {styles.titleTagDetail}>Passenger Information: </Text>
                   </View>
                 </Display>
               );
@@ -161,20 +203,10 @@ export default class History extends Component {
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    display: 'flex',
-  },
-  none: {
-    display: 'none',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    //justifyContent: 'center',
-    //backgroundColor: '#CFCFCF',
-    backgroundColor: '#292929',
-  },
-  title: {
+  flex: { display: 'flex', },
+  none: { display: 'none', },
+  container: { flex: 1, alignItems: 'center', backgroundColor: '#292929', },
+  titleStack: {
     position: 'absolute',
     zIndex: 1,
     top: 0,
@@ -238,31 +270,23 @@ const styles = StyleSheet.create({
     height: height,
     width: width,
   },
-  bookingDayTag1: {
-    marginLeft: 10,
-    marginTop: 4,
-    fontSize: 15,
-  },
-  bookingDayTag2: {
-    fontSize: 18,
-    marginTop: 4,
-    textAlign: 'center',
-  },
-  deleteTourTag1: {
-    marginTop: 3,
-    marginRight: 5,
-  },
-  backTourTag: {
-    marginTop: 1,
-    marginLeft: 15,
-  },
-  deleteTourTag2: {
-    marginTop: 1,
-    marginRight: 15,
-  },
-  titleTag: {
-    textAlign: 'center',
-    fontSize: 25,
-  },
-
+  bookingDayTag1: { marginLeft: 10, marginTop: 4, fontSize: 15, },
+  bookingDayTag2: { fontSize: 18, marginTop: 4, textAlign: 'center', },
+  deleteTourTag1: { marginTop: 3, marginRight: 5, },
+  deleteTourTag2: { marginTop: 1, marginRight: 15, },
+  backTourTag: { marginTop: 1, marginLeft: 15, },
+  titleTag: { textAlign: 'center', fontSize: 25, fontWeight: 'bold'},
+  titleTagDetail: { marginLeft: 10, fontSize: 20, },
+  // Table
+  tableCheckout: { margin: 10 },
+  headCheckout: { height: 40,  backgroundColor: '#f1f8ff'  },
+  wrapperCheckout: { flexDirection: 'row', },
+  titleCheckout: { flex: 1, backgroundColor: '#f6f8fa' },
+  rowCheckout: {  height: 28  },
+  textHeadCheckout: { textAlign: 'center',  fontSize: 15, fontWeight: 'bold' },
+  textTitleCheckout: { textAlign: 'left', paddingLeft: 10, fontSize: 15, fontWeight: 'bold' },
+  textDataCheckout: { textAlign: 'center',  fontSize: 15, },
+  //
+  tableTitleContact: { textAlign: 'left', paddingLeft: 10, fontSize: 15, fontWeight: 'bold' },
+  tableDataContact: { fontWeight: 'normal' },
 })
