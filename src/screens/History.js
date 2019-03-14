@@ -20,6 +20,7 @@ export default class History extends Component {
     super();
     this.state = { 
       showAlertDeleteTag: false,
+      idToDeleteTag: '0',
       tags: [
         {'choose': 'false', 'show': 'true', 'id': '1', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Sai Gon'},
         {'choose': 'false', 'show': 'true', 'id': '2', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '12', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Ha Noi'},
@@ -44,7 +45,7 @@ export default class History extends Component {
     this.setState({tags: newArray});
   }
   showAlert (id){
-    this.setState({showAlertDeleteTag: true});
+    this.setState({showAlertDeleteTag: true, idToDeleteTag: id});
   }
   hideAlert (){
     this.setState({showAlertDeleteTag: false});
@@ -77,7 +78,7 @@ export default class History extends Component {
                       <View style={[tag.status === 'New' ? styles.flex : styles.none ]}>
                         <MaterialCommunityIcons name="new-box" size={40} color={"tomato"}/>
                       </View>
-                      <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag2 : styles.none]} onPress={() => this.removeTag(tag.id)}>
+                      <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag2 : styles.none]} onPress={() => this.showAlert(tag.id)}>
                         <Foundation name="x" size={35} color={"tomato"}/>
                       </TouchableOpacity>
                       <TouchableOpacity style={[tag.status === 'New' ? styles.none : styles.deleteTourTag2]} onPress={() => {}}>
@@ -110,7 +111,7 @@ export default class History extends Component {
                         <Ionicons name="md-arrow-round-back" size={35} color={"tomato"} fontWeight={"bold"}/>
                       </TouchableOpacity>
                       <Text style = {styles.bookingDayTag}>{tag.bookingDay}</Text>
-                      <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag2 : styles.none]} onPress={() => this.removeTag(tag.id)}>
+                      <TouchableOpacity style={[tag.status === 'New' ? styles.deleteTourTag2 : styles.none]} onPress={() => this.showAlert(tag.id)}>
                         <Foundation name="x" size={35} color={"tomato"}/>
                       </TouchableOpacity>
                       <TouchableOpacity style={[tag.status === 'New' ? styles.none : styles.deleteTourTag2]} onPress={() => {}}>
@@ -124,6 +125,26 @@ export default class History extends Component {
             })
           }
         </View>
+        <AwesomeAlert
+          show={this.state.showAlertDeleteTag}
+          showProgress={false}
+          title="Delete Tour"
+          message="Do you want to delete this tour?"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText="No, cancel"
+          confirmText="Yes, delete it"
+          confirmButtonColor="#DD6B55"
+          onCancelPressed={() => {
+            this.hideAlert();
+          }}
+          onConfirmPressed={() => {
+            this.removeTag(this.state.idToDeleteTag);
+            this.hideAlert();
+          }}
+        />
       </View>
     );
   }
