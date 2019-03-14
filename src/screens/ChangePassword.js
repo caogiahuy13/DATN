@@ -6,19 +6,11 @@ import {connect} from 'react-redux';
 
 import { } from '../actions/index.js';
 import { updatePassword } from '../services/api';
-import { ERR_ALL_FIELD, ERR_CONFIRM_PASSWORD, SUCCESS_CHANGE_PASSWORD } from '../constants/index';
+import { ERR_ALL_FIELD, ERR_CONFIRM_PASSWORD, SUCCESS_CHANGE_PASSWORD, COLOR_MAIN } from '../constants/index';
 
 class ChangePassword extends Component {
   static navigationOptions = {
     title: 'Change Password',
-    headerStyle: {
-      backgroundColor: '#324a5e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    tabBarVisible: false,
   };
 
   constructor(props){
@@ -129,7 +121,7 @@ class ChangePassword extends Component {
             title="CHANGE PASSWORD"
             onPress={()=>{this._onButtonPress()}}
             type="solid"
-            buttonStyle={{backgroundColor: '#324a5e'}}
+            buttonStyle={{backgroundColor: COLOR_MAIN}}
           />
       </View>
     );

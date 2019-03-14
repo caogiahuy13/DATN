@@ -4,6 +4,8 @@ import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-
 import StarRating from 'react-native-star-rating';
 import NumberFormat from 'react-number-format';
 
+import { COLOR_MAIN } from '../constants/index';
+
 export default class TourCard extends Component{
   render(){
     const {data} = this.props;
@@ -21,8 +23,8 @@ export default class TourCard extends Component{
               <View style={{flexDirection: 'row'}}>
                   <View style={{flex: 1}}>
                       <View style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
-                          <Icon name='calendar' type='antdesign' color='#324a5e' size={20} containerStyle={{marginRight: 6}}/>
-                          <Text style={{fontSize: 16, fontWeight: 'bold'}}>{data.start_date}</Text>
+                          <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={20} containerStyle={{marginRight: 6}}/>
+                          <Text style={styles.calendarText}>{data.start_date}</Text>
                       </View>
                       <StarRating
                         emptyStar={'ios-star'}
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 24,
     // color: 'rgb(178,34,34)',
-    color: '#324a5e',
+    color: COLOR_MAIN,
     fontWeight: 'bold',
     marginBottom: 4,
   },
@@ -84,9 +86,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     alignItems: 'center',
+    marginBottom: 5,
   },
   button: {
-    backgroundColor: '#324a5e',
+    backgroundColor: COLOR_MAIN,
     borderRadius: 0,
     marginLeft: 10,
     marginBottom: 0,
@@ -96,5 +99,10 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: 'flex-start',
     marginHorizontal: 10
+  },
+  calendarText: {
+    color: COLOR_MAIN,
+    fontSize: 15,
+    fontWeight: '100',
   }
 })

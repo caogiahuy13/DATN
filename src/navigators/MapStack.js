@@ -4,6 +4,8 @@ import {createStackNavigator} from "react-navigation";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {fromRight} from 'react-navigation-transitions';
 
+import { COLOR_MAIN } from '../constants/index';
+
 import Map from '../screens/Map';
 import TourDetail from '../screens/TourDetail';
 import Filter from '../screens/Filter';
@@ -20,7 +22,7 @@ const MapStack = createStackNavigator(
     defaultNavigationOptions: {
       // header: null,
       headerStyle: {
-        backgroundColor: '#324a5e',
+        backgroundColor: COLOR_MAIN,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

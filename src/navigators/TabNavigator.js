@@ -2,6 +2,8 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import {createBottomTabNavigator} from "react-navigation";
 
+import { COLOR_MAIN } from '../constants/index';
+
 import TabBarComponent from '../components/TabBarComponent';
 
 import MapStack from './MapStack';
@@ -25,7 +27,7 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: 'tomato',
       inactiveTintColor: '#FFFFFF',
       style: {
-        backgroundColor: '#324A5E',
+        backgroundColor: COLOR_MAIN,
         height: 60,
       },
     },

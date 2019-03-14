@@ -4,6 +4,7 @@ import TourCard from '../components/TourCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { getAllTour, getAllTourTurn } from '../services/api';
+import { COLOR_MAIN } from '../constants/index';
 
 var { width } = Dimensions.get('window');
 var inputSearch_Width = width - 80;
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'rgba(0,0,0,0.05)',
       borderRadius: 5,
-      color: '#324A5E',
+      color: COLOR_MAIN,
       marginRight: 5,
       paddingHorizontal: 15,
     },

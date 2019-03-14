@@ -3,6 +3,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from "react-navigation";
 import {fromRight} from 'react-navigation-transitions';
 
+import { COLOR_MAIN } from '../constants/index';
+
 import Setting from '../screens/Setting';
 import ChangePassword from '../screens/ChangePassword';
 
@@ -15,7 +17,7 @@ const SettingStack = createStackNavigator(
     defaultNavigationOptions: {
       // header: null,
       headerStyle: {
-        backgroundColor: '#324a5e',
+        backgroundColor: COLOR_MAIN,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
