@@ -11,5 +11,4 @@ import FindGooglePlaces from './src/screens/FindGooglePlaces';
 import TourCard from './src/components/TourCard';
 import TourDetail2 from './src/screens/TourDetail2';
 
-
-AppRegistry.registerComponent(appName, () => TourDetail2);
+AppRegistry.registerComponent(appName, () => App);

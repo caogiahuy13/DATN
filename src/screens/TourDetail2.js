@@ -3,6 +3,8 @@ import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
 import NumberFormat from 'react-number-format';
 import Moment from 'moment';
+import Collapsible from 'react-native-collapsible';
+
 
 import { getTourById } from '../services/api';
 import { COLOR_MAIN } from '../constants/index';
@@ -86,11 +88,16 @@ class TourDetail extends Component{
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
           <Card
-            containerStyle = {{margin: 0}}
-            title='GIỚI THIỆU'
+            containerStyle = {{margin: 0, flex: 1}}
+            title=<Button/>
             titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
           >
-            <Text style={{marginBottom: 10}}>tourdescription</Text>
+            <View style={{flex: 1}}>
+              <Text style={{marginBottom: 10}}>tourdescription</Text>
+              <Collapsible collapsed={false}>
+                <View><Text>Collapsible</Text></View>
+              </Collapsible>
+            </View>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
