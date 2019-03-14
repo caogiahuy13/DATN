@@ -43,6 +43,8 @@ export default class History extends Component {
         {'id': '4', 'fullName': 'Noh Varr', 'phoneNumber': '(+555) 555 555', 'email': 'nohvarr@gmail.com'},
         {'id': '5', 'fullName': 'ABC XYZ', 'phoneNumber': '(+555) 555 555', 'email': 'abcxyz@gmail.com'},
       ], 
+      tableHeadPassenger: ['ID', 'Full Name', 'Phone Number', 'Birthdate', 'Gender', 'Address', 'Identity Card/ Passport'],
+      widthArrPassenger: [40, 180, 120, 100, 70, 200, 100],
     };
   }
   removeTag (id){
@@ -67,6 +69,23 @@ export default class History extends Component {
     this.setState({showAlertDeleteTag: false});
   }
   render() {
+    const tableDataPassenger = [];
+    for (let i = 1; i <= 10; i += 1) {
+      const rowDataPassenger = [];
+      rowDataPassenger.push(`${i}`);
+      rowDataPassenger.push(`Thomas Wilson`);
+      rowDataPassenger.push(`(+555) 555 555`);
+      rowDataPassenger.push(`07/11/1997`);
+      rowDataPassenger.push(`Male`);
+      rowDataPassenger.push(`123 ABC XYZ Street, P.6, Q.10, TP Ho Chi Minh.`);
+      rowDataPassenger.push(`123456789`);
+      /*
+      for (let j = 1; j < 7; j += 1) {
+        rowDataPassenger.push(`${i}${j}`);
+      }
+      */
+      tableDataPassenger.push(rowDataPassenger);
+    }
     return (
       <View style={styles.container}>
         <View style={styles.titleStack}>
@@ -171,6 +190,30 @@ export default class History extends Component {
                     </Text>
         {/* Passenger Information:  */}
                     <Text style = {styles.titleTagDetail}>Passenger Information: </Text>
+                    <View style={styles.tablePassenger}>
+                      <ScrollView horizontal={true}>
+                        <View>
+                          <Table borderStyle={{borderColor: '#C1C0B9'}}>
+                            <Row data={this.state.tableHeadPassenger} widthArr={this.state.widthArrPassenger} style={styles.headerPassenger} textStyle={styles.textPassenger}/>
+                          </Table>
+                          <ScrollView style={styles.dataWrapperPassenger}>
+                            <Table borderStyle={{borderColor: '#C1C0B9'}}>
+                              {
+                                tableDataPassenger.map((rowDataPassenger, index) => (
+                                  <Row
+                                    key={index}
+                                    data={rowDataPassenger}
+                                    widthArr={this.state.widthArrPassenger}
+                                    style={[styles.rowPassenger, index%2 && {backgroundColor: '#F7F6E7'}]}
+                                    textStyle={styles.textPassenger}
+                                  />
+                                ))
+                              }
+                            </Table>
+                          </ScrollView>
+                        </View>
+                      </ScrollView>
+                    </View>
                   </View>
                 </Display>
               );
@@ -278,7 +321,7 @@ const styles = StyleSheet.create({
   titleTag: { textAlign: 'center', fontSize: 25, fontWeight: 'bold'},
   titleTagDetail: { marginLeft: 10, fontSize: 20, },
   // Table
-  tableCheckout: { margin: 10 },
+  tableCheckout: { marginHorizontal: 10, marginTop: 5, },
   headCheckout: { height: 40,  backgroundColor: '#f1f8ff'  },
   wrapperCheckout: { flexDirection: 'row', },
   titleCheckout: { flex: 1, backgroundColor: '#f6f8fa' },
@@ -289,4 +332,10 @@ const styles = StyleSheet.create({
   //
   tableTitleContact: { textAlign: 'left', paddingLeft: 10, fontSize: 15, fontWeight: 'bold' },
   tableDataContact: { fontWeight: 'normal' },
+  //
+  tablePassenger: { marginHorizontal: 10, marginTop: 5, backgroundColor: '#fff', height: '37%', },
+  headerPassenger: { height: 50, backgroundColor: '#537791' },
+  textPassenger: { textAlign: 'center', fontWeight: '100' },
+  dataWrapperPassenger: { marginTop: -1 },
+  rowPassenger: { height: 40, backgroundColor: '#E7E6E1' }
 })
