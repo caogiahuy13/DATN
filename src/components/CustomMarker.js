@@ -124,7 +124,7 @@ class CustomMarker extends Component{
 
       if (indexes.length>1){
         return {
-          label: '*',
+          label: '...',
           isMultiple: true,
           multipleLabel: labels,
         };
@@ -178,6 +178,9 @@ class CustomMarker extends Component{
     let icon = React.createRef();
     icon = this.getImageUrl(val);
 
+    if (currentRoute.isVisible && this._isInRoute(val.id)>=0){
+      icon = require("../assets/images/markers/location.png");
+    }
     // Ký tự cho địa điểm đi qua của tour ví dụ A, B, C, D
     // let char;
     // if (this._isInRoute(val.id)>=0){
@@ -202,15 +205,20 @@ class CustomMarker extends Component{
                 { this.state.isOrderVisible && currentRoute.isVisible && this._isInRoute(val.id)>=0 && badge.isMultiple &&
                   <Text style={styles.callout}>Orders: {badge.multipleLabel}</Text>
                 }
+
                 <Image source={icon} style={styles.image}/>
 
-                {!this.state.isOrderVisible && currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
+                { currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
+                  <Text style={styles.num}>{badge.label}</Text>
+                }
+
+                {/*!this.state.isOrderVisible && currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
                   <Badge
                     status="error"
                     value={badge.label}
                     containerStyle={styles.badge}
                   />
-                }
+                */}
 
                 <Callout tooltip={true}></Callout>
             </Marker>
@@ -238,6 +246,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 2,
   },
+  num: {
+    position: 'absolute',
+    alignSelf: 'center',
+    fontSize: 11,
+    fontWeight: 'bold',
+    transform: [{translateY: 5}],
+  }
 
 })
 
