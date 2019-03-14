@@ -3,6 +3,8 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { Text, Button, CheckBox } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
+import { GOOGLE_MAPS_APIKEY } from '../constants/index';
+
 class FindGooglePlaces extends Component {
   static navigationOptions = {
     title: 'Search Location',
@@ -29,7 +31,7 @@ class FindGooglePlaces extends Component {
 
           query={{
             // available options: https://developers.google.com/places/web-service/autocomplete
-            key: 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q',
+            key: GOOGLE_MAPS_APIKEY,
             language: 'en', // language of the results
             country: 'VN',
           }}

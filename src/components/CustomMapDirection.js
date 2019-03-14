@@ -6,11 +6,12 @@ import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 
 import {handleCurrentRoute} from '../actions/index.js';
+import { COLOR_MAIN,
+         GOOGLE_MAPS_APIKEY,
+         ERR_ALL_FIELD, ERR_CONFIRM_PASSWORD, SUCCESS_CHANGE_PASSWORD } from '../constants/index';
 
 const origin = {latitude: 10.762864, longitude: 106.682229};
 const destination = {latitude: 10.773831, longitude: 106.704895};
-// const GOOGLE_MAPS_APIKEY = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
-const GOOGLE_MAPS_APIKEY = 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q';
 
 class CustomMapDirection extends Component{
   constructor(props){

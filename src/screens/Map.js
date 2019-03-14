@@ -8,6 +8,7 @@ import { Button, Icon } from 'react-native-elements';
 
 import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute, filterType } from '../actions/index.js';
 import { getNearMe } from '../services/api';
+import { GOOGLE_MAPS_APIKEY } from '../constants/index';
 
 import CustomMarker from '../components/CustomMarker';
 import LocationDetail from '../components/LocationDetail';
@@ -18,9 +19,6 @@ import CustomMapDirection from '../components/CustomMapDirection';
 // const { width, height }  = window;
 // const LATITUDE_DELTA = 0.0922;
 // const LONGITUDE_DELTA = LATITUDE_DELTA + (width / height);
-
-// key: AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q
-const GOOGLE_MAPS_APIKEY = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
 class Map extends Component {
   static navigationOptions = {
