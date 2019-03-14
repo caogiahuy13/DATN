@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
-import { me, updateSex, updateBirthdate } from '../services/api';
+import { me, updateSex, updateBirthdate, logout } from '../services/api';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -89,9 +89,11 @@ class Setting extends Component {
   }
 
   _onPressLogout(){
-    AsyncStorage.removeItem('userToken');
-    LoginManager.logOut();
-    this.props.navigation.navigate("Map")
+    this.callLogout().then(()=>{
+      AsyncStorage.removeItem('userToken');
+      LoginManager.logOut();
+      this.props.navigation.navigate("Map")
+    })
   }
 
   // Kiểm tra đã đăng nhập
@@ -132,6 +134,21 @@ class Setting extends Component {
             .then((response) => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => {console.error(error);});
+  }
+
+  // Gọi API logout
+  async callLogout(){
+    let status;
+    return logout().then((response) => {
+                      status = response.status;
+                      return response.json();
+                    })
+                   .then((responseJson) => {
+                      if (status != 200){
+                        Alert.alert(responseJson.msg);
+                      }
+                   })
+                   .catch((error) => console.error(error));
   }
 
   componentDidMount(){

@@ -64,6 +64,21 @@ export async function me(){
 
 }
 
+export async function logout(){
+  let URL = HOST + 'user/logout';
+  return await AsyncStorage.getItem('userToken')
+                            .then((data) => {
+                              return fetch(URL, {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': data,
+                                  'Content-Type': 'application/json',
+                                },
+                              });
+                            })
+}
+
 export async function updateSex(sex){
   let URL = HOST + 'user/updateSex';
   return await AsyncStorage.getItem('userToken')
