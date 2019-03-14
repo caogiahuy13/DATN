@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Text, View, Alert, Image, StyleSheet} from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
-import StarRating from 'react-native-star-rating';
 import NumberFormat from 'react-number-format';
 
 import { COLOR_MAIN } from '../constants/index';
@@ -26,17 +25,14 @@ export default class TourCard extends Component{
                           <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={20} containerStyle={{marginRight: 6}}/>
                           <Text style={styles.calendarText}>{data.start_date}</Text>
                       </View>
-                      <StarRating
-                        emptyStar={'ios-star'}
-                        fullStar={'ios-star'}
-                        halfStar={'ios-star-half'}
-                        iconSet={'Ionicons'}
-                        maxStars={5}
-                        rating={3}
-                        fullStarColor={'#434A54'}
-                        containerStyle={{justifyContent: 'flex-start', marginBottom: 4}}
-                        starStyle={{marginRight: 4}}
-                        starSize={18}
+                      <Rating
+                        type='custom'
+                        ratingCount={5}
+                        imageSize={18}
+                        ratingColor = {COLOR_MAIN}
+                        readonly
+                        startingValue={2.5}
+                        style={{ alignSelf: 'flex-start', marginTop: 4}}
                       />
                   </View>
                   <View style={{alignContent: 'flex-end'}}>

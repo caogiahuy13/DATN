@@ -76,13 +76,14 @@ class Filter extends Component {
             <View style={{flexDirection: 'row'}}>
                 <Button
                   containerStyle={styles.button}
+                  buttonStyle={{borderWidth: 0.6}}
                   title='Check All'
                   type='outline'
                   onPress={()=>onCheckAll()}
                 />
                 <Button
                   containerStyle={styles.button}
-                  buttonStyle={{borderColor: 'red'}}
+                  buttonStyle={{borderColor: 'red', borderWidth: 0.6}}
                   titleStyle={{color: 'red'}}
                   title='Uncheck All'
                   type='outline'
