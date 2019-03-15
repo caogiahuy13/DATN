@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
+import { Card, Button, Icon, Divider, Rating, AirbnbRating, Avatar } from 'react-native-elements';
 import NumberFormat from 'react-number-format';
 import Moment from 'moment';
 import Collapsible from 'react-native-collapsible';
@@ -148,7 +148,8 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isReviewCollapsed}>
-                <Text>Collapsible</Text>
+                  <Review/>
+                  <Review/>
               </Collapsible>
           </Card>
 
@@ -182,7 +183,7 @@ class CardTitle extends Component{
               containerStyle={{justifyContent: 'center'}}
           />
         </TouchableOpacity>
-        <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/>
+        { !this.props.status && <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/> }
       </View>
     );
   }
@@ -201,6 +202,33 @@ class TourPrice extends Component {
             renderText={value => <Text>{value}</Text>}
           />
         </Text>
+      </View>
+    )
+  }
+}
+
+class Review extends Component {
+  render(){
+    return(
+      <View style={{paddingHorizontal: 4}}>
+        <View style={{flexDirection: 'row', paddingTop: 6}}>
+          <Avatar rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }} containerStyle={{marginRight: 8}}/>
+          <Text style={{alignSelf: 'center', flex: 1, color: COLOR_LIGHT_BLACK}}>ABC</Text>
+          <Rating
+            type='custom'
+            ratingCount={5}
+            imageSize={14}
+            ratingColor = {COLOR_MAIN}
+            readonly
+            ratingBackgroundColor='#c8c7c8'
+            startingValue={2.5}
+            style={{alignSelf: 'center'}}
+          />
+        </View>
+        <View style={{paddingVertical: 8}}>
+            <Text>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+        </View>
+        <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/>
       </View>
     )
   }
