@@ -5,6 +5,9 @@ export const GOOGLE_MAPS_APIKEY_TWO = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
 export const COLOR_MAIN = '#324a5e';
 export const COLOR_GREEN = '#1BBC9B';
+export const COLOR_LIGHT_BLACK = '#43484D'; // default color for card title 'react-native-elements'
+export const COLOR_GRAY = '#434A54'; // website main gray color
+export const COLOR_HARD_RED = '#C50000'; // book tour button color
 
 export const ERR_USERNAME = 'Email or Phone number must be in right format';
 export const ERR_PASSWORD = 'Password is required';

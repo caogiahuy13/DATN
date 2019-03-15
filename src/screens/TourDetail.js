@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
 import NumberFormat from 'react-number-format';
 import Moment from 'moment';
+import Collapsible from 'react-native-collapsible';
 
 import { getTourById } from '../services/api';
+import { COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED } from '../constants/index';
 
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
-    title: 'Thông tin tour',
+    title: 'Tour information',
   });
 
   constructor(props){
@@ -17,26 +19,57 @@ class TourDetail extends Component{
       tour: {},
       currentTurn: {},
       dayDiff: 0,
+      slotLeft: 0,
+      daysLeft: 0,
+
+      isDescriptionCollapsed: true,
+      isDetailCollapsed: true,
+      isReviewCollapsed: true,
     }
+  }
+
+  toggleDescription(){
+    this.setState({isDescriptionCollapsed: !this.state.isDescriptionCollapsed});
+  }
+  toggleDetail(){
+    this.setState({isDetailCollapsed: !this.state.isDetailCollapsed});
+  }
+  toggleReview(){
+    this.setState({isReviewCollapsed: !this.state.isReviewCollapsed});
   }
 
   async callGetTourByIdAPI(id){
     return getTourById(id)
             .then((response) => response.json())
             .then((responseJson) => {
-              console.log(responseJson);
-              this.setState({tour: responseJson.data})
+              this.setState({tour: responseJson.data});
               this.setState({currentTurn: responseJson.data.tour_turns[0]});
-              this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day})
+              this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day});
             })
             .catch((error) => {
               console.error(error);
             });
   }
 
+  getDaysLeft(startDate){
+    let day1 = Moment(new Date());
+    let day2 = Moment(startDate);
+    let duration = Moment.duration(day2.diff(day1));
+    let days = Math.floor(duration.asDays());
+    return days;
+  }
+
+  setMultipleState(){
+    const {tour, currentTurn} = this.state;
+    this.setState({slotLeft: currentTurn.num_max_people - currentTurn.num_current_people});
+    this.setState({daysLeft: this.getDaysLeft(currentTurn.start_date)});
+  }
+
   componentWillMount() {
     const id = this.props.navigation.getParam("id");
-    this.callGetTourByIdAPI(id);
+    this.callGetTourByIdAPI(id).then(()=>{
+      this.setMultipleState();
+    })
   }
 
   componentWillUnmount() {
@@ -45,122 +78,116 @@ class TourDetail extends Component{
 
   render(){
     Moment.locale('en');
-    const {tour, currentTurn, dayDiff} = this.state;
+    const {tour, currentTurn, dayDiff, slotLeft, daysLeft} = this.state;
 
+    console.log(this.state.tour);
     return(
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
         <ScrollView>
           <Card
             containerStyle = {{margin: 0}}
             title={tour.name}
             titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
-            image={require("../assets/images/tour-card-img.jpg")}>
+            image={{uri: tour.featured_img}}>
             <View style={{marginBottom: 8}}>
-              <Info firstText="Ngày khởi hành" secondText={Moment(currentTurn.start_date).format('DD/MM/YYYY')} type="day"/>
-              <Info firstText="Ngày kết thúc" secondText={Moment(currentTurn.end_date).format('DD/MM/YYYY')} type="day"/>
-              <Info firstText="Thời gian" secondText={dayDiff} type="day"/>
-              <Info firstText="Số chỗ còn lại" current={currentTurn.num_current_people} max={currentTurn.num_max_people} type="slot"/>
-            </View>
-
-            <Divider style={{height: 1}}/>
-
-            <View style={{marginVertical: 8}}>
-              <TourRating/>
               <View style={{flexDirection: 'row'}}>
-                <TourIcon name="star" type="font-awesome" text="100"/>
-                <TourIcon name="comments" type="font-awesome" text="10"/>
+                <Text style={{flex: 0.36}}>Tour code:</Text>
+                <Text style={{flex: 0.64}}>000{tour.id}</Text>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{flex: 0.36}}>Start date:</Text>
+                <Text style={{flex: 0.32}}>{Moment(currentTurn.start_date).format('DD/MM/YYYY')}</Text>
+                <View style={{flexDirection: 'row', flex: 0.32}}>
+                    <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={18}/>
+                    <Text style={{color: 'orange'}}> Other day</Text>
+                </View>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{flex: 0.36}}>Last in -{dayDiff} days</Text>
+                <Text style={{flex: 0.32}}>{daysLeft} days left</Text>
+                <Text style={{flex: 0.32}}>{slotLeft} slot left</Text>
               </View>
             </View>
 
             <Divider style={{height: 1}}/>
 
-            <TourPrice price={tour.price}/>
+            <TourPrice price={500000}/>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
           <Card
-            containerStyle = {{margin: 0}}
-            title='GIỚI THIỆU'
-            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
+            containerStyle = {styles.cardContainer}
+            title=<CardTitle title="Description" status={this.state.isDescriptionCollapsed} onPress={()=>this.toggleDescription()}/>
+            titleStyle={styles.cardTitle}
           >
-            <Text style={{marginBottom: 10}}>{tour.description}</Text>
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isDescriptionCollapsed}>
+                <Text>{tour.description}</Text>
+              </Collapsible>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
           <Card
-            containerStyle = {{margin: 0}}
-            title='CHƯƠNG TRÌNH TOUR'
-            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
+            containerStyle = {styles.cardContainer}
+            title=<CardTitle title="Detail" status={this.state.isDetailCollapsed} onPress={()=>this.toggleDetail()}/>
+            titleStyle={styles.cardTitle}
           >
-            <Text style={{marginBottom: 10}}>{tour.detail}</Text>
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isDetailCollapsed}>
+                <Text>{tour.detail}</Text>
+              </Collapsible>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
           <Card
-            containerStyle = {{margin: 0}}
-            title='GHI CHÚ'
-            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
+            containerStyle = {styles.cardContainer}
+            title=<CardTitle title="Reviews" status={this.state.isReviewCollapsed} onPress={()=>this.toggleReview()}/>
+            titleStyle={styles.cardTitle}
           >
-            <Text style={{marginBottom: 10}}>{tour.policy}</Text>
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isReviewCollapsed}>
+                <Text>Collapsible</Text>
+              </Collapsible>
           </Card>
+
+          <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
         </ScrollView>
         <Button
-          buttonStyle={{backgroundColor: '#C50000', borderRadius: 0}}
-          title='ĐẶT TOUR'
+          buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
+          title='BOOK TOUR'
           onPress={()=>{}}
+          titleStyle={{fontSize: 18, fontWeight: 'bold'}}
         />
       </View>
     );
   }
 }
 
-class Info extends Component{
-  remainSlot = () => {return this.props.max - this.props.current};
+class CardTitle extends Component{
   render(){
     return(
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{flex: 0.5}}>{this.props.firstText}</Text>
-        {this.props.type !== "slot" && <Text style={{flex: 0.5}}>{this.props.secondText}</Text>}
-        {this.props.type === "slot" && <Text style={{flex: 0.5}}>{this.remainSlot()}/{this.props.max}</Text>}
+      <View>
+        <TouchableOpacity style={{flexDirection: 'row', flex: 1, paddingVertical: 10}} activeOpacity={0.7} onPress={this.props.onPress}>
+          <Text style={{flex: 1, fontWeight: 'bold', fontSize: 18, color: COLOR_LIGHT_BLACK}}>
+              {this.props.title}
+          </Text>
+          <Icon
+              name={this.props.status ? 'caretleft' : 'caretdown'}
+              type='antdesign'
+              color={COLOR_LIGHT_BLACK}
+              size={17}
+              containerStyle={{justifyContent: 'center'}}
+          />
+        </TouchableOpacity>
+        <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/>
       </View>
     );
   }
 }
-class TourRating extends Component {
-  render(){
-    return(
-      <View style={{flexDirection: 'row', marginBottom: 5}}>
-        <Rating
-          imageSize={20}
-          readonly
-          startingValue={4.5}
-          style={{marginRight: 10}}
-        />
-        <Text>4.5/5 trong 10 đánh giá</Text>
-      </View>
-    )
-  }
-}
-class TourIcon extends Component {
-  render(){
-    return(
-      <View style={{flexDirection: 'row', marginRight: 10}}>
-        <Icon
-          name={this.props.name}
-          type={this.props.type}
-          size={20}
-          color='gray'
-          containerStyle={{marginRight: 5}}
-        />
-        <Text>{this.props.text}</Text>
-      </View>
-    )
-  }
-}
+
 class TourPrice extends Component {
   render(){
     return(
@@ -170,7 +197,7 @@ class TourPrice extends Component {
             value={this.props.price}
             displayType={'text'}
             thousandSeparator={true}
-            suffix={' đ'}
+            suffix={' VNĐ'}
             renderText={value => <Text>{value}</Text>}
           />
         </Text>
@@ -180,7 +207,15 @@ class TourPrice extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  cardContainer: {
+    margin: 0,
+    flex: 1,
+    paddingVertical: 0,
+  },
+  cardTitle: {
+    alignSelf: 'flex-start',
+    marginHorizontal: 8,
+  }
 })
 
 export default TourDetail;

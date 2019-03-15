@@ -31,6 +31,7 @@ export default class TourCard extends Component{
                         imageSize={18}
                         ratingColor = {COLOR_MAIN}
                         readonly
+                        ratingBackgroundColor='#c8c7c8'
                         startingValue={2.5}
                         style={{ alignSelf: 'flex-start', marginTop: 4}}
                       />
