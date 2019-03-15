@@ -6,6 +6,12 @@ import NumberFormat from 'react-number-format';
 import { COLOR_MAIN } from '../constants/index';
 
 export default class TourCard extends Component{
+
+  _onPress = () => {
+    console.log(this.props.data.tour);
+    this.props.onPress(this.props.data.tour.id)
+  }
+
   render(){
     const {data} = this.props;
 
@@ -40,7 +46,7 @@ export default class TourCard extends Component{
                       <TourPrice value={data.price}/>
                       <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                           <Button buttonStyle={styles.button} title='BOOK NOW'/>
-                          <Button buttonStyle={styles.button} title='DETAIL'/>
+                          <Button buttonStyle={styles.button} title='DETAIL'onPress={this._onPress}/>
                       </View>
                   </View>
               </View>

@@ -10,6 +10,10 @@ var { width } = Dimensions.get('window');
 var inputSearch_Width = width - 80;
 
 export default class Tours extends Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   constructor(props){
     super(props);
     this.state = {
@@ -35,6 +39,10 @@ export default class Tours extends Component {
             .then((response) => response.json())
             .then((responseJson) => responseJson.data)
             .catch((error) => console.error(error));
+  }
+
+  tourDetailPress = (id) => {
+    this.props.navigation.navigate("TourDetail",{id: id});
   }
 
   componentDidMount(){
@@ -63,7 +71,7 @@ export default class Tours extends Component {
 
         <FlatList
           data={this.state.tours}
-          renderItem={(item) => <TourCard data={item.item}/>}
+          renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress}/>}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
