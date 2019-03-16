@@ -4,6 +4,7 @@ import { Card, Button, Icon, Divider, Rating, AirbnbRating, Avatar } from 'react
 import NumberFormat from 'react-number-format';
 import Moment from 'moment';
 import Collapsible from 'react-native-collapsible';
+import Slideshow from 'react-native-image-slider-show';
 
 import { getImageByTourId, getTourTurnById } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED } from '../constants/index';
@@ -18,7 +19,7 @@ class TourDetail extends Component{
     this.state = {
       tour: {},
       currentTurn: {},
-      images: {},
+      images: [],
       dayDiff: 0,
       slotLeft: 0,
       daysLeft: 0,
@@ -52,7 +53,10 @@ class TourDetail extends Component{
     return getImageByTourId(id)
             .then((response) => response.json())
             .then((responseJson) => {
-              this.setState({images: responseJson.data});
+              let source = responseJson.data.map((val,key)=>{
+                return {url: val.name}
+              });
+              this.setState({images: source});
             })
             .catch((error) => console.error(error));
   }
@@ -84,9 +88,9 @@ class TourDetail extends Component{
     const id = this.props.navigation.getParam("id");
     this.callGetTourTurnById(id)
         .then(()=>{
+          this.callGetImageByTourId(this.state.tour.id);
           this.setMultipleState();
         });
-    this.callGetImageByTourId(id);
   }
 
   componentWillUnmount() {
@@ -101,35 +105,38 @@ class TourDetail extends Component{
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
         <ScrollView>
           <Card
-            containerStyle = {{margin: 0}}
-            title={tour.name}
-            titleStyle={{alignSelf: 'flex-start', marginHorizontal: 8}}
-            image={{uri: tour.featured_img}}>
-            <View style={{marginBottom: 8}}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 0.36}}>Tour code:</Text>
-                <Text style={{flex: 0.64}}>000{currentTurn.id}</Text>
-              </View>
+            containerStyle = {{margin: 0, padding: 0}}
+            title=<TourTitle title={tour.name}/>
+            titleStyle={styles.cardTitle}
+          >
+            <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>
+            <View style={{paddingHorizontal: 12}}>
+                <View style={{marginBottom: 8}}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{flex: 0.36}}>Tour code:</Text>
+                    <Text style={{flex: 0.64}}>000{currentTurn.id}</Text>
+                  </View>
 
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 0.36}}>Start date:</Text>
-                <Text style={{flex: 0.32}}>{Moment(currentTurn.start_date).format('DD/MM/YYYY')}</Text>
-                <View style={{flexDirection: 'row', flex: 0.32}}>
-                    <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={18}/>
-                    <Text style={{color: 'orange'}}> Other day</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{flex: 0.36}}>Start date:</Text>
+                    <Text style={{flex: 0.32}}>{Moment(currentTurn.start_date).format('DD/MM/YYYY')}</Text>
+                    <View style={{flexDirection: 'row', flex: 0.32}}>
+                        <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={18}/>
+                        <Text style={{color: 'orange'}}> Other day</Text>
+                    </View>
+                  </View>
+
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{flex: 0.36}}>Last in {dayDiff} days</Text>
+                    <Text style={{flex: 0.32}}>{daysLeft} days left</Text>
+                    <Text style={{flex: 0.32}}>{slotLeft} slot left</Text>
+                  </View>
                 </View>
-              </View>
 
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 0.36}}>Last in {dayDiff} days</Text>
-                <Text style={{flex: 0.32}}>{daysLeft} days left</Text>
-                <Text style={{flex: 0.32}}>{slotLeft} slot left</Text>
-              </View>
+                <Divider style={{height: 1}}/>
+
+                <TourPrice price={currentTurn.price}/>
             </View>
-
-            <Divider style={{height: 1}}/>
-
-            <TourPrice price={currentTurn.price}/>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
@@ -200,6 +207,18 @@ class CardTitle extends Component{
           />
         </TouchableOpacity>
         { !this.props.status && <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/> }
+      </View>
+    );
+  }
+}
+
+class TourTitle extends Component{
+  render(){
+    return(
+      <View style={{flex: 1, padding: 10}}>
+          <Text style={{flex: 1, fontWeight: 'bold', fontSize: 18, color: COLOR_LIGHT_BLACK}}>
+              {this.props.title}
+          </Text>
       </View>
     );
   }

@@ -8,7 +8,6 @@ import { COLOR_MAIN } from '../constants/index';
 export default class TourCard extends Component{
 
   _onPress = () => {
-    console.log(this.props.data);
     this.props.onPress(this.props.data.id)
   }
 
