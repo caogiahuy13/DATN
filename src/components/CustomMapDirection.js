@@ -139,19 +139,6 @@ class CustomMapDirection extends Component{
       <View>
         {coordinates}
         {airways}
-        {/*<MapViewDirections
-          origin={coordinates[0]}
-          waypoints={(coordinates.length > 2) ? coordinates.slice(1, -1) : null}
-          destination={coordinates[coordinates.length-1]}
-          apikey={GOOGLE_MAPS_APIKEY}
-          strokeWidth={2}
-          strokeColor="rgba(66,133,244,0.5)"
-          onReady={(result) => {
-            this.props.parent().fitToCoordinates(result.coordinates,{
-              edgePadding: { top: 50, right: 50, bottom: 120, left: 50 },
-            });
-          }}
-        />*/}
       </View>
     );
   }

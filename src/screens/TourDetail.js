@@ -5,8 +5,9 @@ import NumberFormat from 'react-number-format';
 import Moment from 'moment';
 import Collapsible from 'react-native-collapsible';
 import Slideshow from 'react-native-image-slider-show';
+import MapView, {Marker} from 'react-native-maps';
 
-import { getImageByTourId, getTourTurnById } from '../services/api';
+import { getImageByTourId, getTourTurnById, getNearMe } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED } from '../constants/index';
 
 class TourDetail extends Component{
@@ -159,8 +160,12 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isDetailCollapsed}>
+                <View style={{height: 400}}>
+                    <TourMap id={tour.id}/>
+                </View>
                 <Text>{tour.detail}</Text>
               </Collapsible>
+
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
@@ -269,6 +274,73 @@ class Review extends Component {
   }
 }
 
+class TourMap extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      dataSource: [],
+      count: 0,
+      region: {
+        latitude:  10.762864,
+        longitude: 106.682229,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      },
+    }
+  }
+
+  callGetNearMeAPI(){
+      // Lay ban kinh tuong ung voi chieu doc man hinh
+      let {latitudeDelta, longitudeDelta } = this.state.region;
+      let distance = 1.0;
+      if (latitudeDelta !== 0.01){
+        distance = latitudeDelta * 70;
+      }
+
+      return getNearMe(this.state.region.latitude, this.state.region.longitude, distance)
+              .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                      dataSource: responseJson.data,
+                      count: responseJson.itemCount,
+                    });
+                })
+                .catch((error) => console.error(error));
+  }
+
+  _onRegionChange(e){
+    this.setState({
+      region: {
+        latitude: e.latitude,
+        longitude: e.longitude,
+        latitudeDelta: e.latitudeDelta,
+        longitudeDelta: e.longitudeDelta,
+      }
+    });
+
+    this.callGetNearMeAPI();
+  }
+
+  componentDidMount(){
+    return this.callGetNearMeAPI();
+  }
+
+  render(){
+    const {region} = this.state;
+
+    return(
+      <MapView style={styles.map}
+          onRegionChange={e => {this._onRegionChange(e)}}
+          showsUserLocation = {true}
+          moveOnMarkerPress = {true}
+          initialRegion={region}
+          ref={c => this.mapView = c}
+      >
+      </MapView>
+    )
+  }
+}
+
 const styles = StyleSheet.create({
   cardContainer: {
     margin: 0,
@@ -278,7 +350,10 @@ const styles = StyleSheet.create({
   cardTitle: {
     alignSelf: 'flex-start',
     marginHorizontal: 8,
-  }
+  },
+  map: {
+      ...StyleSheet.absoluteFillObject,
+  },
 })
 
 export default TourDetail;
