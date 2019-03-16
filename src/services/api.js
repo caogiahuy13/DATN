@@ -139,6 +139,11 @@ export async function getTourById(id){
   return await fetch(URL);
 }
 
+export async function getImageByTourId(id){
+  let URL = HOST + 'tour_image/getByTour/' + id;
+  return await fetch(URL);
+}
+
 export async function getNearMe(latitude, longitude, distance){
   let URL = HOST + 'location/getNearMe?&tour=true';
   return await fetch(URL, {
@@ -162,6 +167,11 @@ export async function getRouteByTour(id){
 
 export async function getAllTour(){
   let URL = HOST + 'tour/getAll';
+  return await fetch(URL);
+}
+
+export async function getTourTurnById(id){
+  let URL = HOST + 'tour_turn/getById/' + id;
   return await fetch(URL);
 }
 

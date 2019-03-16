@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import Moment from 'moment';
 import Collapsible from 'react-native-collapsible';
 
-import { getTourById } from '../services/api';
+import { getImageByTourId, getTourTurnById } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED } from '../constants/index';
 
 class TourDetail extends Component{
@@ -18,6 +18,7 @@ class TourDetail extends Component{
     this.state = {
       tour: {},
       currentTurn: {},
+      images: {},
       dayDiff: 0,
       slotLeft: 0,
       daysLeft: 0,
@@ -38,17 +39,22 @@ class TourDetail extends Component{
     this.setState({isReviewCollapsed: !this.state.isReviewCollapsed});
   }
 
-  async callGetTourByIdAPI(id){
-    return getTourById(id)
+  async callGetTourTurnById(id){
+    return getTourTurnById(id)
             .then((response) => response.json())
             .then((responseJson) => {
-              this.setState({tour: responseJson.data});
-              this.setState({currentTurn: responseJson.data.tour_turns[0]});
-              this.setState({dayDiff: responseJson.data.routes[responseJson.data.routes.length-1].day});
+              this.setState({tour: responseJson.data.tour});
+              this.setState({currentTurn: responseJson.data});
             })
-            .catch((error) => {
-              console.error(error);
-            });
+            .catch((error) => console.error(error));
+  }
+  async callGetImageByTourId(id){
+    return getImageByTourId(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.setState({images: responseJson.data});
+            })
+            .catch((error) => console.error(error));
   }
 
   getDaysLeft(startDate){
@@ -59,17 +65,28 @@ class TourDetail extends Component{
     return days;
   }
 
+  getDaysDiff(startDate, endDate){
+    let day1 = Moment(startDate);
+    let day2 = Moment(endDate);
+    let duration = Moment.duration(day2.diff(day1));
+    let days = Math.ceil(duration.asDays());
+    return days;
+  }
+
   setMultipleState(){
     const {tour, currentTurn} = this.state;
+    this.setState({dayDiff: this.getDaysDiff(currentTurn.start_date, currentTurn.end_date)});
     this.setState({slotLeft: currentTurn.num_max_people - currentTurn.num_current_people});
     this.setState({daysLeft: this.getDaysLeft(currentTurn.start_date)});
   }
 
-  componentWillMount() {
+  componentWillMount(){
     const id = this.props.navigation.getParam("id");
-    this.callGetTourByIdAPI(id).then(()=>{
-      this.setMultipleState();
-    })
+    this.callGetTourTurnById(id)
+        .then(()=>{
+          this.setMultipleState();
+        });
+    this.callGetImageByTourId(id);
   }
 
   componentWillUnmount() {
@@ -91,7 +108,7 @@ class TourDetail extends Component{
             <View style={{marginBottom: 8}}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{flex: 0.36}}>Tour code:</Text>
-                <Text style={{flex: 0.64}}>000{tour.id}</Text>
+                <Text style={{flex: 0.64}}>000{currentTurn.id}</Text>
               </View>
 
               <View style={{flexDirection: 'row'}}>
@@ -104,7 +121,7 @@ class TourDetail extends Component{
               </View>
 
               <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 0.36}}>Last in -{dayDiff} days</Text>
+                <Text style={{flex: 0.36}}>Last in {dayDiff} days</Text>
                 <Text style={{flex: 0.32}}>{daysLeft} days left</Text>
                 <Text style={{flex: 0.32}}>{slotLeft} slot left</Text>
               </View>
@@ -112,7 +129,7 @@ class TourDetail extends Component{
 
             <Divider style={{height: 1}}/>
 
-            <TourPrice price={500000}/>
+            <TourPrice price={currentTurn.price}/>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
