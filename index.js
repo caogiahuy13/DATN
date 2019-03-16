@@ -10,5 +10,6 @@ import {name as appName} from './app.json';
 import FindGooglePlaces from './src/screens/FindGooglePlaces';
 import TourCard from './src/components/TourCard';
 import TourDetail from './src/screens/TourDetail';
+import ForgetPassword from './src/screens/ForgetPassword';
 
 AppRegistry.registerComponent(appName, () => App);

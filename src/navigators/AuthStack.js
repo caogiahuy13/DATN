@@ -4,11 +4,13 @@ import {fromRight} from 'react-navigation-transitions';
 
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import ForgetPassword from '../screens/ForgetPassword';
 
 const AuthStack = createStackNavigator(
   {
     Login,
-    Register
+    ForgetPassword,
+    Register,
   },
   {
     defaultNavigationOptions: {

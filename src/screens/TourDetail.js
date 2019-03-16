@@ -80,7 +80,6 @@ class TourDetail extends Component{
     Moment.locale('en');
     const {tour, currentTurn, dayDiff, slotLeft, daysLeft} = this.state;
 
-    console.log(this.state.tour);
     return(
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
         <ScrollView>

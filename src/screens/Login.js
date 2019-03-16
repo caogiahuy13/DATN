@@ -194,7 +194,7 @@ class Login extends Component {
                             onChangeText={(value)=> this.setState({password: value})}
                         />
                         <View style={styles.notePassword}>
-                            <Text style={styles.lostPassword}>Lost your password?</Text>
+                            <Text style={styles.lostPassword} onPress={()=>navigation.navigate("ForgetPassword")}>Lost your password?</Text>
                         </View>
                         { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
                         <TouchableOpacity style={styles.buttonLogin} onPress={() => {this._onPressLogin()}}>
