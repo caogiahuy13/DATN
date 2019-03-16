@@ -20,7 +20,7 @@ class CustomMarker extends Component{
   }
 
   getImageUrl(val){
-    switch(val.type.marker)
+    switch(val)
     {
       case "amusement":
         icon = require("../assets/images/markers/amusement.png");
@@ -176,7 +176,7 @@ class CustomMarker extends Component{
 
     // Link ảnh địa điểm
     let icon = React.createRef();
-    icon = this.getImageUrl(val);
+    icon = this.getImageUrl(val.type.marker);
 
     if (currentRoute.isVisible && this._isInRoute(val.id)>=0){
       icon = require("../assets/images/markers/location.png");
