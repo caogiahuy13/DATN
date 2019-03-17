@@ -22,7 +22,8 @@ export default class History extends Component {
     this.state = { 
       showAlertDeleteTag: false,
       idToDeleteTag: '0',
-      hiddenFeature: false,
+      showHiddenFeature: false,
+      countShowHiddenFeature: 0,
       tags: [
         {'choose': 'false', 'show': 'true', 'id': '1', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Sai Gon'},
         {'choose': 'false', 'show': 'true', 'id': '2', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '12', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Ha Noi'},
@@ -42,10 +43,13 @@ export default class History extends Component {
       ],
       infoContacts: [
         {'id': '1', 'fullName': 'Thomas Wilson', 'phoneNumber': '(+555) 555 555', 'email': 'thomaswilson@gmail.com'},
-        {'id': '2', 'fullName': 'William King', 'phoneNumber': '(+555) 555 555', 'email': 'williamking@gmail.com'},
-        {'id': '3', 'fullName': 'Captain Marvel', 'phoneNumber': '(+555) 555 555', 'email': 'captainmarvel@gmail.com'},
-        {'id': '4', 'fullName': 'Noh Varr', 'phoneNumber': '(+555) 555 555', 'email': 'nohvarr@gmail.com'},
-        {'id': '5', 'fullName': 'ABC XYZ', 'phoneNumber': '(+555) 555 555', 'email': 'abcxyz@gmail.com'},
+        {'id': '2', 'fullName': 'Thomas Wilson', 'phoneNumber': '(+555) 555 555', 'email': 'thomaswilson@gmail.com'},
+        {'id': '3', 'fullName': 'William King', 'phoneNumber': '(+555) 555 555', 'email': 'williamking@gmail.com'},
+        {'id': '4', 'fullName': 'William King', 'phoneNumber': '(+555) 555 555', 'email': 'williamking@gmail.com'},
+        {'id': '5', 'fullName': 'Captain Marvel', 'phoneNumber': '(+555) 555 555', 'email': 'captainmarvel@gmail.com'},
+        {'id': '6', 'fullName': 'Noh Varr', 'phoneNumber': '(+555) 555 555', 'email': 'nohvarr@gmail.com'},
+        {'id': '7', 'fullName': 'Noh Varr', 'phoneNumber': '(+555) 555 555', 'email': 'nohvarr@gmail.com'},
+        {'id': '8', 'fullName': 'ABC XYZ', 'phoneNumber': '(+555) 555 555', 'email': 'abcxyz@gmail.com'},
       ], 
       tableHeadPassenger: ['ID', 'Full Name', 'Phone Number', 'Birthdate', 'Gender', 'Address', 'Identity Card/ Passport'],
       widthArrPassenger: [40, 180, 120, 100, 70, 200, 100],
@@ -72,6 +76,19 @@ export default class History extends Component {
   hideAlert (){
     this.setState({showAlertDeleteTag: false});
   }
+  show_HideFeature (){
+    const temp = this.state.countShowHiddenFeature + 1;
+    this.setState({countShowHiddenFeature: temp});
+    if (this.state.countShowHiddenFeature === 2)
+    {
+      this.setState({showHiddenFeature: true});
+    }
+    if (this.state.countShowHiddenFeature > 3)
+    {
+      this.setState({showHiddenFeature: false});
+      this.setState({countShowHiddenFeature: 0});
+    }
+  }
   render() {
     const tableDataPassenger = [];
     for (let i = 1; i <= 10; i += 1) {
@@ -91,15 +108,16 @@ export default class History extends Component {
       tableDataPassenger.push(rowDataPassenger);
     }
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, ]}>
         <View style={styles.titleStack}>
           <Text style={styles.textTitle}> HISTORY </Text>
+          <TouchableOpacity style={{position: 'absolute', right: 0, width: 100, height: 60, }} onPress={() => this.show_HideFeature()}></TouchableOpacity>
         </View>
-        <Text style={styles.titleNotice}> Click to see details. </Text>
+        <Text style={[this.state.showHiddenFeature ? styles.titleNotice_HiddenFeature : styles.titleNotice]}> Click on the card to see details. </Text>
 
         <ScrollView style={styles.tagsContainer} ref="scrollView"
              onContentSizeChange={(width,height) => this.refs.scrollView.scrollTo({y:height})}>
-          <View style={[this.state.hiddenFeature ? styles.tagPadding : styles.tagPadding_HiddenFeature]}></View>
+          <View style={[this.state.showHiddenFeature ? styles.tagPadding_HiddenFeature : styles.tagPadding]}></View>
           {
             this.state.tags.map((tag, index) => {
               return (
@@ -110,7 +128,7 @@ export default class History extends Component {
                 exit="fadeOutDown"
                 enter="fadeInUp">
                   <TouchableOpacity key = {tag.id} 
-                  style = {[tag.choose ? styles.tag : styles.tagChoose]} 
+                  style = {[tag.choose ? [this.state.showHiddenFeature ? styles.tag_HiddenFeature : styles.tag] : styles.tagChoose]} 
                   onPress={() => this.chooseTag(tag.id)}>
                     <View  style={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
                       <Text style = {styles.bookingDayTag1}>
@@ -273,7 +291,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 0,
     marginTop: 68,
-    color: '#fff',
+    color: '#cfcfcf',
     fontSize: 20,
   },
   infoTag: {
@@ -284,7 +302,7 @@ const styles = StyleSheet.create({
     display: 'flex', 
     flexDirection:'row', 
     justifyContent:'space-between',
-    borderWidth: 1,
+    borderTopWidth: 2,
     borderColor: 'rgba(0,0,0,0.05)',
     borderRadius: 5,
   },
@@ -296,7 +314,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   tagPadding: {
-    height: 285,
+    height: 100,
     width: width,
     //backgroundColor: '#292929',
   },
@@ -348,10 +366,17 @@ const styles = StyleSheet.create({
   rowPassenger: { height: 40, backgroundColor: '#E7E6E1' },
   // Hidden feature
   container_HiddenFeature: { flex: 1, alignItems: 'center', backgroundColor: '#292929', },
+  titleNotice_HiddenFeature: {
+    position: 'absolute',
+    zIndex: 0,
+    marginTop: 68,
+    color: '#fff',
+    fontSize: 20,
+  },
   tagPadding_HiddenFeature: {
-    height: 100,
+    height: 285,
     width: width,
-    //backgroundColor: '#292929',
+    //backgroundColor: 'blue',
   },
   tag_HiddenFeature: {
     marginTop: -190,
