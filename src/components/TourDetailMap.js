@@ -42,7 +42,6 @@ class TourDetailMap extends Component {
 
   _onShowMarkerPress(){
     this.props.tourDetailShowMarker(!this.props.tourDetail.showMarker);
-    console.log(this.props.tourDetail.showMarker);
   }
   callGetNearMeAPI(){
       // Lay ban kinh tuong ung voi chieu doc man hinh
@@ -97,7 +96,7 @@ class TourDetailMap extends Component {
               {markers}
               <TourDetailMapDirection parent={()=>this.mapView}/>
           </MapView>
-          
+
           <View style={{flex: 1, flexDirection: 'row'}}>
               <View style={{marginTop: 5}}>
                   <Icon

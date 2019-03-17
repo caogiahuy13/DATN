@@ -41,7 +41,7 @@ class TourCarouselEntry extends Component {
 
   render () {
     const {item} = this.props;
-
+    console.log(item);
     return (
       <View style={styles.container}>
         <Image source={{uri: item.featured_img}} style={styles.image}/>
@@ -62,7 +62,7 @@ class TourCarouselEntry extends Component {
               title="Detail"
               titleStyle={{fontSize: 14}}
               buttonStyle={styles.button}
-              onPress={()=>{this.props.navigation.navigate("TourDetail",{id: item.id})}}
+              onPress={()=>{this.props.navigation.navigate("TourDetail",{id: item.tour_turns.id})}}
             />
           </View>
         </View>
