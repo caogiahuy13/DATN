@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {Text, View, Image, StyleSheet, Dimensions} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import { Icon } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { tourDetailChangeRoutes } from '../actions/index.js';
+import { tourDetailChangeRoutes, tourDetailShowMarker } from '../actions/index.js';
 import { getRouteByTour, getNearMe } from '../services/api';
 
 import TourDetailMapDirection from './TourDetailMapDirection';
@@ -39,6 +40,10 @@ class TourDetailMap extends Component {
     this.callGetNearMeAPI();
   }
 
+  _onShowMarkerPress(){
+    this.props.tourDetailShowMarker(!this.props.tourDetail.showMarker);
+    console.log(this.props.tourDetail.showMarker);
+  }
   callGetNearMeAPI(){
       // Lay ban kinh tuong ung voi chieu doc man hinh
       let {latitudeDelta, longitudeDelta } = this.state.region;
@@ -92,7 +97,18 @@ class TourDetailMap extends Component {
               {markers}
               <TourDetailMapDirection parent={()=>this.mapView}/>
           </MapView>
+          
           <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{marginTop: 5}}>
+                  <Icon
+                    raised
+                    containerStyle={{opacity: 0.6}}
+                    size={18}
+                    name={this.props.tourDetail.showMarker ? 'map-marker' : 'map-marker-off'}
+                    type='material-community'
+                    onPress={()=>{this._onShowMarkerPress()}}
+                  />
+              </View>
               { this.props.tourDetail.showLocation &&
                 <View style={styles.locationDetail}>
                     <TourDetailMapLocationDetail/>
@@ -126,6 +142,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     tourDetailChangeRoutes: tourDetailChangeRoutes,
+    tourDetailShowMarker: tourDetailShowMarker,
   }, dispatch)
 }
 

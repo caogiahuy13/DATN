@@ -124,3 +124,10 @@ export function tourDetailShowLocation(visible){
     visible,
   }
 }
+
+export function tourDetailShowMarker(visible){
+  return {
+    type: types.TOUR_DETAIL_SHOW_MARKER,
+    visible,
+  }
+}

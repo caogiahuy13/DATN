@@ -5,6 +5,7 @@ let tourDetail = {
   routes: [],
   location: {},
   showLocation: false,
+  showMarker: true,
 }
 
 export default function(state=tourDetail, action){
@@ -32,6 +33,13 @@ export default function(state=tourDetail, action){
         ...state,
         showLocation: action.visible,
       }
+      break;
+    case types.TOUR_DETAIL_SHOW_MARKER:
+      return {
+        ...state,
+        showMarker: action.visible,
+      }
+      break;
   }
   return state;
 }

@@ -173,6 +173,7 @@ class TourDetailMapMarker extends Component{
 
     return(
         <View>
+          { (this.props.tourDetail.showMarker || this._isInRoute(val.id)>=0 ) &&
             <Marker
               coordinate={{latitude: val.latitude, longitude: val.longitude}}
               onPress={() => {this._onMarkerPress()}}
@@ -191,6 +192,7 @@ class TourDetailMapMarker extends Component{
 
                 <Callout tooltip={true}></Callout>
             </Marker>
+          }
         </View>
     );
   }
