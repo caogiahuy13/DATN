@@ -95,3 +95,10 @@ export function filterType(filterTypes){
     filterTypes,
   }
 }
+
+export function tourDetailChangeId(id){
+  return {
+    type: types.TOURL_DETAIL_CHANGE_ID,
+    id,
+  }
+}

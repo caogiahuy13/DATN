@@ -6,6 +6,7 @@ import tourCarouselReducer from './tourCarouselReducer';
 import currentRouteReducer from './currentRouteReducer';
 import accessReducer from './accessReducer';
 import filterLocationReducer from './filterLocationReducer';
+import tourDetailReducer from './tourDetailReducer';
 
 const allReducers= combineReducers({
   region: regionReducer,
@@ -15,5 +16,6 @@ const allReducers= combineReducers({
   currentRoute: currentRouteReducer,
   access: accessReducer,
   filterLocation: filterLocationReducer,
+  tourDetail: tourDetailReducer,
 });
 export default allReducers;
