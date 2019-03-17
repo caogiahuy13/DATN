@@ -9,6 +9,7 @@ import { getRouteByTour, getNearMe } from '../services/api';
 
 import TourDetailMapDirection from './TourDetailMapDirection';
 import TourDetailMapMarker from './TourDetailMapMarker';
+import TourDetailMapLocationDetail from './TourDetailMapLocationDetail';
 
 class TourDetailMap extends Component {
   constructor(props){
@@ -80,16 +81,25 @@ class TourDetailMap extends Component {
     });
 
     return(
-      <MapView style={styles.map}
-          onRegionChange={e => {this._onRegionChange(e)}}
-          showsUserLocation = {true}
-          moveOnMarkerPress = {true}
-          initialRegion={this.state.region}
-          ref={c => this.mapView = c}
-      >
-          {markers}
-          <TourDetailMapDirection parent={()=>this.mapView}/>
-      </MapView>
+      <View style={{flex: 1}}>
+          <MapView style={styles.map}
+              onRegionChange={e => {this._onRegionChange(e)}}
+              showsUserLocation = {true}
+              moveOnMarkerPress = {true}
+              initialRegion={this.state.region}
+              ref={c => this.mapView = c}
+          >
+              {markers}
+              <TourDetailMapDirection parent={()=>this.mapView}/>
+          </MapView>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+              { this.props.tourDetail.showLocation &&
+                <View style={styles.locationDetail}>
+                    <TourDetailMapLocationDetail/>
+                </View>
+              }
+          </View>
+      </View>
     )
   }
 
@@ -98,6 +108,13 @@ class TourDetailMap extends Component {
 const styles = StyleSheet.create({
   map: {
       ...StyleSheet.absoluteFillObject,
+  },
+  locationDetail: {
+    marginVertical: 10,
+    marginRight: 10,
+    marginLeft: 5,
+    flex: 1,
+    justifyContent: 'flex-start',
   },
 })
 

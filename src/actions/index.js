@@ -110,3 +110,17 @@ export function tourDetailChangeRoutes(routes){
     routes,
   }
 }
+
+export function tourDetailChangeLocation(location){
+  return {
+    type: types.TOUR_DETAIL_CHANGE_LOCATION,
+    location,
+  }
+}
+
+export function tourDetailShowLocation(visible){
+  return {
+    type: types.TOUR_DETAIL_SHOW_LOCATION,
+    visible,
+  }
+}

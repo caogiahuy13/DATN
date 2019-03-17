@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import { Badge, Icon} from 'react-native-elements';
 import isEqual from 'lodash.isequal';
 
-import { } from '../actions/index.js';
+import { tourDetailShowLocation, tourDetailChangeLocation } from '../actions/index.js';
 
 class TourDetailMapMarker extends Component{
   constructor(props) {
@@ -93,8 +93,8 @@ class TourDetailMapMarker extends Component{
 
   _onMarkerPress(){
     this.setState({isOrderVisible: !this.state.isOrderVisible});
-    // this.props.handleModalLocation(true);
-    // this.props.changeSelectedLocation(this.props.val);
+    this.props.tourDetailChangeLocation(this.props.val);
+    this.props.tourDetailShowLocation(true);
   }
 
   _isInRoute(id){
@@ -231,7 +231,8 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    tourDetailChangeLocation: tourDetailChangeLocation,
+    tourDetailShowLocation: tourDetailShowLocation,
   }, dispatch)
 }
 
