@@ -8,6 +8,7 @@ import { tourDetailChangeRoutes } from '../actions/index.js';
 import { getRouteByTour, getNearMe } from '../services/api';
 
 import TourDetailMapDirection from './TourDetailMapDirection';
+import TourDetailMapMarker from './TourDetailMapMarker';
 
 class TourDetailMap extends Component {
   constructor(props){
@@ -74,6 +75,10 @@ class TourDetailMap extends Component {
   }
 
   render(){
+    let markers = this.state.dataSource.map((val,key)=>{
+        return (<TourDetailMapMarker key={key} val={val}></TourDetailMapMarker>);
+    });
+
     return(
       <MapView style={styles.map}
           onRegionChange={e => {this._onRegionChange(e)}}
@@ -82,6 +87,7 @@ class TourDetailMap extends Component {
           initialRegion={this.state.region}
           ref={c => this.mapView = c}
       >
+          {markers}
           <TourDetailMapDirection parent={()=>this.mapView}/>
       </MapView>
     )
