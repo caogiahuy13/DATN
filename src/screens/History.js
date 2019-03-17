@@ -22,12 +22,16 @@ export default class History extends Component {
     this.state = { 
       showAlertDeleteTag: false,
       idToDeleteTag: '0',
+      hiddenFeature: false,
       tags: [
         {'choose': 'false', 'show': 'true', 'id': '1', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Sai Gon'},
         {'choose': 'false', 'show': 'true', 'id': '2', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '12', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Ha Noi'},
         {'choose': 'false', 'show': 'true', 'id': '3', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '6', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Vung Tau'},
-        {'choose': 'false', 'show': 'true', 'id': '4', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '11', 'totalMoney': '2.179.000 VND', 'status': 'New',  'title': 'Da Nang'},
-        {'choose': 'false', 'show': 'true', 'id': '5', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'New',  'title': 'Vinh Ha Long'},
+        {'choose': 'false', 'show': 'true', 'id': '4', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Sai Gon'},
+        {'choose': 'false', 'show': 'true', 'id': '5', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '12', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Ha Noi'},
+        {'choose': 'false', 'show': 'true', 'id': '6', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '6', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Vung Tau'},
+        {'choose': 'false', 'show': 'true', 'id': '7', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '11', 'totalMoney': '2.179.000 VND', 'status': 'New',  'title': 'Da Nang'},
+        {'choose': 'false', 'show': 'true', 'id': '8', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'New',  'title': 'Vinh Ha Long'},
       ], 
       tableHeadCheckout: ['', 'Price', 'Count'],
       tableTitleCheckout: ['Adult', 'Children', 'Total'],
@@ -95,7 +99,7 @@ export default class History extends Component {
 
         <ScrollView style={styles.tagsContainer} ref="scrollView"
              onContentSizeChange={(width,height) => this.refs.scrollView.scrollTo({y:height})}>
-          <View style={styles.tagPadding}></View>
+          <View style={[this.state.hiddenFeature ? styles.tagPadding : styles.tagPadding_HiddenFeature]}></View>
           {
             this.state.tags.map((tag, index) => {
               return (
@@ -124,12 +128,11 @@ export default class History extends Component {
                       </TouchableOpacity>
                     </View>
                     <Text style = {styles.titleTag}>{tag.title}</Text>
-                    <View style={{width: '100%', height: 30, backgroundColor: '#cfcfcf', marginTop: 5,
-                                  display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <View style={styles.infoTag}>
                       <Text style={{fontSize: 20, }}><MaterialCommunityIcons name="human-male" size={25}/>{tag.totalSlot}</Text>
                       <Text style={{fontSize: 20, }}>{tag.totalMoney} <MaterialCommunityIcons name="credit-card" size={25}/></Text>
                     </View>
-                    <Image source={{uri: './../assets/images/logo.png'}} style={{resizeMode: 'contain', width: '100%', height: '66%', backgroundColor: '#292929'}} />
+                    {/* <Image source={{uri: './../assets/images/logo.png'}} style={{resizeMode: 'contain', width: '100%', height: '66%', backgroundColor: '#292929'}} /> */}
                   </TouchableOpacity>
                 </Display>
               );
@@ -249,7 +252,7 @@ export default class History extends Component {
 const styles = StyleSheet.create({
   flex: { display: 'flex', },
   none: { display: 'none', },
-  container: { flex: 1, alignItems: 'center', backgroundColor: '#292929', },
+  container: { flex: 1, alignItems: 'center', backgroundColor: '#F4F5F4', },
   titleStack: {
     position: 'absolute',
     zIndex: 1,
@@ -273,6 +276,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
   },
+  infoTag: {
+    width: '100%', 
+    height: 30, 
+    backgroundColor: '#fff', 
+    paddingHorizontal: 20,
+    display: 'flex', 
+    flexDirection:'row', 
+    justifyContent:'space-between',
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.05)',
+    borderRadius: 5,
+  },
   tagsContainer: {
     position: 'absolute',
     zIndex: 0,
@@ -286,20 +301,12 @@ const styles = StyleSheet.create({
     //backgroundColor: '#292929',
   },
   tag: {
-    marginTop: -190,
-    marginLeft: '12.5%',
-    height: 300,
-    width: '75%',
+    margin: 10,
     backgroundColor: '#fff',
-    borderRadius: 5,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.05)',
-    transform: [
-      { perspective: 1000 },
-      //{ translateY: 10},
-      { rotateX: '-40deg'},
-    ],
-    elevation: 3,
+    borderRadius: 5,
+    elevation: 5,
   },
   tagChoose: {
     marginTop: -150,
@@ -338,5 +345,37 @@ const styles = StyleSheet.create({
   headerPassenger: { height: 50, backgroundColor: '#537791' },
   textPassenger: { textAlign: 'center', fontWeight: '100' },
   dataWrapperPassenger: { marginTop: -1 },
-  rowPassenger: { height: 40, backgroundColor: '#E7E6E1' }
+  rowPassenger: { height: 40, backgroundColor: '#E7E6E1' },
+  // Hidden feature
+  container_HiddenFeature: { flex: 1, alignItems: 'center', backgroundColor: '#292929', },
+  tagPadding_HiddenFeature: {
+    height: 100,
+    width: width,
+    //backgroundColor: '#292929',
+  },
+  tag_HiddenFeature: {
+    marginTop: -190,
+    marginLeft: '12.5%',
+    height: 300,
+    width: '75%',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: 'rgba(0,0,0,0.05)',
+    transform: [
+      { perspective: 1000 },
+      //{ translateY: 10},
+      { rotateX: '-40deg'},
+    ],
+    elevation: 3,
+  },
+  infoTag_HiddenFeature: {
+    width: '100%', 
+    height: 30, 
+    backgroundColor: '#cfcfcf', 
+    marginTop: 5,
+    display: 'flex', 
+    flexDirection:'row', 
+    justifyContent:'space-between',
+  },
 })
