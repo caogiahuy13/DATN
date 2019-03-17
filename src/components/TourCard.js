@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import {Text, View, Alert, Image, StyleSheet} from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
 import NumberFormat from 'react-number-format';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
+import { tourDetailChangeId } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 
-export default class TourCard extends Component{
+class TourCard extends Component{
 
   _onPress = () => {
-    this.props.onPress(this.props.data.id)
+    this.props.onPress(this.props.data.id);
+    this.props.tourDetailChangeId(this.props.data.tour.id);
   }
 
   render(){
@@ -108,3 +112,16 @@ const styles = StyleSheet.create({
     fontWeight: '100',
   }
 })
+
+function mapStateToProps(state){
+  return{
+
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    tourDetailChangeId: tourDetailChangeId,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TourCard);

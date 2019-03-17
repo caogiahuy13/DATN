@@ -96,9 +96,17 @@ export function filterType(filterTypes){
   }
 }
 
+// Tour Detail
 export function tourDetailChangeId(id){
   return {
-    type: types.TOURL_DETAIL_CHANGE_ID,
+    type: types.TOUR_DETAIL_CHANGE_ID,
     id,
+  }
+}
+
+export function tourDetailChangeRoutes(routes){
+  return {
+    type: types.TOUR_DETAIL_CHANGE_ROUTES,
+    routes,
   }
 }

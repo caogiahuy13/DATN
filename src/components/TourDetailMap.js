@@ -4,7 +4,7 @@ import MapView, {Marker} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { tourDetailChangeId } from '../actions/index.js';
+import { tourDetailChangeRoutes } from '../actions/index.js';
 import { getRouteByTour, getNearMe } from '../services/api';
 
 import TourDetailMapDirection from './TourDetailMapDirection';
@@ -34,7 +34,7 @@ class TourDetailMap extends Component {
         longitudeDelta: e.longitudeDelta,
       }
     });
-    // this.callGetNearMeAPI();
+    this.callGetNearMeAPI();
   }
 
   callGetNearMeAPI(){
@@ -56,8 +56,21 @@ class TourDetailMap extends Component {
                 .catch((error) => console.error(error));
   }
 
+  async callGetRouteByTour(id){
+    return getRouteByTour(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.props.tourDetailChangeRoutes(responseJson.data);
+            })
+            .catch((error) => console.error(error));
+  }
+
   componentWillUnmount(){
     this.state = false;
+  }
+
+  componentWillMount(){
+    this.callGetRouteByTour(this.props.tourDetail.id);
   }
 
   render(){
@@ -69,7 +82,7 @@ class TourDetailMap extends Component {
           initialRegion={this.state.region}
           ref={c => this.mapView = c}
       >
-          {/*<TourDetailMapDirection id={this.props.id} parent={()=>this.mapView}/>*/}
+          <TourDetailMapDirection parent={()=>this.mapView}/>
       </MapView>
     )
   }
@@ -89,7 +102,7 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    tourDetailChangeRoutes: tourDetailChangeRoutes,
   }, dispatch)
 }
 
