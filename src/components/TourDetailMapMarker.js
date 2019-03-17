@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import { Badge, Icon} from 'react-native-elements';
 import isEqual from 'lodash.isequal';
 
-import { handleModalLocation, changeSelectedLocation, filterLocation } from '../actions/index.js';
+import { } from '../actions/index.js';
 
 class TourDetailMapMarker extends Component{
   constructor(props) {
@@ -93,19 +93,19 @@ class TourDetailMapMarker extends Component{
 
   _onMarkerPress(){
     this.setState({isOrderVisible: !this.state.isOrderVisible});
-    this.props.handleModalLocation(true);
-    this.props.changeSelectedLocation(this.props.val);
+    // this.props.handleModalLocation(true);
+    // this.props.changeSelectedLocation(this.props.val);
   }
 
   _isInRoute(id){
-    let idList = this.props.currentRoute.data.map((val,key)=>{
+    let idList = this.props.tourDetail.routes.map((val,key)=>{
       return(val.location.id);
     });
     return idList.indexOf(id);
   }
 
   getBadge(id){
-    let idList = this.props.currentRoute.data.map((val,key)=>{
+    let idList = this.props.tourDetail.routes.map((val,key)=>{
       return(val.location.id);
     });
 
@@ -159,38 +159,35 @@ class TourDetailMapMarker extends Component{
   }
 
   render(){
-    // const { val, currentRoute, filterLocation } = this.props;
     const {val} = this.props;
 
     // Link ảnh địa điểm
     let icon = React.createRef();
     icon = this.getImageUrl(val.type.marker);
 
-    // if (currentRoute.isVisible && this._isInRoute(val.id)>=0){
-    //   icon = require("../assets/images/markers/location.png");
-    // }
+    if (this._isInRoute(val.id)>=0){
+      icon = require("../assets/images/markers/location.png");
+    }
 
     let badge = this.getBadge(val.id);
 
     return(
         <View>
             <Marker
-              coordinate={{
-                latitude: val.latitude,
-                longitude: val.longitude,
-              }}
-              // onPress={() => {this._onMarkerPress()}}
-              tracksViewChanges={this.state.tracksViewChanges}
+              coordinate={{latitude: val.latitude, longitude: val.longitude}}
+              onPress={() => {this._onMarkerPress()}}
+              // tracksViewChanges={{this.state.tracksViewChanges}
+              tracksViewChanges={false}
             >
-                {/* this.state.isOrderVisible && this._isInRoute(val.id)>=0 && badge.isMultiple &&
+                { this.state.isOrderVisible && this._isInRoute(val.id)>=0 && badge.isMultiple &&
                   <Text style={styles.callout}>Orders: {badge.multipleLabel}</Text>
-                */}
+                }
 
                 <Image source={icon} style={styles.image}/>
 
-                {/* currentRoute.isVisible && this._isInRoute(val.id)>=0 &&
+                { this._isInRoute(val.id)>=0 &&
                   <Text style={styles.num}>{badge.label}</Text>
-                */}
+                }
 
                 <Callout tooltip={true}></Callout>
             </Marker>
@@ -229,15 +226,12 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return{
-    modalLocation: state.modalLocation,
-    currentRoute: state.currentRoute,
-    filterLocation: state.filterLocation,
+    tourDetail: state.tourDetail,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-    handleModalLocation: handleModalLocation,
-    changeSelectedLocation: changeSelectedLocation,
+
   }, dispatch)
 }
 
