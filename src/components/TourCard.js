@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { tourDetailChangeId } from '../actions/index.js';
+import { tourDetailChangeId, tourDetailShowMarker } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 
 class TourCard extends Component{
@@ -13,6 +13,7 @@ class TourCard extends Component{
   _onPress = () => {
     this.props.onPress(this.props.data.id);
     this.props.tourDetailChangeId(this.props.data.tour.id);
+    this.props.tourDetailShowMarker(true);
   }
 
   render(){
@@ -24,7 +25,7 @@ class TourCard extends Component{
           title={data.tour.name}
           image={{uri: data.tour.featured_img}}
           titleStyle={styles.title}
-          containerStyle={{padding: 0}}
+          containerStyle={styles.card}
         >
 
           <View style={{justifyContent: 'flex-start'}}>
@@ -81,6 +82,11 @@ class TourPrice extends Component {
 
 
 const styles = StyleSheet.create({
+  card: {
+    padding: 0,
+    borderRadius: 4,
+    elevation: 2,
+  },
   price: {
     fontSize: 24,
     // color: 'rgb(178,34,34)',
@@ -121,6 +127,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     tourDetailChangeId: tourDetailChangeId,
+    tourDetailShowMarker: tourDetailShowMarker,
   }, dispatch)
 }
 

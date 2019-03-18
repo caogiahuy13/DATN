@@ -165,7 +165,7 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isDetailCollapsed}>
-                <View style={{height: 400}}>
+                <View style={{height: 400, marginBottom: 10}}>
                     <TourDetailMap/>
                 </View>
                 <Text>{tour.detail}</Text>

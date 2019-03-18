@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatLi
 import TourCard from '../components/TourCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { getAllTour, getAllTourTurn } from '../services/api';
+import { getAllTourTurn } from '../services/api';
 import { COLOR_MAIN } from '../constants/index';
 
 var { width } = Dimensions.get('window');
@@ -19,19 +19,6 @@ export default class Tours extends Component {
     this.state = {
       tours: {},
     }
-  }
-
-  async callGetAllTourAPI(){
-    return getAllTour()
-          .then((response) => {
-            return response.json();
-           })
-           .then((responseJson) => {
-             return responseJson.data;
-           })
-          .catch((error) => {
-            console.error(error);
-          });
   }
 
   async callGetAllTourTurnAPI(){
