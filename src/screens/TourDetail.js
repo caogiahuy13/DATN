@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import { } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour } from '../services/api';
 import { GOOGLE_MAPS_APIKEY,
-         COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED } from '../constants/index';
+         COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
 
 import TourDetailMap from '../components/TourDetailMap';
 
@@ -112,7 +112,7 @@ class TourDetail extends Component{
         <ScrollView>
           <Card
             containerStyle = {{margin: 0, padding: 0}}
-            title=<TourTitle title={tour.name}/>
+            title=<TourTitle title={tour.name} isSale={currentTurn.discount > 0}/>
             titleStyle={styles.cardTitle}
           >
             <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>
@@ -141,7 +141,7 @@ class TourDetail extends Component{
 
                 <Divider style={{height: 1}}/>
 
-                <TourPrice price={currentTurn.price}/>
+                <TourPrice price={currentTurn.price} discount={currentTurn.discount}/>
             </View>
           </Card>
 
@@ -229,6 +229,11 @@ class TourTitle extends Component{
           <Text style={{flex: 1, fontWeight: 'bold', fontSize: 18, color: COLOR_LIGHT_BLACK}}>
               {this.props.title}
           </Text>
+          { this.props.isSale &&
+            <View style={{width: 60, flex: 1, marginTop: 8, justifyContent: 'flex-end'}}>
+              <Button buttonStyle={styles.sale} title='SALE!' titleStyle={{fontSize: 14}}/>
+            </View>
+          }
       </View>
     );
   }
@@ -236,11 +241,23 @@ class TourTitle extends Component{
 
 class TourPrice extends Component {
   render(){
+    let newPrice = this.props.price - (this.props.price * this.props.discount)/100;
     return(
       <View style={{marginVertical: 8, alignItems: 'center'}}>
+        { this.props.discount > 0 &&
+          <Text style={{color:'gray', fontWeight: 'bold', fontSize: 14, textDecorationLine: 'line-through'}}>
+            <NumberFormat
+              value={this.props.price}
+              displayType={'text'}
+              thousandSeparator={true}
+              suffix={' VNĐ'}
+              renderText={value => <Text>{value}</Text>}
+            />
+          </Text>
+        }
         <Text style={{color:'#C50000', fontWeight: 'bold', fontSize: 24}}>
           <NumberFormat
-            value={this.props.price}
+            value={newPrice}
             displayType={'text'}
             thousandSeparator={true}
             suffix={' VNĐ'}
@@ -291,6 +308,11 @@ const styles = StyleSheet.create({
   },
   map: {
       ...StyleSheet.absoluteFillObject,
+  },
+  sale: {
+    backgroundColor: COLOR_GREEN,
+    borderRadius: 0,
+    padding: 0,
   },
 })
 

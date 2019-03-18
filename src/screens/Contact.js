@@ -3,6 +3,8 @@ import { View, StyleSheet, Alert, Text, ScrollView, TextInput, TouchableOpacity 
 import { Card } from 'react-native-elements';
 import MapView, {Marker} from 'react-native-maps';
 
+import { COLOR_GREEN } from '../constants/index';
+
 class Contact extends Component {
   static navigationOptions = {
     title: 'Contact',
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
         color: 'gray',
     },
     buttonLogin: {
-        backgroundColor: '#1BBC9B',
+        backgroundColor: COLOR_GREEN,
         paddingVertical: 10,
         marginTop: 20,
     },

@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { tourDetailChangeId, tourDetailShowMarker } from '../actions/index.js';
-import { COLOR_MAIN } from '../constants/index';
+import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 class TourCard extends Component{
 
@@ -45,6 +45,11 @@ class TourCard extends Component{
                         startingValue={2.5}
                         style={{ alignSelf: 'flex-start', marginTop: 4}}
                       />
+                      { data.discount > 0 &&
+                        <View style={{width: 70, flex: 1, justifyContent: 'flex-end'}}>
+                          <Button buttonStyle={styles.sale} title='SALE!'/>
+                        </View>
+                      }
                   </View>
                   <View style={{alignContent: 'flex-end'}}>
                       <TourPrice value={data.price}/>
@@ -107,6 +112,11 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     paddingHorizontal: 16,
     paddingVertical: 6,
+  },
+  sale: {
+    backgroundColor: COLOR_GREEN,
+    borderRadius: 0,
+    padding: 0,
   },
   title: {
     alignSelf: 'flex-start',

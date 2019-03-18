@@ -10,6 +10,7 @@ import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 import { me, updateSex, updateBirthdate, logout } from '../services/api';
+import { COLOR_GRAY } from '../constants/index';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -238,6 +239,7 @@ class Setting extends Component {
           onPress={() => {this.props.navigation.navigate("AboutUs")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron/>}
+          // leftIcon=<Icon name='info' type='octicon' color='gray'/>
         />
         <ListItem
           title="Contact"
@@ -245,6 +247,7 @@ class Setting extends Component {
           onPress={() => {this.props.navigation.navigate("Contact")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron/>}
+          // leftIcon=<Icon name='contacts' type='material-community' color='gray'/>
         />
 
         <Space/>
