@@ -108,16 +108,9 @@ class Setting extends Component {
 
   // Gọi API me lấy thông tin người dùng
   async callMeAPI(){
-    return me()
-            .then((response) => {
-                return response.json();
-              })
-            .then((responseJson) => {
-              return responseJson;
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+    return me().then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
   }
 
   // Gọi API cập nhật giới tính
@@ -125,7 +118,7 @@ class Setting extends Component {
     return updateSex(sex)
             .then((response) => response.json())
             .then((responseJson) => responseJson)
-            .catch((error) => {console.error(error);});
+            .catch((error) => console.error(error));
   }
 
   // Gọi API cập nhật ngày sinh
@@ -236,6 +229,23 @@ class Setting extends Component {
             rightIcon={<Chevron />}
           />
         }
+
+        <Space/>
+
+        <ListItem
+          title="About Us"
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {this.props.navigation.navigate("AboutUs")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron/>}
+        />
+        <ListItem
+          title="Contact"
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {this.props.navigation.navigate("Contact")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron/>}
+        />
 
         <Space/>
 

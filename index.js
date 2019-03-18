@@ -12,5 +12,6 @@ import TourCard from './src/components/TourCard';
 import TourDetail from './src/screens/TourDetail';
 import ForgetPassword from './src/screens/ForgetPassword';
 import TourDetailMap from './src/components/TourDetailMap';
+import AboutUs from './src/screens/AboutUs';
 
 AppRegistry.registerComponent(appName, () => App);

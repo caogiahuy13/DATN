@@ -7,11 +7,15 @@ import { COLOR_MAIN } from '../constants/index';
 
 import Setting from '../screens/Setting';
 import ChangePassword from '../screens/ChangePassword';
+import AboutUs from '../screens/AboutUs';
+import Contact from '../screens/Contact';
 
 const SettingStack = createStackNavigator(
   {
     Setting,
     ChangePassword,
+    AboutUs,
+    Contact,
   },
   {
     defaultNavigationOptions: {
@@ -32,7 +36,7 @@ SettingStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "ChangePassword") {
+        if (route.routeName === "ChangePassword" || route.routeName === "AboutUs" || route.routeName === "Contact") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;
