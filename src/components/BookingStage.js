@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 
-import { COLOR_MAIN } from '../constants/index';
+import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
     alignItems: 'center',
+    backgroundColor: COLOR_GRAY_BACKGROUND,
   },
   icon: {
     flex: 1,
