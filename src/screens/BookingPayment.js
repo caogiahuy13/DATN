@@ -7,6 +7,7 @@ import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE 
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
+import BookingTourCard from '../components/BookingTourCard';
 
 class BookingPayment extends Component {
   constructor(props){
@@ -34,6 +35,10 @@ class BookingPayment extends Component {
     return(
       <ScrollView style={styles.container}>
           <BookingStage stage={2}/>
+
+          <Space/>
+
+          <BookingTourCard/>
 
           <Space/>
 

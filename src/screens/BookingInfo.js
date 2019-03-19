@@ -10,6 +10,7 @@ import BookingStage from '../components/BookingStage';
 import NumberPicker from '../components/NumberPicker';
 import BookingPassenger from '../components/BookingPassenger';
 import InfoText from '../components/InfoText';
+import BookingTourCard from '../components/BookingTourCard';
 
 class BookingInfo extends Component {
   constructor(props){
@@ -143,6 +144,10 @@ class BookingInfo extends Component {
           <BookingStage stage={1}/>
 
           <Space/>
+
+          <BookingTourCard/>
+
+          <InfoText text="Number of passengers"/>
 
           <View style={styles.card}>
               <View style={styles.numberPicker}>
