@@ -8,6 +8,6 @@ import App from './App';
 import {name as appName} from './app.json';
 
 import TourDetailMap from './src/components/TourDetailMap';
+import BookingInfo from './src/screens/BookingInfo';
 
-
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => BookingInfo);

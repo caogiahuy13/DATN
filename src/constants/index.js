@@ -1,5 +1,5 @@
 export const HOST = 'http://10.0.3.2:5000/';
-
+// export const HOST = 'http://192.168.1.4:5000/';
 export const GOOGLE_MAPS_APIKEY = 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q';
 export const GOOGLE_MAPS_APIKEY_TWO = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 

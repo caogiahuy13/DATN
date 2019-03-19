@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: COLOR_MAIN,
-    borderRadius: 0,
+    borderRadius: 1,
     marginLeft: 10,
     marginBottom: 0,
     paddingHorizontal: 16,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   sale: {
     backgroundColor: COLOR_GREEN,
-    borderRadius: 0,
+    borderRadius: 1,
     padding: 0,
   },
   title: {

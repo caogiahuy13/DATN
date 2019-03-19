@@ -10,7 +10,6 @@ import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 import { me, updateSex, updateBirthdate, logout } from '../services/api';
-import { COLOR_GRAY } from '../constants/index';
 
 const deviceWidth = Dimensions.get("window").width;
 

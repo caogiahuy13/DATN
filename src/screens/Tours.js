@@ -32,7 +32,7 @@ export default class Tours extends Component {
     this.props.navigation.navigate("TourDetail",{id: id});
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.callGetAllTourTurnAPI()
         .then((data)=>{
           this.setState({tours: data});
