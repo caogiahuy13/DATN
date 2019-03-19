@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity, ScrollView, Keyboard} from 'react-native';
-import { Card, Icon, ListItem } from 'react-native-elements';
+import { Card, Icon, ListItem, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
 
@@ -196,6 +196,18 @@ class BookingInfo extends Component {
 
           {passengersCard}
 
+          <Space/>
+
+          <Button
+            title="NEXT"
+            type="solid"
+            buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+            containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
+            titleStyle={{fontSize: 16}}
+          />
+
+          <Space/>
+
       </ScrollView>
     )
   }
@@ -237,18 +249,6 @@ const styles = StyleSheet.create({
       fontSize: 18,
       flex: 1,
       alignSelf: 'center',
-    },
-    listItemContainer: {
-      height: 55,
-      borderWidth: 0.5,
-      borderColor: '#ECECEC',
-    },
-    modalGender: {
-      backgroundColor: 'white',
-      alignItems: 'center',
-      borderRadius: 4,
-      borderColor: 'rgba(0, 0, 0, 0.1)',
-      borderWidth: 1,
     },
 })
 
