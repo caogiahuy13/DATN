@@ -37,9 +37,8 @@ class BookingPassenger extends Component {
     })
     this._showGenderModal(false);
   };
-
-    // Hiển thị modal chọn giới tính
-    _renderModalContent = () => {
+  // Hiển thị modal chọn giới tính
+  _renderModalContent = () => {
       let isMale;
       if (this.state.passenger.gender != ''){
         isMale = (this.state.passenger.gender.toLowerCase() == 'male') ? true : false;
@@ -89,9 +88,83 @@ class BookingPassenger extends Component {
     this._showDateTimePicker(false);
   };
 
+
+  changeFullname(value){
+    this.setState(
+      {
+        passenger: {
+          ...this.state.passenger,
+          fullname: value
+        }
+      }, () => {
+        this.props.update(this.state.passenger, this.props.index);
+      }
+    );
+  }
+  changeBirthday(value){
+    this.setState(
+      {
+        passenger: {
+          ...this.state.passenger,
+          birthday: value
+        }
+      }, () => {
+        this.props.update(this.state.passenger, this.props.index);
+      }
+    );
+  }
+  changeAge(value){
+    this.setState(
+      {
+        passenger: {
+          ...this.state.passenger,
+          age: value
+        }
+      }, () => {
+        this.props.update(this.state.passenger, this.props.index);
+      }
+    );
+  }
+  changeGender(value){
+    this.setState(
+      {
+        passenger: {
+          ...this.state.passenger,
+          gender: value
+        }
+      }, () => {
+        this.props.update(this.state.passenger, this.props.index);
+      }
+    );
+  }
+  changePhone(value){
+    this.setState(
+      {
+        passenger: {
+          ...this.state.passenger,
+          phone: value
+        }
+      }, () => {
+        this.props.update(this.state.passenger, this.props.index);
+      }
+    );
+  }
+  changeIdentity(value){
+    this.setState(
+      {
+        passenger: {
+          ...this.state.passenger,
+          identity: value
+        }
+      }, () => {
+        this.props.update(this.state.passenger, this.props.index);
+      }
+    );
+  }
+
   render(){
     const {passenger} = this.state;
-
+    let infoText = "Passenger Information #" + this.props.index;
     return(
       <View>
           <DateTimePicker
@@ -107,7 +180,7 @@ class BookingPassenger extends Component {
             {this._renderModalContent()}
           </Modal>
 
-          <InfoText text="Passenger Information"/>
+          <InfoText text={infoText}/>
 
           <View style={styles.card}>
               <TextInput
@@ -116,12 +189,7 @@ class BookingPassenger extends Component {
                   placeholderTextColor='rgba(0,0,0,0.4)'
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({
-                                            passenger: {
-                                              ...this.state.passenger,
-                                              fullname: value
-                                            }
-                                          })}
+                  onChangeText={(value)=> this.changeFullname(value)}
               />
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
                 <TextInput
@@ -130,12 +198,7 @@ class BookingPassenger extends Component {
                     placeholderTextColor='rgba(0,0,0,0.4)'
                     returnKeyType='next'
                     autoCorrect={false}
-                    onChangeText={(value)=> this.setState({
-                                              passenger: {
-                                                ...this.state.passenger,
-                                                birthday: value
-                                              }
-                                            })}
+                    onChangeText={(value)=> this.changeBirthday(value)}
                     editable={false} selectTextOnFocus={false}
                     value={passenger.birthday == '' ? null : Moment(this.state.passenger.birthday).format('DD/MM/YYYY')}
                 />
@@ -147,12 +210,7 @@ class BookingPassenger extends Component {
                   keyboardType='numeric'
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({
-                                            passenger: {
-                                              ...this.state.passenger,
-                                              age: value
-                                            }
-                                          })}
+                  onChangeText={(value)=> this.changeAge(value)}
               />
 
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showGenderModal(true)}>
@@ -162,12 +220,7 @@ class BookingPassenger extends Component {
                     placeholderTextColor='rgba(0,0,0,0.4)'
                     returnKeyType='next'
                     autoCorrect={false}
-                    onChangeText={(value)=> this.setState({
-                                              passenger: {
-                                                ...this.state.passenger,
-                                                gender: value
-                                              }
-                                            })}
+                    onChangeText={(value)=> this.changeGender(value)}
                     editable={false} selectTextOnFocus={false}
                     value={passenger.gender == '' ? null : passenger.gender}
                 />
@@ -179,12 +232,7 @@ class BookingPassenger extends Component {
                   keyboardType='phone-pad'
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({
-                                            passenger: {
-                                              ...this.state.passenger,
-                                              phone: value
-                                            }
-                                          })}
+                  onChangeText={(value)=> this.changePhone(value)}
               />
               <TextInput
                   style={styles.input}
@@ -193,12 +241,7 @@ class BookingPassenger extends Component {
                   keyboardType='numeric'
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({
-                                            passenger: {
-                                              ...this.state.passenger,
-                                              identity: value
-                                            }
-                                          })}
+                  onChangeText={(value)=> this.changeIdentity(value)}
               />
           </View>
       </View>

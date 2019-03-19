@@ -96,30 +96,47 @@ class BookingInfo extends Component {
   }
   changePassengerNumber(){
     let number = this.state.number.children + this.state.number.adult;
-    console.log(number);
 
-    let passengers = [];
-    for (let i=0; i<number; i++){
-      passengers.push({
-        fullname: '',
-        birthday: '',
-        age: 0,
-        gender: '',
-        phone: '',
-        identity: '',
-      });
+    let {passengers} = this.state;
+    let newPassengers = [];
+
+    if (passengers.length >= number){
+      for (let i=0; i<number; i++){
+        newPassengers.push(passengers[i]);
+      }
+    } else {
+      for (let i=0; i<passengers.length; i++){
+        newPassengers.push(passengers[i]);
+      }
+      let newNum = number - passengers.length;
+      for (let i=0; i<newNum; i++){
+        newPassengers.push({
+          fullname: '',
+          birthday: '',
+          age: 0,
+          gender: '',
+          phone: '',
+          identity: '',
+        });
+      }
     }
 
-    this.setState({passengers: passengers});
+    this.setState({passengers: newPassengers});
+  }
+
+  update = (passenger, index) => {
+    let passengers = this.state.passengers;
+    passengers[index-1] = passenger;
+    this.setState({passengers: passengers},()=>{console.log(this.state.passengers);});
   }
 
   render(){
+    let index = 0;
     let passengersCard = this.state.passengers.map((val,key)=>{
-      return (
-        <BookingPassenger key={key} val={val}/>
-      )
+      index += 1;
+      return (<BookingPassenger key={key} val={val} index={index} update={this.update}/>);
     });
-    
+
     return(
       <ScrollView style={styles.container}>
 
