@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, Dimensions, AsyncStorage } from 'react-native';
 import { ListItem, Divider, Avatar, Icon } from 'react-native-elements'
+import Dialog from "react-native-dialog";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
@@ -9,7 +10,7 @@ import {connect} from 'react-redux';
 import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
-import { me, updateSex, updateBirthdate, logout } from '../services/api';
+import { me, updateSex, updateBirthdate, logout, userUpdate } from '../services/api';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -23,7 +24,11 @@ class Setting extends Component {
     this.state = {
       isGenderModalVisible: false,
       isDateTimePickerVisible: false,
+      isAddressModalVisible: false,
+
       isLogedIn: false,
+
+      tmpAddress: '',
     }
 
     this.CheckLogedIn();
@@ -35,6 +40,14 @@ class Setting extends Component {
     this.callUpdateBirthdateAPI(date).then(()=>{
       this.props.changeBirthday(date);
       this._showDateTimePicker(false);
+    })
+  };
+
+  //Các hàm quản lý Address Modal
+  _showAddressModal = (visible) => this.setState({ isAddressModalVisible: visible });
+  _handleAddressModal = (address) => {
+    this.callUpdateAddress(address).then(()=>{
+      this._showAddressModal(false);
     })
   };
 
@@ -96,6 +109,16 @@ class Setting extends Component {
     })
   }
 
+  showAddress(address){
+    let ret = '';
+    if (address.length > 45){
+      ret = address.substring(0,47) + ' ...';
+    } else {
+      ret = address;
+    }
+    return ret;
+  }
+
   // Kiểm tra đã đăng nhập
   async CheckLogedIn(){
     await AsyncStorage.getItem('userToken')
@@ -144,6 +167,25 @@ class Setting extends Component {
                    .catch((error) => console.error(error));
   }
 
+  async callUpdateAddress(address){
+    const data = new FormData();
+    data.append('address',address);
+
+    return userUpdate(data)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+           .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else {
+                this.props.changeProfile(responseJson.profile);
+              }
+           })
+           .catch((error) => console.error(error));
+  }
+
   componentDidMount(){
     this.callMeAPI().then((data)=>{
       this.props.changeProfile(data.profile);
@@ -178,6 +220,14 @@ class Setting extends Component {
         >
           {this._renderModalContent()}
         </Modal>
+        <Dialog.Container visible={this.state.isAddressModalVisible}>
+            <Dialog.Title>Enter Address</Dialog.Title>
+            <Dialog.Description>Please enter new address</Dialog.Description>
+            <Dialog.Input placeholder="Address" style={{borderBottomWidth: 0.5}} onChangeText={(value) => this.setState({tmpAddress: value})}>
+            </Dialog.Input>
+            <Dialog.Button label="Cancel" onPress={()=>this._showAddressModal(false)} />
+            <Dialog.Button label="OK" onPress={()=>this._handleAddressModal(this.state.tmpAddress)} />
+        </Dialog.Container>
 
         <View style={styles.userRow}>
           <View style={styles.userImage}>
@@ -225,6 +275,14 @@ class Setting extends Component {
           rightTitle={(Moment(profile.birthdate).format('DD/MM/YYYY')=='Invalid date') ? '' : Moment(profile.birthdate).format('DD/MM/YYYY')}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showDateTimePicker(true)}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+        />
+        <ListItem
+          title="Address"
+          rightTitle={profile.address ? this.showAddress(profile.address) : ''}
+          rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
+          onPress={() => {this._showAddressModal(true)}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
         />
