@@ -15,22 +15,18 @@ class BookingTourCard extends Component{
         titleStyle={styles.cardTitle}
         image={require('../assets/images/tour-card-img.jpg')}
       >
-        <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-                <TourInfo firstText="Code:" secondText="00001"/>
-                <TourInfo firstText="Start date:" secondText="01/01/2019"/>
-                <TourInfo firstText="End date:" secondText="05/01/2019"/>
-                <TourInfo firstText="Lasting:" secondText="1 days"/>
-            </View>
-            <View style={styles.priceContainer}>
-                <Text>TOTAL PRICE:</Text>
-                <Text style={{fontWeight: 'bold', fontSize: 26, color: COLOR_HARD_RED }}>100,000,00 VNĐ</Text>
-            </View>
-
-
-
+        <View style={{flex: 1, paddingHorizontal: 4, paddingBottom: 10}}>
+            <TourInfo firstText="Code:" secondText="00001"/>
+            <TourInfo firstText="Start date:" secondText="01/01/2019"/>
+            <TourInfo firstText="End date:" secondText="05/01/2019"/>
+            <TourInfo firstText="Lasting:" secondText="1 days"/>
+            <TourInfo firstText="Adult price:" secondText="100,000 VNĐ x 1"/>
+            <TourInfo firstText="Children price:" secondText="100,000 VNĐ x 0"/>
         </View>
-
+        <View style={styles.priceContainer}>
+            <Text>TOTAL PRICE:</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 26, color: COLOR_HARD_RED }}>100,000,00 VNĐ</Text>
+        </View>
       </Card>
     );
   }
