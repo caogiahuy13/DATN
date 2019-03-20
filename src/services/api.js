@@ -148,6 +148,22 @@ export async function updatePassword(old_password, new_password){
                             })
 }
 
+export async function userUpdate(data){
+  let URL = HOST + 'user/update';
+  return await AsyncStorage.getItem('userToken')
+                            .then((auth) => {
+                              return fetch(URL, {
+                                method: 'PUT',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': auth,
+                                  'Content-Type': 'multipart/form-data',
+                                },
+                                body: data,
+                              });
+                            })
+}
+
 export async function getTourById(id){
   let URL = HOST + 'tour/getById/' + id;
   return await fetch(URL);

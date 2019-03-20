@@ -184,7 +184,7 @@ class Setting extends Component {
             <Avatar
               rounded
               size="large"
-              onPress={()=>{Alert.alert("Test")}}
+              onPress={()=>{this.props.navigation.navigate("ChangeAvatar")}}
               source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'}}
             />
           </View>
