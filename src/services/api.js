@@ -79,6 +79,20 @@ export async function logout(){
                             })
 }
 
+export async function forgetPassword(email){
+  let URL = HOST + 'user/forgetPassword';
+  return await fetch(URL, {
+                            method: 'POST',
+                            headers: {
+                              Accept: 'application/json',
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              email: email,
+                            }),
+                          })
+}
+
 export async function updateSex(sex){
   let URL = HOST + 'user/updateSex';
   return await AsyncStorage.getItem('userToken')

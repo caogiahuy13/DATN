@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import {
-    StyleSheet, Text, View, Image,
+    StyleSheet, Text, View, Image, Alert,
     TextInput, TouchableOpacity,
     KeyboardAvoidingView, Button,
     AsyncStorage,
 } from 'react-native'
 
 import { ERR_EMAIL } from '../constants/index';
+import { forgetPassword } from '../services/api';
 
 class ForgetPassword extends Component {
     constructor(props){
@@ -33,15 +34,42 @@ class ForgetPassword extends Component {
       return true;
     }
 
+    async callForgetPassword(){
+      let status;
+      return forgetPassword(this.state.email)
+            .then((response) => {
+                status = response.status;
+                return response.json();
+              })
+            .then((responseJson) => {
+              if (status == 400){
+                this.setError(responseJson.msg,true);
+              } else if (status != 400){
+                this.setError('',false);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+    }
+
     // Hàm gọi thi nhấn nút Send Request
     _onPressSendRequest(){
       let validate = this.checkEmail();
       if (validate){
-        // this.callLoginAPI().then(()=>{
-        //   if (this.state.isError == false){
-        //     this.props.navigation.navigate("Map");
-        //   }
-        // })
+        this.callForgetPassword().then(()=>{
+          if (this.state.isError == false){
+            Alert.alert(
+              'Congratulations',
+              'New password has been sent to your email!',
+              [
+                {text: 'OK', onPress: () => this.props.navigation.navigate("Login")},
+              ],
+              {cancelable: false},
+            );
+              // this.props.navigation.navigate("Login");
+            }
+        })
       }
     }
 
