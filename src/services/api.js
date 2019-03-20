@@ -203,3 +203,19 @@ export async function getCommentByTour(id){
   let URL = HOST + 'comment/getByTour/' + id;
   return await fetch(URL);
 }
+
+export async function createRequest(name, email, message){
+  let URL = HOST + 'request/create';
+  return await fetch(URL, {
+                            method: 'POST',
+                            headers: {
+                              Accept: 'application/json',
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              name: name,
+                              email: email,
+                              message: message,
+                            }),
+                          })
+}

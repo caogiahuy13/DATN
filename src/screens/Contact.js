@@ -4,17 +4,88 @@ import { Card } from 'react-native-elements';
 import MapView, {Marker} from 'react-native-maps';
 
 import { COLOR_GREEN } from '../constants/index';
+import { ERR_NAME, ERR_EMAIL, ERR_MESSAGE } from '../constants/index';
+import { createRequest } from '../services/api';
 
 class Contact extends Component {
   static navigationOptions = {
     title: 'Contact',
   };
 
+  constructor(props){
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      message: '',
+    }
+  }
+
+  // Thay đổi state của error
+  setError(err, isError){
+    this.setState({err: err, isError: isError});
+  }
+
+  // Kiểm tra thông tin
+  checkUser(){
+    if (this.state.name == ''){
+      this.setError(ERR_NAME, true);
+      return false;
+    }
+    if (this.state.email == ''){
+      this.setError(ERR_EMAIL, true);
+      return false;
+    }
+    if (this.state.message == ''){
+      this.setError(ERR_MESSAGE, true);
+      return false;
+    }
+    this.setError('', false);
+    return true;
+  }
+
+  // Gọi create request API
+  async callCreateRequest(){
+    let status;
+    return createRequest(this.state.name, this.state.email, this.state.message)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+          .then((responseJson) => {
+            if (status == 400){
+              this.setError(responseJson.msg,true);
+            } else {
+              this.setError('',false);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+  }
+
+  sendPress(){
+    let validate = this.checkUser();
+    if (validate){
+      this.callCreateRequest().then(()=>{
+          if (this.state.isError == false){
+            Alert.alert(
+              'Congratulations',
+              'You message has been sent to our email!',
+              [
+                {text: 'OK', onPress: () => {}},
+              ],
+              {cancelable: false},
+            );
+          }
+      })
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Card
-          containerStyle = {styles.card}
+        <View style = {styles.card}
         >
           <View style={{height: 300, marginBottom: 10}}>
               <MapView style={styles.map}
@@ -74,17 +145,38 @@ class Contact extends Component {
           <Space/>
 
           <Text style={styles.inputText}>Name:</Text>
-          <TextInput style={styles.input} autoCorrect={false}/>
+          <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              returnKeyType='next'
+              autoCorrect={false}
+              onChangeText={(value)=> this.setState({name: value})}
+          />
           <Text style={styles.inputText}>Email:</Text>
-          <TextInput style={styles.input} autoCorrect={false}/>
+          <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              returnKeyType='next'
+              keyboardType='email-address'
+              autoCorrect={false}
+              onChangeText={(value)=> this.setState({email: value})}
+          />
           <Text style={styles.inputText}>Message:</Text>
-          <TextInput style={styles.input} autoCorrect={false}/>
+          <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              keyboardType='email-address'
+              autoCorrect={false}
+              onChangeText={(value)=> this.setState({message: value})}
+          />
 
-          <TouchableOpacity style={styles.buttonLogin} onPress={() => {}}>
+          { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
+
+          <TouchableOpacity style={styles.buttonLogin} onPress={() => {this.sendPress()}}>
                <Text style={styles.buttonText}>SEND NOW</Text>
           </TouchableOpacity>
 
-        </Card>
+        </View>
       </ScrollView>
     );
   }
@@ -114,6 +206,7 @@ const styles = StyleSheet.create({
     },
     card: {
       margin: 0,
+      padding: 12,
     },
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -143,6 +236,11 @@ const styles = StyleSheet.create({
         color :'#fff',
         fontWeight: 'bold',
         fontSize: 18,
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 16,
+        marginTop: 10,
     },
 })
 
