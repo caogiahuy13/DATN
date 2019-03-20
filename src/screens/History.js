@@ -9,6 +9,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Display from 'react-native-display';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
@@ -24,6 +25,7 @@ export default class History extends Component {
       idToDeleteTag: '0',
       showHiddenFeature: false,
       countShowHiddenFeature: 0,
+      zoomTablePassenger: false,
       tags: [
         {'choose': 'false', 'show': 'true', 'id': '1', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '1', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Sai Gon'},
         {'choose': 'false', 'show': 'true', 'id': '2', 'code': '0009522', 'bookingDay': '08/03/2019 10:04', 'totalSlot': '12', 'totalMoney': '2.179.000 VND', 'status': 'Old',  'title': 'Ha Noi'},
@@ -88,6 +90,10 @@ export default class History extends Component {
       this.setState({showHiddenFeature: false});
       this.setState({countShowHiddenFeature: 0});
     }
+  }
+  zoom_TablePassenger(){
+    const temp = !this.state.zoomTablePassenger;
+    this.setState({zoomTablePassenger: temp});
   }
   render() {
     const tableDataPassenger = [];
@@ -211,8 +217,13 @@ export default class History extends Component {
                       </Text>
                     </Text>
         {/* Passenger Information:  */}
-                    <Text style = {styles.titleTagDetail}>Passenger Information: </Text>
-                    <View style={styles.tablePassenger}>
+                    <View style={{  width: width, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                      <Text style = {styles.titleTagDetail}>Passenger Information: </Text>
+                      <TouchableOpacity style={{  marginRight: 10, }} onPress={() => this.zoom_TablePassenger()}>
+                        <MaterialIcons name="zoom-out-map" size={30} color={"#324A5E"}/>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={[this.state.zoomTablePassenger ? styles.tablePassenger2 : styles.tablePassenger1]}>
                       <ScrollView horizontal={true}>
                         <View>
                           <Table borderStyle={{borderColor: '#C1C0B9'}}>
@@ -359,7 +370,8 @@ const styles = StyleSheet.create({
   tableTitleContact: { textAlign: 'left', paddingLeft: 10, fontSize: 15, fontWeight: 'bold' },
   tableDataContact: { fontWeight: 'normal' },
   //
-  tablePassenger: { marginHorizontal: 10, marginTop: 5, backgroundColor: '#fff', height: '37%', },
+  tablePassenger1: { marginHorizontal: 10, marginTop: 5, backgroundColor: '#fff', height: '37%', },
+  tablePassenger2: { position: 'absolute', paddingHorizontal: 10, marginTop: 70, backgroundColor: '#fff', width: width },
   headerPassenger: { height: 50, backgroundColor: '#537791' },
   textPassenger: { textAlign: 'center', fontWeight: '100' },
   dataWrapperPassenger: { marginTop: -1 },
