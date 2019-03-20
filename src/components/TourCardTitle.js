@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Card, Icon, Button } from 'react-native-elements';
 
 import { COLOR_LIGHT_BLACK, COLOR_GREEN } from '../constants/index';
 

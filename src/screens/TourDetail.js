@@ -9,11 +9,13 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { } from '../actions/index.js';
-import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour } from '../services/api';
+import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour } from '../services/api';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
 
 import TourDetailMap from '../components/TourDetailMap';
+import TourDetailReview from '../components/TourDetailReview';
+import TourCardTitle from '../components/TourCardTitle';
 
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
@@ -29,6 +31,7 @@ class TourDetail extends Component{
       dayDiff: 0,
       slotLeft: 0,
       daysLeft: 0,
+      comments: [],
 
       isDescriptionCollapsed: true,
       isDetailCollapsed: true,
@@ -66,6 +69,14 @@ class TourDetail extends Component{
             })
             .catch((error) => console.error(error));
   }
+  async callGetCommentByTour(id){
+    return getCommentByTour(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.setState({comments: responseJson.data});
+            })
+            .catch((error) => console.error(error));
+  }
 
   getDaysLeft(startDate){
     let day1 = Moment(new Date());
@@ -95,6 +106,7 @@ class TourDetail extends Component{
     this.callGetTourTurnById(id)
         .then(()=>{
           this.callGetImageByTourId(this.state.tour.id);
+          this.callGetCommentByTour(this.state.tour.id);
           this.setMultipleState();
         });
   }
@@ -105,14 +117,20 @@ class TourDetail extends Component{
 
   render(){
     Moment.locale('en');
-    const {tour, currentTurn, dayDiff, slotLeft, daysLeft} = this.state;
+    const {tour, currentTurn, dayDiff, slotLeft, daysLeft, comments} = this.state;
+
+    let reviews = comments.map((val,key)=>{
+      return (
+        <TourDetailReview key={key} comment={val}/>
+      )
+    })
 
     return(
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
         <ScrollView>
           <Card
             containerStyle = {{margin: 0, padding: 0}}
-            title=<TourTitle title={tour.name} isSale={currentTurn.discount > 0}/>
+            title=<TourCardTitle title={tour.name} isSale={currentTurn.discount > 0}/>
             titleStyle={styles.cardTitle}
           >
             <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>
@@ -181,14 +199,14 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isReviewCollapsed}>
-                  <Review/>
-                  <Review/>
+                  {reviews}
               </Collapsible>
           </Card>
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
         </ScrollView>
+
         <Button
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
           title='BOOK TOUR'
@@ -222,23 +240,6 @@ class CardTitle extends Component{
   }
 }
 
-class TourTitle extends Component{
-  render(){
-    return(
-      <View style={{flex: 1, padding: 10}}>
-          <Text style={{flex: 1, fontWeight: 'bold', fontSize: 18, color: COLOR_LIGHT_BLACK}}>
-              {this.props.title}
-          </Text>
-          { this.props.isSale &&
-            <View style={{width: 60, flex: 1, marginTop: 8, justifyContent: 'flex-end'}}>
-              <Button buttonStyle={styles.sale} title='SALE!' titleStyle={{fontSize: 14}}/>
-            </View>
-          }
-      </View>
-    );
-  }
-}
-
 class TourPrice extends Component {
   render(){
     let newPrice = this.props.price - (this.props.price * this.props.discount)/100;
@@ -264,33 +265,6 @@ class TourPrice extends Component {
             renderText={value => <Text>{value}</Text>}
           />
         </Text>
-      </View>
-    )
-  }
-}
-
-class Review extends Component {
-  render(){
-    return(
-      <View style={{paddingHorizontal: 4}}>
-        <View style={{flexDirection: 'row', paddingTop: 6}}>
-          <Avatar rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }} containerStyle={{marginRight: 8}}/>
-          <Text style={{alignSelf: 'center', flex: 1, color: COLOR_LIGHT_BLACK}}>ABC</Text>
-          <Rating
-            type='custom'
-            ratingCount={5}
-            imageSize={14}
-            ratingColor = {COLOR_MAIN}
-            readonly
-            ratingBackgroundColor='#c8c7c8'
-            startingValue={2.5}
-            style={{alignSelf: 'center'}}
-          />
-        </View>
-        <View style={{paddingVertical: 8}}>
-            <Text>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-        </View>
-        <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/>
       </View>
     )
   }
