@@ -4,15 +4,13 @@ import { Card, Icon, ListItem, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
 
-import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
+import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
 
 import BookingStage from '../components/BookingStage';
 import NumberPicker from '../components/NumberPicker';
 import BookingPassenger from '../components/BookingPassenger';
 import InfoText from '../components/InfoText';
 import BookingTourCard from '../components/BookingTourCard';
-
-const placeHolderColor = 'rgba(0,0,0,0.15)';
 
 class BookingInfo extends Component {
   static navigationOptions = {
@@ -212,7 +210,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Fullname *"
-                  placeholderTextColor={placeHolderColor}
+                  placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {fullname: value}})}
@@ -220,7 +218,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Phone number *"
-                  placeholderTextColor={placeHolderColor}
+                  placeholderTextColor={COLOR_PLACEHOLDER}
                   keyboardType='phone-pad'
                   returnKeyType='next'
                   autoCorrect={false}
@@ -229,7 +227,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Email *"
-                  placeholderTextColor={placeHolderColor}
+                  placeholderTextColor={COLOR_PLACEHOLDER}
                   keyboardType='email-address'
                   returnKeyType='next'
                   autoCorrect={false}
@@ -238,7 +236,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Address *"
-                  placeholderTextColor={placeHolderColor}
+                  placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {address: value}})}

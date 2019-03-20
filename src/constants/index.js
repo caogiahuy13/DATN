@@ -10,6 +10,7 @@ export const COLOR_GRAY = '#434A54'; // website main gray color
 export const COLOR_HARD_RED = '#C50000'; // book tour button color
 export const COLOR_GRAY_BACKGROUND = '#F4F5F4'; // background color of setting
 export const COLOR_LIGHT_BLUE = '#2089DC'; // default color of react-native-elements button
+export const COLOR_PLACEHOLDER = 'rgba(0,0,0,0.15)'; // place holder color for text input
 
 export const ERR_USERNAME = 'Email or Phone number must be in right format';
 export const ERR_PASSWORD = 'Password is required';
