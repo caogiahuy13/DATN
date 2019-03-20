@@ -16,6 +16,7 @@ import { GOOGLE_MAPS_APIKEY,
 import TourDetailMap from '../components/TourDetailMap';
 import TourDetailReview from '../components/TourDetailReview';
 import TourCardTitle from '../components/TourCardTitle';
+import CollapsibleCardTitle from '../components/CollapsibleCardTitle';
 
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
@@ -117,13 +118,16 @@ class TourDetail extends Component{
 
   render(){
     Moment.locale('en');
-    const {tour, currentTurn, dayDiff, slotLeft, daysLeft, comments} = this.state;
+    const {
+      tour, currentTurn,
+      dayDiff, slotLeft, daysLeft,
+      comments,
+      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed,
+    } = this.state;
 
     let reviews = comments.map((val,key)=>{
-      return (
-        <TourDetailReview key={key} comment={val}/>
-      )
-    })
+      return (<TourDetailReview key={key} comment={val}/>)
+    });
 
     return(
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
@@ -167,10 +171,10 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CardTitle title="Description" status={this.state.isDescriptionCollapsed} onPress={()=>this.toggleDescription()}/>
+            title=<CollapsibleCardTitle title="Description" status={isDescriptionCollapsed} onPress={()=>this.toggleDescription()}/>
             titleStyle={styles.cardTitle}
           >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isDescriptionCollapsed}>
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isDescriptionCollapsed}>
                 <Text>{tour.description}</Text>
               </Collapsible>
           </Card>
@@ -179,10 +183,10 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CardTitle title="Detail" status={this.state.isDetailCollapsed} onPress={()=>this.toggleDetail()}/>
+            title=<CollapsibleCardTitle title="Detail" status={isDetailCollapsed} onPress={()=>this.toggleDetail()}/>
             titleStyle={styles.cardTitle}
           >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isDetailCollapsed}>
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isDetailCollapsed}>
                 <View style={{height: 400, marginBottom: 10}}>
                     <TourDetailMap/>
                 </View>
@@ -195,10 +199,10 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CardTitle title="Reviews" status={this.state.isReviewCollapsed} onPress={()=>this.toggleReview()}/>
+            title=<CollapsibleCardTitle title="Reviews" status={isReviewCollapsed} onPress={()=>this.toggleReview()}/>
             titleStyle={styles.cardTitle}
           >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isReviewCollapsed}>
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isReviewCollapsed}>
                   {reviews}
               </Collapsible>
           </Card>
@@ -213,28 +217,6 @@ class TourDetail extends Component{
           onPress={()=>{this.props.navigation.navigate("BookingInfo")}}
           titleStyle={{fontSize: 18, fontWeight: 'bold'}}
         />
-      </View>
-    );
-  }
-}
-
-class CardTitle extends Component{
-  render(){
-    return(
-      <View>
-        <TouchableOpacity style={{flexDirection: 'row', flex: 1, paddingVertical: 10}} activeOpacity={0.7} onPress={this.props.onPress}>
-          <Text style={{flex: 1, fontWeight: 'bold', fontSize: 18, color: COLOR_LIGHT_BLACK}}>
-              {this.props.title}
-          </Text>
-          <Icon
-              name={this.props.status ? 'caretleft' : 'caretdown'}
-              type='antdesign'
-              color={COLOR_LIGHT_BLACK}
-              size={17}
-              containerStyle={{justifyContent: 'center'}}
-          />
-        </TouchableOpacity>
-        { !this.props.status && <Divider style={{height: 1, backgroundColor: '#F4F5F4'}}/> }
       </View>
     );
   }
