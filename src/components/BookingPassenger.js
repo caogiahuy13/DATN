@@ -7,6 +7,8 @@ import Modal from 'react-native-modal';
 
 import InfoText from './InfoText';
 
+const placeHolderColor = 'rgba(0,0,0,0.15)';
+
 class BookingPassenger extends Component {
   constructor(props){
     super(props);
@@ -14,7 +16,7 @@ class BookingPassenger extends Component {
       passenger: {
         fullname: '',
         birthday: '',
-        age: 0,
+        age: '',
         gender: '',
         phone: '',
         identity: '',
@@ -162,9 +164,15 @@ class BookingPassenger extends Component {
     );
   }
 
+  componentWillMount(){
+    const {val} = this.props;
+    this.setState({passenger: val});
+  }
+
   render(){
     const {passenger} = this.state;
     let infoText = "Passenger Information #" + this.props.index;
+    
     return(
       <View>
           <DateTimePicker
@@ -186,7 +194,7 @@ class BookingPassenger extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Fullname *"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.changeFullname(value)}
@@ -195,7 +203,7 @@ class BookingPassenger extends Component {
                 <TextInput
                     style={styles.input}
                     placeholder="Birthday *"
-                    placeholderTextColor='rgba(0,0,0,0.4)'
+                    placeholderTextColor={placeHolderColor}
                     returnKeyType='next'
                     autoCorrect={false}
                     onChangeText={(value)=> this.changeBirthday(value)}
@@ -206,18 +214,17 @@ class BookingPassenger extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Age *"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
-                  keyboardType='numeric'
-                  returnKeyType='next'
-                  autoCorrect={false}
+                  placeholderTextColor={placeHolderColor}
                   onChangeText={(value)=> this.changeAge(value)}
+                  editable={false} selectTextOnFocus={false}
+                  value={passenger.age == '' ? null : passenger.age}
               />
 
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showGenderModal(true)}>
                 <TextInput
                     style={styles.input}
                     placeholder="Gender *"
-                    placeholderTextColor='rgba(0,0,0,0.4)'
+                    placeholderTextColor={placeHolderColor}
                     returnKeyType='next'
                     autoCorrect={false}
                     onChangeText={(value)=> this.changeGender(value)}
@@ -228,7 +235,7 @@ class BookingPassenger extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Phone number"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   keyboardType='phone-pad'
                   returnKeyType='next'
                   autoCorrect={false}
@@ -237,7 +244,7 @@ class BookingPassenger extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Identity number/ Passport"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   keyboardType='numeric'
                   returnKeyType='next'
                   autoCorrect={false}

@@ -12,6 +12,8 @@ import BookingPassenger from '../components/BookingPassenger';
 import InfoText from '../components/InfoText';
 import BookingTourCard from '../components/BookingTourCard';
 
+const placeHolderColor = 'rgba(0,0,0,0.15)';
+
 class BookingInfo extends Component {
   static navigationOptions = {
     title: 'Passenger Information',
@@ -30,7 +32,9 @@ class BookingInfo extends Component {
         adult: 0,
         children: 0,
       },
-      passengers: [],
+
+      adultInfo: [],
+      childrenInfo: [],
 
       isDateTimePickerVisible: false,
       isGenderModalVisible: false,
@@ -47,7 +51,7 @@ class BookingInfo extends Component {
         }
       },
       () => {
-        this.changePassengerNumber();
+        this.changeChildrenNumber();
       }
     );
   }
@@ -64,7 +68,7 @@ class BookingInfo extends Component {
         }
       },
       () => {
-        this.changePassengerNumber();
+        this.changeChildrenNumber();
       }
     );
   }
@@ -78,7 +82,7 @@ class BookingInfo extends Component {
         }
       },
       () => {
-        this.changePassengerNumber();
+        this.changeAdultNumber();
       }
     );
   }
@@ -95,30 +99,30 @@ class BookingInfo extends Component {
         }
       },
       () => {
-        this.changePassengerNumber();
+        this.changeAdultNumber();
       }
     );
   }
-  changePassengerNumber(){
-    let number = this.state.number.children + this.state.number.adult;
 
-    let {passengers} = this.state;
-    let newPassengers = [];
+  changeAdultNumber(){
+    let number = this.state.number.adult;
+    let {adultInfo} = this.state;
+    let newAdultInfo = [];
 
-    if (passengers.length >= number){
+    if (adultInfo.length >= number){
       for (let i=0; i<number; i++){
-        newPassengers.push(passengers[i]);
+        newAdultInfo.push(adultInfo[i]);
       }
     } else {
-      for (let i=0; i<passengers.length; i++){
-        newPassengers.push(passengers[i]);
+      for (let i=0; i<adultInfo.length; i++){
+        newAdultInfo.push(adultInfo[i]);
       }
-      let newNum = number - passengers.length;
+      let newNum = number - adultInfo.length;
       for (let i=0; i<newNum; i++){
-        newPassengers.push({
+        newAdultInfo.push({
           fullname: '',
           birthday: '',
-          age: 0,
+          age: 'Adult',
           gender: '',
           phone: '',
           identity: '',
@@ -126,21 +130,59 @@ class BookingInfo extends Component {
       }
     }
 
-    this.setState({passengers: newPassengers});
+    this.setState({adultInfo: newAdultInfo});
+  }
+  changeChildrenNumber(){
+    let number = this.state.number.children;
+    let {childrenInfo} = this.state;
+    let newChildrenInfo = [];
+
+    if (childrenInfo.length >= number){
+      for (let i=0; i<number; i++){
+        newChildrenInfo.push(childrenInfo[i]);
+      }
+    } else {
+      for (let i=0; i<childrenInfo.length; i++){
+        newChildrenInfo.push(childrenInfo[i]);
+      }
+      let newNum = number - childrenInfo.length;
+      for (let i=0; i<newNum; i++){
+        newChildrenInfo.push({
+          fullname: '',
+          birthday: '',
+          age: 'Children',
+          gender: '',
+          phone: '',
+          identity: '',
+        });
+      }
+    }
+
+    this.setState({childrenInfo: newChildrenInfo});
   }
 
   update = (passenger, index) => {
-    let passengers = this.state.passengers;
-    passengers[index-1] = passenger;
-    this.setState({passengers: passengers},()=>{console.log(this.state.passengers);});
+    let {adultInfo, childrenInfo} = this.state;
+
+    if (passenger.age == 'Adult'){
+      adultInfo[index-1] = passenger;
+      this.setState({adultInfo: adultInfo});
+    } else if (passenger.age == 'Children'){
+      childrenInfo[index-this.state.number.adult-1] = passenger;
+      this.setState({childrenInfo: childrenInfo});
+    }
   }
 
   render(){
     let index = 0;
-    let passengersCard = this.state.passengers.map((val,key)=>{
+    let adultCard = this.state.adultInfo.map((val,key)=>{
       index += 1;
       return (<BookingPassenger key={key} val={val} index={index} update={this.update}/>);
-    });
+    })
+    let childrenCard = this.state.childrenInfo.map((val,key)=>{
+      index += 1;
+      return (<BookingPassenger key={key} val={val} index={index} update={this.update}/>);
+    })
 
     return(
       <ScrollView style={styles.container}>
@@ -170,7 +212,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Fullname *"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {fullname: value}})}
@@ -178,7 +220,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Phone number *"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   keyboardType='phone-pad'
                   returnKeyType='next'
                   autoCorrect={false}
@@ -187,7 +229,7 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Email *"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   keyboardType='email-address'
                   returnKeyType='next'
                   autoCorrect={false}
@@ -196,14 +238,15 @@ class BookingInfo extends Component {
               <TextInput
                   style={styles.input}
                   placeholder="Address *"
-                  placeholderTextColor='rgba(0,0,0,0.4)'
+                  placeholderTextColor={placeHolderColor}
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {address: value}})}
               />
           </View>
 
-          {passengersCard}
+          {adultCard}
+          {childrenCard}
 
           <Space/>
 
