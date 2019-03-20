@@ -192,7 +192,7 @@ class TourDetail extends Component{
         <Button
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
           title='BOOK TOUR'
-          onPress={()=>{}}
+          onPress={()=>{this.props.navigation.navigate("BookingInfo")}}
           titleStyle={{fontSize: 18, fontWeight: 'bold'}}
         />
       </View>

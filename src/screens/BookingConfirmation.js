@@ -9,6 +9,10 @@ import InfoText from '../components/InfoText';
 import BookingTourCard from '../components/BookingTourCard';
 
 class BookingConfirmation extends Component {
+  static navigationOptions = {
+    title: 'Confirm Your Booking',
+  };
+
   constructor(props){
     super(props);
     this.state = {
@@ -57,16 +61,18 @@ class BookingConfirmation extends Component {
           </View>
 
           <Space/>
-          
+
           <Button
             title="NEXT"
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
+            onPress={()=>{this.props.navigation.navigate("Tours")}}
           />
 
           <Space/>
+
       </ScrollView>
     )
   }
@@ -111,6 +117,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: COLOR_GRAY_BACKGROUND,
+      paddingVertical: 10,
     },
     space: {
       paddingTop: 20,

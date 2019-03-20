@@ -10,5 +10,6 @@ import {name as appName} from './app.json';
 import TourDetailMap from './src/components/TourDetailMap';
 import BookingInfo from './src/screens/BookingInfo';
 import BookingPayment from './src/screens/BookingPayment';
+import BookingConfirmation from './src/screens/BookingConfirmation';
 
 AppRegistry.registerComponent(appName, () => App);

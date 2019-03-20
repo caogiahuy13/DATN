@@ -13,6 +13,10 @@ import InfoText from '../components/InfoText';
 import BookingTourCard from '../components/BookingTourCard';
 
 class BookingInfo extends Component {
+  static navigationOptions = {
+    title: 'Passenger Information',
+  };
+
   constructor(props){
     super(props);
     this.state = {
@@ -209,10 +213,10 @@ class BookingInfo extends Component {
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
+            onPress={()=>{this.props.navigation.navigate("BookingPayment")}}
           />
 
           <Space/>
-
       </ScrollView>
     )
   }
@@ -226,6 +230,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLOR_GRAY_BACKGROUND,
+        paddingVertical: 10,
     },
     input: {
         fontSize: 16,
