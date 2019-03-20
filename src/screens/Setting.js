@@ -181,12 +181,22 @@ class Setting extends Component {
 
         <View style={styles.userRow}>
           <View style={styles.userImage}>
-            <Avatar
-              rounded
-              size="large"
-              onPress={()=>{this.props.navigation.navigate("ChangeAvatar")}}
-              source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'}}
-            />
+            { !profile.avatar &&
+              <Avatar
+                rounded
+                size="large"
+                onPress={()=>{this.props.navigation.navigate("ChangeAvatar")}}
+                source={require('../assets/images/default_user.jpg')}
+              />
+            }
+            { profile.avatar &&
+              <Avatar
+                rounded
+                size="large"
+                onPress={()=>{this.props.navigation.navigate("ChangeAvatar")}}
+                source={{ uri: profile.avatar }}
+              />
+            }
           </View>
           <View>
             <Text style={{ fontSize: 16 }} onPress={()=>{Alert.alert("TEST")}}>{profile.fullname}</Text>

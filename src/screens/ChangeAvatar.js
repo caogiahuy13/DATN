@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Alert, Image, AsyncStorage } from 'react-native';
-import {Input, Text, Button} from 'react-native-elements';
+import { View, Text, StyleSheet, Alert, Image, AsyncStorage } from 'react-native';
+import {Input, Button} from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
+import SvgUri from 'react-native-svg-uri';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -66,28 +67,38 @@ class ChangeAvatar extends Component {
            .catch((error) => console.error(error));
   }
 
-
   render() {
     const { photo } = this.state;
+    const { profile } = this.props.access;
 
     return (
       <View style={styles.container}>
+          <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
+              {!photo && !profile.avatar && (
+                <Image
+                  source={require('../assets/images/default_user.jpg')}
+                  style={{ width: 240, height: 240 }}
+                />
+              )}
+              {!photo && profile.avatar && (
+                <Image
+                  source={{ uri: profile.avatar }}
+                  style={{ width: 240, height: 240 }}
+                />
+              )}
 
-            <Image
-              source={require('../assets/images/svg/upload-photo.svg')}
-              style={{ width: 300, height: 300 }}
-            />
-
-          {photo && (
-            <Image
-              source={{ uri: photo.uri }}
-              style={{ width: 300, height: 300 }}
-            />
-          )}
-          <Button title="Choose Photo" onPress={this.handleChoosePhoto} />
+              {photo && (
+                <Image
+                  source={{ uri: photo.uri }}
+                  style={{ width: 240, height: 240 }}
+                />
+              )}
+              <View style={{margin: 10}}></View>
+              <Button title="Choose Photo" onPress={this.handleChoosePhoto} />
+          </View>
 
           <Button
-            title="CHANGE PASSWORD"
+            title="CHANGE AVATAR"
             onPress={()=>{this._onButtonPress()}}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN}}
@@ -100,7 +111,7 @@ class ChangeAvatar extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        padding: 20,
     },
 })
 
