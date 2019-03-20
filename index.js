@@ -11,4 +11,4 @@ import TourDetailMap from './src/components/TourDetailMap';
 import BookingInfo from './src/screens/BookingInfo';
 import BookingPayment from './src/screens/BookingPayment';
 
-AppRegistry.registerComponent(appName, () => BookingPayment);
+AppRegistry.registerComponent(appName, () => App);

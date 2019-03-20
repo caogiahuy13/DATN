@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  StyleSheet, Text, View,
+  StyleSheet, Text, View, Alert,
   TouchableWithoutFeedback,
   TextInput, TouchableOpacity,
   KeyboardAvoidingView, AsyncStorage,
@@ -36,7 +36,15 @@ class Register extends Component {
       if (validate){
         this.callRegisterAPI().then(()=>{
           if (this.state.isError == false){
-            this.props.navigation.navigate("Map");
+            Alert.alert(
+              'Congratulations',
+              'You registered an account successfully! Please check your email to verify the account!',
+              [
+                {text: 'OK', onPress: () => this.props.navigation.navigate("Login")},
+              ],
+              {cancelable: false},
+            );
+            // this.props.navigation.navigate("Login");
           }
         })
       }
