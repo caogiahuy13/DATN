@@ -218,11 +218,23 @@ class BookingInfo extends Component {
         this.setError(ERR_BOOKING_PASSENGER_INFO, true);
         return false;
       }
+      if (adultInfo[i].phone != ''){
+        if (adultInfo[i].phone.length != 10){
+          this.setError(ERR_PHONE_LENGTH, true);
+          return false;
+        }
+      }
     }
     for (let i=0; i<childrenInfo.length; i++){
       if (childrenInfo[i].fullname == '' || childrenInfo[i].birthdate == '' || childrenInfo[i].sex == ''){
         this.setError(ERR_BOOKING_PASSENGER_INFO, true);
         return false;
+      }
+      if (childrenInfo[i].phone != ''){
+        if (childrenInfo[i].phone.length != 10){
+          this.setError(ERR_PHONE_LENGTH, true);
+          return false;
+        }
       }
     }
 
@@ -230,11 +242,40 @@ class BookingInfo extends Component {
     return true;
   }
 
+  getInfo(){
+    const {tourTurn, contactInfo, adultInfo, childrenInfo, number} = this.state;
+
+    let passengers = [];
+    for(let i=0; i<adultInfo.length; i++){
+      passengers.push(adultInfo[i]);
+    }
+    for(let i=0; i<childrenInfo.length; i++){
+      passengers.push(childrenInfo[i]);
+    }
+
+    let info = {
+      idTour_Turn: tourTurn.id,
+      payment: '',
+      fullname: contactInfo.fullname,
+      phone: contactInfo.phone,
+      email: contactInfo.email,
+      address: contactInfo.address,
+      passengers: passengers,
+      total_pay: tourTurn.price_passengers[0].price * number.adult + tourTurn.price_passengers[1].price * number.children,
+    }
+
+    return info;
+  }
+
   onNextPress(){
     let validate = this.validate();
     if (validate){
       if (this.state.isError == false){
-        this.props.navigation.navigate("BookingPayment");
+
+        this.getInfo();
+        this.props.bookingChangeInfo(this.getInfo());
+        console.log(this.props.booking);
+        // this.props.navigation.navigate("BookingPayment");
       }
     }
     // this.props.navigation.navigate("BookingPayment");
