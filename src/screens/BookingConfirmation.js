@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TextInput, ScrollView, AsyncStorage } from 'react-native';
 import { Card, Icon, Button, Divider } from 'react-native-elements';
+import Moment from 'moment';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
+import { bookingChangeInfo } from '../actions/index';
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
 import BookingTourCard from '../components/BookingTourCard';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-
-import { bookingChangeInfo } from '../actions/index';
 
 class BookingConfirmation extends Component {
   static navigationOptions = {
@@ -41,44 +41,42 @@ class BookingConfirmation extends Component {
   }
 
   render(){
-    console.log(this.props.booking);
+    const {info, tourTurn, number} = this.props.booking;
+
+    let index = 0;
+    let passengers = info.passengers.map((val,key)=>{
+      index += 1;
+      return(
+        <View key={key}>
+            <PassengerInfo data={val}/>
+            { (index != info.passengers.length) &&
+              <Divider style={{height: 0.5}}/>
+            }
+        </View>
+      );
+    })
+
     return(
       <ScrollView style={styles.container}>
           <BookingStage stage={3}/>
 
           <Space/>
 
-          <BookingTourCard data={this.props.booking.tourTurn} number={this.props.booking.number}/>
+          <BookingTourCard data={tourTurn} number={number}/>
 
           <InfoText text="Contact Information"/>
 
           <View style={styles.card}>
-              <ContactInfo firstTxt="Fullname:" secondTxt="Cao Gia Huy"/>
-              <ContactInfo firstTxt="Phone number:" secondTxt="0123456789"/>
-              <ContactInfo firstTxt="Email:" secondTxt="cghuy@gmail.com"/>
-              <ContactInfo firstTxt="Address:" secondTxt="227 Nguyen Van Cu"/>
+              <ContactInfo firstTxt="Fullname:" secondTxt={info.fullname}/>
+              <ContactInfo firstTxt="Phone number:" secondTxt={info.phone}/>
+              <ContactInfo firstTxt="Email:" secondTxt={info.email}/>
+              <ContactInfo firstTxt="Address:" secondTxt={info.address}/>
           </View>
 
           <InfoText text="Passenger Information"/>
 
           <View style={styles.card}>
-              <PassengerInfo
-                  fullname="Cao Gia Huy"
-                  phone="0123456789"
-                  birthday="01/01/2019"
-                  gender="Male"
-                  age="Adult"
-                  identity="0123456789"
-              />
-              <Divider style={{height: 0.5}}/>
-              <PassengerInfo
-                  fullname="Cao Gia Huy"
-                  phone="0123456789"
-                  birthday="01/01/2019"
-                  gender="Male"
-                  age="Adult"
-                  identity="0123456789"
-              />
+              {passengers}
           </View>
 
           <Space/>
@@ -118,16 +116,16 @@ class ContactInfo extends Component {
 
 class PassengerInfo extends Component {
   render(){
-    const {fullname, age, birthday, gender, phone, identity} = this.props;
+    const {fullname, phone, birthdate, sex, passport, type} = this.props.data;
 
     return(
       <View style={{paddingVertical: 10}}>
           <Text style={{fontWeight: 'bold'}}>{fullname}</Text>
-          <Text>{phone}</Text>
-          <Text>{birthday}</Text>
-          <Text>{gender}</Text>
-          <Text>{age}</Text>
-          <Text>{identity}</Text>
+          <Text>{Moment(birthdate).format('DD/MM/YYYY')}</Text>
+          <Text>{sex}</Text>
+          <Text>{type}</Text>
+          { phone != '' && <Text>{phone}</Text> }
+          { passport != '' && <Text>{passport}</Text> }
       </View>
     )
   }

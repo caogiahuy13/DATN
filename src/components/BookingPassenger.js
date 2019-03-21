@@ -16,10 +16,10 @@ class BookingPassenger extends Component {
       passenger: {
         fullname: '',
         birthdate: '',
-        age: '',
+        type: '',
         sex: '',
         phone: '',
-        identity: '',
+        passport: '',
       },
 
       isDateTimePickerVisible: false,
@@ -120,7 +120,7 @@ class BookingPassenger extends Component {
       {
         passenger: {
           ...this.state.passenger,
-          age: value
+          type: value
         }
       }, () => {
         this.props.update(this.state.passenger, this.props.index);
@@ -156,7 +156,7 @@ class BookingPassenger extends Component {
       {
         passenger: {
           ...this.state.passenger,
-          identity: value
+          passport: value
         }
       }, () => {
         this.props.update(this.state.passenger, this.props.index);
@@ -217,7 +217,7 @@ class BookingPassenger extends Component {
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   onChangeText={(value)=> this.changeAge(value)}
                   editable={false} selectTextOnFocus={false}
-                  value={passenger.age == '' ? null : passenger.age}
+                  value={passenger.type == '' ? null : passenger.type}
               />
 
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showGenderModal(true)}>
