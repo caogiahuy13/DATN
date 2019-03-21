@@ -7,6 +7,10 @@ import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
 import BookingTourCard from '../components/BookingTourCard';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import { bookingChangeInfo } from '../actions/index';
 
 class BookingConfirmation extends Component {
   static navigationOptions = {
@@ -37,13 +41,14 @@ class BookingConfirmation extends Component {
   }
 
   render(){
+    console.log(this.props.booking);
     return(
       <ScrollView style={styles.container}>
           <BookingStage stage={3}/>
 
           <Space/>
 
-          <BookingTourCard/>
+          <BookingTourCard data={this.props.booking.tourTurn} number={this.props.booking.number}/>
 
           <InfoText text="Contact Information"/>
 
@@ -147,4 +152,15 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BookingConfirmation;
+function mapStateToProps(state){
+  return{
+    booking: state.booking,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookingConfirmation);

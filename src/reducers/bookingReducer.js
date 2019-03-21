@@ -11,6 +11,8 @@ let booking = {
     passengers: [],
     total_pay: 0,
   },
+  tourTurn: {},
+  number: {},
 }
 
 export default function(state = booking, action){
@@ -20,6 +22,18 @@ export default function(state = booking, action){
         ...state,
         info: action.info,
       };
+      break;
+    case types.BOOKING_CHANGE_TOURTURN:
+      return {
+        ...state,
+        tourTurn: action.tourTurn,
+      };
+      break;
+    case types.BOOKING_CHANGE_NUMBER:
+      return {
+        ...state,
+        number: action.number,
+      }
       break;
   }
   return state;

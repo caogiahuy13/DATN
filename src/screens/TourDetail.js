@@ -8,8 +8,8 @@ import Slideshow from 'react-native-image-slider-show';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { } from '../actions/index.js';
-import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour } from '../services/api';
+import { bookingChangeTourTurn } from '../actions/index.js';
+import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, } from '../services/api';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
 
@@ -103,11 +103,10 @@ class TourDetail extends Component{
   }
 
   onBookNowPress(){
-    this.props.navigation.navigate("BookingInfo", {
-      data: this.state.currentTurn,
-    });
+    this.props.bookingChangeTourTurn(this.state.currentTurn);
+    this.props.navigation.navigate("BookingInfo");
   }
-  
+
   componentWillMount(){
     const id = this.props.navigation.getParam("id");
     this.callGetTourTurnById(id)
@@ -280,12 +279,12 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return{
-
+    booking: state.booking,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    bookingChangeTourTurn: bookingChangeTourTurn,
   }, dispatch)
 }
 

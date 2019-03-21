@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 
 import { ERR_BOOKING_CONTACT_INFO, ERR_BOOKING_PASSENGER_INFO, ERR_BOOKING_PASSENGER_MIN, ERR_PHONE_LENGTH, ERR_EMAIL_VALIDATE,
          COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
-import { bookingChangeInfo } from '../actions/index';
+import { bookingChangeInfo, bookingChangeTourTurn, bookingChangeNumber } from '../actions/index';
 import { } from '../services/api';
 
 import BookingStage from '../components/BookingStage';
@@ -37,7 +37,7 @@ class BookingInfo extends Component {
       },
 
       number: {
-        adult: 0,
+        adult: 1,
         children: 0,
       },
 
@@ -96,8 +96,8 @@ class BookingInfo extends Component {
   }
   decreaseAdult(){
     let changeValue = this.state.number.adult - 1;
-    if (changeValue < 0){
-      changeValue = 0
+    if (changeValue < 1){
+      changeValue = 1
     }
     this.setState(
       {
@@ -271,18 +271,19 @@ class BookingInfo extends Component {
     let validate = this.validate();
     if (validate){
       if (this.state.isError == false){
-
-        this.getInfo();
         this.props.bookingChangeInfo(this.getInfo());
-        console.log(this.props.booking);
-        // this.props.navigation.navigate("BookingPayment");
+        this.props.bookingChangeNumber(this.state.number);
+        this.props.navigation.navigate("BookingPayment");
       }
     }
+
+    // this.props.bookingChangeNumber(this.state.number);
     // this.props.navigation.navigate("BookingPayment");
   }
 
   componentWillMount(){
-    this.setState({tourTurn: this.props.navigation.getParam('data')});
+    this.setState({tourTurn: this.props.booking.tourTurn});
+    this.changeAdultNumber(); // tao ra passenger adult dau tien
   }
 
   render(){
@@ -433,6 +434,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     bookingChangeInfo: bookingChangeInfo,
+    bookingChangeTourTurn: bookingChangeTourTurn,
+    bookingChangeNumber: bookingChangeNumber,
   }, dispatch)
 }
 

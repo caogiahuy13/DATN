@@ -140,3 +140,17 @@ export function bookingChangeInfo(info){
     info,
   }
 }
+
+export function bookingChangeTourTurn(tourTurn){
+  return {
+    type: types.BOOKING_CHANGE_TOURTURN,
+    tourTurn,
+  }
+}
+
+export function bookingChangeNumber(number){
+  return {
+    type: types.BOOKING_CHANGE_NUMBER,
+    number,
+  }
+}

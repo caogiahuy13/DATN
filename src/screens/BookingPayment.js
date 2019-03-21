@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Card, Icon, ListItem, Button, Divider } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
+import { bookingChangeInfo } from '../actions/index';
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
@@ -35,14 +38,17 @@ class BookingPayment extends Component {
     this.setState({payType: 2});
   }
 
+  onNextPress(){
+    let {info} = this.props.booking;
+    info.payment = this.state.payType;
+    this.props.bookingChangeInfo(info);
+    this.props.navigation.navigate("BookingConfirmation");
+  }
+
   render(){
     return(
       <ScrollView style={styles.container}>
           <BookingStage stage={2}/>
-
-          <Space/>
-
-          {/*<BookingTourCard/>*/}
 
           <Space/>
 
@@ -102,10 +108,11 @@ class BookingPayment extends Component {
           <Button
             title="NEXT"
             type="solid"
+            disabled = {this.state.payType == 0 ? true : false}
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
-            onPress={()=>{this.props.navigation.navigate("BookingConfirmation")}}
+            onPress={()=>{this.onNextPress()}}
           />
 
           <Space/>
@@ -167,4 +174,15 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BookingPayment;
+function mapStateToProps(state){
+  return{
+    booking: state.booking,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    bookingChangeInfo: bookingChangeInfo,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookingPayment);
