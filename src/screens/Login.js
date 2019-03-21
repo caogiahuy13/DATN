@@ -167,10 +167,6 @@ class Login extends Component {
 
     render() {
         const { navigation } = this.props;
-        console.log(navigation);
-        let previousScreen = this.props.navigation.getParam('previousScreen');
-        console.log("PRE");
-        console.log(previousScreen);
 
         return (
             <View style={styles.container}>

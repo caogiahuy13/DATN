@@ -6,7 +6,8 @@ import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
+import { ERR_BOOKING_CONTACT_INFO, ERR_BOOKING_PASSENGER_INFO, ERR_BOOKING_PASSENGER_MIN, ERR_PHONE_LENGTH, ERR_EMAIL_VALIDATE,
+         COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
 import { bookingChangeInfo } from '../actions/index';
 import { } from '../services/api';
 
@@ -43,8 +44,8 @@ class BookingInfo extends Component {
       adultInfo: [],
       childrenInfo: [],
 
-      isDateTimePickerVisible: false,
-      isGenderModalVisible: false,
+      err: '',
+      isError: false,
     }
   }
 
@@ -128,9 +129,9 @@ class BookingInfo extends Component {
       for (let i=0; i<newNum; i++){
         newAdultInfo.push({
           fullname: '',
-          birthday: '',
+          birthdate: '',
           age: 'Adult',
-          gender: '',
+          sex: '',
           phone: '',
           identity: '',
         });
@@ -156,9 +157,9 @@ class BookingInfo extends Component {
       for (let i=0; i<newNum; i++){
         newChildrenInfo.push({
           fullname: '',
-          birthday: '',
+          birthdate: '',
           age: 'Children',
-          gender: '',
+          sex: '',
           phone: '',
           identity: '',
         });
@@ -180,12 +181,63 @@ class BookingInfo extends Component {
     }
   }
 
-  validate(){
+  setError(err, isError){
+    this.setState({err: err, isError: isError});
+  }
 
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  validate(){
+    const {contactInfo, adultInfo, childrenInfo, number} = this.state;
+
+    if (contactInfo.fullname == '' || contactInfo.phone == '' || contactInfo.email == '' || contactInfo.address == ''){
+      this.setError(ERR_BOOKING_CONTACT_INFO, true);
+      return false;
+    }
+
+    if (!this.validateEmail(contactInfo.email)){
+      this.setError(ERR_EMAIL_VALIDATE, true);
+      return false;
+    }
+
+    if (contactInfo.phone.length != 10){
+      this.setError(ERR_PHONE_LENGTH, true);
+      return false;
+    }
+
+    if (number.adult == 0 && number.children == 0){
+      this.setError(ERR_BOOKING_PASSENGER_MIN, true);
+      return false;
+    }
+
+    for (let i=0; i<adultInfo.length; i++){
+      if (adultInfo[i].fullname == '' || adultInfo[i].birthdate == '' || adultInfo[i].sex == ''){
+        this.setError(ERR_BOOKING_PASSENGER_INFO, true);
+        return false;
+      }
+    }
+    for (let i=0; i<childrenInfo.length; i++){
+      if (childrenInfo[i].fullname == '' || childrenInfo[i].birthdate == '' || childrenInfo[i].sex == ''){
+        this.setError(ERR_BOOKING_PASSENGER_INFO, true);
+        return false;
+      }
+    }
+
+    this.setError('', false);
+    return true;
   }
 
   onNextPress(){
-    this.props.navigation.navigate("BookingPayment");
+    let validate = this.validate();
+    if (validate){
+      if (this.state.isError == false){
+        this.props.navigation.navigate("BookingPayment");
+      }
+    }
+    // this.props.navigation.navigate("BookingPayment");
   }
 
   componentWillMount(){
@@ -234,7 +286,7 @@ class BookingInfo extends Component {
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {fullname: value}})}
+                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, fullname: value}})}
               />
               <TextInput
                   style={styles.input}
@@ -243,7 +295,7 @@ class BookingInfo extends Component {
                   keyboardType='phone-pad'
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {phone: value}})}
+                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, phone: value}})}
               />
               <TextInput
                   style={styles.input}
@@ -252,7 +304,7 @@ class BookingInfo extends Component {
                   keyboardType='email-address'
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {email: value}})}
+                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, email: value}})}
               />
               <TextInput
                   style={styles.input}
@@ -260,12 +312,14 @@ class BookingInfo extends Component {
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {address: value}})}
+                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, address: value}})}
               />
           </View>
 
           {adultCard}
           {childrenCard}
+
+          { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
 
           <Space/>
 
@@ -318,9 +372,15 @@ const styles = StyleSheet.create({
       padding: 4,
     },
     numberPickerText: {
-      fontSize: 18,
+      fontSize: 16,
       flex: 1,
       alignSelf: 'center',
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 16,
+        marginTop: 10,
+        padding: 10,
     },
 })
 

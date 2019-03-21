@@ -15,9 +15,9 @@ class BookingPassenger extends Component {
     this.state = {
       passenger: {
         fullname: '',
-        birthday: '',
+        birthdate: '',
         age: '',
-        gender: '',
+        sex: '',
         phone: '',
         identity: '',
       },
@@ -34,16 +34,16 @@ class BookingPassenger extends Component {
     this.setState({
       passenger: {
         ...this.state.passenger,
-        gender: sex,
+        sex: sex,
       }
-    })
+    },()=>{this.props.update(this.state.passenger, this.props.index);});
     this._showGenderModal(false);
   };
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
       let isMale;
-      if (this.state.passenger.gender != ''){
-        isMale = (this.state.passenger.gender.toLowerCase() == 'male') ? true : false;
+      if (this.state.passenger.sex != ''){
+        isMale = (this.state.passenger.sex.toLowerCase() == 'male') ? true : false;
       }
 
       return(
@@ -84,9 +84,9 @@ class BookingPassenger extends Component {
     this.setState({
       passenger: {
         ...this.state.passenger,
-        birthday: date,
+        birthdate: date,
       }
-    })
+    },()=>{this.props.update(this.state.passenger, this.props.index);});
     this._showDateTimePicker(false);
   };
 
@@ -103,12 +103,12 @@ class BookingPassenger extends Component {
       }
     );
   }
-  changeBirthday(value){
+  changeBirthdate(value){
     this.setState(
       {
         passenger: {
           ...this.state.passenger,
-          birthday: value
+          birthdate: value
         }
       }, () => {
         this.props.update(this.state.passenger, this.props.index);
@@ -132,7 +132,7 @@ class BookingPassenger extends Component {
       {
         passenger: {
           ...this.state.passenger,
-          gender: value
+          sex: value
         }
       }, () => {
         this.props.update(this.state.passenger, this.props.index);
@@ -202,13 +202,13 @@ class BookingPassenger extends Component {
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Birthday *"
+                    placeholder="birthdate *"
                     placeholderTextColor={COLOR_PLACEHOLDER}
                     returnKeyType='next'
                     autoCorrect={false}
-                    onChangeText={(value)=> this.changeBirthday(value)}
+                    onChangeText={(value)=> this.changeBirthdate(value)}
                     editable={false} selectTextOnFocus={false}
-                    value={passenger.birthday == '' ? null : Moment(this.state.passenger.birthday).format('DD/MM/YYYY')}
+                    value={passenger.birthdate == '' ? null : Moment(this.state.passenger.birthdate).format('DD/MM/YYYY')}
                 />
               </TouchableOpacity>
               <TextInput
@@ -229,7 +229,7 @@ class BookingPassenger extends Component {
                     autoCorrect={false}
                     onChangeText={(value)=> this.changeGender(value)}
                     editable={false} selectTextOnFocus={false}
-                    value={passenger.gender == '' ? null : passenger.gender}
+                    value={passenger.sex == '' ? null : passenger.sex}
                 />
               </TouchableOpacity>
               <TextInput

@@ -18,9 +18,14 @@ export const ERR_FULLNAME = 'Fullname is required';
 export const ERR_NAME = 'Name is required';
 export const ERR_PHONE = 'Phone number is required';
 export const ERR_EMAIL = 'Email is required';
+export const ERR_EMAIL_VALIDATE = 'Wrong email type';
 export const ERR_CONFIRM_PASSWORD = 'Password and Confirm password must be match!';
 export const ERR_PHONE_LENGTH = 'Phone number must be 10 digits!';
 export const ERR_ALL_FIELD = 'All fields is required';
 export const ERR_MESSAGE = 'Message is required';
+
+export const ERR_BOOKING_CONTACT_INFO = 'All contact information is required';
+export const ERR_BOOKING_PASSENGER_INFO = 'Fullname, Birthdate, gender of passenger are required';
+export const ERR_BOOKING_PASSENGER_MIN = 'There must be 1 passenger';
 
 export const SUCCESS_CHANGE_PASSWORD = 'Change Password Successfully';
