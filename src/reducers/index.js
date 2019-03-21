@@ -7,6 +7,7 @@ import currentRouteReducer from './currentRouteReducer';
 import accessReducer from './accessReducer';
 import filterLocationReducer from './filterLocationReducer';
 import tourDetailReducer from './tourDetailReducer';
+import bookingReducer from './bookingReducer';
 
 const allReducers= combineReducers({
   region: regionReducer,
@@ -17,5 +18,6 @@ const allReducers= combineReducers({
   access: accessReducer,
   filterLocation: filterLocationReducer,
   tourDetail: tourDetailReducer,
+  booking: bookingReducer,
 });
 export default allReducers;

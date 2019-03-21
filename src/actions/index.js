@@ -131,3 +131,12 @@ export function tourDetailShowMarker(visible){
     visible,
   }
 }
+
+
+// Booking tour
+export function bookingChangeInfo(info){
+  return {
+    type: types.BOOKING_CHANGE_INFO,
+    info,
+  }
+}

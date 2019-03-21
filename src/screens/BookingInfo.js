@@ -3,8 +3,12 @@ import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity,
 import { Card, Icon, ListItem, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
+import { bookingChangeInfo } from '../actions/index';
+import { } from '../services/api';
 
 import BookingStage from '../components/BookingStage';
 import NumberPicker from '../components/NumberPicker';
@@ -171,6 +175,14 @@ class BookingInfo extends Component {
     }
   }
 
+  validate(){
+
+  }
+
+  onNextPress(){
+    this.props.navigation.navigate("BookingPayment");
+  }
+
   render(){
     let index = 0;
     let adultCard = this.state.adultInfo.map((val,key)=>{
@@ -189,7 +201,7 @@ class BookingInfo extends Component {
 
           <Space/>
 
-          <BookingTourCard/>
+          {/*<BookingTourCard/>*/}
 
           <InfoText text="Number of passengers"/>
 
@@ -254,7 +266,7 @@ class BookingInfo extends Component {
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
-            onPress={()=>{this.props.navigation.navigate("BookingPayment")}}
+            onPress={()=>{this.onNextPress()}}
           />
 
           <Space/>
@@ -303,4 +315,15 @@ const styles = StyleSheet.create({
     },
 })
 
-export default BookingInfo;
+function mapStateToProps(state){
+  return{
+    booking: state.booking,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    bookingChangeInfo: bookingChangeInfo,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookingInfo);

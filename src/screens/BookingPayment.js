@@ -42,7 +42,7 @@ class BookingPayment extends Component {
 
           <Space/>
 
-          <BookingTourCard/>
+          {/*<BookingTourCard/>*/}
 
           <Space/>
 
