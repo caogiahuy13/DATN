@@ -97,7 +97,7 @@ export default class History extends Component {
   }
   render() {
     const tableDataPassenger = [];
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 1; i <= 20; i += 1) {
       const rowDataPassenger = [];
       rowDataPassenger.push(`${i}`);
       rowDataPassenger.push(`Thomas Wilson`);
@@ -217,7 +217,7 @@ export default class History extends Component {
                       </Text>
                     </Text>
         {/* Passenger Information:  */}
-                    <View style={{  width: width, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={[this.state.zoomTablePassenger ? styles.buttonZoomTablePassenger2 : styles.buttonZoomTablePassenger1]}>
                       <Text style = {styles.titleTagDetail}>Passenger Information: </Text>
                       <TouchableOpacity style={{  marginRight: 10, }} onPress={() => this.zoom_TablePassenger()}>
                         <MaterialIcons name="zoom-out-map" size={30} color={"#324A5E"}/>
@@ -370,8 +370,10 @@ const styles = StyleSheet.create({
   tableTitleContact: { textAlign: 'left', paddingLeft: 10, fontSize: 15, fontWeight: 'bold' },
   tableDataContact: { fontWeight: 'normal' },
   //
+  buttonZoomTablePassenger1: { width: width, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'},
+  buttonZoomTablePassenger2: { width: width, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', position: 'absolute', top: 75, zIndex: 2, },
   tablePassenger1: { marginHorizontal: 10, marginTop: 5, backgroundColor: '#fff', height: '37%', },
-  tablePassenger2: { position: 'absolute', paddingHorizontal: 10, marginTop: 70, backgroundColor: '#fff', width: width },
+  tablePassenger2: { position: 'absolute', paddingHorizontal: 10, paddingTop: 120, backgroundColor: '#fff', width: width, height: (height - 100) },
   headerPassenger: { height: 50, backgroundColor: '#537791' },
   textPassenger: { textAlign: 'center', fontWeight: '100' },
   dataWrapperPassenger: { marginTop: -1 },
