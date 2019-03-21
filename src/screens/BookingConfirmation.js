@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, AsyncStorage } from 'react-native';
 import { Card, Icon, Button, Divider } from 'react-native-elements';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
@@ -18,6 +18,22 @@ class BookingConfirmation extends Component {
     this.state = {
 
     }
+
+  }
+
+  onButtonPress(){
+    const {navigation} = this.props;
+
+    AsyncStorage.getItem('userToken')
+                .then((data)=>{
+                  if (data == null){
+                    navigation.navigate("Login",{
+                      previousScreen: 'BookingConfirmation',
+                    });
+                  } else if (data != null){
+                    navigation.navigate("Tours");
+                  }
+                })
   }
 
   render(){
@@ -68,7 +84,7 @@ class BookingConfirmation extends Component {
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
-            onPress={()=>{this.props.navigation.navigate("Tours")}}
+            onPress={()=>{this.onButtonPress()}}
           />
 
           <Space/>

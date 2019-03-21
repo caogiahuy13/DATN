@@ -74,7 +74,9 @@ class Login extends Component {
       if (validate){
         this.callLoginAPI().then(()=>{
           if (this.state.isError == false){
-            this.props.navigation.navigate("Map");
+            let previousScreen = this.props.navigation.getParam('previousScreen', 'Map');
+            this.props.navigation.navigate(previousScreen);
+            // this.props.navigation.navigate("Map");
           }
         })
       }
@@ -109,7 +111,8 @@ class Login extends Component {
                })
                .then(()=>{
                  if (this.state.isError == false){
-                   this.props.navigation.navigate("Map");
+                   let previousScreen = this.props.navigation.getParam('previousScreen', 'Map');
+                   this.props.navigation.navigate(previousScreen);
                  }
                })
                .catch((error) => {
@@ -164,6 +167,10 @@ class Login extends Component {
 
     render() {
         const { navigation } = this.props;
+        console.log(navigation);
+        let previousScreen = this.props.navigation.getParam('previousScreen');
+        console.log("PRE");
+        console.log(previousScreen);
 
         return (
             <View style={styles.container}>

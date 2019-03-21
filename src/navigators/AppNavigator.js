@@ -1,5 +1,5 @@
 import React from 'react';
-import {createSwitchNavigator} from "react-navigation";
+import {createSwitchNavigator, createStackNavigator} from "react-navigation";
 
 import Login from '../screens/Login';
 import Register from '../screens/Register';
