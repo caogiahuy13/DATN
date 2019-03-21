@@ -102,6 +102,12 @@ class TourDetail extends Component{
     this.setState({daysLeft: this.getDaysLeft(currentTurn.start_date)});
   }
 
+  onBookNowPress(){
+    this.props.navigation.navigate("BookingInfo", {
+      data: this.state.currentTurn,
+    });
+  }
+  
   componentWillMount(){
     const id = this.props.navigation.getParam("id");
     this.callGetTourTurnById(id)
@@ -214,7 +220,7 @@ class TourDetail extends Component{
         <Button
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
           title='BOOK TOUR'
-          onPress={()=>{this.props.navigation.navigate("BookingInfo")}}
+          onPress={()=>{this.onBookNowPress()}}
           titleStyle={{fontSize: 18, fontWeight: 'bold'}}
         />
       </View>

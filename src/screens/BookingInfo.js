@@ -24,12 +24,17 @@ class BookingInfo extends Component {
   constructor(props){
     super(props);
     this.state = {
+      tourTurn: {
+
+      },
+
       contactInfo: {
         fullname: '',
         phone: '',
         email: '',
         address: '',
       },
+
       number: {
         adult: 0,
         children: 0,
@@ -183,6 +188,10 @@ class BookingInfo extends Component {
     this.props.navigation.navigate("BookingPayment");
   }
 
+  componentWillMount(){
+    this.setState({tourTurn: this.props.navigation.getParam('data')});
+  }
+
   render(){
     let index = 0;
     let adultCard = this.state.adultInfo.map((val,key)=>{
@@ -201,7 +210,7 @@ class BookingInfo extends Component {
 
           <Space/>
 
-          {/*<BookingTourCard/>*/}
+          <BookingTourCard data={this.state.tourTurn} number={this.state.number}/>
 
           <InfoText text="Number of passengers"/>
 
