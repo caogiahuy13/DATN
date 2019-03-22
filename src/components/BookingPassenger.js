@@ -8,6 +8,7 @@ import Modal from 'react-native-modal';
 import InfoText from './InfoText';
 
 import { COLOR_PLACEHOLDER } from '../constants/index';
+import { capitalize } from '../services/function';
 
 class BookingPassenger extends Component {
   constructor(props){
@@ -217,7 +218,7 @@ class BookingPassenger extends Component {
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   onChangeText={(value)=> this.changeAge(value)}
                   editable={false} selectTextOnFocus={false}
-                  value={passenger.type == '' ? null : passenger.type}
+                  value={passenger.type == '' ? null : capitalize(passenger.type)}
               />
 
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showGenderModal(true)}>

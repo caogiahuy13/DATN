@@ -130,7 +130,7 @@ class BookingInfo extends Component {
         newAdultInfo.push({
           fullname: '',
           birthdate: '',
-          type: 'Adult',
+          type: 'adult',
           sex: '',
           phone: '',
           passport: '',
@@ -158,7 +158,7 @@ class BookingInfo extends Component {
         newChildrenInfo.push({
           fullname: '',
           birthdate: '',
-          type: 'Children',
+          type: 'children',
           sex: '',
           phone: '',
           passport: '',
@@ -172,10 +172,10 @@ class BookingInfo extends Component {
   update = (passenger, index) => {
     let {adultInfo, childrenInfo} = this.state;
 
-    if (passenger.type == 'Adult'){
+    if (passenger.type == 'adult'){
       adultInfo[index-1] = passenger;
       this.setState({adultInfo: adultInfo});
-    } else if (passenger.type == 'Children'){
+    } else if (passenger.type == 'children'){
       childrenInfo[index-this.state.number.adult-1] = passenger;
       this.setState({childrenInfo: childrenInfo});
     }
