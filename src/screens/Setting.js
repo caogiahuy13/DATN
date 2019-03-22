@@ -11,6 +11,7 @@ import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 import { me, updateSex, updateBirthdate, logout, userUpdate } from '../services/api';
+import { capitalize } from '../services/function';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -53,8 +54,7 @@ class Setting extends Component {
 
   //Các hàm quản lý GenderModal
   _showGenderModal = (visible) => this.setState({ isGenderModalVisible: visible });
-  _handleGenderModal = (isMale) => {
-    let sex = (isMale) ? 'male' : 'female';
+  _handleGenderModal = (sex) => {
     this.callUpdateSexAPI(sex).then(()=>{
       this.props.changeGender(sex);
       this._showGenderModal(false);
@@ -63,10 +63,7 @@ class Setting extends Component {
 
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
-    let isMale;
-    if (this.props.access.profile.sex != null){
-      isMale = (this.props.access.profile.sex.toLowerCase() == 'male') ? true : false;
-    }
+    const {sex} = this.props.access.profile;
 
     return(
       <View style={styles.modalGender}>
@@ -83,18 +80,27 @@ class Setting extends Component {
             <ListItem
               style={{flex: 1,}}
               title="Male"
-              onPress={() => {this._handleGenderModal(true)}}
+              onPress={() => {this._handleGenderModal('male')}}
               containerStyle={styles.listItemContainer}
-              rightIcon={isMale && <Icon name='check' type='entypo' color='#00BFFF'/>}
+              rightIcon={sex == 'male' && <Icon name='check' type='entypo' color='#00BFFF'/>}
             />
           </View>
           <View style={{position: 'relative', flexDirection: 'row'}}>
             <ListItem
               style={{flex: 1,}}
               title="Female"
-              onPress={() => {this._handleGenderModal(false)}}
+              onPress={() => {this._handleGenderModal('female')}}
               containerStyle={styles.listItemContainer}
-              rightIcon={isMale == false && <Icon name='check' type='entypo' color='#00BFFF'/>}
+              rightIcon={sex == 'female' && <Icon name='check' type='entypo' color='#00BFFF'/>}
+            />
+          </View>
+          <View style={{position: 'relative', flexDirection: 'row'}}>
+            <ListItem
+              style={{flex: 1,}}
+              title="Other"
+              onPress={() => {this._handleGenderModal('other')}}
+              containerStyle={styles.listItemContainer}
+              rightIcon={sex == 'other' && <Icon name='check' type='entypo' color='#00BFFF'/>}
             />
           </View>
       </View>
@@ -119,6 +125,10 @@ class Setting extends Component {
     return ret;
   }
 
+  getTmp(sex){
+    console.log(sex);
+    return sex;
+  }
   // Kiểm tra đã đăng nhập
   async CheckLogedIn(){
     await AsyncStorage.getItem('userToken')
@@ -186,7 +196,7 @@ class Setting extends Component {
            .catch((error) => console.error(error));
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.callMeAPI().then((data)=>{
       this.props.changeProfile(data.profile);
     })
@@ -265,7 +275,7 @@ class Setting extends Component {
         />
         <ListItem
           title="Gender"
-          rightTitle={profile.sex}
+          rightTitle={profile.sex === undefined ? '' : capitalize(profile.sex)}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showGenderModal(true)}}
           containerStyle={styles.listItemContainer}
