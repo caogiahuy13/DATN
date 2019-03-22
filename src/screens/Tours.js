@@ -31,6 +31,9 @@ export default class Tours extends Component {
   tourDetailPress = (id) => {
     this.props.navigation.navigate("TourDetail",{id: id});
   }
+  tourBookNowPress = () => {
+    this.props.navigation.navigate("BookingInfo");
+  }
 
   componentWillMount(){
     this.callGetAllTourTurnAPI()
@@ -58,7 +61,7 @@ export default class Tours extends Component {
 
         <FlatList
           data={this.state.tours}
-          renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress}/>}
+          renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress} onBookNowPress={this.tourBookNowPress}/>}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

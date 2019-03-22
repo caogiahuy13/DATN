@@ -89,6 +89,7 @@ class TourDetail extends Component{
 
   onBookNowPress(){
     this.props.bookingChangeTourTurn(this.state.currentTurn);
+    console.log(this.state.currentTurn);
     this.props.navigation.navigate("BookingInfo");
   }
 

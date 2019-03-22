@@ -5,15 +5,39 @@ import NumberFormat from 'react-number-format';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { tourDetailChangeId, tourDetailShowMarker } from '../actions/index.js';
+import { tourDetailChangeId, tourDetailShowMarker, bookingChangeTourTurn } from '../actions/index.js';
+import { getTourTurnById } from '../services/api';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 class TourCard extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      currentTurn: {},
+    }
+  }
 
-  _onPress = () => {
+  _onDetailPress = () => {
     this.props.onPress(this.props.data.id);
     this.props.tourDetailChangeId(this.props.data.tour.id);
     this.props.tourDetailShowMarker(true);
+  }
+
+  _onBookNowPress = () => {
+    this.callGetTourTurnById(this.props.data.id)
+        .then(()=>{
+          this.props.bookingChangeTourTurn(this.state.currentTurn);
+          this.props.onBookNowPress();
+        })
+  }
+
+  async callGetTourTurnById(id){
+    return getTourTurnById(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.setState({currentTurn: responseJson.data});
+            })
+            .catch((error) => console.error(error));
   }
 
   render(){
@@ -54,8 +78,8 @@ class TourCard extends Component{
                   <View style={{alignContent: 'flex-end'}}>
                       <TourPrice value={data.price}/>
                       <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                          <Button buttonStyle={styles.button} title='BOOK NOW'/>
-                          <Button buttonStyle={styles.button} title='DETAIL'onPress={this._onPress}/>
+                          <Button buttonStyle={styles.button} title='BOOK NOW' onPress={this._onBookNowPress}/>
+                          <Button buttonStyle={styles.button} title='DETAIL'onPress={this._onDetailPress}/>
                       </View>
                   </View>
               </View>
@@ -138,6 +162,7 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     tourDetailChangeId: tourDetailChangeId,
     tourDetailShowMarker: tourDetailShowMarker,
+    bookingChangeTourTurn: bookingChangeTourTurn,
   }, dispatch)
 }
 

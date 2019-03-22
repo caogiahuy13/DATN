@@ -11,10 +11,12 @@ import TourDetail from '../screens/TourDetail';
 import BookingInfo from '../screens/BookingInfo';
 import BookingPayment from '../screens/BookingPayment';
 import BookingConfirmation from '../screens/BookingConfirmation';
+import TourCard from '../components/TourCard';
 
 const ToursStack = createStackNavigator(
   {
     Tours,
+    TourCard,
     TourDetail,
     BookingInfo,
     BookingPayment,
