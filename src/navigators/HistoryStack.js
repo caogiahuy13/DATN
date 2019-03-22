@@ -3,13 +3,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from "react-navigation";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import History from '../screens/History';
+import History2 from '../screens/History2';
+import HistoryDetail from '../screens/HistoryDetail';
 
 const HistoryStack = createStackNavigator(
   {
-    History: {
-      screen: History
-    },
+    History2,
+    HistoryDetail,
   },
   {
     defaultNavigationOptions: {
