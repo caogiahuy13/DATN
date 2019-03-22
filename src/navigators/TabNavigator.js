@@ -15,7 +15,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     MapStack,
     ToursStack,
-    HistoryStack,
+    // HistoryStack,
     SettingStack,
   },
   {
