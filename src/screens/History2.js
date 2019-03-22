@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList} from 'react-native';
 import { Divider } from 'react-native-elements';
 
-import {  } from '../services/api';
+import { getHistoryByUser } from '../services/api';
 import { COLOR_MAIN } from '../constants/index';
 
 import HistoryCard from '../components/HistoryCard';
@@ -14,6 +14,19 @@ class History2 extends Component {
 
   onPress = () => {
     this.props.navigation.navigate("HistoryDetail");
+  }
+
+  callGetHistoryByUser(){
+    return getHistoryByUser()
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson);
+          })
+          .catch((error) => console.error(error));
+  }
+
+  componentWillMount(){
+    this.callGetHistoryByUser();
   }
 
   render() {
