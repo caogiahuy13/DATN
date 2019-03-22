@@ -39,7 +39,10 @@ ToursStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "TourDetail" || route.routeName === "BookingInfo" || route.routeName === "BookingPayment" || route.routeName === "BookingConfirmation") {
+        if (route.routeName === "TourDetail" ||
+            route.routeName === "BookingInfo" ||
+            route.routeName === "BookingPayment" ||
+            route.routeName === "BookingConfirmation") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

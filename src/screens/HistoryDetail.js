@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Divider } from 'react-native-elements';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Divider, Button } from 'react-native-elements';
 
 import {  } from '../services/api';
-import { COLOR_MAIN, COLOR_LIGHT_BLUE } from '../constants/index';
+import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
 
 import InfoText from '../components/InfoText';
 
 class HistoryDetail extends Component {
   static navigationOptions = {
-    header: null,
+    title: 'Detail booked tour information',
   };
 
   constructor(props){
@@ -21,7 +21,7 @@ class HistoryDetail extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.card}>
             <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 16}}>Code: </Text>
@@ -57,7 +57,16 @@ class HistoryDetail extends Component {
             <PassengerInfo/>
         </View>
 
-      </View>
+        <Button
+          title="CANCEL TOUR"
+          type="solid"
+          buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
+          containerStyle={{paddingHorizontal: 16, paddingVertical: 20, borderRadius: 0}}
+          titleStyle={{fontSize: 16}}
+          onPress={()=>{}}
+        />
+
+      </ScrollView>
     );
   }
 }

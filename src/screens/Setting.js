@@ -289,6 +289,12 @@ class Setting extends Component {
 
         <Space/>
 
+        <ListItem
+          title="My Booking"
+          onPress={() => {this.props.navigation.navigate("History2")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+        />
         { profile.type != 'facebook' &&
           <ListItem
             title="Change Password"

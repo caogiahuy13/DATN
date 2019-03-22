@@ -9,7 +9,7 @@ import HistoryCard from '../components/HistoryCard';
 
 class History2 extends Component {
   static navigationOptions = {
-    header: null,
+    title: 'History',
   };
 
   onPress = () => {

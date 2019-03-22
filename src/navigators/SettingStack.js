@@ -10,6 +10,8 @@ import ChangePassword from '../screens/ChangePassword';
 import AboutUs from '../screens/AboutUs';
 import Contact from '../screens/Contact';
 import ChangeAvatar from '../screens/ChangeAvatar';
+import History2 from '../screens/History2';
+import HistoryDetail from '../screens/HistoryDetail';
 
 const SettingStack = createStackNavigator(
   {
@@ -18,6 +20,8 @@ const SettingStack = createStackNavigator(
     AboutUs,
     Contact,
     ChangeAvatar,
+    History2,
+    HistoryDetail,
   },
   {
     defaultNavigationOptions: {
@@ -38,7 +42,12 @@ SettingStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "ChangePassword" || route.routeName === "AboutUs" || route.routeName === "Contact" || route.routeName === "ChangeAvatar") {
+        if (route.routeName === "ChangePassword" ||
+            route.routeName === "AboutUs" ||
+            route.routeName === "Contact" ||
+            route.routeName === "ChangeAvatar" ||
+            route.routeName === "History2" ||
+            route.routeName === "HistoryDetail") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;
