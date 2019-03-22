@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TextInput, ScrollView, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, AsyncStorage, Alert } from 'react-native';
 import { Card, Icon, Button, Divider } from 'react-native-elements';
 import Moment from 'moment';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
-import { bookingChangeInfo } from '../actions/index';
+import { bookingChangeInfo, bookingIsBooking, screenSetPrevious } from '../actions/index';
 import { bookNewTour } from '../services/api';
 
 
@@ -47,20 +47,31 @@ class BookingConfirmation extends Component {
   }
 
   onButtonPress(){
-    this.callBookNewTour();
+    // this.callBookNewTour();
 
-    // const {navigation} = this.props;
-    //
-    // AsyncStorage.getItem('userToken')
-    //             .then((data)=>{
-    //               if (data == null){
-    //                 navigation.navigate("Login",{
-    //                   previousScreen: 'BookingConfirmation',
-    //                 });
-    //               } else if (data != null){
-    //                 navigation.navigate("Tours");
-    //               }
-    //             })
+    const {navigation} = this.props;
+
+    AsyncStorage.getItem('userToken')
+                .then((data)=>{
+                  if (data == null){
+                    this.props.screenSetPrevious('BookingConfirmation');
+                    navigation.navigate("Login");
+
+                  } else if (data != null){
+                    this.callBookNewTour()
+                        .then(()=>{
+                          Alert.alert(
+                            'Congratulations',
+                            'Successful booking tour!',
+                            [
+                              {text: 'OK', onPress: () => navigation.navigate("Tours")},
+                            ],
+                            {cancelable: false},
+                          );
+                          // navigation.navigate("Tours");
+                        });
+                  }
+                })
   }
 
   render(){
@@ -176,11 +187,13 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     booking: state.booking,
+    screenManage: state.screenManage,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    bookingIsBooking: bookingIsBooking,
+    screenSetPrevious: screenSetPrevious,
   }, dispatch)
 }
 

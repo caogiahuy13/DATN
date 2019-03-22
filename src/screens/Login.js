@@ -12,7 +12,7 @@ import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManag
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { handleAccess, changeProfile } from '../actions/index.js';
+import { handleAccess, changeProfile, screenManage } from '../actions/index.js';
 import { login, loginWithFacebook } from '../services/api';
 import { ERR_USERNAME, ERR_PASSWORD } from '../constants/index';
 
@@ -74,9 +74,15 @@ class Login extends Component {
       if (validate){
         this.callLoginAPI().then(()=>{
           if (this.state.isError == false){
-            let previousScreen = this.props.navigation.getParam('previousScreen', 'Map');
-            this.props.navigation.navigate(previousScreen);
-            // this.props.navigation.navigate("Map");
+            // let previousScreen = this.props.navigation.getParam('previousScreen', 'Map');
+            // this.props.navigation.navigate(previousScreen);
+
+            const {previous} = this.props.screenManage;
+            if (previous != ''){
+              this.props.navigation.navigate(this.props.screenManage.previous)
+            } else {
+              this.props.navigation.navigate("Map");
+            }
           }
         })
       }
@@ -327,6 +333,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     access: state.access,
+    screenManage: state.screenManage,
   };
 }
 function mapDispatchToProps(dispatch){

@@ -13,6 +13,7 @@ let booking = {
   },
   tourTurn: {},
   number: {},
+  isBooking: false,
 }
 
 export default function(state = booking, action){
@@ -33,6 +34,12 @@ export default function(state = booking, action){
       return {
         ...state,
         number: action.number,
+      }
+      break;
+    case types.BOOKING_IS_BOOKING:
+      return {
+        ...state,
+        isBooking: action.isBooking,
       }
       break;
   }
