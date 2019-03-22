@@ -13,8 +13,9 @@ import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManag
 import { handleAccess, changeProfile } from '../actions/index.js';
 import { register, loginWithFacebook } from '../services/api';
 import { ERR_FULLNAME, ERR_PASSWORD, ERR_PHONE,
-        ERR_EMAIL, ERR_CONFIRM_PASSWORD, ERR_PHONE_LENGTH,
+        ERR_EMAIL, ERR_CONFIRM_PASSWORD, ERR_PHONE_LENGTH, ERR_EMAIL_VALIDATE,
 } from '../constants/index';
+import { validateEmail, validatePhone } from '../services/function';
 
 class Register extends Component {
     constructor(props){
@@ -91,12 +92,16 @@ class Register extends Component {
         this.setError(ERR_PHONE, true);
         return false;
       }
-      if (this.state.phone.length != 10){
+      if (!validatePhone(this.state.phone)){
         this.setError(ERR_PHONE_LENGTH, true);
         return false;
       }
       if (this.state.email == ''){
         this.setError(ERR_EMAIL, true);
+        return false;
+      }
+      if (!validateEmail(this.state.email)){
+        this.setError(ERR_EMAIL_VALIDATE, true);
         return false;
       }
       if (this.state.password !== this.state.confirmPassword){

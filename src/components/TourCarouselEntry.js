@@ -9,18 +9,6 @@ import {changeCurrentRoute, handleCurrentRoute} from '../actions/index.js';
 import { getRouteByTour } from '../services/api';
 
 class TourCarouselEntry extends Component {
-  async _getRouteByTour(){
-    let link = 'http://10.0.3.2:5000/route/getByTour/' + this.props.item.id;
-    return await fetch(link)
-              .then((response) => response.json())
-              .then((responseJson) => {
-                  this.props.changeCurrentRoute(responseJson.data);
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-  }
-
   async callGetRouteByTourAPI(id){
     return getRouteByTour(id)
               .then((response) => response.json())

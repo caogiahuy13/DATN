@@ -6,8 +6,9 @@ import {
     AsyncStorage,
 } from 'react-native'
 
-import { ERR_EMAIL } from '../constants/index';
+import { ERR_EMAIL, ERR_EMAIL_VALIDATE } from '../constants/index';
 import { forgetPassword } from '../services/api';
+import { validateEmail } from '../services/function';
 
 class ForgetPassword extends Component {
     constructor(props){
@@ -30,6 +31,11 @@ class ForgetPassword extends Component {
         this.setError(ERR_EMAIL, true);
         return false;
       }
+      if (!validateEmail(this.state.email)){
+        this.setError(ERR_EMAIL_VALIDATE, true);
+        return false;
+      }
+
       this.setError('', false);
       return true;
     }

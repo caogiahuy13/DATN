@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 
 import { bookingChangeTourTurn } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, } from '../services/api';
+import { getDaysDiff, getDaysLeft } from '../services/function';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
 
@@ -79,27 +80,11 @@ class TourDetail extends Component{
             .catch((error) => console.error(error));
   }
 
-  getDaysLeft(startDate){
-    let day1 = Moment(new Date());
-    let day2 = Moment(startDate);
-    let duration = Moment.duration(day2.diff(day1));
-    let days = Math.floor(duration.asDays());
-    return days;
-  }
-
-  getDaysDiff(startDate, endDate){
-    let day1 = Moment(startDate);
-    let day2 = Moment(endDate);
-    let duration = Moment.duration(day2.diff(day1));
-    let days = Math.ceil(duration.asDays());
-    return days;
-  }
-
   setMultipleState(){
     const {tour, currentTurn} = this.state;
-    this.setState({dayDiff: this.getDaysDiff(currentTurn.start_date, currentTurn.end_date)});
+    this.setState({dayDiff: getDaysDiff(currentTurn.start_date, currentTurn.end_date)});
     this.setState({slotLeft: currentTurn.num_max_people - currentTurn.num_current_people});
-    this.setState({daysLeft: this.getDaysLeft(currentTurn.start_date)});
+    this.setState({daysLeft: getDaysLeft(currentTurn.start_date)});
   }
 
   onBookNowPress(){

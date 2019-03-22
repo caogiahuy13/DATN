@@ -17,11 +17,20 @@ export function validatePhone(string){
   return re.test(string);
 }
 
-// Lấy khoảng cách ngày
+// Lấy khoảng cách giữa 2 ngày
 export function getDaysDiff(startDate, endDate){
   let day1 = Moment(startDate);
   let day2 = Moment(endDate);
   let duration = Moment.duration(day2.diff(day1));
   let days = Math.ceil(duration.asDays());
   return days + 1;
+}
+
+// Lấy khoảng cách ngày đến hiện tại
+export function getDaysLeft(startDate){
+  let day1 = Moment(new Date());
+  let day2 = Moment(startDate);
+  let duration = Moment.duration(day2.diff(day1));
+  let days = Math.floor(duration.asDays());
+  return days;
 }

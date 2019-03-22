@@ -4,8 +4,9 @@ import { Card } from 'react-native-elements';
 import MapView, {Marker} from 'react-native-maps';
 
 import { COLOR_GREEN } from '../constants/index';
-import { ERR_NAME, ERR_EMAIL, ERR_MESSAGE } from '../constants/index';
+import { ERR_NAME, ERR_EMAIL, ERR_MESSAGE, ERR_EMAIL_VALIDATE } from '../constants/index';
 import { createRequest } from '../services/api';
+import { validateEmail } from '../services/function';
 
 class Contact extends Component {
   static navigationOptions = {
@@ -34,6 +35,10 @@ class Contact extends Component {
     }
     if (this.state.email == ''){
       this.setError(ERR_EMAIL, true);
+      return false;
+    }
+    if (!validateEmail(this.state.email)){
+      this.setError(ERR_EMAIL_VALIDATE, true);
       return false;
     }
     if (this.state.message == ''){
