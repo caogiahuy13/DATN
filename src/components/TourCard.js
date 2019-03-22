@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 
 import { tourDetailChangeId, tourDetailShowMarker, bookingChangeTourTurn } from '../actions/index.js';
 import { getTourTurnById } from '../services/api';
+import { priceFormat } from '../services/function';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 class TourCard extends Component{
@@ -42,7 +43,7 @@ class TourCard extends Component{
 
   render(){
     const {data} = this.props;
-
+    console.log(data);
     return(
       <View>
         <Card
@@ -76,7 +77,7 @@ class TourCard extends Component{
                       }
                   </View>
                   <View style={{alignContent: 'flex-end'}}>
-                      <TourPrice value={data.price}/>
+                      <TourPrice price={data.price} discount={data.discount}/>
                       <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                           <Button buttonStyle={styles.button} title='BOOK NOW' onPress={this._onBookNowPress}/>
                           <Button buttonStyle={styles.button} title='DETAIL'onPress={this._onDetailPress}/>
@@ -93,22 +94,23 @@ class TourCard extends Component{
 
 class TourPrice extends Component {
   render(){
+    const { price, discount } = this.props;
+    let newPrice = price - (price * discount)/100;
+
     return(
       <View style={styles.priceContainer}>
+          { discount > 0 &&
+            <Text style={{color:'gray', fontWeight: 'bold', fontSize: 14, textDecorationLine: 'line-through'}}>
+              {priceFormat(price)}
+            </Text>
+          }
           <Text style={styles.price}>
-              <NumberFormat
-                value={this.props.value}
-                displayType={'text'}
-                thousandSeparator={true}
-                suffix={' đ'}
-                renderText={value => <Text>{value}</Text>}
-              />
+              {priceFormat(newPrice)}
           </Text>
       </View>
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   card: {

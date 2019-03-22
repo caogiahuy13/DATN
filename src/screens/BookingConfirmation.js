@@ -121,7 +121,7 @@ class BookingConfirmation extends Component {
           <Space/>
 
           <Button
-            title="NEXT"
+            title="BOOK"
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
