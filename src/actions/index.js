@@ -154,3 +154,18 @@ export function bookingChangeNumber(number){
     number,
   }
 }
+
+export function bookingIsBooking(isBooking){
+  return {
+    type: types.BOOKING_IS_BOOKING,
+    isBooking,
+  }
+}
+
+// Screen for login
+export function screenSetPrevious(screen){
+  return {
+    type: types.SCREEN_SET_PREVIOUS,
+    screen,
+  }
+}
