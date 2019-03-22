@@ -30,8 +30,7 @@ class BookingPassenger extends Component {
 
   //Các hàm quản lý GenderModal
   _showGenderModal = (visible) => this.setState({ isGenderModalVisible: visible });
-  _handleGenderModal = (isMale) => {
-    let sex = (isMale) ? 'male' : 'female';
+  _handleGenderModal = (sex) => {
     this.setState({
       passenger: {
         ...this.state.passenger,
@@ -42,10 +41,12 @@ class BookingPassenger extends Component {
   };
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
-      let isMale;
-      if (this.state.passenger.sex != ''){
-        isMale = (this.state.passenger.sex.toLowerCase() == 'male') ? true : false;
-      }
+      // let isMale;
+      // if (this.state.passenger.sex != ''){
+      //   isMale = (this.state.passenger.sex.toLowerCase() == 'male') ? true : false;
+      // }
+
+      const {sex} = this.state.passenger;
 
       return(
         <View style={styles.modalGender}>
@@ -62,18 +63,27 @@ class BookingPassenger extends Component {
               <ListItem
                 style={{flex: 1,}}
                 title="Male"
-                onPress={() => {this._handleGenderModal(true)}}
+                onPress={() => {this._handleGenderModal('male')}}
                 containerStyle={styles.listItemContainer}
-                rightIcon={isMale && <Icon name='check' type='entypo' color='#00BFFF'/>}
+                rightIcon={sex == 'male' && <Icon name='check' type='entypo' color='#00BFFF'/>}
               />
             </View>
             <View style={{position: 'relative', flexDirection: 'row'}}>
               <ListItem
                 style={{flex: 1,}}
                 title="Female"
-                onPress={() => {this._handleGenderModal(false)}}
+                onPress={() => {this._handleGenderModal('female')}}
                 containerStyle={styles.listItemContainer}
-                rightIcon={isMale == false && <Icon name='check' type='entypo' color='#00BFFF'/>}
+                rightIcon={sex == 'female' && <Icon name='check' type='entypo' color='#00BFFF'/>}
+              />
+            </View>
+            <View style={{position: 'relative', flexDirection: 'row'}}>
+              <ListItem
+                style={{flex: 1,}}
+                title="Other"
+                onPress={() => {this._handleGenderModal('other')}}
+                containerStyle={styles.listItemContainer}
+                rightIcon={sex == 'other' && <Icon name='check' type='entypo' color='#00BFFF'/>}
               />
             </View>
         </View>
@@ -230,7 +240,7 @@ class BookingPassenger extends Component {
                     autoCorrect={false}
                     onChangeText={(value)=> this.changeGender(value)}
                     editable={false} selectTextOnFocus={false}
-                    value={passenger.sex == '' ? null : passenger.sex}
+                    value={passenger.sex == '' ? null : capitalize(passenger.sex)}
                 />
               </TouchableOpacity>
               <TextInput
