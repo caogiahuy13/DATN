@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList} from 'react-native';
 import { Divider } from 'react-native-elements';
 
-import { getHistoryByUser } from '../services/api';
+import { getHistoryByUser, getPassengerInBookTourHistory } from '../services/api';
 import { COLOR_MAIN } from '../constants/index';
 
 import HistoryCard from '../components/HistoryCard';
@@ -12,6 +12,12 @@ class History2 extends Component {
     title: 'History',
   };
 
+  constructor(props){
+    super(props);
+    this.state = {
+      bookedTour: [],
+    }
+  }
   onPress = () => {
     this.props.navigation.navigate("HistoryDetail");
   }
@@ -20,21 +26,42 @@ class History2 extends Component {
     return getHistoryByUser()
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
+            this.setState({bookedTour: responseJson.data});
           })
           .catch((error) => console.error(error));
   }
 
+  callGetPassengerInBookTourHistory(id){
+    return getPassengerInBookTourHistory(id)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson);
+          })
+          .catch((error) => console.error(error));
+
+  }
   componentWillMount(){
     this.callGetHistoryByUser();
+
   }
 
   render() {
+    const {bookedTour} = this.state;
+    console.log(bookedTour);
+
+    let history = bookedTour.map((val,key)=>{
+      return(
+        <HistoryCard key={key} data={val} onPress={()=>this.onPress()}/>
+      )
+    });
+
     return (
       <View style={styles.container}>
-        <HistoryCard onPress={()=>this.onPress()}/>
+        {/*<HistoryCard onPress={()=>this.onPress()}/>
         <Divider style={{height: 0.5, marginHorizontal: 14}}/>
-        <HistoryCard/>
+        <HistoryCard/>*/}
+
+        {history}
       </View>
     );
   }

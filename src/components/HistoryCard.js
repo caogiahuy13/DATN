@@ -4,18 +4,21 @@ import { Icon } from 'react-native-elements';
 
 import { } from '../actions/index.js';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
+import { capitalize, bookedDateFormat, priceFormat } from '../services/function';
 
 class HistoryCard extends Component{
   render(){
+    const {data} = this.props;
+
     return(
       <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
         <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}}>
-                <Text style={styles.code}>009522</Text>
-                <InfoText firstTxt="Booking Day:" secondTxt="08/03/2019 10:44"/>
-                <InfoText firstTxt="Total Slot:" secondTxt="1"/>
-                <InfoText firstTxt="Total Money:" secondTxt="2,179,000 VNĐ"/>
-                <InfoText firstTxt="Status:" secondTxt="New"/>
+                <Text style={styles.code}>{'0000'+data.id}</Text>
+                <InfoText firstTxt="Booking Day:" secondTxt={bookedDateFormat(data.book_time)}/>
+                <InfoText firstTxt="Total Slot:" secondTxt={data.num_passenger}/>
+                <InfoText firstTxt="Total Money:" secondTxt={priceFormat(data.total_pay)}/>
+                <InfoText firstTxt="Status:" secondTxt={capitalize(data.status)}/>
             </View>
             <View style={{justifyContent: 'center', }}>
                 <Icon

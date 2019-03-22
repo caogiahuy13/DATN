@@ -121,7 +121,8 @@ class ChangePassword extends Component {
             title="CHANGE PASSWORD"
             onPress={()=>{this._onButtonPress()}}
             type="solid"
-            buttonStyle={{backgroundColor: COLOR_MAIN}}
+            buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+            containerStyle={{paddingHorizontal: 6}}
           />
       </View>
     );

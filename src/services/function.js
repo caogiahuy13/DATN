@@ -1,4 +1,7 @@
 import Moment from 'moment';
+import { View, Text } from 'react-native';;
+import NumberFormat from 'react-number-format';
+import React, { Component } from 'react';
 
 // Viết hoa chữ cái đầu tiên
 export function capitalize(string) {
@@ -33,4 +36,26 @@ export function getDaysLeft(startDate){
   let duration = Moment.duration(day2.diff(day1));
   let days = Math.floor(duration.asDays());
   return days;
+}
+
+// Định dạng ngày DD/MM/YYYY
+export function dateFormat(date){
+  return Moment(date).format('DD/MM/YYYY');
+}
+
+// Định dạng ngày DD/MM/YYYY
+export function bookedDateFormat(date){
+  return Moment(date).format('DD/MM/YYYY h:mm');
+}
+
+export function priceFormat(price){
+  return (
+    <NumberFormat
+      value={price}
+      displayType={'text'}
+      thousandSeparator={true}
+      suffix={' VNĐ'}
+      renderText={value => <Text>{value}</Text>}
+    />
+  );
 }

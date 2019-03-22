@@ -30,6 +30,7 @@ class BookingConfirmation extends Component {
 
   async callBookNewTour(){
     const {info} = this.props.booking;
+    let status;
 
     return bookNewTour(info)
           .then((response) => {
@@ -40,15 +41,20 @@ class BookingConfirmation extends Component {
               if (status != 200){
                 Alert.alert(responseJson.msg);
               } else {
-
+                Alert.alert(
+                  'Congratulations',
+                  'Successful booking tour!',
+                  [
+                    {text: 'OK', onPress: () => this.props.navigation.navigate("Tours")},
+                  ],
+                  {cancelable: false},
+                );
               }
            })
            .catch((error) => console.error(error));
   }
 
   onButtonPress(){
-    // this.callBookNewTour();
-
     const {navigation} = this.props;
 
     AsyncStorage.getItem('userToken')
@@ -56,18 +62,17 @@ class BookingConfirmation extends Component {
                   if (data == null){
                     this.props.screenSetPrevious('BookingConfirmation');
                     navigation.navigate("Login");
-
                   } else if (data != null){
                     this.callBookNewTour()
                         .then(()=>{
-                          Alert.alert(
-                            'Congratulations',
-                            'Successful booking tour!',
-                            [
-                              {text: 'OK', onPress: () => navigation.navigate("Tours")},
-                            ],
-                            {cancelable: false},
-                          );
+                          // Alert.alert(
+                          //   'Congratulations',
+                          //   'Successful booking tour!',
+                          //   [
+                          //     {text: 'OK', onPress: () => navigation.navigate("Tours")},
+                          //   ],
+                          //   {cancelable: false},
+                          // );
                           // navigation.navigate("Tours");
                         });
                   }

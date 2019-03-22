@@ -275,7 +275,7 @@ class Setting extends Component {
         />
         <ListItem
           title="Gender"
-          rightTitle={profile.sex === undefined ? '' : capitalize(profile.sex)}
+          rightTitle={(profile.sex == undefined || profile.sex == '' ) ? '' : capitalize(profile.sex)}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showGenderModal(true)}}
           containerStyle={styles.listItemContainer}
@@ -346,6 +346,8 @@ class Setting extends Component {
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
           onPress={()=>{this._onPressLogout()}}
         />
+
+        <Space/>
 
       </ScrollView>
     );

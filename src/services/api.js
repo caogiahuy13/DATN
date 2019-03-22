@@ -277,3 +277,18 @@ export async function getHistoryByUser(){
                               });
                             })
 }
+
+export async function getPassengerInBookTourHistory(id){
+  let URL = HOST + 'book_tour/getPassengerInBookTourHistory/' + id;
+  return await AsyncStorage.getItem('userToken')
+                            .then((auth) => {
+                              return fetch(URL, {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': auth,
+                                  'Content-Type': 'application/json',
+                                },
+                              });
+                            })
+}
