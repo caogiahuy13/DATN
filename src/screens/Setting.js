@@ -261,6 +261,7 @@ class Setting extends Component {
           rightTitle={profile.email}
           rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
           containerStyle={styles.listItemContainer}
+          leftIcon=<Icon name='email' type='material' color='gray' size={20}/>
         />
         <ListItem
           title="Gender"
@@ -269,6 +270,7 @@ class Setting extends Component {
           onPress={() => {this._showGenderModal(true)}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
+          leftIcon=<Icon name='gender-male-female' type='material-community' color='gray' size={20}/>
         />
         <ListItem
           title="Birthday"
@@ -277,6 +279,7 @@ class Setting extends Component {
           onPress={() => {this._showDateTimePicker(true)}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
+          leftIcon=<Icon name='calendar' type='entypo' color='gray' size={20}/>
         />
         <ListItem
           title="Address"
@@ -285,6 +288,7 @@ class Setting extends Component {
           onPress={() => {this._showAddressModal(true)}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
+          leftIcon=<Icon name='address' type='entypo' color='gray' size={20}/>
         />
 
         <Space/>
@@ -294,6 +298,7 @@ class Setting extends Component {
           onPress={() => {this.props.navigation.navigate("History2")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
+          leftIcon=<Icon name='shopping-cart' type='entypo' color='gray' size={20}/>
         />
         { profile.type != 'facebook' &&
           <ListItem
@@ -301,6 +306,7 @@ class Setting extends Component {
             onPress={() => {this.props.navigation.navigate("ChangePassword")}}
             containerStyle={styles.listItemContainer}
             rightIcon={<Chevron />}
+            leftIcon=<Icon name='key' type='entypo' color='gray' size={20}/>
           />
         }
 
