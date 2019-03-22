@@ -40,7 +40,15 @@ class BookingPayment extends Component {
 
   onNextPress(){
     let {info} = this.props.booking;
-    info.payment = this.state.payType;
+    switch(this.state.payType){
+      case 1:
+        info.payment = 'incash';
+        break;
+      case 2:
+        info.payment = 'bank';
+        break;
+    }
+
     this.props.bookingChangeInfo(info);
     this.props.navigation.navigate("BookingConfirmation");
   }
