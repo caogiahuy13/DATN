@@ -10,6 +10,7 @@ import { ERR_BOOKING_CONTACT_INFO, ERR_BOOKING_PASSENGER_INFO, ERR_BOOKING_PASSE
          COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
 import { bookingChangeInfo, bookingChangeTourTurn, bookingChangeNumber } from '../actions/index';
 import { } from '../services/api';
+import { validateEmail, validatePhone } from '../services/function';
 
 import BookingStage from '../components/BookingStage';
 import NumberPicker from '../components/NumberPicker';
@@ -185,11 +186,6 @@ class BookingInfo extends Component {
     this.setState({err: err, isError: isError});
   }
 
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
   validate(){
     const {contactInfo, adultInfo, childrenInfo, number} = this.state;
 
@@ -198,12 +194,12 @@ class BookingInfo extends Component {
       return false;
     }
 
-    if (!this.validateEmail(contactInfo.email)){
+    if (!validateEmail(contactInfo.email)){
       this.setError(ERR_EMAIL_VALIDATE, true);
       return false;
     }
 
-    if (contactInfo.phone.length != 10){
+    if (!validatePhone(contactInfo.phone)){
       this.setError(ERR_PHONE_LENGTH, true);
       return false;
     }
@@ -219,7 +215,7 @@ class BookingInfo extends Component {
         return false;
       }
       if (adultInfo[i].phone != ''){
-        if (adultInfo[i].phone.length != 10){
+        if (!validatePhone(adultInfo[i].phone)){
           this.setError(ERR_PHONE_LENGTH, true);
           return false;
         }
@@ -231,7 +227,7 @@ class BookingInfo extends Component {
         return false;
       }
       if (childrenInfo[i].phone != ''){
-        if (childrenInfo[i].phone.length != 10){
+        if (!validatePhone(childrenInfo[i].phone)){
           this.setError(ERR_PHONE_LENGTH, true);
           return false;
         }

@@ -41,11 +41,6 @@ class BookingPassenger extends Component {
   };
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
-      // let isMale;
-      // if (this.state.passenger.sex != ''){
-      //   isMale = (this.state.passenger.sex.toLowerCase() == 'male') ? true : false;
-      // }
-
       const {sex} = this.state.passenger;
 
       return(
