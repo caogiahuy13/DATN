@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, TextInput, ScrollView, AsyncStorage } from 'react-native';
 import { Card, Icon, Button, Divider } from 'react-native-elements';
 import Moment from 'moment';
+import axios from 'axios';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
 import { bookingChangeInfo } from '../actions/index';
+import { bookNewTour } from '../services/api';
+
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
@@ -25,19 +28,39 @@ class BookingConfirmation extends Component {
 
   }
 
-  onButtonPress(){
-    const {navigation} = this.props;
+  async callBookNewTour(){
+    const {info} = this.props.booking;
 
-    AsyncStorage.getItem('userToken')
-                .then((data)=>{
-                  if (data == null){
-                    navigation.navigate("Login",{
-                      previousScreen: 'BookingConfirmation',
-                    });
-                  } else if (data != null){
-                    navigation.navigate("Tours");
-                  }
-                })
+    return bookNewTour(info)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+           .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else {
+
+              }
+           })
+           .catch((error) => console.error(error));
+  }
+
+  onButtonPress(){
+    this.callBookNewTour();
+
+    // const {navigation} = this.props;
+    //
+    // AsyncStorage.getItem('userToken')
+    //             .then((data)=>{
+    //               if (data == null){
+    //                 navigation.navigate("Login",{
+    //                   previousScreen: 'BookingConfirmation',
+    //                 });
+    //               } else if (data != null){
+    //                 navigation.navigate("Tours");
+    //               }
+    //             })
   }
 
   render(){

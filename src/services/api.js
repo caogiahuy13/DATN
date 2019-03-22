@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import axios from 'axios';
 
 import { HOST } from '../constants/index';
 
@@ -234,4 +235,30 @@ export async function createRequest(name, email, message){
                               message: message,
                             }),
                           })
+}
+
+export async function bookNewTour(info){
+  // console.log(info);
+  let URL = HOST + 'book_tour/book_new_tour';
+  return await AsyncStorage.getItem('userToken')
+                            .then((auth) => {
+                              return fetch(URL, {
+                                method: 'POST',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': auth,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  idTour_Turn: info.idTour_Turn,
+                                  payment: info.payment,
+                                  fullname: info.fullname,
+                                  phone: info.phone,
+                                  email: info.email,
+                                  address: info.address,
+                                  passengers: info.passengers,
+                                  total_pay: info.total_pay,
+                                }),
+                              });
+                            })
 }
