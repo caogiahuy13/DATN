@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList} from 'react-native';
 import { Divider } from 'react-native-elements';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { getHistoryByUser, getPassengerInBookTourHistory } from '../services/api';
+import { bookedTourGetInfo, bookedTourGetPassengers } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 
 import HistoryCard from '../components/HistoryCard';
@@ -18,8 +21,13 @@ class History2 extends Component {
       bookedTour: [],
     }
   }
+
   onPress = (data) => {
-    console.log(data);
+    this.props.bookedTourGetInfo(data);
+    this.callGetPassengerInBookTourHistory(data.id)
+        .then((passengersData)=>{
+          this.props.bookedTourGetPassengers(passengersData);
+        })
     this.props.navigation.navigate("HistoryDetail");
   }
 
@@ -35,12 +43,10 @@ class History2 extends Component {
   callGetPassengerInBookTourHistory(id){
     return getPassengerInBookTourHistory(id)
           .then((response) => response.json())
-          .then((responseJson) => {
-            console.log(responseJson);
-          })
+          .then((responseJson) => responseJson.data)
           .catch((error) => console.error(error));
-
   }
+
   componentWillMount(){
     this.callGetHistoryByUser();
   }
@@ -79,4 +85,16 @@ const styles = StyleSheet.create({
     },
 })
 
-export default History2;
+function mapStateToProps(state){
+  return{
+    bookedTour: state.bookedTour,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    bookedTourGetInfo: bookedTourGetInfo,
+    bookedTourGetPassengers: bookedTourGetPassengers,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(History2);

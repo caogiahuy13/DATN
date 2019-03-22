@@ -169,3 +169,18 @@ export function screenSetPrevious(screen){
     screen,
   }
 }
+
+// Booked tour
+export function bookedTourGetInfo(info){
+  return {
+    type: types.BOOKED_TOUR_GET_INFO,
+    info,
+  }
+}
+
+export function bookedTourGetPassengers(passengers){
+  return {
+    type: types.BOOKED_TOUR_GET_PASSENGERS,
+    passengers,
+  }
+}
