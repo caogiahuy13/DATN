@@ -11,7 +11,7 @@ class HistoryCard extends Component{
     const {data} = this.props;
 
     return(
-      <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
+      <TouchableOpacity style={styles.container} onPress={()=>this.props.onPress(data)}>
         <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}}>
                 <Text style={styles.code}>{'0000'+data.id}</Text>

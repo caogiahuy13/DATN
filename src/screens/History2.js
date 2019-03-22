@@ -18,7 +18,8 @@ class History2 extends Component {
       bookedTour: [],
     }
   }
-  onPress = () => {
+  onPress = (data) => {
+    console.log(data);
     this.props.navigation.navigate("HistoryDetail");
   }
 
@@ -42,25 +43,26 @@ class History2 extends Component {
   }
   componentWillMount(){
     this.callGetHistoryByUser();
-
   }
 
   render() {
     const {bookedTour} = this.state;
-    console.log(bookedTour);
 
+    let index = 0;
     let history = bookedTour.map((val,key)=>{
+      index += 1;
       return(
-        <HistoryCard key={key} data={val} onPress={()=>this.onPress()}/>
+        <View key={key}>
+            <HistoryCard data={val} onPress={this.onPress}/>
+            { index != bookedTour.length &&
+              <Divider style={{height: 0.5, marginHorizontal: 14}}/>
+            }
+        </View>
       )
     });
 
     return (
       <View style={styles.container}>
-        {/*<HistoryCard onPress={()=>this.onPress()}/>
-        <Divider style={{height: 0.5, marginHorizontal: 14}}/>
-        <HistoryCard/>*/}
-
         {history}
       </View>
     );
