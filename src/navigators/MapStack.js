@@ -10,11 +10,17 @@ import Map from '../screens/Map';
 import TourDetail from '../screens/TourDetail';
 import Filter from '../screens/Filter';
 import FindGooglePlaces from '../screens/FindGooglePlaces';
+import BookingInfo from '../screens/BookingInfo';
+import BookingPayment from '../screens/BookingPayment';
+import BookingConfirmation from '../screens/BookingConfirmation';
 
 const MapStack = createStackNavigator(
   {
     Map,
     TourDetail,
+    BookingInfo,
+    BookingPayment,
+    BookingConfirmation,
     Filter,
     FindGooglePlaces,
   },
