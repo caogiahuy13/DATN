@@ -43,7 +43,7 @@ class TourCard extends Component{
 
   render(){
     const {data} = this.props;
-    console.log(data);
+
     return(
       <View>
         <Card
@@ -114,7 +114,7 @@ class TourPrice extends Component {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 0,
+
     borderRadius: 4,
     elevation: 2,
   },
