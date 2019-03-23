@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Image} from 'react-native';
 import { Button } from 'react-native-elements';
-import TourCard from '../components/TourCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 
 import { getAllTourTurn } from '../services/api';
 import { COLOR_MAIN } from '../constants/index';
+
+import TourCard from '../components/TourCard';
 
 export default class Tours extends Component {
   static navigationOptions = {
@@ -20,6 +21,8 @@ export default class Tours extends Component {
       count: 0,
       maxCount: 0,
       isLoading: false,
+
+      per_page: 6,
     }
   }
 
@@ -39,51 +42,54 @@ export default class Tours extends Component {
 
   onLoadMorePress(){
     this.setState({isLoading: true});
-    this.callGetAllTourTurnAPI(1,this.state.count + 4,false)
+    this.callGetAllTourTurnAPI(1,this.state.count + this.state.per_page,false)
         .then((ret)=>{
           this.setState({tours: ret.data}, ()=>{
             this.setState({isLoading: false});
           });
           this.setState({maxCount: ret.itemCount});
-          this.setState({count: this.state.count + 4})
+          this.setState({count: this.state.count + this.state.per_page})
         })
   }
 
   componentWillMount(){
-    this.callGetAllTourTurnAPI(1,4,false)
+    this.callGetAllTourTurnAPI(1,this.state.per_page,false)
         .then((ret)=>{
           this.setState({tours: ret.data});
           this.setState({maxCount: ret.itemCount});
-          this.setState({count: this.state.count + 4});
+          this.setState({count: this.state.count + this.state.per_page});
         })
   }
 
   render() {
+    const { tours, maxCount, count, isLoading } = this.state;
     return (
       <ScrollView style={styles.container}>
         <FlatList
-          data={this.state.tours}
+          data={tours}
           renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress} onBookNowPress={this.tourBookNowPress}/>}
           keyExtractor={(item, index) => index.toString()}
         />
-        { this.state.isLoading && this.state.maxCount >= this.state.count &&
+
+        { isLoading && maxCount >= count &&
           <View style={{alignItems: 'center', padding: 16}}>
             <Image
               style={{width: 30, height: 30}}
               source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
           </View>
         }
+
         {
-          this.state.maxCount < this.state.count &&
+          maxCount < count &&
           <View style={{alignItems: 'center', paddingTop: 16}}>
               <Text style={{color: 'red'}}>All tours have been loaded</Text>
           </View>
         }
-        { this.state.tours != null &&
+
+        { tours != null &&
           <Button
             title="SHOW MORE"
             type="solid"
-            disabled = {this.state.payType == 0 ? true : false}
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{padding: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}

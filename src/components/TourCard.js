@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, View, Alert, Image, StyleSheet} from 'react-native';
+import {Text, View, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import { Card, Button, Icon, Divider, Rating, AirbnbRating } from 'react-native-elements';
 import NumberFormat from 'react-number-format';
 import {bindActionCreators} from 'redux';
@@ -45,50 +45,59 @@ class TourCard extends Component{
     const {data} = this.props;
 
     return(
-      <View>
-        <Card
-          title={data.tour.name}
-          image={{uri: data.tour.featured_img}}
-          titleStyle={styles.title}
-          containerStyle={styles.card}
-        >
-
-          <View style={{justifyContent: 'flex-start'}}>
-              <View style={{flexDirection: 'row'}}>
-                  <View style={{flex: 1}}>
-                      <View style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
-                          <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={20} containerStyle={{marginRight: 6}}/>
-                          <Text style={styles.calendarText}>{data.start_date}</Text>
-                      </View>
-                      <Rating
-                        type='custom'
-                        ratingCount={5}
-                        imageSize={18}
-                        ratingColor = {COLOR_MAIN}
-                        readonly
-                        ratingBackgroundColor='#c8c7c8'
-                        startingValue={2.5}
-                        style={{ alignSelf: 'flex-start', marginTop: 4}}
-                      />
-                      { data.discount > 0 &&
-                        <View style={{width: 70, flex: 1, justifyContent: 'flex-end'}}>
-                          <Button buttonStyle={styles.sale} title='SALE!'/>
-                        </View>
-                      }
-                  </View>
-                  <View style={{alignContent: 'flex-end'}}>
-                      <TourPrice price={data.price} discount={data.discount}/>
-                      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                          <Button buttonStyle={styles.button} title='BOOK NOW' onPress={this._onBookNowPress}/>
-                          <Button buttonStyle={styles.button} title='DETAIL'onPress={this._onDetailPress}/>
-                      </View>
-                  </View>
+      <TouchableOpacity style={styles.container} onPress={this._onDetailPress}>
+        <View style={{flex: 0.4, justifyContent: 'flex-end'}}>
+            <Image style={{flex: 1, width: undefined, height: undefined}} source={{uri: data.tour.featured_img}}/>
+            { data.discount > 0 &&
+              <View style={{padding: 6, position: 'absolute'}}>
+                  <Sale/>
               </View>
-          </View>
+            }
+        </View>
 
-        </Card>
-      </View>
+        <View style={{flex: 0.6, paddingHorizontal: 10}}>
+            <Text style={{fontWeight: 'bold', fontSize: 15}}>{data.tour.name}</Text>
+
+            <View style={{justifyContent: 'flex-start', flexDirection: 'row', paddingVertical: 2}}>
+                <Icon name='calendar' type='antdesign' color='gray' size={18} containerStyle={{marginRight: 6}}/>
+                <Text style={styles.calendarText}>{data.start_date}</Text>
+            </View>
+
+            <View style={{alignItems: 'flex-start'}}>
+                <TourRating rating={3}/>
+            </View>
+
+            <TourPrice price={data.price} discount={data.discount}/>
+        </View>
+      </TouchableOpacity>
     );
+  }
+}
+
+class Sale extends Component {
+  render(){
+    return(
+      <View style={styles.sale}>
+        <Text style={{color: 'white'}}>SALE!</Text>
+      </View>
+    )
+  }
+}
+
+class TourRating extends Component {
+  render(){
+    const {rating} = this.props;
+    return(
+      <Rating
+        type='custom'
+        ratingCount={5}
+        imageSize={14}
+        ratingColor = {COLOR_MAIN}
+        readonly
+        ratingBackgroundColor='#c8c7c8'
+        startingValue={rating}
+      />
+    )
   }
 }
 
@@ -100,7 +109,7 @@ class TourPrice extends Component {
     return(
       <View style={styles.priceContainer}>
           { discount > 0 &&
-            <Text style={{color:'gray', fontWeight: 'bold', fontSize: 14, textDecorationLine: 'line-through'}}>
+            <Text style={styles.oldPrice}>
               {priceFormat(price)}
             </Text>
           }
@@ -113,45 +122,32 @@ class TourPrice extends Component {
 }
 
 const styles = StyleSheet.create({
-  card: {
-
-    borderRadius: 4,
-    elevation: 2,
+  container: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    padding: 12
   },
   price: {
-    fontSize: 24,
-    // color: 'rgb(178,34,34)',
+    fontSize: 20,
     color: COLOR_MAIN,
     fontWeight: 'bold',
-    marginBottom: 4,
+  },
+  oldPrice: {
+    color:'gray',
+    fontSize: 12,
+    fontWeight: '300',
+    textDecorationLine: 'line-through'
   },
   priceContainer: {
     flex: 1,
-    paddingLeft: 10,
+    padding: 4,
     alignItems: 'center',
-    marginBottom: 5,
   },
-  button: {
-    backgroundColor: COLOR_MAIN,
-    borderRadius: 1,
-    marginLeft: 10,
-    marginBottom: 0,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-  },
+
   sale: {
     backgroundColor: COLOR_GREEN,
-    borderRadius: 1,
-    padding: 0,
-  },
-  title: {
-    alignSelf: 'flex-start',
-    marginHorizontal: 10
-  },
-  calendarText: {
-    color: COLOR_MAIN,
-    fontSize: 15,
-    fontWeight: '100',
+    paddingVertical: 4,
+    paddingHorizontal: 6
   }
 })
 
