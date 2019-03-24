@@ -12,6 +12,7 @@ import Contact from '../screens/Contact';
 import ChangeAvatar from '../screens/ChangeAvatar';
 import History2 from '../screens/History2';
 import HistoryDetail from '../screens/HistoryDetail';
+import TermsCondition from '../screens/TermsCondition';
 
 const SettingStack = createStackNavigator(
   {
@@ -22,6 +23,7 @@ const SettingStack = createStackNavigator(
     ChangeAvatar,
     History2,
     HistoryDetail,
+    TermsCondition,
   },
   {
     defaultNavigationOptions: {
@@ -47,7 +49,8 @@ SettingStack.navigationOptions = ({ navigation }) => {
             route.routeName === "Contact" ||
             route.routeName === "ChangeAvatar" ||
             route.routeName === "History2" ||
-            route.routeName === "HistoryDetail") {
+            route.routeName === "HistoryDetail" ||
+            route.routeName === "TermsCondition") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

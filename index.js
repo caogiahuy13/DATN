@@ -11,5 +11,6 @@ import TourDetailMap from './src/components/TourDetailMap';
 import BookingInfo from './src/screens/BookingInfo';
 import History2 from './src/screens/History2';
 import HistoryDetail from './src/screens/HistoryDetail';
+import TermsCondition from './src/screens/TermsCondition';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => TermsCondition);
