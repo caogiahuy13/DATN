@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Image} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, SearchBar, Icon } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
+import RNPickerSelect from 'react-native-picker-select';
 
 import { getAllTourTurn } from '../services/api';
-import { COLOR_MAIN } from '../constants/index';
+import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
+import { price, placeholderPrice } from '../constants/search';
 
 import TourCard from '../components/TourCard';
 
@@ -23,6 +25,8 @@ export default class Tours extends Component {
       isLoading: false,
 
       per_page: 6,
+
+      price: undefined,
     }
   }
 
@@ -63,40 +67,73 @@ export default class Tours extends Component {
 
   render() {
     const { tours, maxCount, count, isLoading } = this.state;
+
     return (
-      <ScrollView style={styles.container}>
-        <FlatList
-          data={tours}
-          renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress} onBookNowPress={this.tourBookNowPress}/>}
-          keyExtractor={(item, index) => index.toString()}
-        />
-
-        { isLoading && maxCount >= count &&
-          <View style={{alignItems: 'center', padding: 16}}>
-            <Image
-              style={{width: 30, height: 30}}
-              source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
+      <View style={{flex: 1, backgroundColor: COLOR_GRAY_BACKGROUND}}>
+          <View style={{flexDirection: 'row'}}>
+              <SearchBar
+                platform="android"
+                placeholder="Type Here..."
+                onChangeText={()=>{}}
+                value="TEST"
+                containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
+                inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
+                inputStyle={{fontSize: 16}}
+              />
+              <View style={{backgroundColor: COLOR_MAIN}}>
+                  <Icon name='sliders' type='font-awesome' color='white' size={30} containerStyle={styles.filter}/>
+              </View>
           </View>
-        }
-
-        {
-          maxCount < count &&
-          <View style={{alignItems: 'center', paddingTop: 16}}>
-              <Text style={{color: 'red'}}>All tours have been loaded</Text>
+          <View style={{flexDirection: 'row'}}>
+              <View style={{flex: 1}}>
+                <RNPickerSelect
+                  placeholder={placeholderPrice}
+                  items={price}
+                  onValueChange={value => {
+                    this.setState({
+                      price: value,
+                    });
+                  }}
+                  value={this.state.price}
+                />
+              </View>
           </View>
-        }
 
-        { tours != null &&
-          <Button
-            title="SHOW MORE"
-            type="solid"
-            buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
-            containerStyle={{padding: 16, borderRadius: 0}}
-            titleStyle={{fontSize: 16}}
-            onPress={()=>{this.onLoadMorePress()}}
-          />
-        }
-      </ScrollView>
+
+          <ScrollView>
+            <FlatList
+              data={tours}
+              renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress} onBookNowPress={this.tourBookNowPress}/>}
+              keyExtractor={(item, index) => index.toString()}
+            />
+
+            { isLoading && maxCount >= count &&
+              <View style={{alignItems: 'center', padding: 16}}>
+                <Image
+                  style={{width: 30, height: 30}}
+                  source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
+              </View>
+            }
+
+            {
+              maxCount < count &&
+              <View style={{alignItems: 'center', paddingTop: 16}}>
+                  <Text style={{color: 'red'}}>All tours have been loaded</Text>
+              </View>
+            }
+
+            { tours != null &&
+              <Button
+                title="SHOW MORE"
+                type="solid"
+                buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+                containerStyle={{padding: 16, borderRadius: 0}}
+                titleStyle={{fontSize: 16}}
+                onPress={()=>{this.onLoadMorePress()}}
+              />
+            }
+          </ScrollView>
+      </View>
     );
   }
 }
@@ -106,4 +143,11 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#F4F5F4',
     },
+    filter: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: 14,
+      marginRight: 14,
+    }
 })

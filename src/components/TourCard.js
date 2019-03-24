@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 
 import { tourDetailChangeId, tourDetailShowMarker, bookingChangeTourTurn } from '../actions/index.js';
 import { getTourTurnById } from '../services/api';
-import { priceFormat } from '../services/function';
+import { priceFormat, dateFormat } from '../services/function';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 class TourCard extends Component{
@@ -60,7 +60,7 @@ class TourCard extends Component{
 
             <View style={{justifyContent: 'flex-start', flexDirection: 'row', paddingVertical: 2}}>
                 <Icon name='calendar' type='antdesign' color='gray' size={18} containerStyle={{marginRight: 6}}/>
-                <Text style={styles.calendarText}>{data.start_date}</Text>
+                <Text style={styles.calendarText}>{dateFormat(data.start_date)}</Text>
             </View>
 
             <View style={{alignItems: 'flex-start'}}>
