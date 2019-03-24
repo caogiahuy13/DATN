@@ -336,7 +336,20 @@ class Setting extends Component {
           onPress={() => {this.props.navigation.navigate("Contact")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron/>}
-          // leftIcon=<Icon name='contacts' type='material-community' color='gray'/>
+        />
+        <ListItem
+          title="Terms Condition"
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {this.props.navigation.navigate("TermsCondition")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron/>}
+        />
+        <ListItem
+          title="Faq"
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {this.props.navigation.navigate("Faq")}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron/>}
         />
 
         <Space/>
