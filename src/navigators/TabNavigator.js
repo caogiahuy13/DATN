@@ -34,7 +34,7 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 TabNavigator.navigationOptions = ({ navigation }) => {
-    if (navigation.state.index === 3){
+    if (navigation.state.index === 2){
       AsyncStorage.getItem('userToken').then((data) => {
         if (data == null){
           navigation.navigate("AuthStack");

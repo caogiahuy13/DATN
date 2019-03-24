@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, Alert,
   TouchableWithoutFeedback,
   TextInput, TouchableOpacity,
-  KeyboardAvoidingView, AsyncStorage,
+  KeyboardAvoidingView, AsyncStorage, Image
 } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {bindActionCreators} from 'redux';
@@ -14,6 +14,7 @@ import { handleAccess, changeProfile } from '../actions/index.js';
 import { register, loginWithFacebook } from '../services/api';
 import { ERR_FULLNAME, ERR_PASSWORD, ERR_PHONE,
         ERR_EMAIL, ERR_CONFIRM_PASSWORD, ERR_PHONE_LENGTH, ERR_EMAIL_VALIDATE,
+        COLOR_PLACEHOLDER,
 } from '../constants/index';
 import { validateEmail, validatePhone } from '../services/function';
 
@@ -28,6 +29,8 @@ class Register extends Component {
         email: '',
         err: '',
         isError: false,
+
+        isLoading: false,
       }
     }
 
@@ -35,7 +38,9 @@ class Register extends Component {
     _onPressRegister(){
       let validate = this.checkUser();
       if (validate){
+        this.setState({isLoading: true});
         this.callRegisterAPI().then(()=>{
+          this.setState({isLoading: false});
           if (this.state.isError == false){
             Alert.alert(
               'Congratulations',
@@ -205,50 +210,59 @@ class Register extends Component {
                         <View style={styles.line}/>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.inputText}>Fullname *</Text>
                         <TextInput style={styles.input}
-                            placeholderTextColor='rgba(255,255,255,0.8)'
+                            placeholder="Fullname *"
+                            placeholderTextColor={COLOR_PLACEHOLDER}
                             returnKeyType='next'
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({fullname: value})}
                         />
-                        <Text style={styles.inputText}>Password *</Text>
                         <TextInput style={styles.input}
-                            placeholderTextColor='rgba(255,255,255,0.8)'
+                            placeholder="Password *"
+                            placeholderTextColor={COLOR_PLACEHOLDER}
                             returnKeyType='next'
                             secureTextEntry
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({password: value})}
                         />
-                        <Text style={styles.inputText}>Confirm Password *</Text>
                         <TextInput style={styles.input}
-                            placeholderTextColor='rgba(255,255,255,0.8)'
+                            placeholder="Confirm Password *"
+                            placeholderTextColor={COLOR_PLACEHOLDER}
                             returnKeyType='next'
                             secureTextEntry
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({confirmPassword: value})}
                         />
-                        <Text style={styles.inputText}>Phone number *</Text>
                         <TextInput style={styles.input}
-                            placeholderTextColor='rgba(255,255,255,0.8)'
+                            placeholder="Phone Number *"
+                            placeholderTextColor={COLOR_PLACEHOLDER}
                             keyboardType='phone-pad'
                             returnKeyType='next'
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({phone: value})}
                         />
-                        <Text style={styles.inputText}>Email *</Text>
                         <TextInput style={styles.input}
-                            placeholderTextColor='rgba(255,255,255,0.8)'
+                            placeholder="Email *"
+                            placeholderTextColor={COLOR_PLACEHOLDER}
                             keyboardType='email-address'
                             returnKeyType='go'
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({email: value})}
                         />
                         { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
+
+
                         <TouchableOpacity style={styles.buttonRegister} onPress={() => this._onPressRegister()}>
-                             <Text style={styles.buttonText}>REGISTER</Text>
+                              { this.state.isLoading &&
+                                  <Image
+                                    style={{width: 24, height: 24, tintColor: 'white', marginHorizontal: 6}}
+                                    source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
+                              }
+                              <Text style={styles.buttonText}>REGISTER</Text>
                         </TouchableOpacity>
+
                         <Text style={styles.ORText}>OR</Text>
+
                         <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.handleFacebookLogin()}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
@@ -256,6 +270,7 @@ class Register extends Component {
                                 LOGIN WITH FACEBOOK
                             </Text>
                         </TouchableOpacity>
+
                         <View style={styles.register}>
                             <Text style={{fontSize: 18}}>You have an account? </Text>
                             <Text style={{fontSize: 18, color: '#5375D8'}} onPress={()=>{navigation.navigate('Login');}}>Login here </Text>
@@ -273,7 +288,7 @@ const styles = StyleSheet.create({
     },
     imageBackground: {
         backgroundColor: '#292929',
-        height: '12%',
+        height: '26%',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -311,7 +326,7 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         height: 40,
-        marginTop: 10,
+        marginVertical: 8,
         paddingHorizontal: 10,
         backgroundColor: 'rgba(0,0,0,0.02)',
         borderWidth: 1,
@@ -327,6 +342,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#1BBC9B',
         paddingVertical: 10,
         marginTop: 20,
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     buttonFacebook: {
         backgroundColor: '#3B5998',
