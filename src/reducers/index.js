@@ -10,6 +10,7 @@ import tourDetailReducer from './tourDetailReducer';
 import bookingReducer from './bookingReducer';
 import screenReducer from './screenReducer';
 import bookedTourReducer from './bookedTourReducer';
+import searchFilterReducer from './searchFilterReducer';
 
 const allReducers= combineReducers({
   region: regionReducer,
@@ -23,5 +24,6 @@ const allReducers= combineReducers({
   booking: bookingReducer,
   screenManage: screenReducer,
   bookedTour: bookedTourReducer,
+  searchFilter: searchFilterReducer,
 });
 export default allReducers;

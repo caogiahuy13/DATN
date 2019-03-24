@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { Slider, Button, Rating, AirbnbRating } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { COLOR_PLACEHOLDER, COLOR_MAIN, COLOR_GREEN, COLOR_LIGHT_BLUE } from '../constants/index';
 import { dateFormat, priceFormat } from '../services/function';
+import { searchFilterChange } from '../actions/index';
 
 class SearchFilter extends Component {
   static navigationOptions = {
@@ -16,7 +19,7 @@ class SearchFilter extends Component {
     this.state = {
       date: '',
       maxPrice: 0,
-      search: '',
+      destination: '',
       rating: 3,
 
       isDateTimePickerVisible: false,
@@ -30,19 +33,33 @@ class SearchFilter extends Component {
   };
 
   onSearchPress(){
-
+    this.props.searchFilterChange(this.state);
+    this.props.navigation.goBack();
   }
+
   onResetPress(){
     this.setState({
       date: '',
       maxPrice: 0,
-      search: '',
-      rating: 3,
+      destination: '',
+      rating: 0,
+    }, ()=>{
+      this.props.searchFilterChange(this.state);
+    })
+  }
+
+  componentWillMount(){
+    const {searchFilter} = this.props;
+    this.setState({
+      date: searchFilter.date,
+      maxPrice: searchFilter.maxPrice,
+      destination: searchFilter.destination,
+      rating: searchFilter.rating,
     })
   }
 
   render() {
-    const {date, maxPrice, search, rating} = this.state;
+    const {date, maxPrice, destination, rating} = this.state;
 
     return (
       <View style={styles.container}>
@@ -64,8 +81,8 @@ class SearchFilter extends Component {
               placeholderTextColor={COLOR_PLACEHOLDER}
               returnKeyType='next'
               autoCorrect={false}
-              onChangeText={(value)=> this.setState({search: value})}
-              value={search == '' ? null : search}
+              onChangeText={(value)=> this.setState({destination: value})}
+              value={destination == '' ? null : destination}
           />
 
           <Text style={styles.inputText}>Select your date</Text>
@@ -142,4 +159,15 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SearchFilter;
+function mapStateToProps(state){
+  return{
+    searchFilter: state.searchFilter,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    searchFilterChange: searchFilterChange,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchFilter);

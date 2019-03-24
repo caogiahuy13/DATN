@@ -184,3 +184,11 @@ export function bookedTourGetPassengers(passengers){
     passengers,
   }
 }
+
+// Search filter
+export function searchFilterChange(filter){
+  return {
+    type: types.SEARCH_FILTER_CHANGE,
+    filter,
+  }
+}
