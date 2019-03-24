@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Image} from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Image, Animated} from 'react-native';
 import { Button, SearchBar, Icon } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
@@ -10,6 +10,8 @@ import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { price, placeholderPrice } from '../constants/search';
 
 import TourCard from '../components/TourCard';
+
+const headerHeight = 108;
 
 export default class Tours extends Component {
   static navigationOptions = {
@@ -26,7 +28,11 @@ export default class Tours extends Component {
 
       per_page: 6,
 
+      search: null,
       price: undefined,
+
+      isNavBarHidden: false,
+      height: new Animated.Value(headerHeight),
     }
   }
 
@@ -42,6 +48,17 @@ export default class Tours extends Component {
   }
   tourBookNowPress = () => {
     this.props.navigation.navigate("BookingInfo");
+  }
+
+  setAnimation(disable) {
+    Animated.timing(this.state.height, {
+      duration: 100,
+      toValue: disable ? 0 : headerHeight
+    }).start()
+  };
+  handleScroll(event) {
+      this.setAnimation((event.nativeEvent.contentOffset.y > headerHeight));
+      this.setState({ isNavBarHidden: !this.state.isNavBarHidden });
   }
 
   onLoadMorePress(){
@@ -67,40 +84,43 @@ export default class Tours extends Component {
 
   render() {
     const { tours, maxCount, count, isLoading } = this.state;
+    const { search } = this.state;
 
     return (
       <View style={{flex: 1, backgroundColor: COLOR_GRAY_BACKGROUND}}>
-          <View style={{flexDirection: 'row'}}>
-              <SearchBar
-                platform="android"
-                placeholder="Type Here..."
-                onChangeText={()=>{}}
-                value="TEST"
-                containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
-                inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
-                inputStyle={{fontSize: 16}}
-              />
-              <View style={{backgroundColor: COLOR_MAIN}}>
-                  <Icon name='sliders' type='font-awesome' color='white' size={30} containerStyle={styles.filter}/>
+          <Animated.View style={{height: this.state.height}}>
+              <View style={{flexDirection: 'row'}}>
+                  <SearchBar
+                    platform="android"
+                    placeholder="Type Here..."
+                    onChangeText={()=>{}}
+                    value={search}
+                    containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
+                    inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
+                    inputStyle={{fontSize: 16}}
+                  />
+                  <TouchableOpacity style={{backgroundColor: COLOR_MAIN}} onPress={()=>{this.props.navigation.navigate("SearchFilter")}} activeOpacity={1}>
+                      <Icon name='sliders' type='font-awesome' color='white' size={30} containerStyle={styles.filter}/>
+                  </TouchableOpacity>
               </View>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1}}>
-                <RNPickerSelect
-                  placeholder={placeholderPrice}
-                  items={price}
-                  onValueChange={value => {
-                    this.setState({
-                      price: value,
-                    });
-                  }}
-                  value={this.state.price}
-                />
+              <View style={{flexDirection: 'row'}}>
+                  <View style={{flex: 1}}>
+                    <RNPickerSelect
+                      placeholder={placeholderPrice}
+                      items={price}
+                      onValueChange={value => {
+                        this.setState({
+                          price: value,
+                        });
+                      }}
+                      value={this.state.price}
+                    />
+                  </View>
               </View>
-          </View>
+          </Animated.View>
 
 
-          <ScrollView>
+          <ScrollView onScroll={this.handleScroll.bind(this)}>
             <FlatList
               data={tours}
               renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress} onBookNowPress={this.tourBookNowPress}/>}

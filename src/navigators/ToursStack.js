@@ -7,6 +7,7 @@ import {fromRight} from 'react-navigation-transitions';
 import { COLOR_MAIN } from '../constants/index';
 
 import Tours from '../screens/Tours';
+import SearchFilter from '../screens/SearchFilter';
 import TourDetail from '../screens/TourDetail';
 import BookingInfo from '../screens/BookingInfo';
 import BookingPayment from '../screens/BookingPayment';
@@ -17,6 +18,7 @@ const ToursStack = createStackNavigator(
   {
     Tours,
     TourCard,
+    SearchFilter,
     TourDetail,
     BookingInfo,
     BookingPayment,
@@ -44,7 +46,8 @@ ToursStack.navigationOptions = ({ navigation }) => {
         if (route.routeName === "TourDetail" ||
             route.routeName === "BookingInfo" ||
             route.routeName === "BookingPayment" ||
-            route.routeName === "BookingConfirmation") {
+            route.routeName === "BookingConfirmation" ||
+            route.routeName === "SearchFilter") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;
