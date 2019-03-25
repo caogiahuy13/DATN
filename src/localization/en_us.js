@@ -61,13 +61,20 @@ const en_us = {
   loginFB: "Login with Facebook",
   notHaveAccount: "You don't have an account", // You don't have an account?
 
+  // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",
 
+  // Fullname modal
+  fullnameModalLabel: "Enter fullname",
+  fullnameModalDescription: "Please enter your fullname",
+
+  // Change password
   newPassword: "New password",
   oldPassword: "Old password",
   confirmPassword: "Confirm new password",
 
+  // Gender modal
   genderMocalLabel: "Choose gender",
 
   // Register
@@ -115,6 +122,9 @@ const en_us = {
   // Change avatar
   changeAvatar: "Change Avatar",
   choosePhoto: "Choose Photo",
+
+  // Change language
+  changeLanguage: "Change language",
 
   // Detail booked tour
   detailBookedTour: "Detail Booked Tour Information", // Detail Booked Tour Information

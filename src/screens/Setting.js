@@ -27,10 +27,12 @@ class Setting extends Component {
       isGenderModalVisible: false,
       isDateTimePickerVisible: false,
       isAddressModalVisible: false,
+      isFullnameModalVisible: false,
 
       isLogedIn: false,
 
       tmpAddress: '',
+      tmpFullname: '',
     }
 
     this.CheckLogedIn();
@@ -50,6 +52,14 @@ class Setting extends Component {
   _handleAddressModal = (address) => {
     this.callUpdateAddress(address).then(()=>{
       this._showAddressModal(false);
+    })
+  };
+
+  //Các hàm quản lý Fullname Modal
+  _showFullnameModal = (visible) => this.setState({ isFullnameModalVisible: visible });
+  _handleFullnameModal = (fullname) => {
+    this.callUpdateFullname(fullname).then(()=>{
+      this._showFullnameModal(false);
     })
   };
 
@@ -197,9 +207,31 @@ class Setting extends Component {
            .catch((error) => console.error(error));
   }
 
+  async callUpdateFullname(fullname){
+    const data = new FormData();
+    data.append('fullname',fullname);
+
+    return userUpdate(data)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+           .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else {
+                this.props.changeProfile(responseJson.profile);
+              }
+           })
+           .catch((error) => console.error(error));
+  }
+
   componentWillMount(){
     this.callMeAPI().then((data)=>{
       this.props.changeProfile(data.profile);
+      this.setState({tmpAddress: data.profile.address});
+      this.setState({tmpFullname: data.profile.fullname});
+      console.log(data.profile);
     })
   }
 
@@ -213,6 +245,7 @@ class Setting extends Component {
     }
 
     const {profile} = this.props.access;
+    const {tmpAddress, tmpFullname} = this.state;
 
     Moment.locale('en');
     let tmpEmail = "";
@@ -225,19 +258,30 @@ class Setting extends Component {
           onConfirm={(date)=>{this._handleDatePicked(date)}}
           onCancel={()=>{this._showDateTimePicker(false)}}
         />
+
         <Modal
           isVisible={this.state.isGenderModalVisible}
           onBackdropPress={()=>{this._showGenderModal(false)}}
         >
           {this._renderModalContent()}
         </Modal>
+
         <Dialog.Container visible={this.state.isAddressModalVisible}>
             <Dialog.Title>{localized.addressModalLabel}</Dialog.Title>
             <Dialog.Description>{localized.addressModalDescription}</Dialog.Description>
-            <Dialog.Input placeholder={localized.address} style={{borderBottomWidth: 0.5}} onChangeText={(value) => this.setState({tmpAddress: value})}>
+            <Dialog.Input placeholder={localized.address} style={{borderBottomWidth: 0.5}} value={tmpAddress} onChangeText={(value) => this.setState({tmpAddress: value})}>
             </Dialog.Input>
             <Dialog.Button label={localized.cancel} onPress={()=>this._showAddressModal(false)} />
-            <Dialog.Button label={localized.ok} onPress={()=>this._handleAddressModal(this.state.tmpAddress)} />
+            <Dialog.Button label={localized.ok} onPress={()=>this._handleAddressModal(tmpAddress)} />
+        </Dialog.Container>
+
+        <Dialog.Container visible={this.state.isFullnameModalVisible}>
+            <Dialog.Title>{localized.fullnameModalLabel}</Dialog.Title>
+            <Dialog.Description>{localized.fullnameModalDescription}</Dialog.Description>
+            <Dialog.Input placeholder={localized.fullname} style={{borderBottomWidth: 0.5}} value={tmpFullname} onChangeText={(value) => this.setState({tmpFullname: value})}>
+            </Dialog.Input>
+            <Dialog.Button label={localized.cancel} onPress={()=>this._showFullnameModal(false)} />
+            <Dialog.Button label={localized.ok} onPress={()=>this._handleFullnameModal(tmpFullname)} />
         </Dialog.Container>
 
         <View style={styles.userRow}>
@@ -260,7 +304,7 @@ class Setting extends Component {
             }
           </View>
           <View>
-            <Text style={{ fontSize: 16 }} onPress={()=>{Alert.alert("TEST")}}>{profile.fullname}</Text>
+            <Text style={{ fontSize: 16 }} onPress={() => {this._showFullnameModal(true)}}>{profile.fullname}</Text>
             <Text style={{ color: 'gray', fontSize: 14, }}>{profile.phone}</Text>
           </View>
         </View>

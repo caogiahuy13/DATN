@@ -61,13 +61,20 @@ const vi = {
   loginFB: "Đăng nhập với Facebook",
   notHaveAccount: "Bạn chưa có tài khoản", // You don't have an account?
 
+  // Address modal
   addressModalLabel: "Nhập địa chỉ",
   addressModalDescription: "Vui lòng nhập địa chỉ",
 
+  // Fullname modal
+  fullnameModalLabel: "Nhập họ tên",
+  fullnameModalDescription: "Vui lòng nhập họ tên",
+
+  // Change password
   newPassword: "Mật khẩu mới",
   oldPassword: "Mật khẩu cũ",
   confirmPassword: "Nhập lại mật khẩu mới",
 
+  // Gender modal
   genderMocalLabel: "Chọn giới tính",
 
   // Register
@@ -77,7 +84,7 @@ const vi = {
   // Forget password
   forgetPasswordSuccess: "Mật khẩu mới đã được gửi vào email của bạn!", // New password has been sent to your email!
   sendRequest: "Gửi yêu cầu",
-  
+
   // Tour Detail
   tourDetail: "Thông tin tour",
 
@@ -115,6 +122,9 @@ const vi = {
   // Change avatar
   changeAvatar: "Thay đổi ảnh đại diện",
   choosePhoto: "Chọn ảnh",
+
+  // Change language
+  changeLanguage: "Thay đổi ngôn ngữ",
 
   // Detail booked tour
   detailBookedTour: "Thông tin tour đã đặt", // Detail Booked Tour Information
