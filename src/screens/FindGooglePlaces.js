@@ -5,16 +5,18 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import { GOOGLE_MAPS_APIKEY } from '../constants/index';
 
+import localized from '../localization/index';
+
 class FindGooglePlaces extends Component {
   static navigationOptions = {
-    title: 'Search Location',
+    title: localized.searchLocation,
   };
 
   render(){
     return(
       <View style={styles.container}>
         <GooglePlacesAutocomplete
-          placeholder='Search'
+          placeholder={localized.search}
           minLength={2} // minimum length of text to search
           autoFocus={false}
           returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype

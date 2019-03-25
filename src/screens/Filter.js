@@ -5,10 +5,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { filterType } from '../actions/index.js';
+import localized from '../localization/index';
 
 class Filter extends Component {
   static navigationOptions = {
-    title: 'Filter location type',
+    title: localized.filterLocationType,
   };
 
   constructor(props){
@@ -77,7 +78,7 @@ class Filter extends Component {
                 <Button
                   containerStyle={styles.button}
                   buttonStyle={{borderWidth: 0.6}}
-                  title='Check All'
+                  title={localized.checkAll}
                   type='outline'
                   onPress={()=>onCheckAll()}
                 />
@@ -85,7 +86,7 @@ class Filter extends Component {
                   containerStyle={styles.button}
                   buttonStyle={{borderColor: 'red', borderWidth: 0.6}}
                   titleStyle={{color: 'red'}}
-                  title='Uncheck All'
+                  title={localized.uncheckAll}
                   type='outline'
                   onPress={()=>onUncheckAll()}
                 />

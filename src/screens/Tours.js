@@ -8,6 +8,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { getAllTourTurn } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { price, placeholderPrice } from '../constants/search';
+import localized from '../localization/index';
 
 import TourCard from '../components/TourCard';
 
@@ -138,13 +139,13 @@ export default class Tours extends Component {
             {
               maxCount < count &&
               <View style={{alignItems: 'center', paddingTop: 16}}>
-                  <Text style={{color: 'red'}}>All tours have been loaded</Text>
+                  <Text style={{color: 'red'}}>{localized.allTourLoaded}</Text>
               </View>
             }
 
             { tours != null &&
               <Button
-                title="SHOW MORE"
+                title={localized.showMore.toUpperCase()}
                 type="solid"
                 buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
                 containerStyle={{padding: 16, borderRadius: 0}}

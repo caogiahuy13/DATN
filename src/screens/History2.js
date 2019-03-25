@@ -7,12 +7,13 @@ import {connect} from 'react-redux';
 import { getHistoryByUser, getPassengerInBookTourHistory } from '../services/api';
 import { bookedTourGetInfo, bookedTourGetPassengers } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
+import localized from '../localization/index';
 
 import HistoryCard from '../components/HistoryCard';
 
 class History2 extends Component {
   static navigationOptions = {
-    title: 'History',
+    title: localized.historyBook,
   };
 
   constructor(props){

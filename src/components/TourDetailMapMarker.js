@@ -7,6 +7,7 @@ import { Badge, Icon} from 'react-native-elements';
 import isEqual from 'lodash.isequal';
 
 import { tourDetailShowLocation, tourDetailChangeLocation } from '../actions/index.js';
+import localized from '../localization/index';
 
 class TourDetailMapMarker extends Component{
   constructor(props) {
@@ -181,7 +182,7 @@ class TourDetailMapMarker extends Component{
               tracksViewChanges={false}
             >
                 { this.state.isOrderVisible && this._isInRoute(val.id)>=0 && badge.isMultiple &&
-                  <Text style={styles.callout}>Orders: {badge.multipleLabel}</Text>
+                  <Text style={styles.callout}>{localized.order}: {badge.multipleLabel}</Text>
                 }
 
                 <Image source={icon} style={styles.image}/>

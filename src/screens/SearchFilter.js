@@ -8,10 +8,11 @@ import {connect} from 'react-redux';
 import { COLOR_PLACEHOLDER, COLOR_MAIN, COLOR_GREEN, COLOR_LIGHT_BLUE } from '../constants/index';
 import { dateFormat, priceFormat } from '../services/function';
 import { searchFilterChange } from '../actions/index';
+import localized from '../localization/index';
 
 class SearchFilter extends Component {
   static navigationOptions = {
-    title: 'Search',
+    title: localized.search,
   };
 
   constructor(props){
@@ -71,10 +72,10 @@ class SearchFilter extends Component {
           />
 
           <TouchableOpacity style={{padding: 16, alignItems: 'flex-end'}} onPress={()=>this.onResetPress()}>
-              <Text style={{color: COLOR_LIGHT_BLUE, fontSize: 16}}>Reset</Text>
+              <Text style={{color: COLOR_LIGHT_BLUE, fontSize: 16}}>{localized.searchReset}</Text>
           </TouchableOpacity>
 
-          <Text style={styles.inputText}>Select your destination</Text>
+          <Text style={styles.inputText}>{localized.selectDestination}</Text>
           <TextInput
               style={styles.input}
               placeholder=""
@@ -85,7 +86,7 @@ class SearchFilter extends Component {
               value={destination == '' ? null : destination}
           />
 
-          <Text style={styles.inputText}>Select your date</Text>
+          <Text style={styles.inputText}>{localized.selectDate}</Text>
           <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
               <TextInput
                   style={styles.input}
@@ -100,7 +101,7 @@ class SearchFilter extends Component {
           </TouchableOpacity>
 
           <View style={{flexDirection: 'row', paddingVertical: 6}}>
-              <Text style={{flex: 1, fontSize: 18}}>Max Price</Text>
+              <Text style={{flex: 1, fontSize: 18}}>{localized.maxPrice}</Text>
               <Text style={{fontSize: 18}}>{priceFormat(maxPrice)}</Text>
           </View>
           <Slider
@@ -126,7 +127,7 @@ class SearchFilter extends Component {
           </View>
 
           <Button
-            title="SEARCH"
+            title={localized.search.toUpperCase()}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingVertical: 32, paddingHorizontal: 16, borderRadius: 0}}

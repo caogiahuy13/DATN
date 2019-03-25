@@ -9,6 +9,7 @@ import {
 import { ERR_EMAIL, ERR_EMAIL_VALIDATE } from '../constants/index';
 import { forgetPassword } from '../services/api';
 import { validateEmail } from '../services/function';
+import localized from '../localization/index';
 
 class ForgetPassword extends Component {
     constructor(props){
@@ -28,11 +29,11 @@ class ForgetPassword extends Component {
     // Kiểm tra thông tin người dùng
     checkEmail(){
       if (this.state.email == ''){
-        this.setError(ERR_EMAIL, true);
+        this.setError(localized.ERR_EMAIL, true);
         return false;
       }
       if (!validateEmail(this.state.email)){
-        this.setError(ERR_EMAIL_VALIDATE, true);
+        this.setError(localized.ERR_EMAIL_VALIDATE, true);
         return false;
       }
 
@@ -66,10 +67,10 @@ class ForgetPassword extends Component {
         this.callForgetPassword().then(()=>{
           if (this.state.isError == false){
             Alert.alert(
-              'Congratulations',
-              'New password has been sent to your email!',
+              localized.congratulation,
+              localized.forgetPasswordSuccess,
               [
-                {text: 'OK', onPress: () => this.props.navigation.navigate("Login")},
+                {text: localized.ok, onPress: () => this.props.navigation.navigate("Login")},
               ],
               {cancelable: false},
             );
@@ -85,13 +86,13 @@ class ForgetPassword extends Component {
         return (
             <View style={styles.container}>
                   <View style={styles.imageBackground}>
-                      <Text style={styles.title}>FORGET</Text>
-                      <Text style={styles.title}>PASSWORD</Text>
+                      <Text style={styles.title}>{localized.forget.toUpperCase()}</Text>
+                      <Text style={styles.title}>{localized.password.toUpperCase()}</Text>
                       <View style={styles.line}/>
                   </View>
                   <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.inputText}>Email *</Text>
+                        <Text style={styles.inputText}>{localized.email} *</Text>
                         <TextInput style={styles.input}
                             placeholder=""
                             placeholderTextColor='rgba(255,255,255,0.8)'
@@ -101,7 +102,7 @@ class ForgetPassword extends Component {
                         />
                         { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
                         <TouchableOpacity style={styles.buttonSend} onPress={() => {this._onPressSendRequest()}}>
-                             <Text style={styles.buttonText}>SEND REQUEST</Text>
+                             <Text style={styles.buttonText}>{localized.sendRequest.toUpperCase()}</Text>
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>

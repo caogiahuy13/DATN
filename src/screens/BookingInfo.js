@@ -11,6 +11,7 @@ import { ERR_BOOKING_CONTACT_INFO, ERR_BOOKING_PASSENGER_INFO, ERR_BOOKING_PASSE
 import { bookingChangeInfo, bookingChangeTourTurn, bookingChangeNumber } from '../actions/index';
 import { } from '../services/api';
 import { validateEmail, validatePhone } from '../services/function';
+import localized from '../localization/index';
 
 import BookingStage from '../components/BookingStage';
 import NumberPicker from '../components/NumberPicker';
@@ -20,7 +21,7 @@ import BookingTourCard from '../components/BookingTourCard';
 
 class BookingInfo extends Component {
   static navigationOptions = {
-    title: 'Passenger Information',
+    title: localized.passengerInfo,
   };
 
   constructor(props){
@@ -190,45 +191,45 @@ class BookingInfo extends Component {
     const {contactInfo, adultInfo, childrenInfo, number} = this.state;
 
     if (contactInfo.fullname == '' || contactInfo.phone == '' || contactInfo.email == '' || contactInfo.address == ''){
-      this.setError(ERR_BOOKING_CONTACT_INFO, true);
+      this.setError(localized.ERR_BOOKING_CONTACT_INFO, true);
       return false;
     }
 
     if (!validateEmail(contactInfo.email)){
-      this.setError(ERR_EMAIL_VALIDATE, true);
+      this.setError(localized.ERR_EMAIL_VALIDATE, true);
       return false;
     }
 
     if (!validatePhone(contactInfo.phone)){
-      this.setError(ERR_PHONE_LENGTH, true);
+      this.setError(localized.ERR_PHONE_LENGTH, true);
       return false;
     }
 
     if (number.adult == 0 && number.children == 0){
-      this.setError(ERR_BOOKING_PASSENGER_MIN, true);
+      this.setError(localized.ERR_BOOKING_PASSENGER_MIN, true);
       return false;
     }
 
     for (let i=0; i<adultInfo.length; i++){
       if (adultInfo[i].fullname == '' || adultInfo[i].birthdate == '' || adultInfo[i].sex == ''){
-        this.setError(ERR_BOOKING_PASSENGER_INFO, true);
+        this.setError(localized.ERR_BOOKING_PASSENGER_INFO, true);
         return false;
       }
       if (adultInfo[i].phone != ''){
         if (!validatePhone(adultInfo[i].phone)){
-          this.setError(ERR_PHONE_LENGTH, true);
+          this.setError(localized.ERR_PHONE_LENGTH, true);
           return false;
         }
       }
     }
     for (let i=0; i<childrenInfo.length; i++){
       if (childrenInfo[i].fullname == '' || childrenInfo[i].birthdate == '' || childrenInfo[i].sex == ''){
-        this.setError(ERR_BOOKING_PASSENGER_INFO, true);
+        this.setError(localized.ERR_BOOKING_PASSENGER_INFO, true);
         return false;
       }
       if (childrenInfo[i].phone != ''){
         if (!validatePhone(childrenInfo[i].phone)){
-          this.setError(ERR_PHONE_LENGTH, true);
+          this.setError(localized.ERR_PHONE_LENGTH, true);
           return false;
         }
       }
@@ -302,25 +303,25 @@ class BookingInfo extends Component {
 
           <BookingTourCard data={this.state.tourTurn} number={this.state.number}/>
 
-          <InfoText text="Number of passengers"/>
+          <InfoText text={localized.numberOfPassengers}/>
 
           <View style={styles.card}>
               <View style={styles.numberPicker}>
-                  <Text style={styles.numberPickerText}>Adult *</Text>
+                  <Text style={styles.numberPickerText}>{localized.adult} *</Text>
                   <NumberPicker value={this.state.number.adult} increase={()=>this.increaseAdult()} decrease={()=>this.decreaseAdult()}/>
               </View>
               <View style={styles.numberPicker}>
-                  <Text style={styles.numberPickerText}>Children</Text>
+                  <Text style={styles.numberPickerText}>{localized.children}</Text>
                   <NumberPicker value={this.state.number.children} increase={()=>this.increaseChildren()} decrease={()=>this.decreaseChildren()}/>
               </View>
           </View>
 
-          <InfoText text="Contact Information"/>
+          <InfoText text={localized.contactInfo}/>
 
           <View style={styles.card}>
               <TextInput
                   style={styles.input}
-                  placeholder="Fullname *"
+                  placeholder={localized.fullname+" *"}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
@@ -328,7 +329,7 @@ class BookingInfo extends Component {
               />
               <TextInput
                   style={styles.input}
-                  placeholder="Phone number *"
+                  placeholder={localized.phone+" *"}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   keyboardType='phone-pad'
                   returnKeyType='next'
@@ -337,7 +338,7 @@ class BookingInfo extends Component {
               />
               <TextInput
                   style={styles.input}
-                  placeholder="Email *"
+                  placeholder={localized.email+" *"}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   keyboardType='email-address'
                   returnKeyType='next'
@@ -346,7 +347,7 @@ class BookingInfo extends Component {
               />
               <TextInput
                   style={styles.input}
-                  placeholder="Address *"
+                  placeholder={localized.address+" *"}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}

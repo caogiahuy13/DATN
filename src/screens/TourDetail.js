@@ -13,6 +13,7 @@ import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommen
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice } from '../services/function';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
+import localized from '../localization/index';
 
 import TourDetailMap from '../components/TourDetailMap';
 import TourDetailReview from '../components/TourDetailReview';
@@ -21,7 +22,7 @@ import CollapsibleCardTitle from '../components/CollapsibleCardTitle';
 
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
-    title: 'Tour information',
+    title: localized.tourDetail,
   });
 
   constructor(props){
@@ -161,7 +162,7 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CollapsibleCardTitle title="Description" status={isDescriptionCollapsed} onPress={()=>this.toggleDescription()}/>
+            title=<CollapsibleCardTitle title={localized.description} status={isDescriptionCollapsed} onPress={()=>this.toggleDescription()}/>
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isDescriptionCollapsed}>
@@ -173,7 +174,7 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CollapsibleCardTitle title="Detail" status={isDetailCollapsed} onPress={()=>this.toggleDetail()}/>
+            title=<CollapsibleCardTitle title={localized.detail} status={isDetailCollapsed} onPress={()=>this.toggleDetail()}/>
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isDetailCollapsed}>
@@ -189,7 +190,7 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CollapsibleCardTitle title="Reviews" status={isReviewCollapsed} onPress={()=>this.toggleReview()}/>
+            title=<CollapsibleCardTitle title={localized.review} status={isReviewCollapsed} onPress={()=>this.toggleReview()}/>
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isReviewCollapsed}>
@@ -203,7 +204,7 @@ class TourDetail extends Component{
 
         <Button
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
-          title='BOOK TOUR'
+          title={localized.bookTour.toUpperCase()}
           onPress={()=>{this.onBookNowPress()}}
           titleStyle={{fontSize: 18, fontWeight: 'bold'}}
         />

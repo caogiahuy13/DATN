@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import { handleAccess, changeProfile, screenManage } from '../actions/index.js';
 import { login, loginWithFacebook } from '../services/api';
 import { ERR_USERNAME, ERR_PASSWORD } from '../constants/index';
+import localized from '../localization/index';
 
 class Login extends Component {
     constructor(props){
@@ -57,11 +58,11 @@ class Login extends Component {
     // Kiểm tra thông tin người dùng
     checkUser(){
       if (this.state.username == ''){
-        this.setError(ERR_USERNAME, true);
+        this.setError(localized.ERR_USERNAME, true);
         return false;
       }
       if (this.state.password == ''){
-        this.setError(ERR_PASSWORD, true);
+        this.setError(localized.ERR_PASSWORD, true);
         return false;
       }
       this.setError('', false);
@@ -178,11 +179,11 @@ class Login extends Component {
             <View style={styles.container}>
                  <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <View style={styles.imageBackground}>
-                        <Text style={styles.title}>LOGIN</Text>
+                        <Text style={styles.title}>{localized.login.toUpperCase()}</Text>
                         <View style={styles.line}/>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.inputText}>Email or Phone number *</Text>
+                        <Text style={styles.inputText}>{localized.emailOrPhone} *</Text>
                         <TextInput style={styles.input}
                             placeholder=""
                             placeholderTextColor='rgba(255,255,255,0.8)'
@@ -192,7 +193,7 @@ class Login extends Component {
                             onChangeText={(value)=> this.setState({username: value})}
                             // onSubmitEditing={()=> this.refs.txtPassword.focus()}
                         />
-                        <Text style={styles.inputText}>Password *</Text>
+                        <Text style={styles.inputText}>{localized.password} *</Text>
                         <TextInput style={styles.input}
                             placeholder=""
                             placeholderTextColor='rgba(255,255,255,0.8)'
@@ -203,23 +204,23 @@ class Login extends Component {
                             onChangeText={(value)=> this.setState({password: value})}
                         />
                         <View style={styles.notePassword}>
-                            <Text style={styles.lostPassword} onPress={()=>navigation.navigate("ForgetPassword")}>Lost your password?</Text>
+                            <Text style={styles.lostPassword} onPress={()=>navigation.navigate("ForgetPassword")}>{localized.lostPassword}?</Text>
                         </View>
                         { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
                         <TouchableOpacity style={styles.buttonLogin} onPress={() => {this._onPressLogin()}}>
-                             <Text style={styles.buttonText}>LOGIN</Text>
+                             <Text style={styles.buttonText}>{localized.login.toUpperCase()}</Text>
                         </TouchableOpacity>
-                        <Text style={styles.ORText}>OR</Text>
+                        <Text style={styles.ORText}>{localized.or.toUpperCase()}</Text>
                         <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.handleFacebookLogin()}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
                                 <Text>{"   "}</Text>
-                                LOGIN WITH FACEBOOK
+                                {localized.loginFB.toUpperCase()}
                             </Text>
                         </TouchableOpacity>
                         <View style={styles.register}>
-                            <Text style={styles.registerText1}>You don't have an account? </Text>
-                            <Text style={styles.registerText2} onPress={()=>{navigation.navigate('Register')}}>Register here </Text>
+                            <Text style={styles.registerText1}>{localized.notHaveAccount}? </Text>
+                            <Text style={styles.registerText2} onPress={()=>{navigation.navigate('Register')}}>{localized.register}</Text>
                         </View>
                     </View>
                 </KeyboardAvoidingView>

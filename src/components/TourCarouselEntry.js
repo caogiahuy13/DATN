@@ -7,6 +7,7 @@ import { withNavigation } from 'react-navigation';
 
 import {changeCurrentRoute, handleCurrentRoute} from '../actions/index.js';
 import { getRouteByTour } from '../services/api';
+import localized from '../localization/index';
 
 class TourCarouselEntry extends Component {
   async callGetRouteByTourAPI(id){
@@ -39,7 +40,7 @@ class TourCarouselEntry extends Component {
             <Button
               icon={<Icon name="directions" type="materialicons" size={18} color="white" iconStyle={{marginRight: 4}}/>}
               type="solid"
-              title="Direction"
+              title={localized.direction}
               titleStyle={{fontSize: 14}}
               buttonStyle={styles.button}
               onPress={()=>{this._onDirectionPress()}}
@@ -47,7 +48,7 @@ class TourCarouselEntry extends Component {
             <Button
               icon={<Icon name="rightcircle" type="antdesign" size={16} color="#2089DC" iconStyle={{marginRight: 4}}/>}
               type="outline"
-              title="Detail"
+              title={localized.detail}
               titleStyle={{fontSize: 14}}
               buttonStyle={styles.button}
               onPress={()=>{this.props.navigation.navigate("TourDetail",{id: item.tour_turns.id})}}

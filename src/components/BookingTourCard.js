@@ -5,7 +5,8 @@ import NumberFormat from 'react-number-format';
 import Moment from 'moment';
 
 import { COLOR_LIGHT_BLACK, COLOR_GREEN, COLOR_HARD_RED } from '../constants/index';
-import { getDaysDiff } from '../services/function';
+import { getDaysDiff, priceFormat } from '../services/function';
+import localized from '../localization/index';
 
 import TourCardTitle from './TourCardTitle';
 
@@ -28,23 +29,17 @@ class BookingTourCard extends Component{
         image={{uri: data.tour.featured_img}}
       >
         <View style={{flex: 1, paddingHorizontal: 4, paddingBottom: 10}}>
-            <TourInfo firstText="Code:" secondText={"000" + data.id}/>
-            <TourInfo firstText="Start date:" secondText={Moment(data.start_date).format('DD/MM/YYYY')}/>
-            <TourInfo firstText="End date:" secondText={Moment(data.end_date).format('DD/MM/YYYY')}/>
-            <TourInfo firstText="Lasting:" secondText={getDaysDiff(data.start_date, data.end_date)}/>
-            <TourPrice firstText="Adult price:" price={data.price_passengers[0].price} number={number.adult}/>
-            <TourPrice firstText="Adult price:" price={data.price_passengers[1].price} number={number.children}/>
+            <TourInfo firstText={localized.code} secondText={"000" + data.id}/>
+            <TourInfo firstText={localized.startDate} secondText={Moment(data.start_date).format('DD/MM/YYYY')}/>
+            <TourInfo firstText={localized.endDate} secondText={Moment(data.end_date).format('DD/MM/YYYY')}/>
+            <TourInfo firstText={localized.lasting} secondText={getDaysDiff(data.start_date, data.end_date)}/>
+            <TourPrice firstText={localized.adultPrice} price={data.price_passengers[0].price} number={number.adult}/>
+            <TourPrice firstText={localized.childrenPrice} price={data.price_passengers[1].price} number={number.children}/>
         </View>
         <View style={styles.priceContainer}>
-            <Text>TOTAL PRICE:</Text>
+            <Text>{localized.totalPrice.toUpperCase()}:</Text>
             <Text style={styles.price}>
-                <NumberFormat
-                  value={this.getTotalPrice()}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  suffix={' VNĐ'}
-                  renderText={value => <Text>{value}</Text>}
-                />
+                {priceFormat(this.getTotalPrice())}
             </Text>
         </View>
       </Card>

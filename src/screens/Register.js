@@ -17,6 +17,7 @@ import { ERR_FULLNAME, ERR_PASSWORD, ERR_PHONE,
         COLOR_PLACEHOLDER,
 } from '../constants/index';
 import { validateEmail, validatePhone } from '../services/function';
+import localized from '../localization/index';
 
 class Register extends Component {
     constructor(props){
@@ -43,10 +44,10 @@ class Register extends Component {
           this.setState({isLoading: false});
           if (this.state.isError == false){
             Alert.alert(
-              'Congratulations',
-              'You registered an account successfully! Please check your email to verify the account!',
+              localized.congratulation,
+              localized.registerSuccess,
               [
-                {text: 'OK', onPress: () => this.props.navigation.navigate("Login")},
+                {text: localized.ok, onPress: () => this.props.navigation.navigate("Login")},
               ],
               {cancelable: false},
             );
@@ -86,31 +87,31 @@ class Register extends Component {
     // Kiểm tra thông tin người dùng
     checkUser(){
       if (this.state.fullname == ''){
-        this.setError(ERR_FULLNAME, true);
+        this.setError(localized.ERR_FULLNAME, true);
         return false;
       }
       if (this.state.password == ''){
-        this.setError(ERR_PASSWORD, true);
+        this.setError(localized.ERR_PASSWORD, true);
         return false;
       }
       if (this.state.phone == ''){
-        this.setError(ERR_PHONE, true);
+        this.setError(localized.ERR_PHONE, true);
         return false;
       }
       if (!validatePhone(this.state.phone)){
-        this.setError(ERR_PHONE_LENGTH, true);
+        this.setError(localized.ERR_PHONE_LENGTH, true);
         return false;
       }
       if (this.state.email == ''){
-        this.setError(ERR_EMAIL, true);
+        this.setError(localized.ERR_EMAIL, true);
         return false;
       }
       if (!validateEmail(this.state.email)){
-        this.setError(ERR_EMAIL_VALIDATE, true);
+        this.setError(localized.ERR_EMAIL_VALIDATE, true);
         return false;
       }
       if (this.state.password !== this.state.confirmPassword){
-        this.setError(ERR_CONFIRM_PASSWORD, true);
+        this.setError(localized.ERR_CONFIRM_PASSWORD, true);
         return false;
       }
       this.setError('', false);
@@ -211,14 +212,14 @@ class Register extends Component {
                     </View>
                     <View style={styles.infoContainer}>
                         <TextInput style={styles.input}
-                            placeholder="Fullname *"
+                            placeholder={localized.fullname + " *"}
                             placeholderTextColor={COLOR_PLACEHOLDER}
                             returnKeyType='next'
                             autoCorrect={false}
                             onChangeText={(value)=> this.setState({fullname: value})}
                         />
                         <TextInput style={styles.input}
-                            placeholder="Password *"
+                            placeholder={localized.password + " *"}
                             placeholderTextColor={COLOR_PLACEHOLDER}
                             returnKeyType='next'
                             secureTextEntry
@@ -226,7 +227,7 @@ class Register extends Component {
                             onChangeText={(value)=> this.setState({password: value})}
                         />
                         <TextInput style={styles.input}
-                            placeholder="Confirm Password *"
+                            placeholder={localized.confirmPassword + " *"}
                             placeholderTextColor={COLOR_PLACEHOLDER}
                             returnKeyType='next'
                             secureTextEntry
@@ -234,7 +235,7 @@ class Register extends Component {
                             onChangeText={(value)=> this.setState({confirmPassword: value})}
                         />
                         <TextInput style={styles.input}
-                            placeholder="Phone Number *"
+                            placeholder={localized.phone + " *"}
                             placeholderTextColor={COLOR_PLACEHOLDER}
                             keyboardType='phone-pad'
                             returnKeyType='next'
@@ -242,7 +243,7 @@ class Register extends Component {
                             onChangeText={(value)=> this.setState({phone: value})}
                         />
                         <TextInput style={styles.input}
-                            placeholder="Email *"
+                            placeholder={localized.email + " *"}
                             placeholderTextColor={COLOR_PLACEHOLDER}
                             keyboardType='email-address'
                             returnKeyType='go'
@@ -258,22 +259,22 @@ class Register extends Component {
                                     style={{width: 24, height: 24, tintColor: 'white', marginHorizontal: 6}}
                                     source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
                               }
-                              <Text style={styles.buttonText}>REGISTER</Text>
+                              <Text style={styles.buttonText}>{localized.register.toUpperCase()}</Text>
                         </TouchableOpacity>
 
-                        <Text style={styles.ORText}>OR</Text>
+                        <Text style={styles.ORText}>{localized.or.toUpperCase()}</Text>
 
                         <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.handleFacebookLogin()}}>
                             <Text style={styles.buttonText}>
                                 <FontAwesome name="facebook" size={25} />
                                 <Text>{"   "}</Text>
-                                LOGIN WITH FACEBOOK
+                                {localized.loginFB.toUpperCase()}
                             </Text>
                         </TouchableOpacity>
 
                         <View style={styles.register}>
-                            <Text style={{fontSize: 18}}>You have an account? </Text>
-                            <Text style={{fontSize: 18, color: '#5375D8'}} onPress={()=>{navigation.navigate('Login');}}>Login here </Text>
+                            <Text style={{fontSize: 18}}>{localized.haveAccount}? </Text>
+                            <Text style={{fontSize: 18, color: '#5375D8'}} onPress={()=>{navigation.navigate('Login');}}>{localized.login}</Text>
                         </View>
                     </View>
                 </KeyboardAvoidingView>

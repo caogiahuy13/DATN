@@ -9,7 +9,8 @@ import {connect} from 'react-redux';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
 import { bookingChangeInfo, bookingIsBooking, screenSetPrevious } from '../actions/index';
 import { bookNewTour } from '../services/api';
-
+import { getGenderShow, getAgeShow } from '../services/function';
+import localized from '../localization/index';
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
@@ -17,7 +18,7 @@ import BookingTourCard from '../components/BookingTourCard';
 
 class BookingConfirmation extends Component {
   static navigationOptions = {
-    title: 'Confirm Your Booking',
+    title: localized.confirmBooking,
   };
 
   constructor(props){
@@ -25,7 +26,6 @@ class BookingConfirmation extends Component {
     this.state = {
 
     }
-
   }
 
   async callBookNewTour(){
@@ -42,10 +42,10 @@ class BookingConfirmation extends Component {
                 Alert.alert(responseJson.msg);
               } else {
                 Alert.alert(
-                  'Congratulations',
-                  'Successful booking tour!',
+                  localized.congratulation,
+                  localized.successBooking,
                   [
-                    {text: 'OK', onPress: () => this.props.navigation.navigate("Tours")},
+                    {text: localized.ok, onPress: () => this.props.navigation.navigate("Tours")},
                   ],
                   {cancelable: false},
                 );
@@ -103,16 +103,16 @@ class BookingConfirmation extends Component {
 
           <BookingTourCard data={tourTurn} number={number}/>
 
-          <InfoText text="Contact Information"/>
+          <InfoText text={localized.contactInfo}/>
 
           <View style={styles.card}>
-              <ContactInfo firstTxt="Fullname:" secondTxt={info.fullname}/>
-              <ContactInfo firstTxt="Phone number:" secondTxt={info.phone}/>
-              <ContactInfo firstTxt="Email:" secondTxt={info.email}/>
-              <ContactInfo firstTxt="Address:" secondTxt={info.address}/>
+              <ContactInfo firstTxt={localized.fullname+":"} secondTxt={info.fullname}/>
+              <ContactInfo firstTxt={localized.phone+":"} secondTxt={info.phone}/>
+              <ContactInfo firstTxt={localized.email+":"} secondTxt={info.email}/>
+              <ContactInfo firstTxt={localized.address+":"} secondTxt={info.address}/>
           </View>
 
-          <InfoText text="Passenger Information"/>
+          <InfoText text={localized.passengerInfo+":"}/>
 
           <View style={styles.card}>
               {passengers}
@@ -121,7 +121,7 @@ class BookingConfirmation extends Component {
           <Space/>
 
           <Button
-            title="BOOK"
+            title={localized.bookTour.toUpperCase()}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
@@ -161,8 +161,8 @@ class PassengerInfo extends Component {
       <View style={{paddingVertical: 10}}>
           <Text style={{fontWeight: 'bold'}}>{fullname}</Text>
           <Text>{Moment(birthdate).format('DD/MM/YYYY')}</Text>
-          <Text>{sex}</Text>
-          <Text>{type}</Text>
+          <Text>{getGenderShow(sex)}</Text>
+          <Text>{getAgeShow(type)}</Text>
           { phone != '' && <Text>{phone}</Text> }
           { passport != '' && <Text>{passport}</Text> }
       </View>

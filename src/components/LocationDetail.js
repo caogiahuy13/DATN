@@ -6,6 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import { Button, Icon } from 'react-native-elements';
 
 import {handleModalLocation, handleTourCarousel, handleCurrentRoute} from '../actions/index.js';
+import localized from '../localization/index';
 
 class LocationDetail extends Component {
 
@@ -19,7 +20,7 @@ class LocationDetail extends Component {
   render(){
     const {location} = this.props.modalLocation;
     let link = "";
-    let tourStr = '' + location.tours.length + ' tour đi qua';
+    let tourStr = '' + location.tours.length + ' tour';
 
     if (location.featured_img != null){
       link = location.featured_img;

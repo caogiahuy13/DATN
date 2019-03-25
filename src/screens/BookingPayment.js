@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
 import { bookingChangeInfo } from '../actions/index';
+import localized from '../localization/index';
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
@@ -14,7 +15,7 @@ import BookingTourCard from '../components/BookingTourCard';
 
 class BookingPayment extends Component {
   static navigationOptions = {
-    title: 'Payment Information',
+    title: localized.paymentInfo,
   };
 
   constructor(props){

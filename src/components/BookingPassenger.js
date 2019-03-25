@@ -8,7 +8,8 @@ import Modal from 'react-native-modal';
 import InfoText from './InfoText';
 
 import { COLOR_PLACEHOLDER } from '../constants/index';
-import { capitalize } from '../services/function';
+import { capitalize, getGenderShow, getAgeShow } from '../services/function';
+import localized from '../localization/index';
 
 class BookingPassenger extends Component {
   constructor(props){
@@ -48,7 +49,7 @@ class BookingPassenger extends Component {
             <View style={{position: 'relative', flexDirection: 'row'}}>
               <ListItem
                 style={{flex: 1,}}
-                title="Choose Gender"
+                title={localized.genderMocalLabel}
                 onPress={() => {this._showGenderModal(false)}}
                 containerStyle={styles.listItemContainer}
                 rightIcon={<Icon name='close' type='FontAwesome' color='#D1D1D6'/>}
@@ -57,7 +58,7 @@ class BookingPassenger extends Component {
             <View style={{position: 'relative', flexDirection: 'row'}}>
               <ListItem
                 style={{flex: 1,}}
-                title="Male"
+                title={localized.male}
                 onPress={() => {this._handleGenderModal('male')}}
                 containerStyle={styles.listItemContainer}
                 rightIcon={sex == 'male' && <Icon name='check' type='entypo' color='#00BFFF'/>}
@@ -66,7 +67,7 @@ class BookingPassenger extends Component {
             <View style={{position: 'relative', flexDirection: 'row'}}>
               <ListItem
                 style={{flex: 1,}}
-                title="Female"
+                title={localized.female}
                 onPress={() => {this._handleGenderModal('female')}}
                 containerStyle={styles.listItemContainer}
                 rightIcon={sex == 'female' && <Icon name='check' type='entypo' color='#00BFFF'/>}
@@ -75,7 +76,7 @@ class BookingPassenger extends Component {
             <View style={{position: 'relative', flexDirection: 'row'}}>
               <ListItem
                 style={{flex: 1,}}
-                title="Other"
+                title={localized.other}
                 onPress={() => {this._handleGenderModal('other')}}
                 containerStyle={styles.listItemContainer}
                 rightIcon={sex == 'other' && <Icon name='check' type='entypo' color='#00BFFF'/>}
@@ -177,7 +178,7 @@ class BookingPassenger extends Component {
 
   render(){
     const {passenger} = this.state;
-    let infoText = "Passenger Information #" + this.props.index;
+    let infoText = localized.passengerInfo + " #" + this.props.index;
 
     return(
       <View>
@@ -199,7 +200,7 @@ class BookingPassenger extends Component {
           <View style={styles.card}>
               <TextInput
                   style={styles.input}
-                  placeholder="Fullname *"
+                  placeholder={localized.fullname + " *"}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
@@ -208,7 +209,7 @@ class BookingPassenger extends Component {
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
                 <TextInput
                     style={styles.input}
-                    placeholder="birthdate *"
+                    placeholder={localized.birthdate + " *"}
                     placeholderTextColor={COLOR_PLACEHOLDER}
                     returnKeyType='next'
                     autoCorrect={false}
@@ -223,24 +224,24 @@ class BookingPassenger extends Component {
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   onChangeText={(value)=> this.changeAge(value)}
                   editable={false} selectTextOnFocus={false}
-                  value={passenger.type == '' ? null : capitalize(passenger.type)}
+                  value={passenger.type == '' ? null : getAgeShow(passenger.type)}
               />
 
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showGenderModal(true)}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Gender *"
+                    placeholder={localized.gender + " *"}
                     placeholderTextColor={COLOR_PLACEHOLDER}
                     returnKeyType='next'
                     autoCorrect={false}
                     onChangeText={(value)=> this.changeGender(value)}
                     editable={false} selectTextOnFocus={false}
-                    value={passenger.sex == '' ? null : capitalize(passenger.sex)}
+                    value={passenger.sex == '' ? null : getGenderShow(passenger.sex)}
                 />
               </TouchableOpacity>
               <TextInput
                   style={styles.input}
-                  placeholder="Phone number"
+                  placeholder={localized.phone}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   keyboardType='phone-pad'
                   returnKeyType='next'
@@ -249,7 +250,7 @@ class BookingPassenger extends Component {
               />
               <TextInput
                   style={styles.input}
-                  placeholder="Identity number/ Passport"
+                  placeholder={localized.identity + "/ Passport"}
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   keyboardType='numeric'
                   returnKeyType='next'

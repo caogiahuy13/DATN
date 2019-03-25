@@ -20,6 +20,15 @@ export function getGenderShow(string){
   }
 }
 
+// Lấy chuỗi hiển thị Age
+export function getAgeShow(string){
+  if (string == 'adults'){
+    return localized.adult;
+  } else if (string == 'children'){
+    return localized.children;
+  }
+}
+
 // Kiểm tra email
 export function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -9,10 +9,11 @@ import {connect} from 'react-redux';
 import { changeProfile } from '../actions/index.js';
 import { userUpdate } from '../services/api';
 import { COLOR_MAIN } from '../constants/index';
+import localized from '../localization/index';
 
 class ChangeAvatar extends Component {
   static navigationOptions = {
-    title: 'Change Avatar',
+    title: localized.changeAvatar,
   };
 
   constructor(props){
@@ -94,11 +95,11 @@ class ChangeAvatar extends Component {
                 />
               )}
               <View style={{margin: 10}}></View>
-              <Button title="Choose Photo" onPress={this.handleChoosePhoto} />
+              <Button title={localized.choosePhoto} onPress={this.handleChoosePhoto} />
           </View>
 
           <Button
-            title="CHANGE AVATAR"
+            title={localized.changeAvatar.toUpperCase()}
             onPress={()=>{this._onButtonPress()}}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN}}

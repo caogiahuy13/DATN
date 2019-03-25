@@ -6,13 +6,14 @@ import {connect} from 'react-redux';
 
 import {  } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
-import { capitalize, priceFormat, dateFormat } from '../services/function';
+import { capitalize, priceFormat, dateFormat, getGenderShow, getAgeShow } from '../services/function';
+import localized from '../localization/index';
 
 import InfoText from '../components/InfoText';
 
 class HistoryDetail extends Component {
   static navigationOptions = {
-    title: 'Detail Booked Tour Information',
+    title: localized.detailBookedTour,
   };
 
   render() {
@@ -37,39 +38,39 @@ class HistoryDetail extends Component {
       <ScrollView style={styles.container}>
         <View style={styles.card}>
             <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 16}}>Code: </Text>
+                <Text style={{fontSize: 16}}>{localized.code}: </Text>
                 <Text style={{fontSize: 16, color: 'orange', fontWeight: 'bold'}}>{'0000'+info.id}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 16}}>Status: </Text>
+                <Text style={{fontSize: 16}}>{localized.status}: </Text>
                 <Text style={{fontSize: 16, color: COLOR_LIGHT_BLUE, fontWeight: 'bold'}}>{capitalize(info.status)}</Text>
             </View>
         </View>
 
-        <InfoText text="Checkout information"/>
+        <InfoText text={localized.checkoutInfo}/>
 
         <View style={styles.card}>
-            <CheckoutInfo firstTxt="Adult price" secondTxt="2,000,000" thirdTxt="1"/>
-            <CheckoutInfo firstTxt="Children price" secondTxt="1,000,000" thirdTxt="1"/>
-            <DetailInfo firstTxt="Total price" secondTxt={priceFormat(info.total_pay)}/>
+            <CheckoutInfo firstTxt={localized.adultPrice} secondTxt="2,000,000" thirdTxt="1"/>
+            <CheckoutInfo firstTxt={localized.childrenPrice} secondTxt="1,000,000" thirdTxt="1"/>
+            <DetailInfo firstTxt={localized.totalPrice} secondTxt={priceFormat(info.total_pay)}/>
         </View>
 
-        <InfoText text="Contact information"/>
+        <InfoText text={localized.contactInfo}/>
 
         <View style={styles.card}>
-            <DetailInfo firstTxt="Fullname" secondTxt={book_tour_contact_info.fullname}/>
-            <DetailInfo firstTxt="Phone number" secondTxt={book_tour_contact_info.phone}/>
-            <DetailInfo firstTxt="Email" secondTxt={book_tour_contact_info.email}/>
+            <DetailInfo firstTxt={localized.fullname} secondTxt={book_tour_contact_info.fullname}/>
+            <DetailInfo firstTxt={localized.phone} secondTxt={book_tour_contact_info.phone}/>
+            <DetailInfo firstTxt={localized.email} secondTxt={book_tour_contact_info.email}/>
         </View>
 
-        <InfoText text="Passenger information"/>
+        <InfoText text={localized.passengerInfo}/>
 
         <View style={styles.passengerCard}>
             {passengersList}
         </View>
 
         <Button
-          title="CANCEL TOUR"
+          title={localized.cancelTour}
           type="solid"
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
           containerStyle={{paddingHorizontal: 16, paddingVertical: 20, borderRadius: 0}}
@@ -117,8 +118,8 @@ class PassengerInfo extends Component {
           <Text style={{fontWeight: 'bold'}}>{data.fullname}</Text>
           { data.phone != null && <Text>{data.phone}</Text>}
           <Text>{dateFormat(data.birthdate)}</Text>
-          <Text>{capitalize(data.sex)}</Text>
-          <Text>{capitalize(data.type_passenger.name)}</Text>
+          <Text>{getGenderShow(data.sex)}</Text>
+          <Text>{getAgeShow(data.type_passenger.name)}</Text>
           { data.passport != null && <Text>{data.passport}</Text>}
       </View>
     )

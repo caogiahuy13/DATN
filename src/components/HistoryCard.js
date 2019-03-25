@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 import { } from '../actions/index.js';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 import { capitalize, bookedDateFormat, priceFormat } from '../services/function';
+import localized from '../localization/index';
 
 class HistoryCard extends Component{
   render(){
@@ -15,10 +16,10 @@ class HistoryCard extends Component{
         <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}}>
                 <Text style={styles.code}>{'0000'+data.id}</Text>
-                <InfoText firstTxt="Booking Day:" secondTxt={bookedDateFormat(data.book_time)}/>
-                <InfoText firstTxt="Total Slot:" secondTxt={data.num_passenger}/>
-                <InfoText firstTxt="Total Money:" secondTxt={priceFormat(data.total_pay)}/>
-                <InfoText firstTxt="Status:" secondTxt={capitalize(data.status)}/>
+                <InfoText firstTxt={localized.bookingDay+":"} secondTxt={bookedDateFormat(data.book_time)}/>
+                <InfoText firstTxt={localized.totalSlot+":"} secondTxt={data.num_passenger}/>
+                <InfoText firstTxt={localized.totalPrice+":"} secondTxt={priceFormat(data.total_pay)}/>
+                <InfoText firstTxt={localized.status+":"} secondTxt={capitalize(data.status)}/>
             </View>
             <View style={{justifyContent: 'center', }}>
                 <Icon
