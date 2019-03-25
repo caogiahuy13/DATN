@@ -135,6 +135,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-localization')
     implementation project(':react-native-svg')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-fbsdk')
