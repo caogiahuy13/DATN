@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 import { bookingChangeTourTurn } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, } from '../services/api';
-import { getDaysDiff, getDaysLeft } from '../services/function';
+import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice } from '../services/function';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
 
@@ -89,7 +89,6 @@ class TourDetail extends Component{
 
   onBookNowPress(){
     this.props.bookingChangeTourTurn(this.state.currentTurn);
-    console.log(this.state.currentTurn);
     this.props.navigation.navigate("BookingInfo");
   }
 
@@ -215,28 +214,18 @@ class TourDetail extends Component{
 
 class TourPrice extends Component {
   render(){
-    let newPrice = this.props.price - (this.props.price * this.props.discount)/100;
+    const {price, discount} = this.props;
+
+    let newPrice = getDiscountPrice(price, discount);
     return(
       <View style={{marginVertical: 8, alignItems: 'center'}}>
-        { this.props.discount > 0 &&
+        { discount > 0 &&
           <Text style={{color:'gray', fontWeight: 'bold', fontSize: 14, textDecorationLine: 'line-through'}}>
-            <NumberFormat
-              value={this.props.price}
-              displayType={'text'}
-              thousandSeparator={true}
-              suffix={' VNĐ'}
-              renderText={value => <Text>{value}</Text>}
-            />
+            {priceFormat(this.props.price)}
           </Text>
         }
         <Text style={{color:'#C50000', fontWeight: 'bold', fontSize: 24}}>
-          <NumberFormat
-            value={newPrice}
-            displayType={'text'}
-            thousandSeparator={true}
-            suffix={' VNĐ'}
-            renderText={value => <Text>{value}</Text>}
-          />
+            {priceFormat(newPrice)}
         </Text>
       </View>
     )
@@ -266,6 +255,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     booking: state.booking,
+    currentTourTurn: state.currentTourTurn,
   };
 }
 function mapDispatchToProps(dispatch){

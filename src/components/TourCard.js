@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 
 import { tourDetailChangeId, tourDetailShowMarker, bookingChangeTourTurn } from '../actions/index.js';
 import { getTourTurnById } from '../services/api';
-import { priceFormat, dateFormat } from '../services/function';
+import { priceFormat, dateFormat, getDiscountPrice } from '../services/function';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 class TourCard extends Component{
@@ -104,7 +104,7 @@ class TourRating extends Component {
 class TourPrice extends Component {
   render(){
     const { price, discount } = this.props;
-    let newPrice = price - (price * discount)/100;
+    let newPrice = getDiscountPrice(price,discount);
 
     return(
       <View style={styles.priceContainer}>

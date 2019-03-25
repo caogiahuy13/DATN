@@ -48,6 +48,7 @@ export function bookedDateFormat(date){
   return Moment(date).format('DD/MM/YYYY h:mm');
 }
 
+// Hiển thị giá tiền định dạng 100,000 VNĐ
 export function priceFormat(price){
   return (
     <NumberFormat
@@ -58,4 +59,8 @@ export function priceFormat(price){
       renderText={value => <Text>{value}</Text>}
     />
   );
+}
+
+export function getDiscountPrice(price, discount){
+  return price - (price * discount);
 }

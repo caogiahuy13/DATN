@@ -192,3 +192,11 @@ export function searchFilterChange(filter){
     filter,
   }
 }
+
+// Current select tour turn
+export function currentTourTurnChange(tourTurn){
+  return {
+    type: types.CURRENT_TOUR_TURN_CHANGE,
+    tourTurn,
+  }
+}
