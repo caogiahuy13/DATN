@@ -12,6 +12,7 @@ import { LoginManager } from 'react-native-fbsdk';
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 import { me, updateSex, updateBirthdate, logout, userUpdate } from '../services/api';
 import { capitalize } from '../services/function';
+import localized from '../localization/index';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -267,14 +268,14 @@ class Setting extends Component {
         <InfoText text="Account"/>
 
         <ListItem
-          title="Email"
+          title={localized.email}
           rightTitle={profile.email}
           rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
           containerStyle={styles.listItemContainer}
           leftIcon=<Icon name='email' type='material' color='gray' size={20}/>
         />
         <ListItem
-          title="Gender"
+          title={localized.gender}
           rightTitle={(profile.sex == undefined || profile.sex == '' ) ? '' : capitalize(profile.sex)}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showGenderModal(true)}}
@@ -283,7 +284,7 @@ class Setting extends Component {
           leftIcon=<Icon name='gender-male-female' type='material-community' color='gray' size={20}/>
         />
         <ListItem
-          title="Birthday"
+          title={localized.birthdate}
           rightTitle={(Moment(profile.birthdate).format('DD/MM/YYYY')=='Invalid date') ? '' : Moment(profile.birthdate).format('DD/MM/YYYY')}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showDateTimePicker(true)}}
@@ -292,7 +293,7 @@ class Setting extends Component {
           leftIcon=<Icon name='calendar' type='entypo' color='gray' size={20}/>
         />
         <ListItem
-          title="Address"
+          title={localized.address}
           rightTitle={profile.address ? this.showAddress(profile.address) : ''}
           rightTitleStyle={{fontSize: 15, position: 'absolute', width: deviceWidth/2, textAlign: 'right'}}
           onPress={() => {this._showAddressModal(true)}}
