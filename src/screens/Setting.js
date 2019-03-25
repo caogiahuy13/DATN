@@ -11,7 +11,7 @@ import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
 import { me, updateSex, updateBirthdate, logout, userUpdate } from '../services/api';
-import { capitalize } from '../services/function';
+import { capitalize, getGenderShow } from '../services/function';
 import localized from '../localization/index';
 
 const deviceWidth = Dimensions.get("window").width;
@@ -71,7 +71,7 @@ class Setting extends Component {
           <View style={{position: 'relative', flexDirection: 'row'}}>
             <ListItem
               style={{flex: 1,}}
-              title="Choose Gender"
+              title={localized.genderMocalLabel}
               onPress={() => {this._showGenderModal(false)}}
               containerStyle={styles.listItemContainer}
               rightIcon={<Icon name='close' type='FontAwesome' color='#D1D1D6'/>}
@@ -80,7 +80,7 @@ class Setting extends Component {
           <View style={{position: 'relative', flexDirection: 'row'}}>
             <ListItem
               style={{flex: 1,}}
-              title="Male"
+              title={localized.male}
               onPress={() => {this._handleGenderModal('male')}}
               containerStyle={styles.listItemContainer}
               rightIcon={sex == 'male' && <Icon name='check' type='entypo' color='#00BFFF'/>}
@@ -89,7 +89,7 @@ class Setting extends Component {
           <View style={{position: 'relative', flexDirection: 'row'}}>
             <ListItem
               style={{flex: 1,}}
-              title="Female"
+              title={localized.female}
               onPress={() => {this._handleGenderModal('female')}}
               containerStyle={styles.listItemContainer}
               rightIcon={sex == 'female' && <Icon name='check' type='entypo' color='#00BFFF'/>}
@@ -98,7 +98,7 @@ class Setting extends Component {
           <View style={{position: 'relative', flexDirection: 'row'}}>
             <ListItem
               style={{flex: 1,}}
-              title="Other"
+              title={localized.other}
               onPress={() => {this._handleGenderModal('other')}}
               containerStyle={styles.listItemContainer}
               rightIcon={sex == 'other' && <Icon name='check' type='entypo' color='#00BFFF'/>}
@@ -232,12 +232,12 @@ class Setting extends Component {
           {this._renderModalContent()}
         </Modal>
         <Dialog.Container visible={this.state.isAddressModalVisible}>
-            <Dialog.Title>Enter Address</Dialog.Title>
-            <Dialog.Description>Please enter new address</Dialog.Description>
-            <Dialog.Input placeholder="Address" style={{borderBottomWidth: 0.5}} onChangeText={(value) => this.setState({tmpAddress: value})}>
+            <Dialog.Title>{localized.addressModalLabel}</Dialog.Title>
+            <Dialog.Description>{localized.addressModalDescription}</Dialog.Description>
+            <Dialog.Input placeholder={localized.address} style={{borderBottomWidth: 0.5}} onChangeText={(value) => this.setState({tmpAddress: value})}>
             </Dialog.Input>
-            <Dialog.Button label="Cancel" onPress={()=>this._showAddressModal(false)} />
-            <Dialog.Button label="OK" onPress={()=>this._handleAddressModal(this.state.tmpAddress)} />
+            <Dialog.Button label={localized.cancel} onPress={()=>this._showAddressModal(false)} />
+            <Dialog.Button label={localized.ok} onPress={()=>this._handleAddressModal(this.state.tmpAddress)} />
         </Dialog.Container>
 
         <View style={styles.userRow}>
@@ -265,7 +265,7 @@ class Setting extends Component {
           </View>
         </View>
 
-        <InfoText text="Account"/>
+        <InfoText text={localized.account}/>
 
         <ListItem
           title={localized.email}
@@ -276,7 +276,7 @@ class Setting extends Component {
         />
         <ListItem
           title={localized.gender}
-          rightTitle={(profile.sex == undefined || profile.sex == '' ) ? '' : capitalize(profile.sex)}
+          rightTitle={(profile.sex == undefined || profile.sex == '' ) ? '' : getGenderShow(profile.sex)}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this._showGenderModal(true)}}
           containerStyle={styles.listItemContainer}
@@ -305,7 +305,7 @@ class Setting extends Component {
         <Space/>
 
         <ListItem
-          title="My Booking"
+          title={localized.historyBook}
           onPress={() => {this.props.navigation.navigate("History2")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
@@ -313,7 +313,7 @@ class Setting extends Component {
         />
         { profile.type != 'facebook' &&
           <ListItem
-            title="Change Password"
+            title={localized.changePassword}
             onPress={() => {this.props.navigation.navigate("ChangePassword")}}
             containerStyle={styles.listItemContainer}
             rightIcon={<Chevron />}
@@ -324,7 +324,7 @@ class Setting extends Component {
         <Space/>
 
         <ListItem
-          title="About Us"
+          title={localized.aboutUs}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.props.navigation.navigate("AboutUs")}}
           containerStyle={styles.listItemContainer}
@@ -332,21 +332,21 @@ class Setting extends Component {
           // leftIcon=<Icon name='info' type='octicon' color='gray'/>
         />
         <ListItem
-          title="Contact"
+          title={localized.contact}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.props.navigation.navigate("Contact")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron/>}
         />
         <ListItem
-          title="Terms Condition"
+          title={localized.termsCondition}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.props.navigation.navigate("TermsCondition")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron/>}
         />
         <ListItem
-          title="Faq"
+          title={localized.faq}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.props.navigation.navigate("Faq")}}
           containerStyle={styles.listItemContainer}
@@ -356,7 +356,7 @@ class Setting extends Component {
         <Space/>
 
         <ListItem
-          title="Log out"
+          title={localized.logout}
           titleStyle = {{textAlign: 'center', color: 'rgb(178,34,34)'}}
           onPress={()=>{this._onPressLogout()}}
         />

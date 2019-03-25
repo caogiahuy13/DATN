@@ -7,10 +7,11 @@ import { COLOR_GREEN } from '../constants/index';
 import { ERR_NAME, ERR_EMAIL, ERR_MESSAGE, ERR_EMAIL_VALIDATE } from '../constants/index';
 import { createRequest } from '../services/api';
 import { validateEmail } from '../services/function';
+import localized from '../localization/index';
 
 class Contact extends Component {
   static navigationOptions = {
-    title: 'Contact',
+    title: localized.contact,
   };
 
   constructor(props){
@@ -30,19 +31,19 @@ class Contact extends Component {
   // Kiểm tra thông tin
   checkUser(){
     if (this.state.name == ''){
-      this.setError(ERR_NAME, true);
+      this.setError(localized.ERR_NAME, true);
       return false;
     }
     if (this.state.email == ''){
-      this.setError(ERR_EMAIL, true);
+      this.setError(localized.ERR_EMAIL, true);
       return false;
     }
     if (!validateEmail(this.state.email)){
-      this.setError(ERR_EMAIL_VALIDATE, true);
+      this.setError(localized.ERR_EMAIL_VALIDATE, true);
       return false;
     }
     if (this.state.message == ''){
-      this.setError(ERR_MESSAGE, true);
+      this.setError(localized.ERR_MESSAGE, true);
       return false;
     }
     this.setError('', false);
@@ -75,10 +76,10 @@ class Contact extends Component {
       this.callCreateRequest().then(()=>{
           if (this.state.isError == false){
             Alert.alert(
-              'Congratulations',
-              'You message has been sent to our email!',
+              localized.congratulation,
+              localized.sendModalLabel,
               [
-                {text: 'OK', onPress: () => {}},
+                {text: localized.ok, onPress: () => {}},
               ],
               {cancelable: false},
             );
@@ -108,10 +109,10 @@ class Contact extends Component {
 
           <Text>Address: 162 Ba Tháng Hai, Phường 12, Quận 10</Text>
           <Text>City: Hồ Chí Minh - Việt Nam</Text>
-          <Info firstText="Phone:" secondText="0963186896"/>
-          <Info firstText="Email:" secondText="traveltour@gmail.com"/>
-          <Info firstText="Opening:" secondText="9:00 AM"/>
-          <Info firstText="Closing:" secondText="18:00 PM"/>
+          <Info firstText={localized.phone} secondText="0963186896"/>
+          <Info firstText={localized.email} secondText="traveltour@gmail.com"/>
+          <Info firstText={localized.opening} secondText="9:00 AM"/>
+          <Info firstText={localized.closing} secondText="18:00 PM"/>
 
           <Space/>
           <Space/>
@@ -149,7 +150,7 @@ class Contact extends Component {
 
           <Space/>
 
-          <Text style={styles.inputText}>Name:</Text>
+          <Text style={styles.inputText}>{localized.name}</Text>
           <TextInput
               style={styles.input}
               autoCorrect={false}
@@ -157,7 +158,7 @@ class Contact extends Component {
               autoCorrect={false}
               onChangeText={(value)=> this.setState({name: value})}
           />
-          <Text style={styles.inputText}>Email:</Text>
+          <Text style={styles.inputText}>{localized.email}</Text>
           <TextInput
               style={styles.input}
               autoCorrect={false}
@@ -166,7 +167,7 @@ class Contact extends Component {
               autoCorrect={false}
               onChangeText={(value)=> this.setState({email: value})}
           />
-          <Text style={styles.inputText}>Message:</Text>
+          <Text style={styles.inputText}>{localized.message}</Text>
           <TextInput
               style={styles.input}
               autoCorrect={false}
@@ -178,7 +179,7 @@ class Contact extends Component {
           { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
 
           <TouchableOpacity style={styles.buttonLogin} onPress={() => {this.sendPress()}}>
-               <Text style={styles.buttonText}>SEND NOW</Text>
+               <Text style={styles.buttonText}>{localized.sendNow}</Text>
           </TouchableOpacity>
 
         </View>

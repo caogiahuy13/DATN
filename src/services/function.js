@@ -2,10 +2,22 @@ import Moment from 'moment';
 import { View, Text } from 'react-native';;
 import NumberFormat from 'react-number-format';
 import React, { Component } from 'react';
+import localized from '../localization/index';
 
 // Viết hoa chữ cái đầu tiên
 export function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Lấy chuỗi hiển thị giới tính
+export function getGenderShow(string){
+  if (string == 'male'){
+    return localized.male;
+  } else if (string == 'female'){
+    return localized.female;
+  } else if (string == 'other'){
+    return localized.other;
+  }
 }
 
 // Kiểm tra email

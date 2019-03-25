@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Alert, Text, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 
+import localized from '../localization/index';
+
 class AboutUs extends Component {
   static navigationOptions = {
-    title: 'About Us',
+    title: localized.aboutUs,
   };
 
   render() {

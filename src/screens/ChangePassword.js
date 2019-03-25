@@ -7,10 +7,11 @@ import {connect} from 'react-redux';
 import { } from '../actions/index.js';
 import { updatePassword } from '../services/api';
 import { ERR_ALL_FIELD, ERR_CONFIRM_PASSWORD, SUCCESS_CHANGE_PASSWORD, COLOR_MAIN } from '../constants/index';
+import localized from '../localization/index';
 
 class ChangePassword extends Component {
   static navigationOptions = {
-    title: 'Change Password',
+    title: localized.changePassword,
   };
 
   constructor(props){
@@ -32,19 +33,19 @@ class ChangePassword extends Component {
   // Kiểm tra thông tin người dùng
   checkUser(){
     if (this.state.old_password == ''){
-      this.setError(ERR_ALL_FIELD, true);
+      this.setError(localized.ERR_ALL_FIELD, true);
       return false;
     }
     if (this.state.new_password == ''){
-      this.setError(ERR_ALL_FIELD, true);
+      this.setError(localized.ERR_ALL_FIELD, true);
       return false;
     }
     if (this.state.confirm_password == ''){
-      this.setError(ERR_ALL_FIELD, true);
+      this.setError(localized.ERR_ALL_FIELD, true);
       return false;
     }
     if (this.state.new_password !== this.state.confirm_password){
-      this.setError(ERR_CONFIRM_PASSWORD, true);
+      this.setError(localized.ERR_CONFIRM_PASSWORD, true);
       return false;
     }
     this.setError('', false);
@@ -77,7 +78,7 @@ class ChangePassword extends Component {
     if (validate){
       this.callUpdatePasswordAPI().then(()=>{
         if (this.state.isError == false){
-          Alert.alert(SUCCESS_CHANGE_PASSWORD);
+          Alert.alert(localized.SUCCESS_CHANGE_PASSWORD);
           this.props.navigation.goBack();
         }
       });
@@ -90,7 +91,7 @@ class ChangePassword extends Component {
           <View style={{marginVertical: 10}}></View>
           <Input
             inputStyle={styles.input}
-            label="Old Password"
+            label={localized.oldPassword}
             secureTextEntry
             autoCorrect={false}
             onChangeText={(value)=> this.setState({old_password: value})}
@@ -99,7 +100,7 @@ class ChangePassword extends Component {
           <View style={{marginVertical: 10}}></View>
           <Input
             inputStyle={styles.input}
-            label="New Password"
+            label={localized.newPassword}
             secureTextEntry
             autoCorrect={false}
             onChangeText={(value)=> this.setState({new_password: value})}
@@ -108,7 +109,7 @@ class ChangePassword extends Component {
           <View style={{marginVertical: 5}}></View>
           <Input
             inputStyle={styles.input}
-            label="Confirm New Password"
+            label={localized.confirmPassword}
             secureTextEntry
             autoCorrect={false}
             onChangeText={(value)=> this.setState({confirm_password: value})}
@@ -118,7 +119,7 @@ class ChangePassword extends Component {
           { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
 
           <Button
-            title="CHANGE PASSWORD"
+            title={localized.changePassword.toUpperCase()}
             onPress={()=>{this._onButtonPress()}}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}

@@ -3,9 +3,11 @@ import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-nati
 import { Card, Icon, Divider } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
 
+import localized from '../localization/index';
+
 class Faq extends Component {
   static navigationOptions = {
-    title: 'FAQ',
+    title: localized.faq,
   };
 
   render() {
