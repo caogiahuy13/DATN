@@ -28,7 +28,7 @@ class History2 extends Component {
     this.callGetPassengerInBookTourHistory(data.id)
         .then((passengersData)=>{
           this.props.bookedTourGetPassengers(passengersData);
-        })
+        });
     this.props.navigation.navigate("HistoryDetail");
   }
 

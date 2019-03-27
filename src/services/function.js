@@ -29,6 +29,17 @@ export function getAgeShow(string){
   }
 }
 
+// Lấy mã tour
+export function getTourCode(id){
+  let str = '';
+  let zeroSize = 5-id.toString().length;
+  for (let i=0; i<zeroSize; i++){
+    str += '0';
+  }
+  str += id;
+  return str;
+}
+
 // Kiểm tra email
 export function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

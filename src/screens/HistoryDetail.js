@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { Divider, Button } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {  } from '../services/api';
+import { getTourTurnById } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
-import { capitalize, priceFormat, dateFormat, getGenderShow, getAgeShow } from '../services/function';
+import { capitalize, priceFormat, dateFormat, getGenderShow, getAgeShow, getDaysDiff, getTourCode } from '../services/function';
 import localized from '../localization/index';
 
 import InfoText from '../components/InfoText';
@@ -16,9 +16,31 @@ class HistoryDetail extends Component {
     title: localized.detailBookedTour,
   };
 
+  constructor(props){
+    super(props);
+    this.state = {
+      tourInfo: null,
+    }
+  }
+  async callGetTourTurnById(id){
+    return getTourTurnById(id)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
+  }
+
+  componentWillMount(){
+    const {fk_tour_turn} = this.props.bookedTour.info;
+    this.callGetTourTurnById(fk_tour_turn)
+        .then((res)=>{
+          this.setState({tourInfo: res.data});
+        })
+  }
+
   render() {
     const {info, passengers} = this.props.bookedTour;
     const {book_tour_contact_info} = this.props.bookedTour.info;
+    const {tourInfo} = this.state;
 
     let index = 0;
     let passengersList = passengers.map((val,key)=>{
@@ -47,6 +69,11 @@ class HistoryDetail extends Component {
             </View>
         </View>
 
+        <InfoText text={localized.tourInfo}/>
+        <View style={styles.card}>
+            { tourInfo != null && <TourInfo data={tourInfo}/> }
+        </View>
+
         <InfoText text={localized.checkoutInfo}/>
 
         <View style={styles.card}>
@@ -70,7 +97,7 @@ class HistoryDetail extends Component {
         </View>
 
         <Button
-          title={localized.cancelTour}
+          title={localized.cancelTour.toUpperCase()}
           type="solid"
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
           containerStyle={{paddingHorizontal: 16, paddingVertical: 20, borderRadius: 0}}
@@ -83,6 +110,27 @@ class HistoryDetail extends Component {
   }
 }
 
+class TourInfo extends Component {
+  render(){
+    const {data} = this.props;
+    const {tour} = this.props.data;
+
+    return(
+      <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 0.4, justifyContent: 'flex-start', paddingRight: 12}}>
+              <Image style={{flex: 1, width: undefined, height: undefined}} source={{uri: tour.featured_img}}/>
+          </View>
+          <View style={{flex: 0.6}}>
+              <Text style={{fontWeight: 'bold', paddingVertical: 4}}>{tour.name}</Text>
+              <Text>{localized.code + ": " + getTourCode(data.id)}</Text>
+              <Text>{localized.startDate + ": " + dateFormat(data.start_date)}</Text>
+              <Text>{localized.endDate + ": " + dateFormat(data.end_date)}</Text>
+              <Text>{localized.lasting + ": " + getDaysDiff(data.start_date, data.end_date)}</Text>
+          </View>
+      </View>
+    )
+  }
+}
 class DetailInfo extends Component {
   render(){
     const {firstTxt, secondTxt} = this.props;

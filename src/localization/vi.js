@@ -24,7 +24,7 @@ const vi = {
   or: "Hoặc",
   forget: "Quên",
   additionalInfo: "Thông tin khác",
-  
+
   opening: "Mở cửa",
   closing: "Đóng cửa",
 
@@ -131,6 +131,7 @@ const vi = {
   detailBookedTour: "Thông tin tour đã đặt", // Detail Booked Tour Information
   checkoutInfo: "Thông tin giá",
   cancelTour: "Hủy tour",
+  tourInfo: "Thông tin tour",
 
   // History card
   bookingDay: "Ngày đặt",

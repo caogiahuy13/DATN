@@ -24,7 +24,7 @@ const en_us = {
   or: "Or",
   forget: "Forget",
   additionalInfo: "Additional Information",
-  
+
   opening: "Opening",
   closing: "Closing",
 
@@ -131,7 +131,8 @@ const en_us = {
   detailBookedTour: "Detail Booked Tour Information", // Detail Booked Tour Information
   checkoutInfo: "Checkout Information",
   cancelTour: "Cancel tour",
-
+  tourInfo: "Tour Information",
+  
   // History card
   bookingDay: "Booking day",
   totalSlot: "Total slot",

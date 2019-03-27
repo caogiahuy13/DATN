@@ -136,10 +136,6 @@ class Setting extends Component {
     return ret;
   }
 
-  getTmp(sex){
-    console.log(sex);
-    return sex;
-  }
   // Kiểm tra đã đăng nhập
   async CheckLogedIn(){
     await AsyncStorage.getItem('userToken')
@@ -231,7 +227,6 @@ class Setting extends Component {
       this.props.changeProfile(data.profile);
       this.setState({tmpAddress: data.profile.address});
       this.setState({tmpFullname: data.profile.fullname});
-      console.log(data.profile);
     })
   }
 

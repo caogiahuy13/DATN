@@ -185,6 +185,13 @@ export function bookedTourGetPassengers(passengers){
   }
 }
 
+export function bookedTourGetTourInfo(tourInfo){
+  return {
+    type: types.BOOKED_TOUR_GET_TOUR_INFO,
+    tourInfo,
+  }
+}
+
 // Search filter
 export function searchFilterChange(filter){
   return {
