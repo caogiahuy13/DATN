@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import { Divider, Button } from 'react-native-elements';
+import { View, Text, StyleSheet, ScrollView, Image, TextInput } from 'react-native';
+import { Divider, Button, CheckBox } from 'react-native-elements';
+import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { getTourTurnById } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
-import { capitalize, priceFormat, dateFormat, getGenderShow, getAgeShow, getDaysDiff, getTourCode } from '../services/function';
+import { capitalize, priceFormat, dateFormat, getGenderShow, getAgeShow, getDaysDiff, getTourCode, bookedDateFormat } from '../services/function';
 import localized from '../localization/index';
 
 import InfoText from '../components/InfoText';
@@ -20,6 +21,12 @@ class HistoryDetail extends Component {
     super(props);
     this.state = {
       tourInfo: null,
+      cancel: {
+        reason: '',
+        isChecked: false,
+      },
+
+      isCancelModalVisible: false,
     }
   }
   async callGetTourTurnById(id){
@@ -27,6 +34,74 @@ class HistoryDetail extends Component {
             .then((response) => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => console.error(error));
+  }
+
+  //Các hàm quản lý CancelModal
+  _showCancelModal = (visible) => this.setState({ isCancelModalVisible: visible });
+  _handleCancelModal = () => {
+    this._showCancelModal(false);
+  };
+  changeReason(reason){
+    this.setState({
+      cancel: {
+        ...this.state.cancel,
+        reason: reason,
+      }
+    });
+  }
+  handleCheckBox(){
+    this.setState({
+      cancel: {
+        ...this.state.cancel,
+        isChecked: !this.state.cancel.isChecked,
+      }
+    });
+  }
+  // Hiển thị modal chọn giới tính
+  _renderModalContent = () => {
+    const {info} = this.props.bookedTour;
+    const {tourInfo, cancel} = this.state;
+    console.log(this.props.bookedTour);
+    return(
+      <View style={styles.modalCancel}>
+        <Text style={styles.cancelTitle}>{localized.cancelTour.toUpperCase()}</Text>
+
+        <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.yourReason}</Text>
+        <TextInput onChangeText={(val)=>{this.changeReason(val)}} value={cancel.reason} multiline style={styles.reason}/>
+
+        <Text></Text>
+        <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.termsCondition}</Text>
+        <ScrollView style={{height: 100, padding: 10, borderWidth: 0.5, borderColor: 'gray'}}>
+            <Text> Lorem Ipsum Lorem Ipsumvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv</Text>
+        </ScrollView>
+        <CheckBox
+          title={localized.agreeCondition}
+          checked={cancel.isChecked}
+          onPress={() => this.handleCheckBox()}
+          containerStyle={styles.checkBoxContainer}
+          textStyle={styles.checkBoxText}
+        />
+
+        <View style={{flexDirection: 'row'}}>
+            <View style={{flex: 1}}></View>
+            <Button
+              title={localized.cancel}
+              type="clear"
+              buttonStyle={{borderRadius: 0}}
+              containerStyle={{marginHorizontal: 6}}
+              titleStyle={{fontSize: 16, paddingHorizontal: 12}}
+              onPress={()=>{this._showCancelModal(false)}}
+            />
+            <Button
+              title={localized.ok}
+              type="solid"
+              buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0, marginHorizontal: 6}}
+              titleStyle={{fontSize: 16, paddingHorizontal: 12}}
+              onPress={()=>{}}
+            />
+        </View>
+      </View>
+    );
   }
 
   componentWillMount(){
@@ -58,10 +133,17 @@ class HistoryDetail extends Component {
 
     return (
       <ScrollView style={styles.container}>
+        <Modal
+          isVisible={this.state.isCancelModalVisible}
+          onBackdropPress={()=>{this._showCancelModal(false)}}
+        >
+          {this._renderModalContent()}
+        </Modal>
+
         <View style={styles.card}>
             <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 16}}>{localized.code}: </Text>
-                <Text style={{fontSize: 16, color: 'orange', fontWeight: 'bold'}}>{'0000'+info.id}</Text>
+                <Text style={{fontSize: 16, color: 'orange', fontWeight: 'bold'}}>{getTourCode(info.id)}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 16}}>{localized.status}: </Text>
@@ -102,7 +184,7 @@ class HistoryDetail extends Component {
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
           containerStyle={{paddingHorizontal: 16, paddingVertical: 20, borderRadius: 0}}
           titleStyle={{fontSize: 16}}
-          onPress={()=>{}}
+          onPress={()=>{this._showCancelModal(true)}}
         />
 
       </ScrollView>
@@ -131,6 +213,7 @@ class TourInfo extends Component {
     )
   }
 }
+
 class DetailInfo extends Component {
   render(){
     const {firstTxt, secondTxt} = this.props;
@@ -196,6 +279,42 @@ const styles = StyleSheet.create({
     secondTxt: {
       flex: 0.6,
       fontWeight: 'bold',
+    },
+    modalCancel: {
+      backgroundColor: 'white',
+      borderRadius: 4,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+      borderWidth: 1,
+      padding: 12,
+    },
+    cancelTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      alignItems: 'center',
+      alignSelf: 'center',
+      padding: 10,
+    },
+    checkBoxContainer: {
+      backgroundColor: 'white',
+      paddingVertical: 12,
+      paddingHorizontal: 0,
+      margin: 0,
+      borderWidth: 0
+    },
+    checkBoxText: {
+      fontSize: 13,
+      fontWeight: 'normal',
+      color: 'gray',
+      margin: 0,
+      padding: 0,
+    },
+    reason: {
+      minHeight: 150,
+      height: 'auto',
+      borderWidth: 0.5,
+      borderColor: 'gray',
+      color: 'gray',
+      padding: 10,
     }
 })
 

@@ -24,6 +24,9 @@ const en_us = {
   or: "Or",
   forget: "Forget",
   additionalInfo: "Additional Information",
+  logout: "Logout",
+  cancel: "Cancel",
+  ok: "OK",
 
   opening: "Opening",
   closing: "Closing",
@@ -132,15 +135,14 @@ const en_us = {
   checkoutInfo: "Checkout Information",
   cancelTour: "Cancel tour",
   tourInfo: "Tour Information",
-  
+
   // History card
   bookingDay: "Booking day",
   totalSlot: "Total slot",
 
-  logout: "Logout",
-
-  cancel: "Cancel",
-  ok: "OK",
+  cancelTour: "Cancel tour",
+  yourReason: "Your Reason",
+  agreeCondition: "I have read and accepted with these above terms of condition",
 
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',

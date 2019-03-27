@@ -24,6 +24,9 @@ const vi = {
   or: "Hoặc",
   forget: "Quên",
   additionalInfo: "Thông tin khác",
+  logout: "Đăng xuất",
+  cancel: "Hủy",
+  ok: "OK",
 
   opening: "Mở cửa",
   closing: "Đóng cửa",
@@ -137,10 +140,9 @@ const vi = {
   bookingDay: "Ngày đặt",
   totalSlot: "Số người",
 
-  logout: "Đăng xuất",
-
-  cancel: "Hủy",
-  ok: "OK",
+  cancelTour: "Hủy tour",
+  yourReason: "Lý do hủy tour",
+  agreeCondition: "Tôi đã đọc và hiểu các quy định",
 
   SUCCESS_CHANGE_PASSWORD: "Thay đổi mật khẩu thành công",
 
