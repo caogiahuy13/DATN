@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 import { bookingChangeTourTurn } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, } from '../services/api';
-import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice } from '../services/function';
+import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
 import localized from '../localization/index';
@@ -39,6 +39,7 @@ class TourDetail extends Component{
       isDescriptionCollapsed: true,
       isDetailCollapsed: true,
       isReviewCollapsed: true,
+      isAdditionCollapsed: true,
     }
   }
 
@@ -50,6 +51,9 @@ class TourDetail extends Component{
   }
   toggleReview(){
     this.setState({isReviewCollapsed: !this.state.isReviewCollapsed});
+  }
+  toggleAddition(){
+    this.setState({isAdditionCollapsed: !this.state.isAdditionCollapsed});
   }
 
   async callGetTourTurnById(id){
@@ -113,12 +117,20 @@ class TourDetail extends Component{
       tour, currentTurn,
       dayDiff, slotLeft, daysLeft,
       comments,
-      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed,
+      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed
     } = this.state;
 
     let reviews = comments.map((val,key)=>{
       return (<TourDetailReview key={key} comment={val}/>)
     });
+
+    let detailPrice = null;
+    if (currentTurn.price_passengers != undefined){
+      detailPrice = currentTurn.price_passengers.map((val,key)=>{
+        return(<DetailPrice key={key} data={val}/>)
+      })
+    }
+
 
     return(
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
@@ -200,6 +212,19 @@ class TourDetail extends Component{
 
           <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
 
+          <Card
+            containerStyle = {styles.cardContainer}
+            title=<CollapsibleCardTitle title={localized.additionalInfo} status={isAdditionCollapsed} onPress={()=>this.toggleAddition()}/>
+            titleStyle={styles.cardTitle}
+          >
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isAdditionCollapsed}>
+                  <Text style={{fontWeight: 'bold', paddingVertical: 4}}>Price of Tour</Text>
+                  {detailPrice}
+              </Collapsible>
+          </Card>
+
+          <Divider style={{height: 10, backgroundColor: '#F4F5F4'}}/>
+
         </ScrollView>
 
         <Button
@@ -228,6 +253,18 @@ class TourPrice extends Component {
         <Text style={{color:'#C50000', fontWeight: 'bold', fontSize: 24}}>
             {priceFormat(newPrice)}
         </Text>
+      </View>
+    )
+  }
+}
+
+class DetailPrice extends Component {
+  render(){
+    const {data} = this.props;
+    return(
+      <View style={{flexDirection: 'row'}}>
+          <Text style={{flex: 0.4}}>{getAgeShow(data.type)}</Text>
+          <Text style={{flex: 0.6}}>{priceFormat(data.price)}</Text>
       </View>
     )
   }

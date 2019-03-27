@@ -23,7 +23,8 @@ const en = {
   order: "Order",
   or: "Or",
   forget: "Forget",
-
+  additionalInfo: "Additional Information",
+  
   opening: "Opening",
   closing: "Closing",
 

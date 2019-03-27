@@ -23,7 +23,8 @@ const vi = {
   order: "Thứ tự",
   or: "Hoặc",
   forget: "Quên",
-
+  additionalInfo: "Thông tin khác",
+  
   opening: "Mở cửa",
   closing: "Đóng cửa",
 
