@@ -7,7 +7,8 @@ import {connect} from 'react-redux';
 
 import { getTourTurnById } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
-import { capitalize, priceFormat, dateFormat, getGenderShow, getAgeShow, getDaysDiff, getTourCode, bookedDateFormat } from '../services/function';
+import { capitalize, priceFormat, dateFormat, getGenderShow,
+         getAgeShow, getAgePriceShow, getDaysDiff, getTourCode, bookedDateFormat } from '../services/function';
 import localized from '../localization/index';
 
 import InfoText from '../components/InfoText';
@@ -130,6 +131,9 @@ class HistoryDetail extends Component {
       )
     })
 
+    let passengerPrice = info.type_passenger_detail.map((val,key)=>{
+      return(<CheckoutInfo key={key} firstTxt={getAgePriceShow(val.type)} secondTxt={priceFormat(val.price)} thirdTxt={val.num_passenger}/>)
+    })
 
     return (
       <ScrollView style={styles.container}>
@@ -159,8 +163,7 @@ class HistoryDetail extends Component {
         <InfoText text={localized.checkoutInfo}/>
 
         <View style={styles.card}>
-            <CheckoutInfo firstTxt={localized.adultPrice} secondTxt="2,000,000" thirdTxt="1"/>
-            <CheckoutInfo firstTxt={localized.childrenPrice} secondTxt="1,000,000" thirdTxt="1"/>
+            {passengerPrice}
             <DetailInfo firstTxt={localized.totalPrice} secondTxt={priceFormat(info.total_pay)}/>
         </View>
 
@@ -234,7 +237,7 @@ class CheckoutInfo extends Component {
       <View style={{flexDirection: 'row'}}>
           <Text style={styles.firstTxt}>{firstTxt}</Text>
           <Text> </Text>
-          <Text style={styles.secondTxt}>{secondTxt + ' x ' + thirdTxt}</Text>
+          <Text style={styles.secondTxt}>{secondTxt}{' x ' + thirdTxt}</Text>
       </View>
     )
   }

@@ -29,6 +29,15 @@ export function getAgeShow(string){
   }
 }
 
+// Lấy chuỗi hiển thị giá theo Age
+export function getAgePriceShow(string){
+  if (string == 'adults'){
+    return localized.adultPrice;
+  } else if (string == 'children'){
+    return localized.childrenPrice;
+  }
+}
+
 // Lấy mã tour
 export function getTourCode(id){
   let str = '';

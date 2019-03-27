@@ -4,7 +4,7 @@ import { Divider } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { getHistoryByUser, getPassengerInBookTourHistory } from '../services/api';
+import { getHistoryByUser, getPassengerInBookTourHistory, getHistoryBookTourById } from '../services/api';
 import { bookedTourGetInfo, bookedTourGetPassengers } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 import localized from '../localization/index';
@@ -24,12 +24,16 @@ class History2 extends Component {
   }
 
   onPress = (data) => {
-    this.props.bookedTourGetInfo(data);
     this.callGetPassengerInBookTourHistory(data.id)
         .then((passengersData)=>{
           this.props.bookedTourGetPassengers(passengersData);
         });
-    this.props.navigation.navigate("HistoryDetail");
+    this.callGetHistoryBookTourById(data.id)
+        .then((res)=>{
+          this.props.bookedTourGetInfo(res.data);
+          this.props.navigation.navigate("HistoryDetail");
+        })
+    // this.props.navigation.navigate("HistoryDetail");
   }
 
   callGetHistoryByUser(){
@@ -38,6 +42,13 @@ class History2 extends Component {
           .then((responseJson) => {
             this.setState({bookedTour: responseJson.data});
           })
+          .catch((error) => console.error(error));
+  }
+
+  callGetHistoryBookTourById(id){
+    return getHistoryBookTourById(id)
+          .then((response) => response.json())
+          .then((responseJson) => responseJson)
           .catch((error) => console.error(error));
   }
 

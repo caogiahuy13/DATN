@@ -292,3 +292,18 @@ export async function getPassengerInBookTourHistory(id){
                               });
                             })
 }
+
+export async function getHistoryBookTourById(id){
+  let URL = HOST + 'book_tour/getHistoryBookTourById/' + id;
+  return await AsyncStorage.getItem('userToken')
+                            .then((auth) => {
+                              return fetch(URL, {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': auth,
+                                  'Content-Type': 'application/json',
+                                },
+                              });
+                            })
+}
