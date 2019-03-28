@@ -7,17 +7,23 @@ import TourRating from './TourRating';
 
 class TourCardTitle extends Component{
   render(){
+    const {title, rating, view, isSale} = this.props;
+    console.log(rating);
     return(
       <View style={{flex: 1, padding: 10}}>
           <Text style={styles.title}>
-              {this.props.title}
+              {title}
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TourRating rating={3} size={14}/>
-              <Icon name='eye' type='entypo' color='gray' size={14} containerStyle={{marginLeft: 8}}/>
-              <Text style={{marginLeft: 4}}>{this.props.view} views</Text>
+              { typeof(rating) != 'undefined' && <TourRating rating={3} size={14}/>}
+              { typeof(view) != 'undefined' &&
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Icon name='eye' type='entypo' color='gray' size={14} containerStyle={{marginLeft: 8}}/>
+                  <Text style={{marginLeft: 6}}>{view} views</Text>
+                  </View>
+              }
           </View>
-          { this.props.isSale &&
+          { isSale &&
             <View style={styles.saleContainer}>
               <Button buttonStyle={styles.sale} title='SALE!' titleStyle={{fontSize: 14}}/>
             </View>

@@ -132,7 +132,11 @@ class HistoryDetail extends Component {
     })
 
     let passengerPrice = info.type_passenger_detail.map((val,key)=>{
-      return(<CheckoutInfo key={key} firstTxt={getAgePriceShow(val.type)} secondTxt={priceFormat(val.price)} thirdTxt={val.num_passenger}/>)
+      if (val.num_passenger > 0){
+        return(<CheckoutInfo key={key} firstTxt={getAgePriceShow(val.type)} secondTxt={priceFormat(val.price)} thirdTxt={val.num_passenger}/>);
+      } else {
+        return(<View key={key}></View>)
+      }
     })
 
     return (
