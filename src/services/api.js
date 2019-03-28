@@ -94,42 +94,6 @@ export async function forgetPassword(email){
                           })
 }
 
-export async function updateSex(sex){
-  let URL = HOST + 'user/updateSex';
-  return await AsyncStorage.getItem('userToken')
-                            .then((data) => {
-                              return fetch(URL, {
-                                method: 'PUT',
-                                headers: {
-                                  'Accept': 'application/json',
-                                  'authorization': data,
-                                  'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                  sex: sex,
-                                }),
-                              });
-                            })
-}
-
-export async function updateBirthdate(birthdate){
-  let URL = HOST + 'user/updateBirthdate';
-  return await AsyncStorage.getItem('userToken')
-                            .then((data) => {
-                              return fetch(URL, {
-                                method: 'PUT',
-                                headers: {
-                                  'Accept': 'application/json',
-                                  'authorization': data,
-                                  'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                  birthdate: birthdate,
-                                }),
-                              });
-                            })
-}
-
 export async function updatePassword(old_password, new_password){
   let URL = HOST + 'user/updatePassword';
   return await AsyncStorage.getItem('userToken')

@@ -62,7 +62,7 @@ class HistoryDetail extends Component {
   _renderModalContent = () => {
     const {info} = this.props.bookedTour;
     const {tourInfo, cancel} = this.state;
-    console.log(this.props.bookedTour);
+    // console.log(this.props.bookedTour);
     return(
       <View style={styles.modalCancel}>
         <Text style={styles.cancelTitle}>{localized.cancelTour.toUpperCase()}</Text>

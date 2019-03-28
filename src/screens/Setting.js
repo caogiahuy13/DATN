@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import { LoginManager } from 'react-native-fbsdk';
 
 import { handleAccess, changeProfile, changeGender, changeBirthday } from '../actions/index.js';
-import { me, updateSex, updateBirthdate, logout, userUpdate } from '../services/api';
+import { me, logout, userUpdate } from '../services/api';
 import { capitalize, getGenderShow } from '../services/function';
 import localized from '../localization/index';
 
@@ -155,18 +155,42 @@ class Setting extends Component {
 
   // Gọi API cập nhật giới tính
   async callUpdateSexAPI(sex){
-    return updateSex(sex)
-            .then((response) => response.json())
-            .then((responseJson) => responseJson)
-            .catch((error) => console.error(error));
+    const data = new FormData();
+    data.append('sex',sex);
+
+    return userUpdate(data)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+           .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else {
+                this.props.changeProfile(responseJson.profile);
+              }
+           })
+           .catch((error) => console.error(error));
   }
 
   // Gọi API cập nhật ngày sinh
   async callUpdateBirthdateAPI(date){
-    return updateBirthdate(date)
-            .then((response) => response.json())
-            .then((responseJson) => responseJson)
-            .catch((error) => {console.error(error);});
+    const data = new FormData();
+    data.append('birthdate',new Date(date).toISOString().slice(0, 19).replace('T', ' '));
+
+    return userUpdate(data)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+           .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else {
+                this.props.changeProfile(responseJson.profile);
+              }
+           })
+           .catch((error) => console.error(error));
   }
 
   // Gọi API logout
