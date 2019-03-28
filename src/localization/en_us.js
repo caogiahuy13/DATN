@@ -27,10 +27,9 @@ const en_us = {
   logout: "Logout",
   cancel: "Cancel",
   ok: "OK",
-
+  view: "Views",
   opening: "Opening",
   closing: "Closing",
-
   startDate: "Start date",
   endDate: "End date",
   lasting: "Lasting",
@@ -145,7 +144,7 @@ const en_us = {
   agreeCondition: "I have read and accepted with these above terms of condition",
   agreeAlert: "Please agree all the terms of condition",
   cancelBookingRequestSend: "Your cancel booking tour request has been send",
-    
+
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
   ERR_FULLNAME: 'Fullname is required',

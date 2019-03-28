@@ -3,6 +3,8 @@ import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Card, Icon, Button, Rating } from 'react-native-elements';
 
 import { COLOR_LIGHT_BLACK, COLOR_GREEN, COLOR_MAIN} from '../constants/index';
+import localized from '../localization/index';
+
 import TourRating from './TourRating';
 
 class TourCardTitle extends Component{
@@ -19,7 +21,7 @@ class TourCardTitle extends Component{
               { typeof(view) != 'undefined' &&
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Icon name='eye' type='entypo' color='gray' size={14} containerStyle={{marginLeft: 8}}/>
-                  <Text style={{marginLeft: 6}}>{view} views</Text>
+                  <Text style={{marginLeft: 6}}>{view} {localized.view}</Text>
                   </View>
               }
           </View>

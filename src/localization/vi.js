@@ -27,10 +27,9 @@ const vi = {
   logout: "Đăng xuất",
   cancel: "Hủy",
   ok: "OK",
-
+  view: "Lượt xem",
   opening: "Mở cửa",
   closing: "Đóng cửa",
-
   startDate: "Ngày bắt đầu",
   endDate: "Ngày kết thúc",
   lasting: "Số ngày",

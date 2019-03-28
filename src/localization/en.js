@@ -27,10 +27,9 @@ const en = {
   logout: "Logout",
   cancel: "Cancel",
   ok: "OK",
-
+  view: "Views",
   opening: "Opening",
   closing: "Closing",
-
   startDate: "Start date",
   endDate: "End date",
   lasting: "Lasting",
