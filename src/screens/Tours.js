@@ -4,6 +4,8 @@ import { Button, SearchBar, Icon } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import RNPickerSelect from 'react-native-picker-select';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { getAllTourTurn, searchTourTurn } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
@@ -14,7 +16,7 @@ import TourCard from '../components/TourCard';
 
 const headerHeight = 108;
 
-export default class Tours extends Component {
+class Tours extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -30,6 +32,9 @@ export default class Tours extends Component {
       per_page: 4,
 
       search: '',
+      maxPrice: 100000000,
+
+
       price: undefined,
 
       isNavBarHidden: false,
@@ -82,19 +87,24 @@ export default class Tours extends Component {
   }
 
   getData(){
-    const {per_page, count, search} = this.state;
+    const {per_page, count, search, maxPrice} = this.state;
+    const {searchFilter} = this.props;
+
     let data = {
       page: 1,
       per_page: count + per_page,
       isUnique: false,
       name: search,
     }
+
+    if(typeof(searchFilter.maxPrice) != 'undefined'){
+      data['price'] = searchFilter.maxPrice;
+    }
+
     return data;
   }
 
   onSubmitSearch(){
-    const {per_page, count, search} = this.state;
-
     this.setState({count: 0},()=>{
       let data = this.getData();
       this.loadNewTours(data);
@@ -117,6 +127,17 @@ export default class Tours extends Component {
     this.loadNewTours(data);
   }
 
+  onSearchFilterPress(){
+    this.props.navigation.navigate("SearchFilter", {
+      onGoBack: () => {
+        this.setState({count: 0},()=>{
+          let data = this.getData();
+          this.loadNewTours(data);
+        })
+      }
+    });
+  }
+
   // componentWillMount(){
   //   this.callGetAllTourTurnAPI(1,this.state.per_page,false)
   //       .then((ret)=>{
@@ -133,7 +154,7 @@ export default class Tours extends Component {
   render() {
     const { tours, maxCount, count, isLoading } = this.state;
     const { search } = this.state;
-    console.log(count, maxCount);
+
     return (
       <View style={{flex: 1, backgroundColor: COLOR_GRAY_BACKGROUND}}>
           <Animated.View style={{height: this.state.height}}>
@@ -141,15 +162,15 @@ export default class Tours extends Component {
                   <SearchBar
                     platform="android"
                     placeholder="..."
-                    onChangeText={(value)=>this.setState({search: value})}
-                    onSubmitEditing={()=>{this.onSubmitSearch()}}
-                    onCancel={()=>{}}
+                    onChangeText={(value)=>{this.setState({search: value});this.onSubmitSearch();}}
+                    // onSubmitEditing={()=>{this.onSubmitSearch()}}
+                    // onCancel={()=>{this.onSubmitSearch()}}
                     value={search}
                     containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
                     inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
                     inputStyle={{fontSize: 16}}
                   />
-                  <TouchableOpacity style={{backgroundColor: COLOR_MAIN}} onPress={()=>{this.props.navigation.navigate("SearchFilter")}} activeOpacity={1}>
+                  <TouchableOpacity style={{backgroundColor: COLOR_MAIN}} onPress={()=>{this.onSearchFilterPress()}} activeOpacity={1}>
                       <Icon name='sliders' type='font-awesome' color='white' size={30} containerStyle={styles.filter}/>
                   </TouchableOpacity>
               </View>
@@ -221,3 +242,16 @@ const styles = StyleSheet.create({
       marginRight: 14,
     }
 })
+
+function mapStateToProps(state){
+  return{
+    searchFilter: state.searchFilter,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tours);

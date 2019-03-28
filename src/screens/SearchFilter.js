@@ -18,10 +18,10 @@ class SearchFilter extends Component {
   constructor(props){
     super(props);
     this.state = {
-      date: '',
-      maxPrice: 0,
-      destination: '',
-      rating: 3,
+      date: undefined,
+      maxPrice: undefined,
+      destination: undefined,
+      rating: undefined,
 
       isDateTimePickerVisible: false,
     }
@@ -33,17 +33,19 @@ class SearchFilter extends Component {
     this._showDateTimePicker(false);
   };
 
-  onSearchPress(){
-    this.props.searchFilterChange(this.state);
+  async onSearchPress(){
+    // console.log(this.state);
+    await this.props.searchFilterChange(this.state);
+    this.props.navigation.state.params.onGoBack();
     this.props.navigation.goBack();
   }
 
   onResetPress(){
     this.setState({
-      date: '',
-      maxPrice: 0,
-      destination: '',
-      rating: 0,
+      date: undefined,
+      maxPrice: undefined,
+      destination: undefined,
+      rating: undefined,
     }, ()=>{
       this.props.searchFilterChange(this.state);
     })
@@ -102,15 +104,15 @@ class SearchFilter extends Component {
 
           <View style={{flexDirection: 'row', paddingVertical: 6}}>
               <Text style={{flex: 1, fontSize: 18}}>{localized.maxPrice}</Text>
-              <Text style={{fontSize: 18}}>{priceFormat(maxPrice)}</Text>
+              { typeof(maxPrice) != 'undefined' && <Text style={{fontSize: 18}}>{priceFormat(maxPrice)}</Text>}
           </View>
           <Slider
             value={maxPrice}
             onValueChange={value => this.setState({maxPrice: value})}
-            maximumValue={100000000}
+            maximumValue={10000000}
             maximumTrackTintColor={COLOR_PLACEHOLDER}
             minimumTrackTintColor={COLOR_MAIN}
-            step={500000}
+            step={100000}
             thumbTintColor={COLOR_GREEN}
             thumbStyle={{}}
           />
