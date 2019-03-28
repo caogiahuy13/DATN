@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { bookingChangeTourTurn } from '../actions/index.js';
-import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, } from '../services/api';
+import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, increaseView } from '../services/api';
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
 import { GOOGLE_MAPS_APIKEY,
          COLOR_MAIN, COLOR_LIGHT_BLACK, COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
@@ -84,6 +84,12 @@ class TourDetail extends Component{
             })
             .catch((error) => console.error(error));
   }
+  async callIncreaseView(id){
+    return increaseView(id)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
+  }
 
   setMultipleState(){
     const {tour, currentTurn} = this.state;
@@ -99,6 +105,7 @@ class TourDetail extends Component{
 
   componentWillMount(){
     const id = this.props.navigation.getParam("id");
+    this.callIncreaseView(id);
     this.callGetTourTurnById(id)
         .then(()=>{
           this.callGetImageByTourId(this.state.tour.id);
@@ -137,7 +144,7 @@ class TourDetail extends Component{
         <ScrollView>
           <Card
             containerStyle = {{margin: 0, padding: 0}}
-            title=<TourCardTitle title={tour.name} isSale={currentTurn.discount > 0}/>
+            title=<TourCardTitle title={tour.name} isSale={currentTurn.discount > 0} view={currentTurn.view}/>
             titleStyle={styles.cardTitle}
           >
             <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>

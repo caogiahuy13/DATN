@@ -180,6 +180,11 @@ export async function getAllTourTurn(page=1,per_page=4,isUniqueTour=false){
   return await fetch(URL);
 }
 
+export async function increaseView(id){
+  let URL = HOST + 'tour_turn/increaseView/' + id;
+  return await fetch(URL);
+}
+
 export async function getCommentByTour(id){
   let URL = HOST + 'comment/getByTour/' + id;
   return await fetch(URL);

@@ -10,6 +10,8 @@ import { getTourTurnById } from '../services/api';
 import { priceFormat, dateFormat, getDiscountPrice } from '../services/function';
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
+import TourRating from './TourRating';
+
 class TourCard extends Component{
   constructor(props){
     super(props);
@@ -64,7 +66,7 @@ class TourCard extends Component{
             </View>
 
             <View style={{alignItems: 'flex-start'}}>
-                <TourRating rating={3}/>
+                <TourRating rating={3} size={14}/>
             </View>
 
             <TourPrice price={data.price} discount={data.discount}/>
@@ -80,23 +82,6 @@ class Sale extends Component {
       <View style={styles.sale}>
         <Text style={{color: 'white'}}>SALE!</Text>
       </View>
-    )
-  }
-}
-
-class TourRating extends Component {
-  render(){
-    const {rating} = this.props;
-    return(
-      <Rating
-        type='custom'
-        ratingCount={5}
-        imageSize={14}
-        ratingColor = {COLOR_MAIN}
-        readonly
-        ratingBackgroundColor='#c8c7c8'
-        startingValue={rating}
-      />
     )
   }
 }

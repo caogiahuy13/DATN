@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
-import { Card, Icon, Button } from 'react-native-elements';
+import { Card, Icon, Button, Rating } from 'react-native-elements';
 
-import { COLOR_LIGHT_BLACK, COLOR_GREEN } from '../constants/index';
+import { COLOR_LIGHT_BLACK, COLOR_GREEN, COLOR_MAIN} from '../constants/index';
+import TourRating from './TourRating';
 
 class TourCardTitle extends Component{
   render(){
@@ -11,6 +12,11 @@ class TourCardTitle extends Component{
           <Text style={styles.title}>
               {this.props.title}
           </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TourRating rating={3} size={14}/>
+              <Icon name='eye' type='entypo' color='gray' size={14} containerStyle={{marginLeft: 8}}/>
+              <Text style={{marginLeft: 4}}>{this.props.view} views</Text>
+          </View>
           { this.props.isSale &&
             <View style={styles.saleContainer}>
               <Button buttonStyle={styles.sale} title='SALE!' titleStyle={{fontSize: 14}}/>
