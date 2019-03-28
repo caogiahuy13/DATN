@@ -27,9 +27,9 @@ export default class Tours extends Component {
       maxCount: 0,
       isLoading: false,
 
-      per_page: 6,
+      per_page: 4,
 
-      search: null,
+      search: '',
       price: undefined,
 
       isNavBarHidden: false,
@@ -68,6 +68,39 @@ export default class Tours extends Component {
       this.setState({ isNavBarHidden: !this.state.isNavBarHidden });
   }
 
+  loadNewTours(data){
+    const {per_page, count} = this.state;
+    this.setState({isLoading: true});
+    this.callSearchTourTurn(data)
+        .then((ret)=>{
+          this.setState({tours: ret.data}, ()=>{
+            this.setState({isLoading: false});
+          });
+          this.setState({maxCount: ret.itemCount});
+          this.setState({count: count + per_page})
+        })
+  }
+
+  getData(){
+    const {per_page, count, search} = this.state;
+    let data = {
+      page: 1,
+      per_page: count + per_page,
+      isUnique: false,
+      name: search,
+    }
+    return data;
+  }
+
+  onSubmitSearch(){
+    const {per_page, count, search} = this.state;
+
+    this.setState({count: 0},()=>{
+      let data = this.getData();
+      this.loadNewTours(data);
+    });
+  }
+
   // onLoadMorePress(){
   //   this.setState({isLoading: true});
   //   this.callGetAllTourTurnAPI(1,this.state.count + this.state.per_page,false)
@@ -80,22 +113,8 @@ export default class Tours extends Component {
   //       })
   // }
   onLoadMorePress(){
-    const {count, per_page} = this.state;
-    let data = {
-      page: 1,
-      per_page: count + per_page,
-      isUnique: false,
-    }
-
-    this.setState({isLoading: true});
-    this.callSearchTourTurn(data)
-        .then((ret)=>{
-          this.setState({tours: ret.data}, ()=>{
-            this.setState({isLoading: false});
-          });
-          this.setState({maxCount: ret.itemCount});
-          this.setState({count: count + per_page})
-        })
+    let data = this.getData();
+    this.loadNewTours(data);
   }
 
   // componentWillMount(){
@@ -107,25 +126,14 @@ export default class Tours extends Component {
   //       })
   // }
   componentWillMount(){
-    const {count, per_page} = this.state;
-    let data = {
-      page: 1,
-      per_page: per_page,
-      isUnique: false,
-    }
-
-    this.callSearchTourTurn(1,this.state.per_page,false)
-        .then((ret)=>{
-          this.setState({tours: ret.data});
-          this.setState({maxCount: ret.itemCount});
-          this.setState({count: count + per_page});
-        })
+    let data = this.getData();
+    this.loadNewTours(data);
   }
 
   render() {
     const { tours, maxCount, count, isLoading } = this.state;
     const { search } = this.state;
-
+    console.log(count, maxCount);
     return (
       <View style={{flex: 1, backgroundColor: COLOR_GRAY_BACKGROUND}}>
           <Animated.View style={{height: this.state.height}}>
@@ -133,7 +141,9 @@ export default class Tours extends Component {
                   <SearchBar
                     platform="android"
                     placeholder="..."
-                    onChangeText={()=>{}}
+                    onChangeText={(value)=>this.setState({search: value})}
+                    onSubmitEditing={()=>{this.onSubmitSearch()}}
+                    onCancel={()=>{}}
                     value={search}
                     containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
                     inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
