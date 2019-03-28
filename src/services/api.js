@@ -276,3 +276,22 @@ export async function getHistoryBookTourById(id){
                               });
                             })
 }
+
+export async function createCancelBookingRequest(idBookTour, message){
+  let URL = HOST + 'request_cancel_booking/create';
+  return await AsyncStorage.getItem('userToken')
+                            .then((auth) => {
+                              return fetch(URL, {
+                                method: 'POST',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': auth,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  idBookTour: idBookTour,
+                                  message: message,
+                                }),
+                              });
+                            })
+}

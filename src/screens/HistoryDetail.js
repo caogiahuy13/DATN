@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TextInput, Alert } from 'react-native';
 import { Divider, Button, CheckBox } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { getTourTurnById } from '../services/api';
+import { getTourTurnById, createCancelBookingRequest } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
 import { capitalize, priceFormat, dateFormat, getGenderShow,
          getAgeShow, getAgePriceShow, getDaysDiff, getTourCode, bookedDateFormat } from '../services/function';
@@ -30,8 +30,15 @@ class HistoryDetail extends Component {
       isCancelModalVisible: false,
     }
   }
+
   async callGetTourTurnById(id){
     return getTourTurnById(id)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
+  }
+  async callCreateCancelBookingRequest(idBookTour, message){
+    return createCancelBookingRequest(idBookTour, message)
             .then((response) => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => console.error(error));
@@ -57,6 +64,29 @@ class HistoryDetail extends Component {
         isChecked: !this.state.cancel.isChecked,
       }
     });
+  }
+  onCanCelPress(){
+    const {info} = this.props.bookedTour;
+    const {cancel} = this.state;
+
+    if (!cancel.isChecked){
+      Alert.alert(localized.agreeAlert);
+    } else {
+      this.callCreateCancelBookingRequest(info.id, cancel.reason)
+          .then((res)=>{
+            Alert.alert(
+              localized.congratulation,
+              localized.cancelBookingRequestSend,
+              [
+                {text: localized.ok, onPress: ()=>{
+                  this._showCancelModal(false);
+                  this.props.navigation.navigate("History2")}
+                },
+              ],
+              {cancelable: false},
+            );
+          })
+    }
   }
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
@@ -98,7 +128,7 @@ class HistoryDetail extends Component {
               type="solid"
               buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0, marginHorizontal: 6}}
               titleStyle={{fontSize: 16, paddingHorizontal: 12}}
-              onPress={()=>{}}
+              onPress={()=>{this.onCanCelPress()}}
             />
         </View>
       </View>

@@ -143,6 +143,8 @@ const en = {
   cancelTour: "Cancel tour",
   yourReason: "Your Reason",
   agreeCondition: "I have read and accepted with these above terms of condition",
+  agreeAlert: "Please agree all the terms of condition",
+  cancelBookingRequestSend: "Your cancel booking tour request has been send",
 
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',

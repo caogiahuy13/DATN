@@ -143,8 +143,8 @@ const vi = {
   cancelTour: "Hủy tour",
   yourReason: "Lý do hủy tour",
   agreeCondition: "Tôi đã đọc và hiểu các quy định",
-
-  SUCCESS_CHANGE_PASSWORD: "Thay đổi mật khẩu thành công",
+  agreeAlert: "Vui lòng đồng ý với các điều khoản",
+  cancelBookingRequestSend: "Yêu cầu hủy tour của bạn đã được gửi",
 
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',
   ERR_PASSWORD: 'Vui lòng nhập mật khẩu',
@@ -161,6 +161,8 @@ const vi = {
   ERR_BOOKING_CONTACT_INFO: 'Vui lòng nhập đầy đủ thông tin liên hệ',
   ERR_BOOKING_PASSENGER_INFO: 'Vui lòng nhập tên, ngày sinh, giới tính của hành khách',
   ERR_BOOKING_PASSENGER_MIN: 'Vui lòng nhập ít nhất một hành khách',
+
+  SUCCESS_CHANGE_PASSWORD: "Thay đổi mật khẩu thành công",
 }
 
 export default vi;
