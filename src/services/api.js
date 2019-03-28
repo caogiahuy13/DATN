@@ -3,6 +3,14 @@ import axios from 'axios';
 
 import { HOST } from '../constants/index';
 
+function objToQueryString(obj) {
+  const keyValuePairs = [];
+  for (const key in obj) {
+    keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+  }
+  return keyValuePairs.join('&');
+}
+
 export async function login(username, password){
   let URL = HOST + 'user/login';
   return await fetch(URL, {
@@ -182,6 +190,12 @@ export async function getAllTourTurn(page=1,per_page=4,isUniqueTour=false){
 
 export async function increaseView(id){
   let URL = HOST + 'tour_turn/increaseView/' + id;
+  return await fetch(URL);
+}
+
+export async function searchTourTurn(data={}){
+  const queryString = objToQueryString(data);
+  let URL = HOST + 'tour_turn/search?' + queryString;
   return await fetch(URL);
 }
 

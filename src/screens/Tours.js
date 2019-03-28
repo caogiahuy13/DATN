@@ -5,7 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import RNPickerSelect from 'react-native-picker-select';
 
-import { getAllTourTurn } from '../services/api';
+import { getAllTourTurn, searchTourTurn } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { price, placeholderPrice } from '../constants/search';
 import localized from '../localization/index';
@@ -43,6 +43,12 @@ export default class Tours extends Component {
             .then((responseJson) => responseJson)
             .catch((error) => console.error(error));
   }
+  async callSearchTourTurn(data){
+    return searchTourTurn(data)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
+  }
 
   tourDetailPress = (id) => {
     this.props.navigation.navigate("TourDetail",{id: id});
@@ -62,24 +68,57 @@ export default class Tours extends Component {
       this.setState({ isNavBarHidden: !this.state.isNavBarHidden });
   }
 
+  // onLoadMorePress(){
+  //   this.setState({isLoading: true});
+  //   this.callGetAllTourTurnAPI(1,this.state.count + this.state.per_page,false)
+  //       .then((ret)=>{
+  //         this.setState({tours: ret.data}, ()=>{
+  //           this.setState({isLoading: false});
+  //         });
+  //         this.setState({maxCount: ret.itemCount});
+  //         this.setState({count: this.state.count + this.state.per_page})
+  //       })
+  // }
   onLoadMorePress(){
+    const {count, per_page} = this.state;
+    let data = {
+      page: 1,
+      per_page: count + per_page,
+      isUnique: false,
+    }
+
     this.setState({isLoading: true});
-    this.callGetAllTourTurnAPI(1,this.state.count + this.state.per_page,false)
+    this.callSearchTourTurn(data)
         .then((ret)=>{
           this.setState({tours: ret.data}, ()=>{
             this.setState({isLoading: false});
           });
           this.setState({maxCount: ret.itemCount});
-          this.setState({count: this.state.count + this.state.per_page})
+          this.setState({count: count + per_page})
         })
   }
 
+  // componentWillMount(){
+  //   this.callGetAllTourTurnAPI(1,this.state.per_page,false)
+  //       .then((ret)=>{
+  //         this.setState({tours: ret.data});
+  //         this.setState({maxCount: ret.itemCount});
+  //         this.setState({count: this.state.count + this.state.per_page});
+  //       })
+  // }
   componentWillMount(){
-    this.callGetAllTourTurnAPI(1,this.state.per_page,false)
+    const {count, per_page} = this.state;
+    let data = {
+      page: 1,
+      per_page: per_page,
+      isUnique: false,
+    }
+
+    this.callSearchTourTurn(1,this.state.per_page,false)
         .then((ret)=>{
           this.setState({tours: ret.data});
           this.setState({maxCount: ret.itemCount});
-          this.setState({count: this.state.count + this.state.per_page});
+          this.setState({count: count + per_page});
         })
   }
 
@@ -93,7 +132,7 @@ export default class Tours extends Component {
               <View style={{flexDirection: 'row'}}>
                   <SearchBar
                     platform="android"
-                    placeholder="Type Here..."
+                    placeholder="..."
                     onChangeText={()=>{}}
                     value={search}
                     containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
