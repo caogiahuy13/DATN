@@ -10,7 +10,7 @@ import TourRating from './TourRating';
 class TourCardTitle extends Component{
   render(){
     const {title, rating, view, isSale} = this.props;
-    console.log(rating);
+
     return(
       <View style={{flex: 1, padding: 10}}>
           <Text style={styles.title}>

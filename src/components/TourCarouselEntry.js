@@ -30,7 +30,7 @@ class TourCarouselEntry extends Component {
 
   render () {
     const {item} = this.props;
-    console.log(item);
+
     return (
       <View style={styles.container}>
         <Image source={{uri: item.featured_img}} style={styles.image}/>

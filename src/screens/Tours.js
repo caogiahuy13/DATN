@@ -4,6 +4,7 @@ import { Button, SearchBar, Icon } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import RNPickerSelect from 'react-native-picker-select';
+import Moment from 'moment';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -99,10 +100,16 @@ class Tours extends Component {
     if(typeof(searchFilter.maxPrice) != 'undefined'){
       data['price'] = searchFilter.maxPrice;
     }
+    if(typeof(searchFilter.date) != 'undefined'){
+      data['date'] = Moment(searchFilter.date).format('YYYY-MM-DD');
+    }
+    if(searchFilter.lasting > 0){
+      data['lasting'] = searchFilter.lasting;
+    }
+
     if(sortBy != null){
       data['sortBy'] = sortBy;
     }
-
     if(sortType != null){
       data['sortType'] = sortType;
     } else {
@@ -119,17 +126,6 @@ class Tours extends Component {
     });
   }
 
-  // onLoadMorePress(){
-  //   this.setState({isLoading: true});
-  //   this.callGetAllTourTurnAPI(1,this.state.count + this.state.per_page,false)
-  //       .then((ret)=>{
-  //         this.setState({tours: ret.data}, ()=>{
-  //           this.setState({isLoading: false});
-  //         });
-  //         this.setState({maxCount: ret.itemCount});
-  //         this.setState({count: this.state.count + this.state.per_page})
-  //       })
-  // }
   onLoadMorePress(){
     let data = this.getData();
     this.loadNewTours(data);
@@ -138,6 +134,9 @@ class Tours extends Component {
   onSearchFilterPress(){
     this.props.navigation.navigate("SearchFilter", {
       onGoBack: () => {
+        console.log(this.props.searchFilter);
+        this.setState({sortBy: null});
+        this.setState({sortType: null});
         this.setState({count: 0},()=>{
           let data = this.getData();
           this.loadNewTours(data);
@@ -147,6 +146,9 @@ class Tours extends Component {
   }
 
   onSortByChange(value){
+    if (value == null){
+      this.setState({sortType: null});
+    }
     this.setState({sortBy: value},()=>{
       this.setState({count: 0},()=>{
         let data = this.getData();
@@ -164,14 +166,6 @@ class Tours extends Component {
     });
   }
 
-  // componentWillMount(){
-  //   this.callGetAllTourTurnAPI(1,this.state.per_page,false)
-  //       .then((ret)=>{
-  //         this.setState({tours: ret.data});
-  //         this.setState({maxCount: ret.itemCount});
-  //         this.setState({count: this.state.count + this.state.per_page});
-  //       })
-  // }
   componentWillMount(){
     let data = this.getData();
     this.loadNewTours(data);
@@ -215,6 +209,7 @@ class Tours extends Component {
                       items={sortType}
                       onValueChange={value => this.onSortTypeChange(value)}
                       value={this.state.sortType}
+                      disabled={this.state.sortBy == null ? true : false}
                     />
                   </View>
               </View>

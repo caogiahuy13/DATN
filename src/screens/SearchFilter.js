@@ -10,6 +10,8 @@ import { dateFormat, priceFormat } from '../services/function';
 import { searchFilterChange } from '../actions/index';
 import localized from '../localization/index';
 
+import NumberPicker from '../components/NumberPicker';
+
 class SearchFilter extends Component {
   static navigationOptions = {
     title: localized.search,
@@ -22,6 +24,7 @@ class SearchFilter extends Component {
       maxPrice: undefined,
       destination: undefined,
       rating: undefined,
+      lasting: undefined,
 
       isDateTimePickerVisible: false,
     }
@@ -34,10 +37,26 @@ class SearchFilter extends Component {
   };
 
   async onSearchPress(){
-    // console.log(this.state);
     await this.props.searchFilterChange(this.state);
     this.props.navigation.state.params.onGoBack();
     this.props.navigation.goBack();
+  }
+
+  increaseLasting(){
+    const {lasting} = this.state;
+    if (typeof(lasting) == 'undefined'){
+      this.setState({lasting: 1});
+    } else {
+      this.setState({lasting: lasting + 1});
+    }
+  }
+  decreaseLasting(){
+    const {lasting} = this.state;
+    let newValue = lasting - 1;
+    if (newValue < 0){
+      newValue = 0;
+    }
+    this.setState({lasting: newValue});
   }
 
   onResetPress(){
@@ -46,6 +65,7 @@ class SearchFilter extends Component {
       maxPrice: undefined,
       destination: undefined,
       rating: undefined,
+      lasting: undefined,
     }, ()=>{
       this.props.searchFilterChange(this.state);
     })
@@ -53,16 +73,18 @@ class SearchFilter extends Component {
 
   componentWillMount(){
     const {searchFilter} = this.props;
+    let tmpLasting = (typeof(searchFilter.lasting) == 'undefined') ? 0 : searchFilter.lasting;
     this.setState({
       date: searchFilter.date,
       maxPrice: searchFilter.maxPrice,
       destination: searchFilter.destination,
       rating: searchFilter.rating,
+      lasting: searchFilter.lasting,
     })
   }
 
   render() {
-    const {date, maxPrice, destination, rating} = this.state;
+    const {date, maxPrice, destination, rating, lasting} = this.state;
 
     return (
       <View style={styles.container}>
@@ -98,7 +120,7 @@ class SearchFilter extends Component {
                   autoCorrect={false}
                   onChangeText={(value)=> {}}
                   editable={false} selectTextOnFocus={false}
-                  value={date == '' ? null : dateFormat(date)}
+                  value={typeof(date) == 'undefined' ? null : dateFormat(date)}
               />
           </TouchableOpacity>
 
@@ -116,6 +138,9 @@ class SearchFilter extends Component {
             thumbTintColor={COLOR_GREEN}
             thumbStyle={{}}
           />
+
+          <Text style={styles.inputText}>{localized.lasting}</Text>
+          <NumberPicker value={typeof(lasting) == 'undefined' ? 0 : lasting} increase={()=>this.increaseLasting()} decrease={()=>this.decreaseLasting()}/>
 
           <Text style={styles.inputText}>Min Rating</Text>
           <View style={{alignItems: 'flex-start'}}>
