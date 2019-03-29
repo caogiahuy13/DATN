@@ -69,7 +69,7 @@ class TourCard extends Component{
                 <TourRating rating={3} size={14}/>
             </View>
 
-            <TourPrice price={data.price} discount={data.discount}/>
+            <TourPrice price={data.original_price} discount={data.discount}/>
         </View>
       </TouchableOpacity>
     );

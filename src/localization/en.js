@@ -38,10 +38,15 @@ const en = {
   totalPrice: "Total price",
   adultPrice: "Adult price",
   childrenPrice: "Children price",
-
+  date: "Date",
+  price: "Price",
   male: "Male",
   female: "Female",
   other: "Other",
+  sortBy: "Sort by",
+  sortType: "Sort type",
+  asc: "Ascending",
+  desc: "Descending",
 
   historyBook: "History",
   changePassword: "Change Password",
@@ -138,7 +143,6 @@ const en = {
   // History card
   bookingDay: "Booking day",
   totalSlot: "Total slot",
-
   cancelTour: "Cancel tour",
   yourReason: "Your Reason",
   agreeCondition: "I have read and accepted with these above terms of condition",

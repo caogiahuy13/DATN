@@ -38,10 +38,15 @@ const vi = {
   totalPrice: "Tổng tiền",
   adultPrice: "Giá người lớn",
   childrenPrice: "Giá trẻ em",
-
+  date: "Ngày",
+  price: "Giá",
   male: "Nam",
   female: "Nữ",
   other: "Khác",
+  sortBy: "Sắp xếp theo",
+  sortType: "Kiểu sắp xếp",
+  asc: "Tăng dần",
+  desc: "Giảm dần",
 
   historyBook: "Lịch sử đặt tour",
   changePassword: "Thay đổi mật khẩu",
@@ -138,7 +143,6 @@ const vi = {
   // History card
   bookingDay: "Ngày đặt",
   totalSlot: "Số người",
-
   cancelTour: "Hủy tour",
   yourReason: "Lý do hủy tour",
   agreeCondition: "Tôi đã đọc và hiểu các quy định",

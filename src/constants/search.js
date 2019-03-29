@@ -1,38 +1,43 @@
-export const price = [
+import localized from '../localization/index';
+
+export const sortBy = [
   {
-    label: 'Lowest Price',
-    value: 'lowest price',
+    label: localized.price,
+    value: 'price',
+    key: 'price',
   },
   {
-    label: 'Highest Price',
-    value: 'highest price',
+    label: localized.date,
+    value: 'date',
+    key: 'date',
+  },
+  {
+    label: 'Lasting',
+    value: 'lasting',
+    key: 'lasting',
   },
 ];
 
-export const date = [
+export const sortType = [
   {
-    label: 'Asc',
+    label: localized.asc,
     value: 'asc',
+    key: 'asc',
   },
   {
-    label: 'Desc',
+    label: localized.desc,
     value: 'desc',
+    key: 'desc',
   },
 ];
 
-export const rating = [
-  {
-    label: 'Asc',
-    value: 'asc',
-  },
-  {
-    label: 'Desc',
-    value: 'desc',
-  },
-];
-
-export const placeholderPrice = {
-  label: 'PRICE',
+export const placeHolderSortBy = {
+  label: localized.sortBy,
   value: null,
   color: '#9EA0A4',
-};
+}
+export const placeHolderSortType = {
+  label: localized.sortType,
+  value: null,
+  color: '#9EA0A4',
+}

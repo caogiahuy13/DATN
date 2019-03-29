@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import { getAllTourTurn, searchTourTurn } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
-import { price, placeholderPrice } from '../constants/search';
+import { sortBy, placeHolderSortBy, sortType, placeHolderSortType } from '../constants/search';
 import localized from '../localization/index';
 
 import TourCard from '../components/TourCard';
@@ -32,10 +32,9 @@ class Tours extends Component {
       per_page: 4,
 
       search: '',
-      maxPrice: 100000000,
 
-
-      price: undefined,
+      sortBy: null,
+      sortType: null,
 
       isNavBarHidden: false,
       height: new Animated.Value(headerHeight),
@@ -87,7 +86,7 @@ class Tours extends Component {
   }
 
   getData(){
-    const {per_page, count, search, maxPrice} = this.state;
+    const {per_page, count, search, maxPrice, sortType, sortBy} = this.state;
     const {searchFilter} = this.props;
 
     let data = {
@@ -99,6 +98,15 @@ class Tours extends Component {
 
     if(typeof(searchFilter.maxPrice) != 'undefined'){
       data['price'] = searchFilter.maxPrice;
+    }
+    if(sortBy != null){
+      data['sortBy'] = sortBy;
+    }
+
+    if(sortType != null){
+      data['sortType'] = sortType;
+    } else {
+      data['sortType'] = 'asc';
     }
 
     return data;
@@ -138,6 +146,24 @@ class Tours extends Component {
     });
   }
 
+  onSortByChange(value){
+    this.setState({sortBy: value},()=>{
+      this.setState({count: 0},()=>{
+        let data = this.getData();
+        this.loadNewTours(data);
+      })
+    });
+  }
+
+  onSortTypeChange(value){
+    this.setState({sortType: value},()=>{
+      this.setState({count: 0},()=>{
+        let data = this.getData();
+        this.loadNewTours(data);
+      })
+    });
+  }
+
   // componentWillMount(){
   //   this.callGetAllTourTurnAPI(1,this.state.per_page,false)
   //       .then((ret)=>{
@@ -174,17 +200,21 @@ class Tours extends Component {
                       <Icon name='sliders' type='font-awesome' color='white' size={30} containerStyle={styles.filter}/>
                   </TouchableOpacity>
               </View>
-              <View style={{flexDirection: 'row'}}>
-                  <View style={{flex: 1}}>
+              <View style={{flexDirection: 'row', paddingHorizontal: 6}}>
+                  <View style={{flex: 0.5}}>
                     <RNPickerSelect
-                      placeholder={placeholderPrice}
-                      items={price}
-                      onValueChange={value => {
-                        this.setState({
-                          price: value,
-                        });
-                      }}
-                      value={this.state.price}
+                      placeholder={placeHolderSortBy}
+                      items={sortBy}
+                      onValueChange={value => this.onSortByChange(value)}
+                      value={this.state.sortBy}
+                    />
+                  </View>
+                  <View style={{flex: 0.5}}>
+                    <RNPickerSelect
+                      placeholder={placeHolderSortType}
+                      items={sortType}
+                      onValueChange={value => this.onSortTypeChange(value)}
+                      value={this.state.sortType}
                     />
                   </View>
               </View>
