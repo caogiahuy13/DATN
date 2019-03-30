@@ -12,10 +12,15 @@ export const sortBy = [
     key: 'date',
   },
   {
-    label: 'Lasting',
-    value: 'lasting',
-    key: 'lasting',
+    label: localized.view,
+    value: 'view',
+    key: 'view',
   },
+  {
+    label: localized.booking,
+    value: 'booking',
+    key: 'booking',
+  }
 ];
 
 export const sortType = [

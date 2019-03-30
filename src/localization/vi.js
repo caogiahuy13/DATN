@@ -40,6 +40,7 @@ const vi = {
   childrenPrice: "Giá trẻ em",
   date: "Ngày",
   price: "Giá",
+  booking: "Số chỗ",
   male: "Nam",
   female: "Nữ",
   other: "Khác",

@@ -40,6 +40,7 @@ const en = {
   childrenPrice: "Children price",
   date: "Date",
   price: "Price",
+  booking: "Booking",
   male: "Male",
   female: "Female",
   other: "Other",
