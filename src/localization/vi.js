@@ -167,6 +167,48 @@ const vi = {
   ERR_BOOKING_PASSENGER_MIN: 'Vui lòng nhập ít nhất một hành khách',
 
   SUCCESS_CHANGE_PASSWORD: "Thay đổi mật khẩu thành công",
+
+  CANCEL_BOOKING_TERMS_CONDITION:
+`ĐIỀU KIỆN HỦY TOUR TRONG NƯỚC
+Đối với ngày thường:
+- Hủy vé 5-7 ngày trước ngày khởi hành         : phí hủy 40% tiền tour
+- Hủy vé 3-4 ngày trước ngày khởi hành         : phí hủy 60% tiền tour
+- Hủy vé 2 ngày trước ngày khởi hành            : phí hủy 70% tiền tour
+- Hủy vé 1 ngày trước ngày khởi hành            : phí hủy 100% tiền tour.
+- Trường hợp quý khách đến trễ giờ khởi hành được tính là hủy ngay trong ngày : phí phạt 100% tiền tour.
+
+Đối với ngày lễ, Tết:
+- Hủy tour từ 8-10 ngày trước ngày khởi hành: Phí huỷ tour là 30% trên tổng giá tour.
+- Hủy tour từ 5-7 ngày trước ngày khởi hành: Phí huỷ tour là 60% trên tổng giá tour.
+- Hủy tour từ 3-4 ngày trước ngày khởi hành: Phí huỷ tour là 90% trên tổng giá tour.
+- Hủy tour từ 1-2 ngày trước ngày khởi hành: Phí huỷ tour là 100% trên tổng giá tour.
+* Các tour ngày lễ, tết là các tour có thời gian diễn ra rơi vào một trong các ngày lễ, tết theo qui định.
+
+Lưu ý khi chuyển/hủy tour
+Thời gian hủy chuyến du lịch được tính cho ngày làm việc, không tính Thứ Bảy, Chủ Nhật & các ngày Lễ, Tết.
+
+ĐIỀU KIỆN HỦY TOUR NƯỚC NGOÀI
+Đối với ngày thường:
+- Nếu hủy hoặc chuyển sang các tuyến du lịch khác trước ngày khởi hành 30 ngày: Không bị mất chi phí.
+- Nếu hủy hoặc chuyển sang các chuyến du lịch khác từ 24-29 ngày trước ngày khởi hành: Phạt 50% tiền cọc tour.
+- Nếu hủy hoặc chuyển sang các chuyến du lịch khác từ 20-24 ngày trước ngày khởi hành: Phạt 100% tiền cọc tour.
+- Nếu hủy chuyến du lịch ngay sau khi Đại Sứ Quán, Lãnh Sự Quán đã cấp visa (đối với các nước cần visa): Phạt 100% tiền cọc tour.
+- Nếu hủy chuyến du lịch trong vòng từ 14-19 ngày trước ngày khởi hành: Phạt 50% trên giá tour du lịch.
+- Nếu hủy chuyến du lịch trong vòng từ 10-13 ngày trước ngày khởi hành: Phạt 70% trên giá tour du lịch.
+- Nếu hủy chuyến du lịch trong vòng từ 02-09 ngày trước ngày khởi hành: Phạt 90% trên giá vé du lịch.
+- Nếu hủy chuyến du lịch trong vòng 01 ngày trước ngày khởi hành : Phạt 100% trên giá vé du lịch.
+
+Đối với ngày lễ, Tết:
+- Hủy tour ngay sau khi Đại Sứ Quán, Lãnh Sự Quán đã cấp visa: Chi phí huỷ tour là 100% tiền cọc tour.
+- Hủy tour từ 30 – 45 ngày trước ngày khởi hành: Phí huỷ tour là 30% trên tổng giá tour.
+- Hủy tour từ 16 – 29 ngày trước ngày khởi hành: Phí huỷ tour là 60% trên tổng giá tour.
+- Hủy tour từ 08 – 15 ngày trước ngày khởi hành: Phí huỷ tour là 90% trên tổng giá tour.
+-Hủy tour từ 01 – 07 ngày trước ngày khởi hành: Phí huỷ tour là 100% trên tổng giá tour.
+* Các tour ngày lễ, tết là các tour có thời gian diễn ra rơi vào một trong các ngày lễ, tết theo qui định.
+
+Lưu ý khi chuyển/huỷ tour:
+Thời gian hủy chuyến du lịch được tính cho ngày làm việc, không tính Thứ Bảy, Chủ Nhật & các ngày Lễ, Tết.
+  `,
 }
 
 export default vi;

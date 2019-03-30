@@ -103,7 +103,7 @@ class HistoryDetail extends Component {
         <Text></Text>
         <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.termsCondition}</Text>
         <ScrollView style={{height: 100, padding: 10, borderWidth: 0.5, borderColor: 'gray'}}>
-            <Text> Lorem Ipsum Lorem Ipsumvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv</Text>
+            <Text>{localized.CANCEL_BOOKING_TERMS_CONDITION}</Text>
         </ScrollView>
         <CheckBox
           title={localized.agreeCondition}
