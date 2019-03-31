@@ -10,7 +10,7 @@ import ChangePassword from '../screens/ChangePassword';
 import AboutUs from '../screens/AboutUs';
 import Contact from '../screens/Contact';
 import ChangeAvatar from '../screens/ChangeAvatar';
-import History2 from '../screens/History2';
+import History from '../screens/History';
 import HistoryDetail from '../screens/HistoryDetail';
 import TermsCondition from '../screens/TermsCondition';
 import Faq from '../screens/Faq';
@@ -22,7 +22,7 @@ const SettingStack = createStackNavigator(
     AboutUs,
     Contact,
     ChangeAvatar,
-    History2,
+    History,
     HistoryDetail,
     TermsCondition,
     Faq,
@@ -50,7 +50,7 @@ SettingStack.navigationOptions = ({ navigation }) => {
             route.routeName === "AboutUs" ||
             route.routeName === "Contact" ||
             route.routeName === "ChangeAvatar" ||
-            route.routeName === "History2" ||
+            route.routeName === "History" ||
             route.routeName === "HistoryDetail" ||
             route.routeName === "TermsCondition" ||
             route.routeName === "Faq") {

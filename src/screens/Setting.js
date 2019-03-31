@@ -369,7 +369,7 @@ class Setting extends Component {
 
         <ListItem
           title={localized.historyBook}
-          onPress={() => {this.props.navigation.navigate("History2")}}
+          onPress={() => {this.props.navigation.navigate("History")}}
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
           leftIcon=<Icon name='shopping-cart' type='entypo' color='gray' size={20}/>
