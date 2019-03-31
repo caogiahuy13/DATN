@@ -9,12 +9,12 @@ import TabBarComponent from '../components/TabBarComponent';
 import MapStack from './MapStack';
 import HistoryStack from './HistoryStack';
 import SettingStack from './SettingStack';
-import ToursStack from './ToursStack';
+import SearchStack from './SearchStack';
 
 const TabNavigator = createBottomTabNavigator(
   {
     MapStack,
-    ToursStack,
+    SearchStack,
     // HistoryStack,
     SettingStack,
   },

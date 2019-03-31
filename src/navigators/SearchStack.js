@@ -14,7 +14,7 @@ import BookingPayment from '../screens/BookingPayment';
 import BookingConfirmation from '../screens/BookingConfirmation';
 import TourCard from '../components/TourCard';
 
-const ToursStack = createStackNavigator(
+const SearchStack = createStackNavigator(
   {
     Tours,
     TourCard,
@@ -39,7 +39,7 @@ const ToursStack = createStackNavigator(
     transitionConfig: () => fromRight(),
   }
 );
-ToursStack.navigationOptions = ({ navigation }) => {
+SearchStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
@@ -62,4 +62,4 @@ ToursStack.navigationOptions = ({ navigation }) => {
     };
 };
 
-export default ToursStack;
+export default SearchStack;
