@@ -150,6 +150,11 @@ const vi = {
   agreeAlert: "Vui lòng đồng ý với các điều khoản",
   cancelBookingRequestSend: "Yêu cầu hủy tour của bạn đã được gửi",
 
+  // Top tours
+  topPopular: "Tour phổ biến nhất",
+  topRating: "Tour đánh giá cao nhất",
+  topView: "Tour được quan tâm nhất",
+
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',
   ERR_PASSWORD: 'Vui lòng nhập mật khẩu',
   ERR_FULLNAME: 'Vui lòng nhập họ tên',

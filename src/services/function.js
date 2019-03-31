@@ -105,3 +105,13 @@ export function priceFormat(price){
 export function getDiscountPrice(price, discount){
   return price - (price * discount);
 }
+
+export function shortenString(str, length){
+  let ret = '';
+  if (str.length > length){
+    ret = str.substring(0,length-3) + ' ...';
+  } else {
+    ret = str;
+  }
+  return ret;
+}

@@ -11,6 +11,7 @@ import { priceFormat, dateFormat, getDiscountPrice } from '../services/function'
 import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 import TourRating from './TourRating';
+import Sale from './Sale';
 
 class TourCard extends Component{
   constructor(props){
@@ -76,16 +77,6 @@ class TourCard extends Component{
   }
 }
 
-class Sale extends Component {
-  render(){
-    return(
-      <View style={styles.sale}>
-        <Text style={{color: 'white'}}>SALE!</Text>
-      </View>
-    )
-  }
-}
-
 class TourPrice extends Component {
   render(){
     const { price, discount } = this.props;
@@ -128,12 +119,6 @@ const styles = StyleSheet.create({
     padding: 4,
     alignItems: 'center',
   },
-
-  sale: {
-    backgroundColor: COLOR_GREEN,
-    paddingVertical: 4,
-    paddingHorizontal: 6
-  }
 })
 
 function mapStateToProps(state){

@@ -150,6 +150,11 @@ const en_us = {
   agreeAlert: "Please agree all the terms of condition",
   cancelBookingRequestSend: "Your cancel booking tour request has been send",
 
+  // Top tours
+  topPopular: "Top popular tours",
+  topRating: "Top rating tours",
+  topView: "Top concerned tours",
+  
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
   ERR_FULLNAME: 'Fullname is required',

@@ -70,7 +70,11 @@ class TopTours extends Component {
         })
   }
 
-  componentDidMount(){
+  tourDetailPress = (id) => {
+    this.props.navigation.navigate("TourDetail",{id: id});
+  }
+
+  componentWillMount(){
     this.getTopTourBooking();
     this.getTopTourView();
   }
@@ -80,15 +84,15 @@ class TopTours extends Component {
 
     return (
       <ScrollView>
-          <InfoText text="Top tours"/>
+          <InfoText text={localized.topPopular}/>
           <FlatList
             data={booking}
-            renderItem={(item) => <SmallTourCard data={item.item}/>}
+            renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             style={styles.list}
           />
-          <InfoText text="Top tours"/>
+          <InfoText text={localized.topRating}/>
           <FlatList
             data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}]}
             renderItem={(item) => <SmallTourCard/>}
@@ -96,10 +100,10 @@ class TopTours extends Component {
             horizontal={true}
             style={styles.list}
           />
-          <InfoText text="Top tours"/>
+          <InfoText text={localized.topView}/>
           <FlatList
             data={view}
-            renderItem={(item) => <SmallTourCard data={item.item}/>}
+            renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             style={styles.list}
