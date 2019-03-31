@@ -183,8 +183,9 @@ export async function getAllTourTurnWithoutPagination(){
   return await fetch(URL);
 }
 
-export async function getAllTourTurn(page=1,per_page=4,isUniqueTour=false){
-  let URL = HOST + 'tour_turn/getAll?page=' + page + '&per_page=' + per_page + '&isUniqueTour=' + isUniqueTour;
+export async function getAllTourTurn(data={}){
+  const queryString = objToQueryString(data);
+  let URL = HOST + 'tour_turn/getAll?' + queryString;
   return await fetch(URL);
 }
 
