@@ -48,7 +48,13 @@ const en_us = {
   sortType: "Sort type",
   asc: "Ascending",
   desc: "Descending",
-
+  otherDay: "Other day",
+  daysLeft: "Days left",
+  slotsLeft: "Slots left",
+  lastIn: "Last in",
+  days: "Days",
+  detailPrice: "Detail price",
+  
   historyBook: "History",
   changePassword: "Change Password",
   aboutUs: "About Us",
@@ -154,7 +160,7 @@ const en_us = {
   topPopular: "Top popular tours",
   topRating: "Top rating tours",
   topView: "Top concerned tours",
-  
+
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
   ERR_FULLNAME: 'Fullname is required',

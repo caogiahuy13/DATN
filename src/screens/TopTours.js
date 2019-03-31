@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
-import { } from 'react-native-elements';
-
 
 import { getAllTourTurn } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
@@ -84,7 +82,7 @@ class TopTours extends Component {
 
     return (
       <ScrollView>
-          <InfoText text={localized.topPopular}/>
+          <InfoText text={localized.topPopular.toUpperCase()}/>
           <FlatList
             data={booking}
             renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
@@ -92,7 +90,7 @@ class TopTours extends Component {
             horizontal={true}
             style={styles.list}
           />
-          <InfoText text={localized.topRating}/>
+          <InfoText text={localized.topRating.toUpperCase()}/>
           <FlatList
             data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}]}
             renderItem={(item) => <SmallTourCard/>}
@@ -100,7 +98,7 @@ class TopTours extends Component {
             horizontal={true}
             style={styles.list}
           />
-          <InfoText text={localized.topView}/>
+          <InfoText text={localized.topView.toUpperCase()}/>
           <FlatList
             data={view}
             renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}

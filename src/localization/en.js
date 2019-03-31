@@ -48,6 +48,12 @@ const en = {
   sortType: "Sort type",
   asc: "Ascending",
   desc: "Descending",
+  otherDay: "Other day",
+  daysLeft: "Days left",
+  slotsLeft: "Slots left",
+  lastIn: "Last in",
+  days: "Days",
+  detailPrice: "Detail price",
 
   historyBook: "History",
   changePassword: "Change Password",

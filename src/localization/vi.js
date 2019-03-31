@@ -48,6 +48,12 @@ const vi = {
   sortType: "Kiểu sắp xếp",
   asc: "Tăng dần",
   desc: "Giảm dần",
+  otherDay: "Ngày khác",
+  daysLeft: "Ngày còn lại",
+  slotsLeft: "Chỗ còn lại",
+  lastIn: "Kéo dài",
+  days: "Ngày",
+  detailPrice: "Bảng giá chi tiết",
 
   historyBook: "Lịch sử đặt tour",
   changePassword: "Thay đổi mật khẩu",
