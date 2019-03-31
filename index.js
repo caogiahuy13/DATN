@@ -13,4 +13,4 @@ import HistoryDetail from './src/screens/HistoryDetail';
 import TopTours from './src/screens/TopTours';
 import SmallTourCard from './src/components/SmallTourCard';
 
-AppRegistry.registerComponent(appName, () => TopTours);
+AppRegistry.registerComponent(appName, () => App);

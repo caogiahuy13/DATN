@@ -15,15 +15,75 @@ class TopTours extends Component {
     header: null,
   };
 
+  constructor(props){
+    super(props);
+    this.state = {
+      booking: null,
+      rating: null,
+      view: null,
+    }
+  }
+  async callGetAllTourTurnAPI(data){
+    return getAllTourTurn(data)
+            .then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error))
+  }
 
+  getTopTourBooking(){
+    let data = {
+      isUniqueTour: false,
+      page: 1,
+      per_page: 8,
+      sortBy: 'booking',
+      sortType: 'desc',
+    }
+    this.callGetAllTourTurnAPI(data)
+        .then((res)=>{
+          this.setState({booking: res.data})
+        })
+  }
+  getTopTourRating(){
+    let data = {
+      isUniqueTour: false,
+      page: 1,
+      per_page: 8,
+      sortBy: 'rating',
+      sortType: 'desc',
+    }
+    this.callGetAllTourTurnAPI(data)
+        .then((res)=>{
+          this.setState({rating: res.data})
+        })
+  }
+  getTopTourView(){
+    let data = {
+      isUniqueTour: false,
+      page: 1,
+      per_page: 8,
+      sortBy: 'view',
+      sortType: 'desc',
+    }
+    this.callGetAllTourTurnAPI(data)
+        .then((res)=>{
+          this.setState({view: res.data})
+        })
+  }
+
+  componentDidMount(){
+    this.getTopTourBooking();
+    this.getTopTourView();
+  }
 
   render() {
+    const { booking, rating, view } = this.state;
+
     return (
       <ScrollView>
           <InfoText text="Top tours"/>
           <FlatList
-            data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}]}
-            renderItem={(item) => <SmallTourCard/>}
+            data={booking}
+            renderItem={(item) => <SmallTourCard data={item.item}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             style={styles.list}
@@ -38,23 +98,14 @@ class TopTours extends Component {
           />
           <InfoText text="Top tours"/>
           <FlatList
-            data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}]}
-            renderItem={(item) => <SmallTourCard/>}
+            data={view}
+            renderItem={(item) => <SmallTourCard data={item.item}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             style={styles.list}
           />
       </ScrollView>
     );
-  }
-}
-class Card extends Component {
-  render(){
-    return(
-      <View style={{backgroundColor: 'white', width: 100, height: 100, padding: 20}}>
-          <Text>ABC</Text>
-      </View>
-    )
   }
 }
 

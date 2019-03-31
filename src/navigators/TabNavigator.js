@@ -10,12 +10,13 @@ import MapStack from './MapStack';
 import HistoryStack from './HistoryStack';
 import SettingStack from './SettingStack';
 import SearchStack from './SearchStack';
+import ToursStack from './ToursStack';
 
 const TabNavigator = createBottomTabNavigator(
   {
     MapStack,
+    ToursStack,
     SearchStack,
-    // HistoryStack,
     SettingStack,
   },
   {
@@ -34,7 +35,7 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 TabNavigator.navigationOptions = ({ navigation }) => {
-    if (navigation.state.index === 2){
+    if (navigation.state.index === 3){
       AsyncStorage.getItem('userToken').then((data) => {
         if (data == null){
           navigation.navigate("AuthStack");

@@ -8,7 +8,7 @@ import Moment from 'moment';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { getAllTourTurn, searchTourTurn } from '../services/api';
+import { searchTourTurn } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { sortBy, placeHolderSortBy, sortType, placeHolderSortType } from '../constants/search';
 import localized from '../localization/index';
@@ -42,12 +42,6 @@ class Tours extends Component {
     }
   }
 
-  async callGetAllTourTurnAPI(page, per_page, isUnique){
-    return getAllTourTurn(page, per_page, isUnique)
-            .then((response) => response.json())
-            .then((responseJson) => responseJson)
-            .catch((error) => console.error(error));
-  }
   async callSearchTourTurn(data){
     return searchTourTurn(data)
             .then((response) => response.json())

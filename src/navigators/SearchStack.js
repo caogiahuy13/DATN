@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from "react-navigation";
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {fromRight} from 'react-navigation-transitions';
 
 import { COLOR_MAIN } from '../constants/index';
@@ -58,7 +58,7 @@ SearchStack.navigationOptions = ({ navigation }) => {
     return {
       tabBarVisible,
       tabBarLabel: 'Tours',
-      tabBarIcon: ({ tintColor }) => (<MaterialIcon name="map-marker-distance" color={tintColor} size={33}/>),
+      tabBarIcon: ({ tintColor }) => (<FontAwesome name="search" color={tintColor} size={30}/>),
     };
 };
 
