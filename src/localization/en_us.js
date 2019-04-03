@@ -54,13 +54,15 @@ const en_us = {
   lastIn: "Last in",
   days: "Days",
   detailPrice: "Detail price",
-  
+  language: "Language",
   historyBook: "History",
   changePassword: "Change Password",
   aboutUs: "About Us",
   contact: "Contact",
   termsCondition: "Terms Condition",
   faq: "Faq",
+  writeComment: "Write comment",
+  send: "Send",
 
   congratulation: "Congratulation",
   search: "Search",
@@ -161,6 +163,9 @@ const en_us = {
   topRating: "Top rating tours",
   topView: "Top concerned tours",
 
+  // Review
+  reviewSuccess: "Your review has been sent",
+
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
   ERR_FULLNAME: 'Fullname is required',
@@ -176,6 +181,9 @@ const en_us = {
   ERR_BOOKING_CONTACT_INFO: 'All contact information is required',
   ERR_BOOKING_PASSENGER_INFO: 'Fullname, Birthdate, Gender of passenger are required',
   ERR_BOOKING_PASSENGER_MIN: 'There must be 1 passenger',
+
+  ERR_RATING: "Rating is required",
+  ERR_COMMENT: "Comment is required",
 
   SUCCESS_CHANGE_PASSWORD: "Change Password Successfully",
 }

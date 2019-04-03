@@ -310,3 +310,22 @@ export async function createCancelBookingRequest(idBookTour, message){
                               });
                             })
 }
+
+export async function createComment(idTour, content){
+  let URL = HOST + 'comment/create';
+  return await AsyncStorage.getItem('userToken')
+                            .then((data) => {
+                              return fetch(URL, {
+                                method: 'POST',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': data,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  idTour: idTour,
+                                  content: content,
+                                }),
+                              });
+                            })
+}

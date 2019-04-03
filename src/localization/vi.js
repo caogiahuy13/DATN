@@ -54,13 +54,15 @@ const vi = {
   lastIn: "Kéo dài",
   days: "Ngày",
   detailPrice: "Bảng giá chi tiết",
-
+  language: "Ngôn ngữ",
   historyBook: "Lịch sử đặt tour",
   changePassword: "Thay đổi mật khẩu",
   aboutUs: "Về chúng tôi",
   contact: "Liên hệ",
   termsCondition: "Điều khoản sử dụng",
   faq: "Faq",
+  writeComment: "Viết nhận xét",
+  send: "Gửi",
 
   congratulation: "Chúc mừng",
   search: "Tìm kiếm",
@@ -161,6 +163,9 @@ const vi = {
   topRating: "Tour đánh giá cao nhất",
   topView: "Tour được quan tâm nhất",
 
+  // Review
+  reviewSuccess: "Đánh giá của bạn đã được gửi",
+
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',
   ERR_PASSWORD: 'Vui lòng nhập mật khẩu',
   ERR_FULLNAME: 'Vui lòng nhập họ tên',
@@ -176,6 +181,9 @@ const vi = {
   ERR_BOOKING_CONTACT_INFO: 'Vui lòng nhập đầy đủ thông tin liên hệ',
   ERR_BOOKING_PASSENGER_INFO: 'Vui lòng nhập tên, ngày sinh, giới tính của hành khách',
   ERR_BOOKING_PASSENGER_MIN: 'Vui lòng nhập ít nhất một hành khách',
+
+  ERR_RATING: "Vui lòng đánh giá tour",
+  ERR_COMMENT: "Vui lòng nhập nội dung nhận xét",
 
   SUCCESS_CHANGE_PASSWORD: "Thay đổi mật khẩu thành công",
 

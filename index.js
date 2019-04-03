@@ -12,5 +12,6 @@ import BookingInfo from './src/screens/BookingInfo';
 import HistoryDetail from './src/screens/HistoryDetail';
 import TopTours from './src/screens/TopTours';
 import SmallTourCard from './src/components/SmallTourCard';
+import Review from './src/screens/Review';
 
 AppRegistry.registerComponent(appName, () => App);

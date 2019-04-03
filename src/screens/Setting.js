@@ -5,6 +5,7 @@ import Dialog from "react-native-dialog";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
+import RNRestart from "react-native-restart";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { LoginManager } from 'react-native-fbsdk';
@@ -33,6 +34,8 @@ class Setting extends Component {
 
       tmpAddress: '',
       tmpFullname: '',
+
+      language: "vi",
     }
 
     this.CheckLogedIn();
@@ -254,6 +257,9 @@ class Setting extends Component {
     })
   }
 
+  getLanguage(){
+    return this.state.language;
+  }
   render() {
     if (this.state.isLogedIn == false){
       return(
@@ -383,6 +389,24 @@ class Setting extends Component {
             leftIcon=<Icon name='key' type='entypo' color='gray' size={20}/>
           />
         }
+        <ListItem
+          title={localized._props[this.state.language].language}
+          rightTitle={(profile.sex == undefined || profile.sex == '' ) ? '' : getGenderShow(profile.sex)}
+          rightTitleStyle={{ fontSize: 15}}
+          onPress={() => {
+            console.log(localized._props[localized.getLanguage()].language);
+            // localized.setLanguage("en");
+            this.setState({language: "en"});
+            console.log(localized.getLanguage());
+            if (localized.getLanguage()=="en"){
+              // RNRestart.Restart();
+            }
+
+          }}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+          leftIcon=<Icon name='gender-male-female' type='material-community' color='gray' size={20}/>
+        />
 
         <Space/>
 
