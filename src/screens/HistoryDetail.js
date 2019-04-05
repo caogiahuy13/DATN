@@ -216,15 +216,6 @@ class HistoryDetail extends Component {
         </View>
 
         <Button
-          title={localized.review.toUpperCase()}
-          type="solid"
-          buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
-          containerStyle={{paddingHorizontal: 16, paddingVertical: 20, borderRadius: 0}}
-          titleStyle={{fontSize: 16}}
-          onPress={()=>{this.props.navigation.navigate("Review", {id: tourInfo.tour.id})}}
-        />
-
-        <Button
           title={localized.cancelTour.toUpperCase()}
           type="solid"
           buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}

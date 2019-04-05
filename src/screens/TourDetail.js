@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import { bookingChangeTourTurn } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getReviewByTour, increaseView } from '../services/api';
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
-import { COLOR_HARD_RED } from '../constants/index';
+import { COLOR_HARD_RED, COLOR_MAIN } from '../constants/index';
 import localized from '../localization/index';
 
 import TourDetailMap from '../components/TourDetailMap';
@@ -179,7 +179,19 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isReviewCollapsed}>
-                  {!isReviewCollapsed && this.getReviews()}
+                  { !isReviewCollapsed &&
+                    <View>
+                      {this.getReviews()}
+                      <Button
+                        title={localized.review.toUpperCase()}
+                        type="solid"
+                        buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+                        containerStyle={{paddingHorizontal: 16, paddingVertical: 16, borderRadius: 0}}
+                        titleStyle={{fontSize: 16}}
+                        onPress={()=>{this.props.navigation.navigate("Review", {id: tour.id})}}
+                      />
+                    </View>
+                  }
               </Collapsible>
           </Card>
 
