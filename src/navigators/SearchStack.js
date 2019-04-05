@@ -13,6 +13,7 @@ import BookingInfo from '../screens/BookingInfo';
 import BookingPayment from '../screens/BookingPayment';
 import BookingConfirmation from '../screens/BookingConfirmation';
 import TourCard from '../components/TourCard';
+import Review from '../screens/Review';
 
 const SearchStack = createStackNavigator(
   {
@@ -20,6 +21,7 @@ const SearchStack = createStackNavigator(
     TourCard,
     SearchFilter,
     TourDetail,
+    Review,
     BookingInfo,
     BookingPayment,
     BookingConfirmation,
@@ -47,7 +49,8 @@ SearchStack.navigationOptions = ({ navigation }) => {
             route.routeName === "BookingInfo" ||
             route.routeName === "BookingPayment" ||
             route.routeName === "BookingConfirmation" ||
-            route.routeName === "SearchFilter") {
+            route.routeName === "SearchFilter" ||
+            route.routeName === "Review") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

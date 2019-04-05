@@ -76,6 +76,7 @@ class TourDetail extends Component{
             .then((response) => response.json())
             .then((responseJson) => {
               this.setState({reviews: responseJson.data});
+              console.log(responseJson);
             })
             .catch((error) => console.error(error));
   }

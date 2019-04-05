@@ -63,6 +63,8 @@ const vi = {
   faq: "Faq",
   writeComment: "Viết nhận xét",
   send: "Gửi",
+  rating: "Đánh giá",
+  comment: "Bình luận",
 
   congratulation: "Chúc mừng",
   search: "Tìm kiếm",

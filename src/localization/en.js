@@ -63,7 +63,9 @@ const en = {
   faq: "Faq",
   writeComment: "Write comment",
   send: "Send",
-
+  rating: "Rating",
+  comment: "Comment",
+  
   congratulation: "Congratulation",
   search: "Search",
   checkAll: "Check all",
@@ -165,7 +167,7 @@ const en = {
 
   // Review
   reviewSuccess: "Your review has been sent",
-  
+
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
   ERR_FULLNAME: 'Fullname is required',

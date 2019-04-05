@@ -200,11 +200,6 @@ export async function searchTourTurn(data={}){
   return await fetch(URL);
 }
 
-export async function getCommentByTour(id){
-  let URL = HOST + 'comment/getByTour/' + id;
-  return await fetch(URL);
-}
-
 export async function createRequest(name, email, message){
   let URL = HOST + 'request/create';
   return await fetch(URL, {
@@ -333,4 +328,23 @@ export async function createComment(idTour, content){
 export async function getReviewByTour(id){
   let URL = HOST + 'reviews/getByTour/' + id;
   return await fetch(URL);
+}
+
+export async function createReviewLogedIn(data={}){
+  let URL = HOST + 'reviews/create';
+  return await fetch(URL, {
+                        method: 'POST',
+                        headers: {
+                          'Accept': 'application/json',
+                          'authorization': undefined,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          idTour: data.idTour,
+                          comment: data.comment,
+                          rate: data.rate,
+                          name: data.name,
+                          email: data.email,
+                        }),
+                      });
 }

@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { createComment } from '../services/api';
-import { COLOR_MAIN,
+import { COLOR_MAIN, COLOR_PLACEHOLDER,
          ERR_RATING, ERR_COMMENT } from '../constants/index';
 import { } from '../services/function';
 import localized from '../localization/index';
@@ -22,9 +22,12 @@ class Review extends Component {
       rating: 0,
       comment: '',
       idTour: null,
+      name: '',
+      email: '',
 
       err: '',
       isError: false,
+      isLogedIn: false,
     }
   }
 
@@ -96,18 +99,42 @@ class Review extends Component {
     return(
       <ScrollView style={styles.container}>
           <View style={styles.card}>
-              <Text style={styles.label}>Rating</Text>
-              <AirbnbRating
-                size={36}
-                showRating={false}
-                defaultRating={rating}
-                onFinishRating={(value)=>{this.onFinishRating(value)}}
-              />
-
+              <Text style={styles.inputText}>{localized.name} *</Text>
               <TextInput
                   style={styles.input}
+                  placeholder=""
+                  placeholderTextColor={COLOR_PLACEHOLDER}
+                  returnKeyType='next'
+                  autoCorrect={false}
+                  onChangeText={(value)=> this.setState({name: value})}
+              />
+
+              <Text style={styles.inputText}>{localized.email} *</Text>
+              <TextInput
+                  style={styles.input}
+                  placeholder=""
+                  placeholderTextColor={COLOR_PLACEHOLDER}
+                  returnKeyType='next'
+                  autoCorrect={false}
+                  keyboardType='email-address'
+                  onChangeText={(value)=> this.setState({email: value})}
+              />
+
+              <Text style={styles.inputText}>{localized.rating}</Text>
+              <View style={{alignItems: 'flex-start'}}>
+                  <AirbnbRating
+                    size={36}
+                    showRating={false}
+                    defaultRating={rating}
+                    onFinishRating={(value)=>{this.onFinishRating(value)}}
+                  />
+              </View>
+
+              <Text style={styles.inputText}>{localized.comment}</Text>
+              <TextInput
+                  style={styles.inputMultiline}
                   multiline={true}
-                  placeholder="Write your comment ..."
+                  placeholder={localized.writeComment + " ..."}
                   placeholderTextColor='rgba(0,0,0,0.2)'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({comment: value})}
@@ -139,11 +166,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 14,
   },
-  input: {
+  inputMultiline: {
     fontSize: 18,
     height: 40,
     paddingHorizontal: 10,
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 6,
     marginHorizontal: 4,
     backgroundColor: 'rgba(0,0,0,0.02)',
@@ -163,6 +190,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     padding: 16,
+  },
+  input: {
+    fontSize: 16,
+    height: 40,
+    backgroundColor: 'rgba(0,0,0,0.02)',
+    borderColor: 'rgba(0,0,0,0.05)',
+    color: 'gray',
+    marginBottom: 10,
+    padding: 10,
+  },
+  inputText:
+  {
+    fontSize: 18,
+    paddingVertical: 6,
   },
 
 })

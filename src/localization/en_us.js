@@ -63,6 +63,8 @@ const en_us = {
   faq: "Faq",
   writeComment: "Write comment",
   send: "Send",
+  rating: "Rating",
+  comment: "Comment",
 
   congratulation: "Congratulation",
   search: "Search",
