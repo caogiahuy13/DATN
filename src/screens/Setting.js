@@ -262,6 +262,7 @@ class Setting extends Component {
   getLanguage(){
     return this.state.language;
   }
+  
   render() {
     if (this.state.isLogedIn == false){
       return(

@@ -330,7 +330,7 @@ export async function getReviewByTour(id){
   return await fetch(URL);
 }
 
-export async function createReviewLogedIn(data={}){
+export async function createReviewNotLogedIn(data={}){
   let URL = HOST + 'reviews/create';
   return await fetch(URL, {
                         method: 'POST',
@@ -347,4 +347,24 @@ export async function createReviewLogedIn(data={}){
                           email: data.email,
                         }),
                       });
+}
+
+export async function createReviewLogedIn(data={}){
+  let URL = HOST + 'reviews/create';
+  return await AsyncStorage.getItem('userToken')
+                            .then((token) => {
+                              return fetch(URL, {
+                                method: 'POST',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'authorization': token,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  idTour: data.idTour,
+                                  comment: data.comment,
+                                  rate: data.rate,
+                                }),
+                              });
+                            })
 }
