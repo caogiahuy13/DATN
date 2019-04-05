@@ -134,7 +134,7 @@ class TourDetail extends Component{
         <ScrollView>
           <Card
             containerStyle = {{margin: 0, padding: 0}}
-            title=<TourCardTitle title={tour.name} isSale={currentTurn.discount > 0} rating={3} view={currentTurn.view}/>
+            title=<TourCardTitle title={tour.name} isSale={currentTurn.discount > 0} rating={tour.average_rating} view={currentTurn.view}/>
             titleStyle={styles.cardTitle}
           >
             <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>

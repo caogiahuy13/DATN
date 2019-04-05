@@ -17,7 +17,7 @@ class TourCardTitle extends Component{
               {title}
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              { typeof(rating) != 'undefined' && <TourRating rating={3} size={14}/>}
+              { typeof(rating) != 'undefined' && <TourRating rating={rating} size={14}/>}
               { typeof(view) != 'undefined' &&
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Icon name='eye' type='entypo' color='gray' size={14} containerStyle={{marginLeft: 8}}/>

@@ -21,6 +21,7 @@ class TopTours extends Component {
       view: null,
     }
   }
+
   async callGetAllTourTurnAPI(data){
     return getAllTourTurn(data)
             .then((response) => response.json())
@@ -43,7 +44,7 @@ class TopTours extends Component {
   }
   getTopTourRating(){
     let data = {
-      isUniqueTour: false,
+      isUniqueTour: true,
       page: 1,
       per_page: 8,
       sortBy: 'rating',
@@ -75,6 +76,7 @@ class TopTours extends Component {
   componentWillMount(){
     this.getTopTourBooking();
     this.getTopTourView();
+    this.getTopTourRating();
   }
 
   render() {
@@ -92,8 +94,8 @@ class TopTours extends Component {
           />
           <InfoText text={localized.topRating.toUpperCase()}/>
           <FlatList
-            data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}]}
-            renderItem={(item) => <SmallTourCard/>}
+            data={rating}
+            renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             style={styles.list}
