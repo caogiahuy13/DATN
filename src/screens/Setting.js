@@ -250,11 +250,13 @@ class Setting extends Component {
   }
 
   componentWillMount(){
-    this.callMeAPI().then((data)=>{
-      this.props.changeProfile(data.profile);
-      this.setState({tmpAddress: data.profile.address});
-      this.setState({tmpFullname: data.profile.fullname});
-    })
+    if (this.state.isLogedIn == true){
+      this.callMeAPI().then((data)=>{
+        this.props.changeProfile(data.profile);
+        this.setState({tmpAddress: data.profile.address});
+        this.setState({tmpFullname: data.profile.fullname});
+      })
+    }
   }
 
   getLanguage(){
@@ -389,7 +391,7 @@ class Setting extends Component {
             leftIcon=<Icon name='key' type='entypo' color='gray' size={20}/>
           />
         }
-        <ListItem
+        {/*<ListItem
           title={localized._props[this.state.language].language}
           rightTitle={(profile.sex == undefined || profile.sex == '' ) ? '' : getGenderShow(profile.sex)}
           rightTitleStyle={{ fontSize: 15}}
@@ -406,7 +408,7 @@ class Setting extends Component {
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
           leftIcon=<Icon name='gender-male-female' type='material-community' color='gray' size={20}/>
-        />
+        />*/}
 
         <Space/>
 

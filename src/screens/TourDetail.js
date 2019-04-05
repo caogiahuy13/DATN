@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { bookingChangeTourTurn } from '../actions/index.js';
-import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getCommentByTour, increaseView } from '../services/api';
+import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getReviewByTour, increaseView } from '../services/api';
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
 import { COLOR_HARD_RED } from '../constants/index';
 import localized from '../localization/index';
@@ -29,7 +29,7 @@ class TourDetail extends Component{
       tour: {},
       currentTurn: {},
       images: [],
-      comments: [],
+      reviews: [],
 
       isDescriptionCollapsed: true,
       isDetailCollapsed: true,
@@ -71,11 +71,11 @@ class TourDetail extends Component{
             })
             .catch((error) => console.error(error));
   }
-  async callGetCommentByTour(id){
-    return getCommentByTour(id)
+  async callGetReviewByTour(id){
+    return getReviewByTour(id)
             .then((response) => response.json())
             .then((responseJson) => {
-              this.setState({comments: responseJson.data});
+              this.setState({reviews: responseJson.data});
             })
             .catch((error) => console.error(error));
   }
@@ -87,8 +87,8 @@ class TourDetail extends Component{
   }
 
   getReviews(){
-    let reviews = this.state.comments.map((val,key)=>{
-      return (<TourDetailReview key={key} comment={val}/>)
+    let reviews = this.state.reviews.map((val,key)=>{
+      return (<TourDetailReview key={key} review={val}/>)
     });
     return reviews;
   }
@@ -115,7 +115,7 @@ class TourDetail extends Component{
     this.callGetTourTurnById(id)
         .then(()=>{
           this.callGetImageByTourId(this.state.tour.id);
-          this.callGetCommentByTour(this.state.tour.id);
+          this.callGetReviewByTour(this.state.tour.id);
         });
   }
 

@@ -329,3 +329,8 @@ export async function createComment(idTour, content){
                               });
                             })
 }
+
+export async function getReviewByTour(id){
+  let URL = HOST + 'reviews/getByTour/' + id;
+  return await fetch(URL);
+}
