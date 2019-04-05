@@ -67,7 +67,7 @@ class TourCard extends Component{
             </View>
 
             <View style={{alignItems: 'flex-start'}}>
-                <TourRating rating={3} size={14}/>
+                <TourRating rating={data.tour.average_rating} size={14}/>
             </View>
 
             <TourPrice price={data.original_price} discount={data.discount}/>
