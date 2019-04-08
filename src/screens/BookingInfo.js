@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity, ScrollView, Keyboard} from 'react-native';
+import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity, ScrollView, Keyboard, AsyncStorage} from 'react-native';
 import { Card, Icon, ListItem, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import { ERR_BOOKING_CONTACT_INFO, ERR_BOOKING_PASSENGER_INFO, ERR_BOOKING_PASSENGER_MIN, ERR_PHONE_LENGTH, ERR_EMAIL_VALIDATE,
          COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_PLACEHOLDER } from '../constants/index';
 import { bookingChangeInfo, bookingChangeTourTurn, bookingChangeNumber } from '../actions/index';
-import { } from '../services/api';
+import { me } from '../services/api';
 import { validateEmail, validatePhone } from '../services/function';
 import localized from '../localization/index';
 
@@ -48,6 +48,9 @@ class BookingInfo extends Component {
 
       err: '',
       isError: false,
+
+      isLogedIn: false,
+      profile: {},
     }
   }
 
@@ -190,7 +193,8 @@ class BookingInfo extends Component {
   validate(){
     const {contactInfo, adultInfo, childrenInfo, number} = this.state;
 
-    if (contactInfo.fullname == '' || contactInfo.phone == '' || contactInfo.email == '' || contactInfo.address == ''){
+    if (contactInfo.fullname == '' || contactInfo.phone == '' || contactInfo.email == '' || contactInfo.address == '' ||
+        contactInfo.address == null ){
       this.setError(localized.ERR_BOOKING_CONTACT_INFO, true);
       return false;
     }
@@ -278,9 +282,31 @@ class BookingInfo extends Component {
     // this.props.navigation.navigate("BookingPayment");
   }
 
+  async callMeAPI(){
+    return me().then((response) => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
+  }
+
+  // Kiểm tra đã đăng nhập
+  async CheckLogedIn(){
+    await AsyncStorage.getItem('userToken')
+                      .then((data)=>{
+                        if (data != null){
+                          this.callMeAPI().then((res)=>{
+                            this.setState({profile: res.profile});
+                            this.setState({contactInfo: res.profile});
+                          });
+                          this.setState({isLogedIn: true});
+
+                        }
+                      });
+  }
+
   componentWillMount(){
     this.setState({tourTurn: this.props.booking.tourTurn});
     this.changeAdultNumber(); // tao ra passenger adult dau tien
+    this.CheckLogedIn();
   }
 
   render(){
@@ -326,6 +352,7 @@ class BookingInfo extends Component {
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, fullname: value}})}
+                  value={this.state.contactInfo.fullname}
               />
               <TextInput
                   style={styles.input}
@@ -335,6 +362,7 @@ class BookingInfo extends Component {
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, phone: value}})}
+                  value={this.state.contactInfo.phone}
               />
               <TextInput
                   style={styles.input}
@@ -344,6 +372,7 @@ class BookingInfo extends Component {
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, email: value}})}
+                  value={this.state.contactInfo.email}
               />
               <TextInput
                   style={styles.input}
@@ -352,6 +381,7 @@ class BookingInfo extends Component {
                   returnKeyType='next'
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, address: value}})}
+                  value={this.state.contactInfo.address}
               />
           </View>
 
