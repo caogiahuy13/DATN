@@ -20,7 +20,7 @@ export const sortBy = [
     label: localized.booking,
     value: 'booking',
     key: 'booking',
-  }
+  },
 ];
 
 export const sortType = [

@@ -7,11 +7,13 @@ import { COLOR_MAIN, COLOR_LIGHT_BLACK } from '../constants/index';
 class TourDetailReview extends Component {
   render(){
     const {review} = this.props;
-
+    console.log(review);
     return(
       <View style={{paddingHorizontal: 4}}>
         <View style={{flexDirection: 'row', paddingTop: 6}}>
-          {/*<Avatar rounded source={{ uri: comment.user.avatar }} containerStyle={{marginRight: 8}}/>*/}
+          { review.user != null &&
+            <Avatar rounded source={{ uri: review.user.avatar }} containerStyle={{marginRight: 8}}/>
+          }
           <Text style={styles.name}>
               {review.name}
           </Text>
