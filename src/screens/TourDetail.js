@@ -6,7 +6,7 @@ import Slideshow from 'react-native-image-slider-show';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { bookingChangeTourTurn } from '../actions/index.js';
+import { bookingChangeTourTurn, searchNameChange } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getReviewByTour, increaseView } from '../services/api';
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
 import { COLOR_HARD_RED, COLOR_MAIN } from '../constants/index';
@@ -76,7 +76,6 @@ class TourDetail extends Component{
             .then((response) => response.json())
             .then((responseJson) => {
               this.setState({reviews: responseJson.data});
-              console.log(responseJson);
             })
             .catch((error) => console.error(error));
   }
@@ -103,6 +102,11 @@ class TourDetail extends Component{
       })
     }
     return detailPrice;
+  }
+
+  onOtherDayPress = async (value) => {
+    await this.props.searchNameChange(value)
+    this.props.navigation.navigate("Tours");
   }
 
   onBookNowPress(){
@@ -139,7 +143,7 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
             <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>
-            <TourDetailCardInfo currentTourTurn={currentTurn}/>
+            <TourDetailCardInfo currentTourTurn={currentTurn} onOtherDayPress={this.onOtherDayPress}/>
           </Card>
 
           <TourDetailDivider/>
@@ -266,6 +270,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     bookingChangeTourTurn: bookingChangeTourTurn,
+    searchNameChange: searchNameChange,
   }, dispatch)
 }
 

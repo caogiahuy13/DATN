@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
 
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode } from '../services/function';
@@ -23,7 +23,9 @@ class TourDetailCardInfo extends Component {
               <Text style={{flex: 0.32}}>{dateFormat(currentTourTurn.start_date)}</Text>
               <View style={{flexDirection: 'row', flex: 0.32}}>
                   <Icon name='calendar' type='antdesign' color={COLOR_MAIN} size={18}/>
-                  <Text style={{color: 'orange'}}> {localized.otherDay}</Text>
+                  <TouchableOpacity onPress={()=>{this.props.onOtherDayPress(currentTourTurn.tour.name)}}>
+                      <Text style={{color: 'orange'}}> {localized.otherDay}</Text>
+                  </TouchableOpacity>
               </View>
             </View>
 

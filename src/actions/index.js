@@ -207,3 +207,11 @@ export function currentTourTurnChange(tourTurn){
     tourTurn,
   }
 }
+
+// Search Info
+export function searchNameChange(name){
+  return {
+    type: types.SEARCH_NAME_CHANGE,
+    name,
+  }
+}

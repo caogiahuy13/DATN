@@ -5,10 +5,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import RNPickerSelect from 'react-native-picker-select';
 import Moment from 'moment';
+import { NavigationEvents } from 'react-navigation';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { searchTourTurn } from '../services/api';
+import { searchNameChange } from '../actions/index.js';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { sortBy, placeHolderSortBy, sortType, placeHolderSortType } from '../constants/search';
 import localized from '../localization/index';
@@ -31,8 +33,6 @@ class Tours extends Component {
       isLoading: false,
 
       per_page: 4,
-
-      search: '',
 
       sortBy: null,
       sortType: null,
@@ -81,14 +81,15 @@ class Tours extends Component {
   }
 
   getData(){
-    const {per_page, count, search, maxPrice, sortType, sortBy} = this.state;
+    const {name} = this.props.searchInfo;
+    const {per_page, count, maxPrice, sortType, sortBy} = this.state;
     const {searchFilter} = this.props;
 
     let data = {
       page: 1,
       per_page: count + per_page,
       isUnique: false,
-      name: search,
+      name: name,
     }
 
     if(typeof(searchFilter.maxPrice) != 'undefined'){
@@ -131,7 +132,6 @@ class Tours extends Component {
   onSearchFilterPress(){
     this.props.navigation.navigate("SearchFilter", {
       onGoBack: () => {
-        console.log(this.props.searchFilter);
         this.setState({sortBy: null});
         this.setState({sortType: null});
         this.setState({count: 0},()=>{
@@ -163,6 +163,11 @@ class Tours extends Component {
     });
   }
 
+  onSearchChange(value){
+    this.props.searchNameChange(value);
+    this.onSubmitSearch();
+  }
+
   componentWillMount(){
     let data = this.getData();
     this.loadNewTours(data);
@@ -170,19 +175,20 @@ class Tours extends Component {
 
   render() {
     const { tours, maxCount, count, isLoading } = this.state;
-    const { search } = this.state;
+    const { name } = this.props.searchInfo;
 
     return (
       <View style={{flex: 1, backgroundColor: COLOR_GRAY_BACKGROUND}}>
+          <NavigationEvents
+            onWillFocus={payload => this.onSubmitSearch()}
+          />
           <Animated.View style={{height: this.state.height}}>
               <View style={{flexDirection: 'row'}}>
                   <SearchBar
                     platform="android"
                     placeholder="..."
-                    onChangeText={(value)=>{this.setState({search: value});this.onSubmitSearch();}}
-                    // onSubmitEditing={()=>{this.onSubmitSearch()}}
-                    // onCancel={()=>{this.onSubmitSearch()}}
-                    value={search}
+                    onChangeText={(value)=>{this.onSearchChange(value)}}
+                    value={name}
                     containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
                     inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
                     inputStyle={{fontSize: 16}}
@@ -268,11 +274,12 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     searchFilter: state.searchFilter,
+    searchInfo: state.searchInfo,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    searchNameChange: searchNameChange,
   }, dispatch)
 }
 
