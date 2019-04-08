@@ -7,7 +7,6 @@ import { COLOR_MAIN, COLOR_LIGHT_BLACK } from '../constants/index';
 class TourDetailReview extends Component {
   render(){
     const {review} = this.props;
-    console.log(review);
     return(
       <View style={{paddingHorizontal: 4}}>
         <View style={{flexDirection: 'row', paddingTop: 6}}>

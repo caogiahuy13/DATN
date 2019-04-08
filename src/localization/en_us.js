@@ -78,6 +78,7 @@ const en_us = {
   password: "Password",
   lostPassword: "Lost your password",
   loginFB: "Login with Facebook",
+  shareFB: "Share on Facebook",
   notHaveAccount: "You don't have an account", // You don't have an account?
 
   // Address modal

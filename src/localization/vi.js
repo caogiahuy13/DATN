@@ -78,6 +78,7 @@ const vi = {
   password: "Mật khẩu",
   lostPassword: "Quên mật khẩu",
   loginFB: "Đăng nhập với Facebook",
+  shareFB: "Chia sẻ với Facebook",
   notHaveAccount: "Bạn chưa có tài khoản", // You don't have an account?
 
   // Address modal

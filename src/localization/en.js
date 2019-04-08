@@ -65,7 +65,7 @@ const en = {
   send: "Send",
   rating: "Rating",
   comment: "Comment",
-  
+
   congratulation: "Congratulation",
   search: "Search",
   checkAll: "Check all",
@@ -78,6 +78,7 @@ const en = {
   password: "Password",
   lostPassword: "Lost your password",
   loginFB: "Login with Facebook",
+  shareFB: "Share on Facebook",
   notHaveAccount: "You don't have an account", // You don't have an account?
 
   // Address modal
