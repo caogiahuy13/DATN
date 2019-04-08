@@ -59,6 +59,16 @@ class History extends Component {
           .catch((error) => console.error(error));
   }
 
+  getNoTourView(){
+    return (
+      <View>
+          <Text style={{padding: 16, color: 'red'}}>
+            {localized.noBookedTour}
+          </Text>
+      </View>
+    )
+  }
+
   componentWillMount(){
     this.callGetHistoryByUser();
   }
@@ -78,6 +88,10 @@ class History extends Component {
         </View>
       )
     });
+
+    if (index == 0){
+      history = this.getNoTourView();
+    }
 
     return (
       <View style={styles.container}>

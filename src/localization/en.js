@@ -160,7 +160,8 @@ const en = {
   agreeCondition: "I have read and accepted with these above terms of condition",
   agreeAlert: "Please agree all the terms of condition",
   cancelBookingRequestSend: "Your cancel booking tour request has been send",
-
+  noBookedTour: "You have not booked any tour",
+  
   // Top tours
   topPopular: "Top popular tours",
   topRating: "Top rating tours",
@@ -168,6 +169,8 @@ const en = {
 
   // Review
   reviewSuccess: "Your review has been sent",
+
+
 
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',

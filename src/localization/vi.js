@@ -160,6 +160,7 @@ const vi = {
   agreeCondition: "Tôi đã đọc và hiểu các quy định",
   agreeAlert: "Vui lòng đồng ý với các điều khoản",
   cancelBookingRequestSend: "Yêu cầu hủy tour của bạn đã được gửi",
+  noBookedTour: "Bạn chưa đặt bất cứ tour nào",
 
   // Top tours
   topPopular: "Tour phổ biến nhất",

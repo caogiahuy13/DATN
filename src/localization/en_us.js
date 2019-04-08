@@ -160,7 +160,8 @@ const en_us = {
   agreeCondition: "I have read and accepted with these above terms of condition",
   agreeAlert: "Please agree all the terms of condition",
   cancelBookingRequestSend: "Your cancel booking tour request has been send",
-
+  noBookedTour: "You have not booked any tour",
+  
   // Top tours
   topPopular: "Top popular tours",
   topRating: "Top rating tours",
