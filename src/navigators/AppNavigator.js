@@ -1,8 +1,6 @@
 import React from 'react';
 import {createSwitchNavigator, createStackNavigator} from "react-navigation";
 
-import Login from '../screens/Login';
-import Register from '../screens/Register';
 import TabNavigator from './TabNavigator';
 import AuthStack from './AuthStack';
 

@@ -7,14 +7,15 @@ import { COLOR_MAIN } from '../constants/index';
 import TabBarComponent from '../components/TabBarComponent';
 
 import MapStack from './MapStack';
-import HistoryStack from './HistoryStack';
 import SettingStack from './SettingStack';
 import SearchStack from './SearchStack';
 import ToursStack from './ToursStack';
+import NewsStack from './NewsStack';
 
 const TabNavigator = createBottomTabNavigator(
   {
     MapStack,
+    NewsStack,
     ToursStack,
     SearchStack,
     SettingStack,
@@ -35,7 +36,7 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 TabNavigator.navigationOptions = ({ navigation }) => {
-    if (navigation.state.index === 3){
+    if (navigation.state.index === 4){
       AsyncStorage.getItem('userToken').then((data) => {
         if (data == null){
           navigation.navigate("AuthStack");
