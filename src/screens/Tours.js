@@ -104,6 +104,9 @@ class Tours extends Component {
     if(typeof(searchFilter.destination) != 'undefined'){
       data['name'] = searchFilter.destination;
     }
+    if(typeof(searchFilter.rating) != 'undefined'){
+      data['rating'] = searchFilter.rating;
+    }
 
     if(sortBy != null){
       data['sortBy'] = sortBy;

@@ -142,20 +142,16 @@ class SearchFilter extends Component {
           <Text style={styles.inputText}>{localized.lasting}</Text>
           <NumberPicker value={typeof(lasting) == 'undefined' ? 0 : lasting} increase={()=>this.increaseLasting()} decrease={()=>this.decreaseLasting()}/>
 
-          {/*
-            <View>
-              <Text style={styles.inputText}>Min Rating</Text>
-              <View style={{alignItems: 'flex-start'}}>
-                  <AirbnbRating
-                    count={5}
-                    defaultRating={rating}
-                    size={28}
-                    showRating={false}
-                    onFinishRating={(value)=>this.setState({rating: value})}
-                  />
-              </View>
-            </View>
-          */}
+          <Text style={styles.inputText}>Min Rating</Text>
+          <View style={{alignItems: 'flex-start'}}>
+              <AirbnbRating
+                count={5}
+                defaultRating={typeof(rating)=='undefined' ? 0 : rating}
+                size={28}
+                showRating={false}
+                onFinishRating={(value)=>this.setState({rating: value})}
+              />
+          </View>
 
           <Button
             title={localized.search.toUpperCase()}
