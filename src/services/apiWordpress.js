@@ -137,3 +137,15 @@ export function getBlogsDetail(id){
         return convertWptoPostDetail(data);
     })
 }
+
+export function getTagsBlog(id){
+  return httpWPGet(API_CMS_URL + `tags?post=${id}`).then((data) => {
+      return convertWpTags(data)
+  })
+}
+
+export function getTagsInfo(id){
+  return httpWPGet(API_CMS_URL + `tags/${id}`).then((data) => {
+      return convertWpTag(data)
+  })
+}
