@@ -1,5 +1,4 @@
 import { AsyncStorage } from 'react-native';
-import axios from 'axios';
 
 import { HOST } from '../constants/index';
 

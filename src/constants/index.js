@@ -1,5 +1,8 @@
 export const HOST = 'http://10.0.3.2:5000/';
 // export const HOST = 'http://192.168.1.4:5000/';
+
+export const API_CMS_URL='http://10.0.3.2:8080/wordpress/wp-json/wp/v2/';
+
 export const GOOGLE_MAPS_APIKEY = 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q';
 export const GOOGLE_MAPS_APIKEY_TWO = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
@@ -29,3 +32,6 @@ export const ERR_BOOKING_PASSENGER_INFO = 'Fullname, Birthdate, gender of passen
 export const ERR_BOOKING_PASSENGER_MIN = 'There must be 1 passenger';
 
 export const SUCCESS_CHANGE_PASSWORD = 'Change Password Successfully';
+
+const NEWS = 2;
+export const mainCategoriesList = [NEWS];

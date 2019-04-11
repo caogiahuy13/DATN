@@ -3,19 +3,21 @@ import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import { COLOR_GRAY_BACKGROUND } from '../constants/index';
 
-const str = 'Ho Chi Minh City (commonly known as Saigon) is a city in southern Vietnam famous for the pivotal role it played in the Vietnam War. Its also known for its French colonial landmarks, including Notre-Dame Cathedral, made entirely of materials imported from France, and the 19th-century Central Post Office. Food stalls line the city’s streets, especially around bustling Bến Thành Market.';
-
 class NewsCard extends Component {
   render(){
+    const {data} = this.props;
+    console.log(data.photo.replace("localhost","10.0.3.2"));
     return(
       <TouchableOpacity style={styles.container} onPress={()=>{}}>
-          <View>
-              <Image style={{flex: 1, width: undefined, height: 200}} source={require('../assets/images/tour-card-img.jpg')}/>
+          <View style={{flex: 1}}>
+              <Image style={{flex: 1, width: undefined, height: 200}} source={{uri: data.thumnail.replace("localhost","10.0.3.2")}}/>
           </View>
           <View style={{padding: 10}}>
-              <Text style={styles.title}>Lorem ipsum</Text>
+              <Text style={styles.title}>
+                  {data.title}
+              </Text>
               <Text style={styles.content}>
-                  {str}
+                  {data.metadesc}
               </Text>
           </View>
       </TouchableOpacity>
