@@ -6,7 +6,7 @@ import { COLOR_GRAY_BACKGROUND } from '../constants/index';
 class NewsCard extends Component {
   render(){
     const {data} = this.props;
-    console.log(data.photo.replace("localhost","10.0.3.2"));
+
     return(
       <TouchableOpacity style={styles.container} onPress={()=>{}}>
           <View style={{flex: 1}}>
@@ -14,7 +14,7 @@ class NewsCard extends Component {
           </View>
           <View style={{padding: 10}}>
               <Text style={styles.title}>
-                  {data.title}
+                  {data.metatitle.replace(" - travel.blog.api", "")}
               </Text>
               <Text style={styles.content}>
                   {data.metadesc}
