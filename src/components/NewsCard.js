@@ -4,11 +4,16 @@ import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { COLOR_GRAY_BACKGROUND } from '../constants/index';
 
 class NewsCard extends Component {
+
+  onPress = () => {
+    this.props.onPress(this.props.data.id);
+  }
+
   render(){
     const {data} = this.props;
 
     return(
-      <TouchableOpacity style={styles.container} onPress={()=>{}}>
+      <TouchableOpacity style={styles.container} onPress={this.onPress}>
           <View style={{flex: 1}}>
               <Image style={{flex: 1, width: undefined, height: 200}} source={{uri: data.thumnail.replace("localhost","10.0.3.2")}}/>
           </View>

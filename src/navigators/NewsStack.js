@@ -5,10 +5,14 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLOR_MAIN } from '../constants/index';
 
 import News from '../screens/News';
+import NewsDetail from '../screens/NewsDetail';
+import NewsCard from '../components/NewsCard';
 
 const NewsStack = createStackNavigator(
   {
-    News
+    News,
+    NewsDetail,
+    NewsCard,
   },
   {
     defaultNavigationOptions: {

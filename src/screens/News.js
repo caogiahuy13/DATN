@@ -24,8 +24,7 @@ class News extends Component {
     }
   }
 
-  onLoadMore(){
-    this.setState({isLoading: true});
+  callGetBlogs(){
     getBlogs(this.state.nextPage, 3).then((res) => {
       this.setState({
         news: [...this.state.news, ...res.data],
@@ -35,15 +34,18 @@ class News extends Component {
     })
   }
 
+  onLoadMore(){
+    this.setState({isLoading: true});
+    this.callGetBlogs();
+  }
+
+  onDetailPress = (id) => {
+    this.props.navigation.navigate("NewsDetail",{id: id});
+  }
+
   componentDidMount() {
     this.setState({isFirstLoad: true});
-    getBlogs(this.state.nextPage, 3).then((res) => {
-      this.setState({
-        news: [...this.state.news, ...res.data],
-        nextPage: res.nextPage,
-        isFirstLoad: false,
-      })
-    })
+    this.callGetBlogs();
   }
 
   render(){
@@ -61,7 +63,7 @@ class News extends Component {
       index += 1;
       return(
         <View key={key}>
-            <NewsCard data={val}/>
+            <NewsCard data={val} onPress={this.onDetailPress}/>
             { index != news.length &&
               <View style={{height: 16}}></View>
             }
