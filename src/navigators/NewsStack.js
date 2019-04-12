@@ -6,13 +6,13 @@ import { COLOR_MAIN } from '../constants/index';
 
 import News from '../screens/News';
 import NewsDetail from '../screens/NewsDetail';
-import NewsCard from '../components/NewsCard';
+import NewsTag from '../screens/NewsTag';
 
 const NewsStack = createStackNavigator(
   {
     News,
     NewsDetail,
-    NewsCard,
+    NewsTag,
   },
   {
     defaultNavigationOptions: {
@@ -33,7 +33,8 @@ NewsStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "NewsDetail") {
+        if (route.routeName === "NewsDetail" ||
+            route.routeName === "NewsTag") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

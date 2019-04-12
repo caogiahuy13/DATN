@@ -121,7 +121,6 @@ export function getBlogs(page = 1, limit = 4, params = {}){
     url += params.author ? `&author=${params.author}` : ''
     url += params.exclude ? `&exclude=${params.exclude}` : ''
     url += params.keyword ? `&search=${params.keyword}` : ''
-
     return httpWPGetBlog(url).then((data) => {
         let res = {}
         res.total = data.total

@@ -3,8 +3,9 @@ import { View, ScrollView, Text, StyleSheet, ActivityIndicator, Image} from 'rea
 import { Button, Icon } from 'react-native-elements';
 import HTML from 'react-native-render-html';
 
-import { COLOR_GRAY_BACKGROUND} from '../constants/index';
+import { COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { getBlogsDetail, getTagsBlog } from '../services/apiWordpress';
+import { dateFormat } from '../services/function';
 import localized from '../localization/index';
 
 class NewsDetail extends Component {
@@ -17,23 +18,26 @@ class NewsDetail extends Component {
     this.state = {
       blog: '',
       tags: '',
-
     }
   }
+
+  onTagPress(tag){
+    this.props.navigation.navigate("NewsTag",{tag: tag});
+  }
+
   componentDidMount(){
     const id = this.props.navigation.getParam("id");
     getBlogsDetail(id).then((res)=>{
       this.setState({blog: res});
     })
     getTagsBlog(id).then((res)=>{
-      console.log(res);
       this.setState({tags: res});
     })
   }
 
   render(){
     const {blog, tags} = this.state;
-
+    // console.log(blog);
     if (blog == '' || tags == ''){
       return(
         <View style={{flex: 1, padding: 20}}>
@@ -51,6 +55,7 @@ class NewsDetail extends Component {
           buttonStyle={{borderWidth: 1, borderColor: 'gray'}}
           containerStyle={{margin: 4}}
           titleStyle={{color: 'gray'}}
+          onPress={()=>{this.onTagPress(val.id)}}
         />
       )
     })
@@ -58,9 +63,7 @@ class NewsDetail extends Component {
     return(
       <ScrollView style={styles.container}>
           <HTML html={blog.content}/>
-          <View>
-                <Text>Tags</Text>
-          </View>
+          <Text style={styles.tags}>Tags</Text>
           <View style={{flexDirection: 'row'}}>{tagsCard}</View>
       </ScrollView>
     )
@@ -73,6 +76,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_GRAY_BACKGROUND,
     padding: 12,
   },
+  tags: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingVertical: 4,
+  }
 })
 
 export default NewsDetail;
