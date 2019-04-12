@@ -65,7 +65,8 @@ const en = {
   send: "Send",
   rating: "Rating",
   comment: "Comment",
-
+  news: "News",
+  newsWithTag: "News with tags: ",
   congratulation: "Congratulation",
   search: "Search",
   checkAll: "Check all",
@@ -161,7 +162,7 @@ const en = {
   agreeAlert: "Please agree all the terms of condition",
   cancelBookingRequestSend: "Your cancel booking tour request has been send",
   noBookedTour: "You have not booked any tour",
-  
+
   // Top tours
   topPopular: "Top popular tours",
   topRating: "Top rating tours",

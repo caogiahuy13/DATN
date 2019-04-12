@@ -65,7 +65,8 @@ const vi = {
   send: "Gửi",
   rating: "Đánh giá",
   comment: "Bình luận",
-
+  news: "Tin tức",
+  newsWithTag: "Tin tức với tag: ",
   congratulation: "Chúc mừng",
   search: "Tìm kiếm",
   checkAll: "Check tất cả",

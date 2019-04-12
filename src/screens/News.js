@@ -93,7 +93,7 @@ class News extends Component {
   }
 
   render(){
-    const {isLoading, news, nextPage, keyword} = this.state;
+    const {isLoading, isFirstLoad, news, nextPage, keyword} = this.state;
 
     let newsCard = this.getNewsCard();
 
@@ -135,10 +135,6 @@ class News extends Component {
                 />
               }
           </View>
-
-
-
-          <View style={{height: 12}}></View>
       </ScrollView>
     )
   }

@@ -9,9 +9,11 @@ import localized from '../localization/index';
 import NewsCard from '../components/NewsCard';
 
 class NewsTag extends Component {
-  static navigationOptions = ({navigation}) => ({
-    title: "News Tags",
-  });
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: localized.newsWithTag + navigation.getParam("tagName"),
+    };
+  };
 
   constructor(props) {
     super(props);

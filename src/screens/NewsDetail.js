@@ -10,7 +10,7 @@ import localized from '../localization/index';
 
 class NewsDetail extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: "News Detail",
+    title: localized.news,
   });
 
   constructor(props){
@@ -21,11 +21,12 @@ class NewsDetail extends Component {
     }
   }
 
-  onTagPress(tag){
+  onTagPress(tag, tagName){
     this.props.navigation.navigate({
       routeName: 'NewsTag',
       params: {
         tag: tag,
+        tagName: tagName,
       },
       key: Math.random () * 10000,
     });
@@ -41,7 +42,7 @@ class NewsDetail extends Component {
           buttonStyle={{borderWidth: 1, borderColor: 'gray'}}
           containerStyle={{margin: 4}}
           titleStyle={{color: 'gray'}}
-          onPress={()=>{this.onTagPress(val.id)}}
+          onPress={()=>{this.onTagPress(val.id, val.name)}}
         />
       )
     })
