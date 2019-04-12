@@ -43,7 +43,13 @@ class NewsTag extends Component {
   }
 
   onDetailPress = (id) => {
-    this.props.navigation.navigate("NewsDetail",{id: id});
+    this.props.navigation.navigate({
+      routeName: 'NewsDetail',
+  		params: {
+  			id: id
+  		},
+  		key: Math.random () * 10000,
+    });
   }
 
   componentDidMount() {

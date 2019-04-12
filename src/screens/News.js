@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, StyleSheet, ActivityIndicator, Image} from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, SearchBar } from 'react-native-elements';
 
 import { COLOR_GRAY_BACKGROUND, COLOR_MAIN } from '../constants/index';
 import { getBlogs } from '../services/apiWordpress';
@@ -20,17 +20,33 @@ class News extends Component {
       nextPage: 1,
       news: [],
       isFirstLoad: false,
-      keyword: ''
+      keyword: '',
     }
   }
 
   callGetBlogs(){
-    getBlogs(this.state.nextPage, 3).then((res) => {
-      this.setState({
-        news: [...this.state.news, ...res.data],
-        nextPage: res.nextPage,
-        isLoading: false,
-      })
+    const {keyword, nextPage} = this.state;
+
+    let params = {};
+    if (keyword != ''){
+      params['keyword']=keyword;
+    }
+
+    getBlogs(nextPage, 3, params).then((res) => {
+      if (nextPage == 1){
+        this.setState({
+          news: [...res.data],
+          nextPage: res.nextPage,
+          isLoading: false,
+        })
+      }
+      else {
+        this.setState({
+          news: [...this.state.news, ...res.data],
+          nextPage: res.nextPage,
+          isLoading: false,
+        })
+      }
     })
   }
 
@@ -43,23 +59,11 @@ class News extends Component {
     this.props.navigation.navigate("NewsDetail",{id: id});
   }
 
-  componentDidMount() {
-    this.setState({isFirstLoad: true});
-    this.callGetBlogs();
-  }
-
-  render(){
-    const {isLoading, news, nextPage} = this.state;
-
-    if (news.length == 0){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
+  getNewsCard(){
+    const {news} = this.state;
     let index = 0;
-    let newsCard = this.state.news.map((val,key)=>{
+
+    let newsCard = news.map((val,key)=>{
       index += 1;
       return(
         <View key={key}>
@@ -70,31 +74,69 @@ class News extends Component {
         </View>
       )
     })
+    return newsCard;
+  }
+
+  onSearchChange(value){
+    this.setState({
+      news: [],
+      keyword: value,
+      nextPage: 1,
+    }, ()=>{
+      this.callGetBlogs();
+    });
+  }
+
+  componentDidMount() {
+    this.setState({isFirstLoad: true});
+    this.callGetBlogs();
+  }
+
+  render(){
+    const {isLoading, news, nextPage, keyword} = this.state;
+
+    let newsCard = this.getNewsCard();
 
     return(
       <ScrollView style={styles.container}>
-          <View>
-              {newsCard}
+          <View style={{flexDirection: 'row'}}>
+              <SearchBar
+                platform="android"
+                placeholder="..."
+                onChangeText={(value)=>{this.onSearchChange(value)}}
+                value={keyword}
+                containerStyle={{backgroundColor: COLOR_MAIN, flex: 1, borderWidth: 0,padding: 14}}
+                inputContainerStyle={{backgroundColor: 'white', borderRadius: 40, height: 40}}
+                inputStyle={{fontSize: 16}}
+              />
           </View>
 
-          { isLoading && !!nextPage &&
-            <View style={{alignItems: 'center', padding: 16}}>
-              <Image
-                style={{width: 30, height: 30}}
-                source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
-            </View>
-          }
+          <View style={styles.content}>
+              <View>
+                  {newsCard}
+              </View>
 
-          { news.length > 0 && !!nextPage &&
-            <Button
-              title={localized.showMore.toUpperCase()}
-              type="solid"
-              buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
-              containerStyle={{padding: 16, borderRadius: 0}}
-              titleStyle={{fontSize: 16}}
-              onPress={()=>{this.onLoadMore()}}
-            />
-          }
+              { isLoading && !!nextPage &&
+                <View style={{alignItems: 'center', padding: 16}}>
+                  <Image
+                    style={{width: 30, height: 30}}
+                    source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
+                </View>
+              }
+
+              { news.length > 0 && !!nextPage &&
+                <Button
+                  title={localized.showMore.toUpperCase()}
+                  type="solid"
+                  buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+                  containerStyle={{padding: 16, borderRadius: 0}}
+                  titleStyle={{fontSize: 16}}
+                  onPress={()=>{this.onLoadMore()}}
+                />
+              }
+          </View>
+
+
 
           <View style={{height: 12}}></View>
       </ScrollView>
@@ -106,8 +148,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLOR_GRAY_BACKGROUND,
-    padding: 12,
   },
+  content: {
+    padding: 12,
+  }
 })
 
 export default News;

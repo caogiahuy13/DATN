@@ -22,7 +22,30 @@ class NewsDetail extends Component {
   }
 
   onTagPress(tag){
-    this.props.navigation.navigate("NewsTag",{tag: tag});
+    this.props.navigation.navigate({
+      routeName: 'NewsTag',
+      params: {
+        tag: tag,
+      },
+      key: Math.random () * 10000,
+    });
+  }
+
+  getTags(){
+    let tagsCard = this.state.tags.map((val,key)=>{
+      return(
+        <Button
+          key={key}
+          title={val.name}
+          type="outline"
+          buttonStyle={{borderWidth: 1, borderColor: 'gray'}}
+          containerStyle={{margin: 4}}
+          titleStyle={{color: 'gray'}}
+          onPress={()=>{this.onTagPress(val.id)}}
+        />
+      )
+    })
+    return tagsCard;
   }
 
   componentDidMount(){
@@ -46,25 +69,14 @@ class NewsDetail extends Component {
       )
     }
 
-    let tagsCard = tags.map((val,key)=>{
-      return(
-        <Button
-          key={key}
-          title={val.name}
-          type="outline"
-          buttonStyle={{borderWidth: 1, borderColor: 'gray'}}
-          containerStyle={{margin: 4}}
-          titleStyle={{color: 'gray'}}
-          onPress={()=>{this.onTagPress(val.id)}}
-        />
-      )
-    })
+    let tagsCard = this.getTags();
 
     return(
       <ScrollView style={styles.container}>
           <HTML html={blog.content}/>
           <Text style={styles.tags}>Tags</Text>
           <View style={{flexDirection: 'row'}}>{tagsCard}</View>
+          <View style={{height: 24}}></View>
       </ScrollView>
     )
   }
