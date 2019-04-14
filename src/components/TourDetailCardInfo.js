@@ -1,12 +1,80 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon, Divider } from 'react-native-elements';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Button, Icon, Divider } from 'react-native-elements';
 
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode } from '../services/function';
 import { COLOR_MAIN, COLOR_HARD_RED } from '../constants/index';
 import localized from '../localization/index';
 
 class TourDetailCardInfo extends Component {
+
+  onTagPress(type, id, name){
+    this.props.onTagPress(type, id, name);
+  }
+
+  getProvinces(){
+    const {tour_provinces} = this.props.tour;
+
+    if (typeof(tour_provinces) == 'undefined'){
+      return(<View></View>)
+    }
+
+    let provincesCard = tour_provinces.map((val,key)=>{
+      return(
+        <Button
+          key={key}
+          title={val.province.name}
+          type="outline"
+          buttonStyle={{borderWidth: 1, borderColor: 'gray', paddingVertical: 0, paddingHorizontal: 4}}
+          containerStyle={{margin: 4}}
+          titleStyle={{color: 'gray', fontSize: 12}}
+          onPress={()=>{this.onTagPress("province", val.province.id, val.province.name)}}
+        />
+      )
+    })
+    return provincesCard;
+  }
+  getCountries(){
+    const {tour_countries} = this.props.tour;
+
+    if (typeof(tour_countries) == 'undefined'){
+      return(<View></View>)
+    }
+
+    let countriesCard = tour_countries.map((val,key)=>{
+      return(
+        <Button
+          key={key}
+          title={val.country.name}
+          type="outline"
+          buttonStyle={{borderWidth: 1, borderColor: 'gray', paddingVertical: 0, paddingHorizontal: 4}}
+          containerStyle={{margin: 4}}
+          titleStyle={{color: 'gray', fontSize: 12}}
+          onPress={()=>{this.onTagPress("country", val.country.id, val.country.name)}}
+        />
+      )
+    })
+    return countriesCard;
+  }
+  getCategory(){
+    const {type_tour} = this.props.tour;
+
+    if (typeof(type_tour) == 'undefined'){
+      return(<View></View>)
+    }
+
+    return (
+      <Button
+        title={type_tour.name}
+        type="outline"
+        buttonStyle={{borderWidth: 1, borderColor: 'gray', paddingVertical: 0, paddingHorizontal: 4}}
+        containerStyle={{margin: 4}}
+        titleStyle={{color: 'gray', fontSize: 12}}
+        onPress={()=>{this.onTagPress("category", type_tour.id, type_tour.name)}}
+      />
+    )
+  }
+
   render(){
     const {currentTourTurn} = this.props;
 
@@ -40,6 +108,23 @@ class TourDetailCardInfo extends Component {
                   {currentTourTurn.num_max_people - currentTourTurn.num_current_people} {localized.slotsLeft.toLowerCase()}
               </Text>
             </View>
+          </View>
+
+          <Divider style={{height: 1}}/>
+          <View style={{paddingVertical: 4}}>
+              <View style={styles.tags}>
+                  <Text>{localized.category}</Text>
+                  <ScrollView horizontal={true}>
+                      {this.getCategory()}
+                  </ScrollView>
+              </View>
+              <View style={styles.tags}>
+                  <Text>{localized.tags}</Text>
+                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                      {this.getCountries()}
+                      {this.getProvinces()}
+                  </ScrollView>
+              </View>
           </View>
 
           <Divider style={{height: 1}}/>
@@ -80,6 +165,10 @@ const styles = StyleSheet.create({
     color: COLOR_HARD_RED,
     fontWeight: 'bold',
     fontSize: 24,
+  },
+  tags: {
+    flexDirection: 'row',
+    alignItems: 'center',
   }
 });
 

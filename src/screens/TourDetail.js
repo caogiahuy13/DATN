@@ -111,6 +111,18 @@ class TourDetail extends Component{
     this.props.navigation.navigate("Tours");
   }
 
+  onTagPress = (type, id, name) => {
+    this.props.navigation.navigate({
+      routeName: 'ListTours',
+      params: {
+        type: type,
+        id: id,
+        name: name,
+      },
+      key: Math.random () * 10000,
+    });
+  }
+
   onBookNowPress(){
     this.props.bookingChangeTourTurn(this.state.currentTurn);
     this.props.navigation.navigate("BookingInfo");
@@ -174,7 +186,7 @@ class TourDetail extends Component{
             titleStyle={styles.cardTitle}
           >
             <Slideshow dataSource={this.state.images} containerStyle={{marginBottom: 8}}/>
-            <TourDetailCardInfo currentTourTurn={currentTurn} onOtherDayPress={this.onOtherDayPress}/>
+            <TourDetailCardInfo currentTourTurn={currentTurn} tour={tour} onOtherDayPress={this.onOtherDayPress} onTagPress={this.onTagPress}/>
           </Card>
 
           <TourDetailDivider/>

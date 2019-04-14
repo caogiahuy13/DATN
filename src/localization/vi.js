@@ -82,6 +82,8 @@ const vi = {
   shareFB: "Chia sẻ với Facebook",
   notHaveAccount: "Bạn chưa có tài khoản", // You don't have an account?
   more: "Xem tất cả",
+  tags: "Tags",
+  category: "Category",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
@@ -170,6 +172,8 @@ const vi = {
   topView: "Tour được quan tâm nhất",
   domesticTours: "Tour trong nước",
   internationalTours: "Tour quốc tế",
+  domestic: "Trong nước",
+  international: "Quốc tế",
 
   // Review
   reviewSuccess: "Đánh giá của bạn đã được gửi",

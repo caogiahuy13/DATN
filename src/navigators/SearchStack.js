@@ -52,7 +52,8 @@ SearchStack.navigationOptions = ({ navigation }) => {
             route.routeName === "BookingPayment" ||
             route.routeName === "BookingConfirmation" ||
             route.routeName === "SearchFilter" ||
-            route.routeName === "Review") {
+            route.routeName === "Review" ||
+            route.routeName === "ListTours") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

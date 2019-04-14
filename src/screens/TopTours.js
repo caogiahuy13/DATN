@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { getTourTurnByType } from '../services/api';
+import { getTourTypeLocalize } from '../services/function';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import localized from '../localization/index';
 
@@ -32,11 +33,14 @@ class TopTours extends Component {
     this.props.navigation.navigate("TourDetail",{id: id});
   }
 
-  morePress(type){
+  morePress(id){
+    let name = getTourTypeLocalize(id);
     this.props.navigation.navigate({
       routeName: 'ListTours',
       params: {
-        type: type,
+        type: "country",
+        id: id,
+        name: name,
       },
       key: Math.random () * 10000,
     });

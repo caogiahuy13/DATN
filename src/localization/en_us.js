@@ -82,7 +82,9 @@ const en_us = {
   shareFB: "Share on Facebook",
   notHaveAccount: "You don't have an account", // You don't have an account?
   more: "More",
-  
+  tags: "Tags",
+  category: "Category",
+
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",
@@ -170,7 +172,9 @@ const en_us = {
   topView: "Top concerned tours",
   domesticTours: "Domestic Tours",
   internationalTours: "International Tours",
-
+  domestic: "Domestic",
+  international: "International",
+  
   // Review
   reviewSuccess: "Your review has been sent",
 

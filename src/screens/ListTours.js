@@ -3,15 +3,17 @@ import { View, ScrollView, Text, StyleSheet, ActivityIndicator, Image, FlatList}
 import { Button, Icon } from 'react-native-elements';
 
 import { COLOR_GRAY_BACKGROUND, COLOR_MAIN } from '../constants/index';
-import { getTourTurnByType } from '../services/api';
+import { getTourTurnByType, getTourTurnByCountry, getTourTurnByProvince } from '../services/api';
 import localized from '../localization/index';
 
 import TourCard from '../components/TourCard';
 
 class ListTours extends Component {
-  static navigationOptions = ({navigation}) => ({
-    title: "LIST TOURS",
-  });
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: "Tours: " + navigation.getParam("name"),
+    };
+  };
 
   constructor(props) {
     super(props)
@@ -22,37 +24,75 @@ class ListTours extends Component {
       isFirstLoad: false,
 
       type: null,
+      id: null,
     }
   }
 
-  callGetTourTurnByType(type){
-    return getTourTurnByType(type, this.state.nextPage, 4)
+  setTours(res){
+    this.setState({
+      tours: [...this.state.tours, ...res.data],
+      nextPage: res.next_page,
+      isLoading: false,
+    })
+  }
+
+  callGetTourTurnByType(id){
+    return getTourTurnByType(id, this.state.nextPage, 4)
           .then((response) => response.json())
-          .then((responseJson) => {
-            this.setState({
-              tours: [...this.state.tours, ...responseJson.data],
-              nextPage: responseJson.next_page,
-              isLoading: false,
-            })
-            return responseJson;
-          })
+          .then((responseJson) => responseJson)
           .catch((error) => console.error(error))
+  }
+  callGetTourTurnByCountry(id){
+    return getTourTurnByCountry(id, this.state.nextPage, 4)
+          .then((response) => response.json())
+          .then((responseJson) => responseJson)
+          .catch((error) => console.error(error))
+  }
+  callGetTourTurnByProvince(id){
+    return getTourTurnByProvince(id, this.state.nextPage, 4)
+          .then((response) => response.json())
+          .then((responseJson) => responseJson)
+          .catch((error) => console.error(error))
+  }
+
+
+  getTourTurn(type, id){
+    if (type == "category"){
+      this.callGetTourTurnByType(id)
+          .then((res)=>this.setTours(res))
+    } else if (type == "province"){
+      this.callGetTourTurnByProvince(id)
+          .then((res)=>this.setTours(res))
+    } else if (type == "country"){
+      this.callGetTourTurnByCountry(id)
+          .then((res)=>this.setTours(res))
+    }
   }
 
   onLoadMore(){
     this.setState({isLoading: true});
-    this.callGetTourTurnByType(this.state.type);
+    this.getTourTurn(this.state.type, this.state.id);
   }
 
   tourDetailPress = (id) => {
-    this.props.navigation.navigate("TourDetail",{id: id});
+    this.props.navigation.navigate({
+      routeName: 'TourDetail',
+      params: {
+        id: id,
+      },
+      key: Math.random () * 10000,
+    });
   }
 
   componentDidMount() {
     const type = this.props.navigation.getParam("type");
+    const id = this.props.navigation.getParam("id");
+
     this.setState({type: type});
+    this.setState({id: id});
+
     this.setState({isFirstLoad: true});
-    this.callGetTourTurnByType(type);
+    this.getTourTurn(type,id);
   }
 
   render(){

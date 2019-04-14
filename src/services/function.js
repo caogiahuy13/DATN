@@ -115,3 +115,11 @@ export function shortenString(str, length){
   }
   return ret;
 }
+
+export function getTourTypeLocalize(id){
+  if (id == 1){
+    return localized.domestic;
+  } else if (id == 2){
+    return localized.international;
+  }
+}
