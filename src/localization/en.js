@@ -81,7 +81,8 @@ const en = {
   loginFB: "Login with Facebook",
   shareFB: "Share on Facebook",
   notHaveAccount: "You don't have an account", // You don't have an account?
-
+  more: "More",
+  
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",

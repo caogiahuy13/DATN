@@ -81,6 +81,7 @@ const vi = {
   loginFB: "Đăng nhập với Facebook",
   shareFB: "Chia sẻ với Facebook",
   notHaveAccount: "Bạn chưa có tài khoản", // You don't have an account?
+  more: "Xem tất cả",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",

@@ -14,6 +14,7 @@ import BookingPayment from '../screens/BookingPayment';
 import BookingConfirmation from '../screens/BookingConfirmation';
 import TourCard from '../components/TourCard';
 import Review from '../screens/Review';
+import ListTours from '../screens/ListTours';
 
 const SearchStack = createStackNavigator(
   {
@@ -25,6 +26,7 @@ const SearchStack = createStackNavigator(
     BookingInfo,
     BookingPayment,
     BookingConfirmation,
+    ListTours,
   },
   {
     defaultNavigationOptions: {
