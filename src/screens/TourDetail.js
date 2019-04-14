@@ -152,7 +152,6 @@ class TourDetail extends Component{
           this.callGetImageByTourId(this.state.tour.id);
           this.callGetReviewByTour(this.state.tour.id);
           this.props.tourDetailChangeId(this.state.tour.id);
-          console.log(this.state.currentTurn);
         });
   }
 

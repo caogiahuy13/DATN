@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StyleSheet, ActivityIndicator, Image} from 'react-native';
+import { View, ScrollView, Text, StyleSheet, ActivityIndicator, Image, FlatList} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 
 import { COLOR_GRAY_BACKGROUND, COLOR_MAIN } from '../constants/index';
-import { getBlogs } from '../services/apiWordpress';
+import { getTourTurnByType } from '../services/api';
 import localized from '../localization/index';
 
-import NewsCard from '../components/NewsCard';
+import TourCard from '../components/TourCard';
 
 class ListTours extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -18,83 +18,56 @@ class ListTours extends Component {
     this.state = {
       isLoading: false,
       nextPage: 1,
-      news: [],
+      tours: [],
       isFirstLoad: false,
-      keyword: '',
+
+      type: null,
     }
   }
 
-  callGetBlogs(){
-    const {keyword, nextPage} = this.state;
-
-    let params = {};
-    if (keyword != ''){
-      params['keyword']=keyword;
-    }
-
-    getBlogs(nextPage, 3, params).then((res) => {
-      if (nextPage == 1){
-        this.setState({
-          news: [...res.data],
-          nextPage: res.nextPage,
-          isLoading: false,
-        })
-      }
-      else {
-        this.setState({
-          news: [...this.state.news, ...res.data],
-          nextPage: res.nextPage,
-          isLoading: false,
-        })
-      }
-    })
+  callGetTourTurnByType(type){
+    return getTourTurnByType(type, this.state.nextPage, 4)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            this.setState({
+              tours: [...this.state.tours, ...responseJson.data],
+              nextPage: responseJson.next_page,
+              isLoading: false,
+            })
+            return responseJson;
+          })
+          .catch((error) => console.error(error))
   }
 
   onLoadMore(){
     this.setState({isLoading: true});
-    this.callGetBlogs();
+    this.callGetTourTurnByType(this.state.type);
   }
 
-  onDetailPress = (id) => {
-    this.props.navigation.navigate("NewsDetail",{id: id});
-  }
-
-  getNewsCard(){
-    const {news} = this.state;
-    let index = 0;
-
-    let newsCard = news.map((val,key)=>{
-      index += 1;
-      return(
-        <View key={key}>
-            <NewsCard data={val} onPress={this.onDetailPress}/>
-            { index != news.length &&
-              <View style={{height: 16}}></View>
-            }
-        </View>
-      )
-    })
-    return newsCard;
+  tourDetailPress = (id) => {
+    this.props.navigation.navigate("TourDetail",{id: id});
   }
 
   componentDidMount() {
+    const type = this.props.navigation.getParam("type");
+    this.setState({type: type});
     this.setState({isFirstLoad: true});
-    this.callGetBlogs();
+    this.callGetTourTurnByType(type);
   }
 
   render(){
-    const {isLoading, isFirstLoad, news, nextPage, keyword} = this.state;
-
-    let newsCard = this.getNewsCard();
+    const {isLoading, tours, nextPage } = this.state;
 
     return(
       <ScrollView style={styles.container}>
           <View style={styles.content}>
-              <View>
-                  {newsCard}
-              </View>
+              <FlatList
+                data={tours}
+                renderItem={(item) => <TourCard data={item.item} onPress={this.tourDetailPress}/>}
+                keyExtractor={(item, index) => index.toString()}
+              />
 
-              { isLoading && !!nextPage &&
+              { isLoading && nextPage != -1 &&
                 <View style={{alignItems: 'center', padding: 16}}>
                   <Image
                     style={{width: 30, height: 30}}
@@ -102,7 +75,7 @@ class ListTours extends Component {
                 </View>
               }
 
-              { news.length > 0 && !!nextPage &&
+              { tours.length > 0 && nextPage != -1 &&
                 <Button
                   title={localized.showMore.toUpperCase()}
                   type="solid"
@@ -124,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_GRAY_BACKGROUND,
   },
   content: {
-    padding: 12,
+
   }
 })
 

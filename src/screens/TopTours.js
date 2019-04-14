@@ -74,7 +74,7 @@ class TopTours extends Component {
             style={styles.list}
           />
 
-          <InfoText text={localized.internationalTours.toUpperCase()} onPress={()=>this.morePress(1)}/>
+          <InfoText text={localized.internationalTours.toUpperCase()} onPress={()=>this.morePress(2)}/>
           <FlatList
             data={international}
             renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
