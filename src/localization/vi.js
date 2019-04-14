@@ -83,7 +83,8 @@ const vi = {
   notHaveAccount: "Bạn chưa có tài khoản", // You don't have an account?
   more: "Xem tất cả",
   tags: "Tags",
-  category: "Category",
+  category: "Loại",
+  policy: "Chính sách",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",

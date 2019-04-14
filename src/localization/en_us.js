@@ -84,7 +84,8 @@ const en_us = {
   more: "More",
   tags: "Tags",
   category: "Category",
-
+  policy: "Policy",
+  
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",
@@ -174,7 +175,7 @@ const en_us = {
   internationalTours: "International Tours",
   domestic: "Domestic",
   international: "International",
-  
+
   // Review
   reviewSuccess: "Your review has been sent",
 

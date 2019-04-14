@@ -37,6 +37,7 @@ class TourDetail extends Component{
       isDetailCollapsed: true,
       isReviewCollapsed: true,
       isAdditionCollapsed: true,
+      isPolicyCollapsed: true,
     }
   }
 
@@ -45,6 +46,9 @@ class TourDetail extends Component{
   }
   toggleDetail(){
     this.setState({isDetailCollapsed: !this.state.isDetailCollapsed});
+  }
+  togglePolicy(){
+    this.setState({isPolicyCollapsed: !this.state.isPolicyCollapsed});
   }
   toggleReview(){
     this.setState({isReviewCollapsed: !this.state.isReviewCollapsed});
@@ -174,7 +178,7 @@ class TourDetail extends Component{
   render(){
     const {
       tour, currentTurn,
-      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed
+      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed, isPolicyCollapsed,
     } = this.state;
 
     return(
@@ -217,6 +221,18 @@ class TourDetail extends Component{
                 <Text>{tour.detail}</Text>
               </Collapsible>
 
+          </Card>
+
+          <TourDetailDivider/>
+
+          <Card
+            containerStyle = {styles.cardContainer}
+            title=<CollapsibleCardTitle title={localized.policy} status={isPolicyCollapsed} onPress={()=>this.togglePolicy()}/>
+            titleStyle={styles.cardTitle}
+          >
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isPolicyCollapsed}>
+                <Text>{tour.policy}</Text>
+              </Collapsible>
           </Card>
 
           <TourDetailDivider/>
