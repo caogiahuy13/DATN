@@ -167,7 +167,9 @@ const en_us = {
   topPopular: "Top popular tours",
   topRating: "Top rating tours",
   topView: "Top concerned tours",
-
+  domesticTours: "Domestic Tours",
+  internationalTours: "International Tours",
+  
   // Review
   reviewSuccess: "Your review has been sent",
 

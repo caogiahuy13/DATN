@@ -167,6 +167,8 @@ const vi = {
   topPopular: "Tour phổ biến nhất",
   topRating: "Tour đánh giá cao nhất",
   topView: "Tour được quan tâm nhất",
+  domesticTours: "Tour trong nước",
+  internationalTours: "Tour quốc tế",
 
   // Review
   reviewSuccess: "Đánh giá của bạn đã được gửi",

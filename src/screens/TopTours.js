@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 
-import { getAllTourTurn } from '../services/api';
+import { getTourTurnByType } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import localized from '../localization/index';
 
@@ -16,93 +16,57 @@ class TopTours extends Component {
   constructor(props){
     super(props);
     this.state = {
-      booking: null,
-      rating: null,
-      view: null,
+      domestic: null,
+      international: null,
     }
   }
 
-  async callGetAllTourTurnAPI(data){
-    return getAllTourTurn(data)
-            .then((response) => response.json())
-            .then((responseJson) => responseJson)
-            .catch((error) => console.error(error))
-  }
-
-  getTopTourBooking(){
-    let data = {
-      isUniqueTour: false,
-      page: 1,
-      per_page: 8,
-      sortBy: 'booking',
-      sortType: 'desc',
-    }
-    this.callGetAllTourTurnAPI(data)
-        .then((res)=>{
-          this.setState({booking: res.data})
-        })
-  }
-  getTopTourRating(){
-    let data = {
-      isUniqueTour: true,
-      page: 1,
-      per_page: 8,
-      sortBy: 'rating',
-      sortType: 'desc',
-    }
-    this.callGetAllTourTurnAPI(data)
-        .then((res)=>{
-          this.setState({rating: res.data})
-        })
-  }
-  getTopTourView(){
-    let data = {
-      isUniqueTour: false,
-      page: 1,
-      per_page: 8,
-      sortBy: 'view',
-      sortType: 'desc',
-    }
-    this.callGetAllTourTurnAPI(data)
-        .then((res)=>{
-          this.setState({view: res.data})
-        })
+  async callGetTourTurnByType(type){
+    return getTourTurnByType(type, 1, 8)
+          .then((response) => response.json())
+          .then((responseJson) => responseJson)
+          .catch((error) => console.error(error))
   }
 
   tourDetailPress = (id) => {
     this.props.navigation.navigate("TourDetail",{id: id});
   }
 
+  getDomesticTours(){
+    this.callGetTourTurnByType(1)
+        .then((res)=>{
+          this.setState({domestic: res.data});
+        })
+  }
+  getInternationalTours(){
+    this.callGetTourTurnByType(2)
+        .then((res)=>{
+          this.setState({international: res.data});
+        })
+  }
+
   componentWillMount(){
-    this.getTopTourBooking();
-    this.getTopTourView();
-    this.getTopTourRating();
+    this.getDomesticTours();
+    this.getInternationalTours();
   }
 
   render() {
-    const { booking, rating, view } = this.state;
+    const { domestic, international } = this.state;
 
     return (
-      <ScrollView>
-          <InfoText text={localized.topPopular.toUpperCase()}/>
+      <ScrollView style={{backgroundColor: COLOR_GRAY_BACKGROUND}}>
+          <InfoText text={localized.domesticTours.toUpperCase()}/>
           <FlatList
-            data={booking}
+            data={domestic}
             renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             style={styles.list}
           />
-          <InfoText text={localized.topRating.toUpperCase()}/>
+
+          <InfoText text={localized.internationalTours.toUpperCase()}/>
           <FlatList
-            data={rating}
-            renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
-            keyExtractor={(item, index) => index.toString()}
-            horizontal={true}
-            style={styles.list}
-          />
-          <InfoText text={localized.topView.toUpperCase()}/>
-          <FlatList
-            data={view}
+            data={international}
             renderItem={(item) => <SmallTourCard data={item.item} onPress={this.tourDetailPress}/>}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}

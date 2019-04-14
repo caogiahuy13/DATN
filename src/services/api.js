@@ -367,3 +367,18 @@ export async function createReviewLogedIn(data={}){
                               });
                             })
 }
+
+export async function getTourTurnByCountry(id, page = 1, limit = 4){
+  let URL = HOST + `tour_classification/getTourTurnByCountry/${id}?page=${page}&per_page=${limit}`
+  return await fetch(URL);
+}
+
+export async function getTourTurnByProvince(id, page = 1, limit = 4){
+  let URL = HOST + `tour_classification/getTourTurnByProvince/${id}?page=${page}&per_page=${limit}`
+  return await fetch(URL);
+}
+
+export async function getTourTurnByType(id, page = 1, limit = 4){
+  let URL = HOST + `tour_classification/getTourTurnByType/${id}?page=${page}&per_page=${limit}`
+  return await fetch(URL);
+}
