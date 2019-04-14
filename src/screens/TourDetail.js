@@ -8,7 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { bookingChangeTourTurn, searchNameChange } from '../actions/index.js';
+import { bookingChangeTourTurn, searchNameChange, tourDetailChangeId } from '../actions/index.js';
 import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getReviewByTour, increaseView } from '../services/api';
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
 import { COLOR_HARD_RED, COLOR_MAIN } from '../constants/index';
@@ -151,6 +151,7 @@ class TourDetail extends Component{
         .then(()=>{
           this.callGetImageByTourId(this.state.tour.id);
           this.callGetReviewByTour(this.state.tour.id);
+          this.props.tourDetailChangeId(this.state.tour.id);
         });
   }
 
@@ -318,6 +319,7 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     bookingChangeTourTurn: bookingChangeTourTurn,
     searchNameChange: searchNameChange,
+    tourDetailChangeId: tourDetailChangeId,
   }, dispatch)
 }
 
