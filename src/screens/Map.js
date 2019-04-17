@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage, Image, TouchableOpacity } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import { Icon } from 'react-native-elements';
+import { Icon, Badge } from 'react-native-elements';
 import Geolocation from 'react-native-geolocation-service';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -96,6 +96,10 @@ class Map extends Component {
     }, 1000)
   }
 
+  onLuggagePress(){
+    this.props.navigation.navigate("ChoseLocation");
+  }
+
   constructor(props){
     super(props);
     this.state = {
@@ -131,6 +135,8 @@ class Map extends Component {
 
   render() {
     const {navigation} = this.props;
+    const {locations} = this.props.recommendTour;
+
     if(this.state.isLoading){
       return(
         <View style={{flex: 1, padding: 20}}>
@@ -162,8 +168,15 @@ class Map extends Component {
                 <View style={{marginTop: 5}}>
                     <Icon raised containerStyle={styles.search} size={18} name='search' type='font-awesome' onPress={()=>{navigation.navigate("FindGooglePlaces",{move: this.moveToLocation.bind(this)})}}/>
                     <Icon raised containerStyle={styles.filter} size={18} name='filter' type='font-awesome' onPress={()=>{navigation.navigate("Filter")}}/>
-                    <TouchableOpacity style={styles.luggage}>
-                        <Image style={{width: 34, height: 34}} source={require('../assets/images/luggage.png')}/>
+                    <TouchableOpacity style={styles.luggage} onPress={()=>{this.onLuggagePress()}}>
+                        <Image style={{width: 33, height: 33}} source={require('../assets/images/luggage.png')}/>
+                        { locations.length > 0 &&
+                          <Badge
+                            value={this.props.recommendTour.locations.length}
+                            status="primary"
+                            containerStyle={{position: 'absolute', top: 0, right: 0}}
+                          />
+                        }
                     </TouchableOpacity>
                 </View>
                 {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
@@ -216,6 +229,7 @@ function mapStateToProps(state){
     tourCarousel: state.tourCarousel,
     currentRoute: state.currentRoute,
     filterLocation: state.filterLocation,
+    recommendTour: state.recommendTour,
   };
 }
 function mapDispatchToProps(dispatch){

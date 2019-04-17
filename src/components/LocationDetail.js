@@ -44,7 +44,6 @@ class LocationDetail extends Component {
       link = location.featured_img;
       // link = "http://10.0.3.2:5000/" + link.split("/").slice(1).join("/");
     }
-    console.log(this.props.recommendTour);
 
     return(
       <View style={styles.detail}>
