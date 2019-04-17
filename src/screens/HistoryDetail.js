@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import { tourDetailChangeId, tourDetailShowMarker } from '../actions/index.js';
 import { getTourTurnById, createCancelBookingRequest } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
 import { capitalize, priceFormat, dateFormat, getGenderShow,
@@ -138,7 +139,11 @@ class HistoryDetail extends Component {
   }
 
   onSchedulePress(){
-    this.props.navigation.navigate("Schedule", {id: this.state.tourInfo.tour.id});
+    const {id} = this.state.tourInfo.tour;
+
+    this.props.tourDetailChangeId(id);
+    this.props.tourDetailShowMarker(true);
+    this.props.navigation.navigate("Schedule", {id: id});
   }
 
   getPassengers(){
@@ -398,7 +403,8 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    tourDetailChangeId: tourDetailChangeId,
+    tourDetailShowMarker: tourDetailShowMarker,
   }, dispatch)
 }
 

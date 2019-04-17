@@ -8,11 +8,11 @@ import {connect} from 'react-redux';
 import { tourDetailChangeRoutes, tourDetailShowMarker } from '../actions/index.js';
 import { getRouteByTour, getNearMe } from '../services/api';
 
-import TourDetailMapDirection from './TourDetailMapDirection';
+import ScheduleMapDirection from './ScheduleMapDirection';
 import TourDetailMapMarker from './TourDetailMapMarker';
 import TourDetailMapLocationDetail from './TourDetailMapLocationDetail';
 
-class TourDetailMap extends Component {
+class ScheduleMap extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -94,7 +94,7 @@ class TourDetailMap extends Component {
               ref={c => this.mapView = c}
           >
               {markers}
-              <TourDetailMapDirection parent={()=>this.mapView}/>
+              <ScheduleMapDirection parent={()=>this.mapView}/>
           </MapView>
 
           <View style={{flex: 1, flexDirection: 'row'}}>
@@ -145,4 +145,4 @@ function mapDispatchToProps(dispatch){
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TourDetailMap);
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleMap);

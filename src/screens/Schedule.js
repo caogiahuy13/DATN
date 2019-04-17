@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import {  } from '../actions/index.js';
 import { getRouteByTour, getCurrentRoute } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { } from '../services/function';
@@ -11,6 +12,7 @@ import localized from '../localization/index';
 
 import ScheduleCard from '../components/ScheduleCard';
 import InfoText from '../components/InfoText';
+import ScheduleMap from '../components/ScheduleMap';
 
 class Schedule extends Component {
   static navigationOptions = {
@@ -22,7 +24,6 @@ class Schedule extends Component {
     this.state = {
       route: [],
       curLocation: null,
-
     }
   }
 
@@ -81,6 +82,9 @@ class Schedule extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
+        <View style={{height: 400, marginBottom: 10}}>
+            <ScheduleMap/>
+        </View>
           {this.getScheduleCard()}
       </ScrollView>
     );
@@ -96,6 +100,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     bookedTour: state.bookedTour,
+
   };
 }
 function mapDispatchToProps(dispatch){

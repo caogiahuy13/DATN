@@ -7,9 +7,10 @@ import {connect} from 'react-redux';
 
 import { GOOGLE_MAPS_APIKEY } from '../constants/index';
 
-class TourDetailMapDirection extends Component{
+class ScheduleMapDirection extends Component{
   createCoordinates(){
     const data = this.props.tourDetail.routes;
+
     let coordinates = [];
     let smallCoordinates = [];
     let airways = [];
@@ -73,6 +74,81 @@ class TourDetailMapDirection extends Component{
     }
   }
 
+  createGoneCoordinates(){
+    const data = [];
+    const {routes} = this.props.tourDetail;
+
+    for (let i=0; i<routes.length; i++){
+      console.log(routes[i]);
+      if (routes[i].id != '121'){
+        data.push(routes[i]);
+      } else {
+        break;
+      }
+    }
+
+    let coordinates = [];
+    let smallCoordinates = [];
+    let airways = [];
+    let smallAirways = [];
+    let count = 0;
+    let isAfterAirways = false;
+    let allCoordinates = [];
+
+    for (let i=0; i<data.length; i++){
+      allCoordinates.push({
+        latitude: data[i].location.latitude,
+        longitude: data[i].location.longitude,
+      });
+
+      smallCoordinates.push({
+        latitude: data[i].location.latitude,
+        longitude: data[i].location.longitude,
+      });
+      count++;
+
+      if (isAfterAirways){
+        smallAirways.push({
+          latitude: data[i].location.latitude,
+          longitude: data[i].location.longitude,
+        });
+
+        airways.push(smallAirways);
+        smallAirways = [];
+        isAfterAirways = false;
+      }
+
+      if (data[i].transport.id == 3){
+        smallAirways.push({
+          latitude: data[i].location.latitude,
+          longitude: data[i].location.longitude,
+        });
+
+        coordinates.push(smallCoordinates);
+        smallCoordinates = [];
+        isAfterAirways = true;
+        count = 0;
+        continue;
+      }
+
+      if (count == 22){
+        coordinates.push(smallCoordinates);
+        smallCoordinates = [];
+        smallCoordinates.push({
+          latitude: data[i].location.latitude,
+          longitude: data[i].location.longitude,
+        });
+      }
+    }
+
+    coordinates.push(smallCoordinates);
+
+    return {
+      coordinates: coordinates,
+      airways: airways,
+      allCoordinates: allCoordinates,
+    }
+  }
   render(){
     let routes = this.createCoordinates();
 
@@ -128,4 +204,4 @@ function mapDispatchToProps(dispatch){
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TourDetailMapDirection);
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleMapDirection);
