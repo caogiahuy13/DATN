@@ -138,7 +138,7 @@ class HistoryDetail extends Component {
   }
 
   onSchedulePress(){
-
+    this.props.navigation.navigate("Schedule", {id: this.state.tourInfo.tour.id});
   }
 
   getPassengers(){

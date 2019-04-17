@@ -167,6 +167,20 @@ export async function getRouteByTour(id){
   return await fetch(URL);
 }
 
+export async function getCurrentRoute(data={}){
+  let URL = HOST + 'route/getCurrentRoute';
+  return await fetch(URL, {
+                            method: 'POST',
+                            headers: {
+                              Accept: 'application/json',
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              ...data,
+                            }),
+                          })
+}
+
 export async function getAllTour(){
   let URL = HOST + 'tour/getAll';
   return await fetch(URL);
