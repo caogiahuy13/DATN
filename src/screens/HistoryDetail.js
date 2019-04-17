@@ -65,6 +65,7 @@ class HistoryDetail extends Component {
       }
     });
   }
+
   onCanCelPress(){
     const {info} = this.props.bookedTour;
     const {cancel} = this.state;
@@ -88,6 +89,7 @@ class HistoryDetail extends Component {
           })
     }
   }
+
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
     const {info} = this.props.bookedTour;
@@ -135,6 +137,47 @@ class HistoryDetail extends Component {
     );
   }
 
+  onSchedulePress(){
+
+  }
+
+  getPassengers(){
+    const {passengers} = this.props.bookedTour;
+    let index = 0;
+    let passengersList = passengers.map((val,key)=>{
+      index += 1;
+      return(
+        <View key={key}>
+            <PassengerInfo data={val}/>
+            { index != passengers.length &&
+              <Divider style={{height: 0.5}}/>
+            }
+        </View>
+      )
+    })
+    return passengersList;
+  }
+  getPassengerPrice(){
+    const {info} = this.props.bookedTour;
+    let passengerPrice = info.type_passenger_detail.map((val,key)=>{
+      if (val.num_passenger > 0){
+        return(<CheckoutInfo key={key} firstTxt={getAgePriceShow(val.type)} secondTxt={priceFormat(val.price)} thirdTxt={val.num_passenger}/>);
+      } else {
+        return(<View key={key}></View>)
+      }
+    })
+    return passengerPrice;
+  }
+
+  isTourStarted(){
+    const {tourInfo} = this.state;
+
+    let startDate = tourInfo ? new Date(tourInfo.start_date) : new Date();
+    var curDate = new Date();
+
+    return (curDate >= startDate) ? true : false;
+  }
+
   componentWillMount(){
     const {fk_tour_turn} = this.props.bookedTour.info;
     this.callGetTourTurnById(fk_tour_turn)
@@ -148,26 +191,8 @@ class HistoryDetail extends Component {
     const {book_tour_contact_info} = this.props.bookedTour.info;
     const {tourInfo} = this.state;
 
-    let index = 0;
-    let passengersList = passengers.map((val,key)=>{
-      index += 1;
-      return(
-        <View key={key}>
-            <PassengerInfo data={val}/>
-            { index != passengers.length &&
-              <Divider style={{height: 0.5}}/>
-            }
-        </View>
-      )
-    })
-
-    let passengerPrice = info.type_passenger_detail.map((val,key)=>{
-      if (val.num_passenger > 0){
-        return(<CheckoutInfo key={key} firstTxt={getAgePriceShow(val.type)} secondTxt={priceFormat(val.price)} thirdTxt={val.num_passenger}/>);
-      } else {
-        return(<View key={key}></View>)
-      }
-    })
+    let passengersList = this.getPassengers();
+    let passengerPrice = this.getPassengerPrice();
 
     return (
       <ScrollView style={styles.container}>
@@ -214,6 +239,17 @@ class HistoryDetail extends Component {
         <View style={styles.passengerCard}>
             {passengersList}
         </View>
+
+        { this.isTourStarted() &&
+          <Button
+            title={localized.schedule.toUpperCase()}
+            type="solid"
+            buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+            containerStyle={{padding: 16, paddingBottom: 20, borderRadius: 0}}
+            titleStyle={{fontSize: 16}}
+            onPress={()=>{this.onSchedulePress()}}
+          />
+        }
 
         <Button
           title={localized.cancelTour.toUpperCase()}

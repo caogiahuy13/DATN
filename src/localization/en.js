@@ -85,7 +85,8 @@ const en = {
   tags: "Tags",
   category: "Category",
   policy: "Policy",
-  
+  schedule: "Schedule",
+
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",

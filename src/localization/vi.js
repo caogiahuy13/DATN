@@ -85,6 +85,7 @@ const vi = {
   tags: "Tags",
   category: "Loại",
   policy: "Chính sách",
+  schedule: "Lịch trình",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
