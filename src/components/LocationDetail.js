@@ -5,8 +5,10 @@ import {connect} from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { Button, Icon } from 'react-native-elements';
 
-import {handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
+import {handleModalLocation, handleTourCarousel, handleCurrentRoute,
+        recommendTourAddLocation } from '../actions/index.js';
 import localized from '../localization/index';
+import { COLOR_LIGHT_BLUE } from '../constants/index';
 
 class LocationDetail extends Component {
 
@@ -15,6 +17,22 @@ class LocationDetail extends Component {
     this.props.handleModalLocation(false);
     this.props.handleTourCarousel(false);
     this.props.handleCurrentRoute(false);
+  }
+
+  isInCart(){
+    const {locations} = this.props.recommendTour;
+    const {location} = this.props.modalLocation;
+
+    for (let i=0; i<locations.length; i++){
+      if (location.id == locations[i].id){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  onAdd(){
+    this.props.recommendTourAddLocation(this.props.modalLocation.location);
   }
 
   render(){
@@ -26,7 +44,7 @@ class LocationDetail extends Component {
       link = location.featured_img;
       // link = "http://10.0.3.2:5000/" + link.split("/").slice(1).join("/");
     }
-
+    console.log(this.props.recommendTour);
 
     return(
       <View style={styles.detail}>
@@ -45,17 +63,29 @@ class LocationDetail extends Component {
               </View>
 
               {/*Hiển thị số lượng tour đi qua nếu có*/}
-              {
-                (location.tours.length > 0) &&
-                <Button
-                  icon={<Icon name="eye" type="feather" size={18} color="white" iconStyle={{marginRight: 4}}/>}
-                  type="solid"
-                  title= {tourStr}
-                  titleStyle={{fontSize: 14}}
-                  buttonStyle={styles.button}
-                  onPress={()=>{this.props.handleTourCarousel(true)}}
-                />
-              }
+              <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                { !this.isInCart() &&
+                  <Icon
+                    name='add-circle-outline'
+                    type='material'
+                    size={25}
+                    color={COLOR_LIGHT_BLUE}
+                    containerStyle={{justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6}}
+                    onPress={() => {this.onAdd()}}
+                  />
+                }
+                {
+                  (location.tours.length > 0) &&
+                  <Button
+                    icon={<Icon name="eye" type="feather" size={18} color="white" iconStyle={{marginRight: 4}}/>}
+                    type="solid"
+                    title= {tourStr}
+                    titleStyle={{fontSize: 14}}
+                    buttonStyle={styles.button}
+                    onPress={()=>{this.props.handleTourCarousel(true)}}
+                  />
+                }
+              </View>
             </View>
         </View>
       </View>
@@ -86,7 +116,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
     margin: 1,
-    alignSelf: 'flex-end'
   },
   name: {
     fontWeight: 'bold',
@@ -97,6 +126,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     modalLocation: state.modalLocation,
+    recommendTour: state.recommendTour,
   };
 }
 function mapDispatchToProps(dispatch){
@@ -104,6 +134,7 @@ function mapDispatchToProps(dispatch){
     handleModalLocation: handleModalLocation,
     handleTourCarousel: handleTourCarousel,
     handleCurrentRoute: handleCurrentRoute,
+    recommendTourAddLocation: recommendTourAddLocation,
   }, dispatch)
 }
 

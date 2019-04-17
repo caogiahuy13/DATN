@@ -229,3 +229,11 @@ export function searchNameChange(name){
     name,
   }
 }
+
+// Recommend tours
+export function recommendTourAddLocation(location){
+  return {
+    type: types.RECOMMEND_TOUR_ADD_LOCATION,
+    location,
+  }
+}

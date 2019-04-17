@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage, Image, TouchableOpacity } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { Icon } from 'react-native-elements';
@@ -87,6 +87,7 @@ class Map extends Component {
   }
 
   moveToLocation(lat, lng){
+    this.props.handleCurrentRouteZoom(true);
     this.mapView.animateToRegion({
       latitude: lat,
       longitude: lng,
@@ -161,6 +162,9 @@ class Map extends Component {
                 <View style={{marginTop: 5}}>
                     <Icon raised containerStyle={styles.search} size={18} name='search' type='font-awesome' onPress={()=>{navigation.navigate("FindGooglePlaces",{move: this.moveToLocation.bind(this)})}}/>
                     <Icon raised containerStyle={styles.filter} size={18} name='filter' type='font-awesome' onPress={()=>{navigation.navigate("Filter")}}/>
+                    <TouchableOpacity style={styles.luggage}>
+                        <Image style={{width: 34, height: 34}} source={require('../assets/images/luggage.png')}/>
+                    </TouchableOpacity>
                 </View>
                 {this.props.modalLocation.isVisible && <View style={styles.locationDetail}><LocationDetail/></View>}
             </View>
@@ -197,6 +201,11 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       marginBottom: 6,
     },
+    luggage: {
+      paddingHorizontal: 8,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
 })
 
 function mapStateToProps(state){
