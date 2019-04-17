@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import Moment from 'moment';
+import Geolocation from 'react-native-geolocation-service';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -110,32 +111,59 @@ class Schedule extends Component {
     this.callGetRouteByTour(idTour);
   }
 
+  // componentDidMount(){
+  //   navigator.geolocation.getCurrentPosition(
+  //     position => {
+  //         console.log(position);
+  //         this.setState({initialPosition: position},()=>{
+  //           this.callGetCurrentRoute();
+  //         });
+  //     },
+  //     (error) => console.log(new Date(), error),
+  //     {enableHighAccuracy: false, timeout: 10000}
+  //   );
+  //
+  //   this.watchID = navigator.geolocation.watchPosition(
+  //     (position) => {
+  //       this.setState({ initialPosition: position },()=>{
+  //         this.callGetCurrentRoute();
+  //       });
+  //       console.log(position);
+  //     },
+  //     (error) => console.log(error.message),
+  //     { enableHighAccuracy: false, timeout: 20000, distanceFilter: 1}
+  //   );
+  // }
   componentDidMount(){
-    navigator.geolocation.getCurrentPosition(
-      position => {
-          console.log(position);
-          this.setState({initialPosition: position},()=>{
-            this.callGetCurrentRoute();
-          });
-      },
-      (error) => console.log(new Date(), error),
-      {enableHighAccuracy: false, timeout: 10000}
+    Geolocation.getCurrentPosition(
+        (position) => {
+            console.log(position);
+            this.setState({initialPosition: position},()=>{
+              this.callGetCurrentRoute();
+            });
+        },
+        (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
     );
 
-    this.watchID = navigator.geolocation.watchPosition(
-      (position) => {
-        this.setState({ initialPosition: position },()=>{
-          this.callGetCurrentRoute();
-        });
-        console.log(position);
-      },
-      (error) => console.log(error.message),
-      { enableHighAccuracy: false, timeout: 20000, distanceFilter: 1}
-    );
+      this.watchID = Geolocation.watchPosition(
+        (position) => {
+          this.setState({ initialPosition: position },()=>{
+            this.callGetCurrentRoute();
+          });
+          console.log(position);
+        },
+        (error) => console.log(error.message),
+        { enableHighAccuracy: true, timeout: 20000, distanceFilter: 1}
+      );
   }
 
   componentWillUnmount(){
-      navigator.geolocation.clearWatch(this.watchID);
+      // navigator.geolocation.clearWatch(this.watchID);
+      Geolocation.clearWatch(this.watchID);
    }
 
   render() {
