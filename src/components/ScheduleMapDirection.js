@@ -8,82 +8,43 @@ import {connect} from 'react-redux';
 import { GOOGLE_MAPS_APIKEY } from '../constants/index';
 
 class ScheduleMapDirection extends Component{
-  createCoordinates(){
+  getAllCoordinates(){
     const data = this.props.tourDetail.routes;
-
-    let coordinates = [];
-    let smallCoordinates = [];
-    let airways = [];
-    let smallAirways = [];
-    let count = 0;
-    let isAfterAirways = false;
     let allCoordinates = [];
-
     for (let i=0; i<data.length; i++){
       allCoordinates.push({
         latitude: data[i].location.latitude,
         longitude: data[i].location.longitude,
       });
-
-      smallCoordinates.push({
-        latitude: data[i].location.latitude,
-        longitude: data[i].location.longitude,
-      });
-      count++;
-
-      if (isAfterAirways){
-        smallAirways.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
-        });
-
-        airways.push(smallAirways);
-        smallAirways = [];
-        isAfterAirways = false;
-      }
-
-      if (data[i].transport.id == 3){
-        smallAirways.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
-        });
-
-        coordinates.push(smallCoordinates);
-        smallCoordinates = [];
-        isAfterAirways = true;
-        count = 0;
-        continue;
-      }
-
-      if (count == 22){
-        coordinates.push(smallCoordinates);
-        smallCoordinates = [];
-        smallCoordinates.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
-        });
-      }
     }
-
-    coordinates.push(smallCoordinates);
-
-    return {
-      coordinates: coordinates,
-      airways: airways,
-      allCoordinates: allCoordinates,
-    }
+    return allCoordinates;
   }
 
-  createGoneCoordinates(){
+  createCoordinates(type, id){
+    // const data = this.props.tourDetail.routes;
+
     const data = [];
     const {routes} = this.props.tourDetail;
 
-    for (let i=0; i<routes.length; i++){
-      console.log(routes[i]);
-      if (routes[i].id != '121'){
-        data.push(routes[i]);
-      } else {
-        break;
+    if (type == 1){
+      for (let i=0; i<routes.length; i++){
+        if (routes[i].id != id){
+          data.push(routes[i]);
+        } else {
+          break;
+        }
+      }
+    } else if (type == 2){
+      let check = false;
+      for (let i=0; i<routes.length; i++){
+        if (check){
+          data.push(routes[i]);
+        }
+
+        if (routes[i].id == id){
+          check = true;
+          data.push(routes[i]);
+        }
       }
     }
 
@@ -93,14 +54,8 @@ class ScheduleMapDirection extends Component{
     let smallAirways = [];
     let count = 0;
     let isAfterAirways = false;
-    let allCoordinates = [];
 
     for (let i=0; i<data.length; i++){
-      allCoordinates.push({
-        latitude: data[i].location.latitude,
-        longitude: data[i].location.longitude,
-      });
-
       smallCoordinates.push({
         latitude: data[i].location.latitude,
         longitude: data[i].location.longitude,
@@ -146,13 +101,33 @@ class ScheduleMapDirection extends Component{
     return {
       coordinates: coordinates,
       airways: airways,
-      allCoordinates: allCoordinates,
     }
   }
-  render(){
-    let routes = this.createCoordinates();
 
-    let allCoordinates = routes.allCoordinates;
+  render(){
+    let allCoordinates = this.getAllCoordinates();
+
+    let goneRoutes = this.createCoordinates(1,125);
+    let routes = this.createCoordinates(2,125);
+
+    let goneCoordinates = goneRoutes.coordinates.map((val,key)=>{
+        return (
+          <MapViewDirections
+            key={key}
+            origin={val[0]}
+            waypoints={(val.length > 2) ? val.slice(1, -1) : null}
+            destination={val[val.length-1]}
+            apikey={GOOGLE_MAPS_APIKEY}
+            strokeWidth={2}
+            strokeColor="rgba(0,0,0,0.3)"
+            onReady={(result) => {
+              this.props.parent().fitToCoordinates(allCoordinates,{
+                edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+              });
+            }}
+          />
+        );
+    });
 
     let coordinates = routes.coordinates.map((val,key)=>{
         return (
@@ -186,6 +161,7 @@ class ScheduleMapDirection extends Component{
 
     return(
       <View>
+        {goneCoordinates}
         {coordinates}
         {airways}
       </View>
