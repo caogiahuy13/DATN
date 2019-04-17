@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import { Icon } from 'react-native-elements';
+import Geolocation from 'react-native-geolocation-service';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import {changeCurrentRegion, changeCurrentLocation, filterType, handleCurrentRouteZoom } from '../actions/index.js';
 import { getNearMe } from '../services/api';
@@ -51,13 +52,24 @@ class Map extends Component {
 
   // Lay toa do cua vi tri hien tai
   getCurrentLocation(){
-    navigator.geolocation.getCurrentPosition(
-      position => {
-          this.props.changeCurrentLocation(position.coords.latitude, position.coords.longitude);
-      },
-      error => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+    Geolocation.getCurrentPosition(
+            (position) => {
+                console.log(position);
+                this.props.changeCurrentLocation(position.coords.latitude, position.coords.longitude);
+            },
+            (error) => {
+                // See error code charts below.
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+    // navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //       this.props.changeCurrentLocation(position.coords.latitude, position.coords.longitude);
+    //   },
+    //   error => Alert.alert(error.message),
+    //   { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    // );
   }
 
   // Ham duoc goi khi nguoi dung di chuyen ban do

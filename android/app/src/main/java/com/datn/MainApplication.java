@@ -15,6 +15,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFusedLocationPackage(),
             new ReactNativeRestartPackage(),
             new ReactNativeLocalizationPackage(),
             new SvgPackage(),
@@ -48,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new MapsPackage(),
             new RNGestureHandlerPackage()
+
       );
     }
 
