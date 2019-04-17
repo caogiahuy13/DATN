@@ -87,6 +87,9 @@ const en_us = {
   policy: "Policy",
   schedule: "Schedule",
   day: "Day",
+  choseLocations: "Chose locations",
+  getRecommendedTour: "Get recommended tour",
+  recommendedTour: "Recommended tour",
   
   // Address modal
   addressModalLabel: "Enter address",

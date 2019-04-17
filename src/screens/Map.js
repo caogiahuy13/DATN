@@ -97,7 +97,9 @@ class Map extends Component {
   }
 
   onLuggagePress(){
-    this.props.navigation.navigate("ChoseLocation");
+    if (this.props.recommendTour.locations.length > 0){
+      this.props.navigation.navigate("ChoseLocation");
+    }
   }
 
   constructor(props){
@@ -216,6 +218,7 @@ const styles = StyleSheet.create({
     },
     luggage: {
       paddingHorizontal: 8,
+      paddingVertical: 4,
       justifyContent: 'center',
       alignItems: 'center'
     }

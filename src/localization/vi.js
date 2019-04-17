@@ -87,6 +87,9 @@ const vi = {
   policy: "Chính sách",
   schedule: "Lịch trình",
   day: "Ngày",
+  choseLocations: "Địa điểm đã chọn",
+  getRecommendedTour: "Lấy tour gợi ý",
+  recommendedTour: "Tour gợi ý",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",

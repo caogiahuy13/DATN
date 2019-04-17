@@ -4,14 +4,22 @@ import { Divider, Icon } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {  } from '../actions/index.js';
+import { recommendTourNewLocations } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 import localized from '../localization/index';
 
-
 class ChoseLocationCard extends Component {
-  onDelete(){
+  onDelete(id){
+    const {locations} = this.props.recommendTour;
+    let newLocations = [];
 
+    for (let i=0; i<locations.length; i++){
+      if (locations[i].id != id){
+        newLocations.push(locations[i]);
+      }
+    }
+
+    this.props.recommendTourNewLocations(newLocations);
   }
 
 
@@ -33,7 +41,7 @@ class ChoseLocationCard extends Component {
                 <Text>{data.address}</Text>
             </View>
             <View style={styles.delete}>
-              <TouchableOpacity onPress={()=>{this.onDelete()}}>
+              <TouchableOpacity onPress={()=>{this.onDelete(data.id)}}>
                   <Icon
                     name='close'
                     type='font-awesome'
@@ -74,7 +82,7 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    recommendTourNewLocations: recommendTourNewLocations,
   }, dispatch)
 }
 

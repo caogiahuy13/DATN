@@ -237,3 +237,10 @@ export function recommendTourAddLocation(location){
     location,
   }
 }
+
+export function recommendTourNewLocations(locations){
+  return {
+    type: types.RECOMMEND_TOUR_NEW_LOCATIONS,
+    locations,
+  }
+}

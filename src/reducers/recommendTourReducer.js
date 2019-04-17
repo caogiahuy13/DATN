@@ -12,6 +12,12 @@ export default function(state=recommendTour, action){
         locations: [...state.locations, action.location],
       };
       break;
+    case types.RECOMMEND_TOUR_NEW_LOCATIONS:
+      return {
+        ...state,
+        locations: action.locations,
+      }
+      break;
   }
   return state;
 }

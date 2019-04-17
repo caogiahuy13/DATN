@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Divider, Icon } from 'react-native-elements';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Icon, Button } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -12,15 +12,11 @@ import ChoseLocationCard from '../components/ChoseLocationCard';
 
 class ChoseLocation extends Component {
   static navigationOptions = {
-    title: "CHOSE LOCATION",
+    title: localized.choseLocations,
   };
 
-  onDelete(){
-
-  }
-
-  componentWillMount(){
-
+  onGetRecommendedTourPress(){
+    this.props.navigation.navigate("RecommendedTour");
   }
 
   render() {
@@ -31,10 +27,23 @@ class ChoseLocation extends Component {
         <ChoseLocationCard key={key} data={val}/>
       )
     })
+
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
           {locationCards}
-      </View>
+
+          { locations.length > 0 &&
+            <Button
+              title={localized.recommendedTour.toUpperCase()}
+              type="solid"
+              buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+              containerStyle={{padding: 16, borderRadius: 0}}
+              titleStyle={{fontSize: 16}}
+              onPress={()=>{this.onGetRecommendedTourPress()}}
+            />
+          }
+
+      </ScrollView>
     );
   }
 }

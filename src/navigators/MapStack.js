@@ -14,6 +14,7 @@ import BookingInfo from '../screens/BookingInfo';
 import BookingPayment from '../screens/BookingPayment';
 import BookingConfirmation from '../screens/BookingConfirmation';
 import ChoseLocation from '../screens/ChoseLocation';
+import RecommendedTour from '../screens/RecommendedTour';
 
 const MapStack = createStackNavigator(
   {
@@ -25,6 +26,7 @@ const MapStack = createStackNavigator(
     Filter,
     FindGooglePlaces,
     ChoseLocation,
+    RecommendedTour
   },
   {
     defaultNavigationOptions: {
@@ -48,7 +50,8 @@ MapStack.navigationOptions = ({ navigation }) => {
         if (route.routeName === "TourDetail" ||
             route.routeName === "Filter" ||
             route.routeName === "FindGooglePlaces" ||
-            route.routeName === "ChoseLocation") {
+            route.routeName === "ChoseLocation" ||
+            route.routeName === "RecommendedTour") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

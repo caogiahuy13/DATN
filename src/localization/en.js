@@ -87,7 +87,10 @@ const en = {
   policy: "Policy",
   schedule: "Schedule",
   day: "Day",
-  
+  choseLocations: "Chose locations",
+  getRecommendedTour: "Get recommended tour",
+  recommendedTour: "Recommended tour",
+
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",
