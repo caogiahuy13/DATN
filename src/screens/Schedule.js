@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {  } from '../actions/index.js';
+import { tourDetailCurrentRoute } from '../actions/index.js';
 import { getRouteByTour, getCurrentRoute } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { } from '../services/function';
@@ -24,6 +24,9 @@ class Schedule extends Component {
     this.state = {
       route: [],
       curLocation: null,
+      watchID: null,
+      initialPosition: 'unknown',
+      lastPosition: 'unknown',
     }
   }
 
@@ -47,14 +50,9 @@ class Schedule extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
               this.setState({curLocation: responseJson.data[0]})
+              this.props.tourDetailCurrentRoute(responseJson.data[0]);
             })
             .catch((error) => console.error(error));
-  }
-
-  componentWillMount(){
-    const id = this.props.navigation.getParam("id");
-    this.callGetCurrentRoute();
-    this.callGetRouteByTour(id);
   }
 
   getScheduleCard(){
@@ -77,6 +75,12 @@ class Schedule extends Component {
       }
     })
     return scheduleCards;
+  }
+
+  componentWillMount(){
+    const id = this.props.navigation.getParam("id");
+    this.callGetCurrentRoute();
+    this.callGetRouteByTour(id);
   }
 
   render() {
@@ -105,7 +109,7 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
+    tourDetailCurrentRoute: tourDetailCurrentRoute,
   }, dispatch)
 }
 

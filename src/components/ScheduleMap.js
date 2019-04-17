@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, View, Image, StyleSheet } from 'react-native';
+import {Text, View, Image, StyleSheet, Alert } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import { Icon } from 'react-native-elements';
 import {bindActionCreators} from 'redux';
@@ -9,7 +9,7 @@ import { tourDetailChangeRoutes, tourDetailShowMarker } from '../actions/index.j
 import { getRouteByTour, getNearMe } from '../services/api';
 
 import ScheduleMapDirection from './ScheduleMapDirection';
-import TourDetailMapMarker from './TourDetailMapMarker';
+import ScheduleMapMarker from './ScheduleMapMarker';
 import TourDetailMapLocationDetail from './TourDetailMapLocationDetail';
 
 class ScheduleMap extends Component {
@@ -23,8 +23,26 @@ class ScheduleMap extends Component {
         longitude: 106.682229,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-      },
+      }
     }
+  }
+
+  // Lay toa do cua vi tri hien tai
+  getCurrentLocation(){
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }
+        })
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
   }
 
   // Ham duoc goi khi nguoi dung di chuyen ban do
@@ -81,7 +99,7 @@ class ScheduleMap extends Component {
 
   render(){
     let markers = this.state.dataSource.map((val,key)=>{
-        return (<TourDetailMapMarker key={key} val={val}></TourDetailMapMarker>);
+        return (<ScheduleMapMarker key={key} val={val}></ScheduleMapMarker>);
     });
 
     return(

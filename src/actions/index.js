@@ -132,6 +132,13 @@ export function tourDetailShowMarker(visible){
   }
 }
 
+export function tourDetailCurrentRoute(curRoute){
+  return {
+    type: types.TOUR_DETAIL_CURRENT_ROUTE,
+    curRoute,
+  }
+}
+
 
 // Booking tour
 export function bookingChangeInfo(info){

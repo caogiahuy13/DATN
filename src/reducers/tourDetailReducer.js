@@ -6,6 +6,7 @@ let tourDetail = {
   location: {},
   showLocation: false,
   showMarker: true,
+  curRoute: {},
 }
 
 export default function(state=tourDetail, action){
@@ -40,6 +41,11 @@ export default function(state=tourDetail, action){
         showMarker: action.visible,
       }
       break;
+    case types.TOUR_DETAIL_CURRENT_ROUTE:
+      return {
+        ...state,
+        curRoute: action.curRoute,
+      }
   }
   return state;
 }

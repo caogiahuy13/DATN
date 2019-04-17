@@ -32,6 +32,7 @@ class ScheduleMapDirection extends Component{
         if (routes[i].id != id){
           data.push(routes[i]);
         } else {
+          data.push(routes[i]);
           break;
         }
       }
@@ -142,10 +143,12 @@ class ScheduleMapDirection extends Component{
   }
 
   render(){
+    const {curRoute} = this.props.tourDetail;
+
     let allCoordinates = this.getAllCoordinates();
 
-    let goneRoutes = this.createCoordinates(1,125);
-    let routes = this.createCoordinates(2,125);
+    let goneRoutes = this.createCoordinates(1,curRoute.id);
+    let routes = this.createCoordinates(2,curRoute.id);
 
     let goneCoordinates = this.getMapViewDirection(goneRoutes, COLOR_MAP_DIRECTION_GRAY, allCoordinates);
     let coordinates = this.getMapViewDirection(routes, COLOR_MAP_DIRECTION_BLUE, allCoordinates);

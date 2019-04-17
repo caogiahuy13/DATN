@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import { tourDetailShowLocation, tourDetailChangeLocation } from '../actions/index.js';
 import localized from '../localization/index';
 
-class TourDetailMapMarker extends Component{
+class ScheduleMapMarker extends Component{
   constructor(props) {
   	super(props);
   	this.state = {
@@ -104,6 +104,19 @@ class TourDetailMapMarker extends Component{
     return idList.indexOf(id);
   }
 
+  hasGone(id, curLocationId){
+    const {routes} = this.props.tourDetail;
+    for (let i=0; i<routes.length; i++){
+      if (routes[i].location.id == id){
+        if (routes[i].id < curLocationId){
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+  }
+
   getBadge(id){
     let idList = this.props.tourDetail.routes.map((val,key)=>{
       return(val.location.id);
@@ -160,13 +173,16 @@ class TourDetailMapMarker extends Component{
 
   render(){
     const {val} = this.props;
+    const {curRoute} = this.props.tourDetail;
 
     // Link ảnh địa điểm
     let icon = React.createRef();
     icon = this.getImageUrl(val.type.marker);
 
-    if (this._isInRoute(val.id)>=0){
+    if (this._isInRoute(val.id)>=0 && !this.hasGone(val.id, curRoute.id)){
       icon = require("../assets/images/markers/location.png");
+    } else if (this._isInRoute(val.id)>=0 && this.hasGone(val.id, curRoute.id)){
+      icon = require("../assets/images/markers/location_gone.png");
     }
 
     let badge = this.getBadge(val.id);
@@ -238,4 +254,4 @@ function mapDispatchToProps(dispatch){
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TourDetailMapMarker);
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleMapMarker);
