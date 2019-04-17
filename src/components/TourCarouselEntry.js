@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import { Button, Icon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
-import {changeCurrentRoute, handleCurrentRoute} from '../actions/index.js';
+import {changeCurrentRoute, handleCurrentRoute, handleCurrentRouteZoom } from '../actions/index.js';
 import { getRouteByTour } from '../services/api';
 import localized from '../localization/index';
 
@@ -24,6 +24,7 @@ class TourCarouselEntry extends Component {
   _onDirectionPress(e){
     this.callGetRouteByTourAPI(this.props.item.id).then(()=>{
       this.props.handleCurrentRoute(true);
+      this.props.handleCurrentRouteZoom(true);
     })
     // console.log(this.props.currentRoute);
   }
@@ -90,13 +91,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return{
-    currentRoute: state.currentRoute,
+
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     changeCurrentRoute: changeCurrentRoute,
     handleCurrentRoute: handleCurrentRoute,
+    handleCurrentRouteZoom: handleCurrentRouteZoom,
   }, dispatch)
 }
 

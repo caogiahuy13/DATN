@@ -61,6 +61,13 @@ export function handleCurrentRoute(visible){
   }
 }
 
+export function handleCurrentRouteZoom(hasZoomed){
+  return {
+    type: types.HANDLE_CURRENT_ROUTE_ZOOM,
+    hasZoomed,
+  }
+}
+
 export function handleAccess(log){
   return {
     type: types.HANDLE_ACCESS,

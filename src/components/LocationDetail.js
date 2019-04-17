@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { Button, Icon } from 'react-native-elements';
 
-import {handleModalLocation, handleTourCarousel, handleCurrentRoute} from '../actions/index.js';
+import {handleModalLocation, handleTourCarousel, handleCurrentRoute } from '../actions/index.js';
 import localized from '../localization/index';
 
 class LocationDetail extends Component {
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     modalLocation: state.modalLocation,
-    tourCarousel: state.tourCarousel,
   };
 }
 function mapDispatchToProps(dispatch){

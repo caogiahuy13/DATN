@@ -4,9 +4,9 @@ import MapView, {Marker} from 'react-native-maps';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
-import { Button, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
-import {changeCurrentRegion, changeCurrentLocation, getNearLocation, handleModalLocation, handleTourCarousel, handleCurrentRoute, filterType } from '../actions/index.js';
+import {changeCurrentRegion, changeCurrentLocation, filterType, handleCurrentRouteZoom } from '../actions/index.js';
 import { getNearMe } from '../services/api';
 import { GOOGLE_MAPS_APIKEY } from '../constants/index';
 
@@ -61,9 +61,17 @@ class Map extends Component {
   }
 
   // Ham duoc goi khi nguoi dung di chuyen ban do
-  _onRegionChange(e){
+  _onRegionChangeComplete(e){
     this.props.changeCurrentRegion(e.latitude, e.longitude, e.latitudeDelta, e.longitudeDelta);
     this.callGetNearMeAPI();
+  }
+  // Ham duoc goi khi nguoi dung di chuyen ban do
+  _onRegionChange(e){
+    if (this.props.currentRoute.hasZoomed){
+      this.props.changeCurrentRegion(e.latitude, e.longitude, e.latitudeDelta, e.longitudeDelta);
+      this.callGetNearMeAPI();
+      this.props.handleCurrentRouteZoom(false);
+    }
   }
 
   moveToLocation(lat, lng){
@@ -122,10 +130,10 @@ class Map extends Component {
         return (<CustomMarker key={key} val={val}></CustomMarker>);
     });
 
-    let coordinates = {latitude:  10.762864, longitude: 106.682229, latitudeDelta: 0.01, longitudeDelta: 0.01}
     return(
         <View style={styles.container}>
             <MapView style={styles.map}
+                onRegionChangeComplete={e => {this._onRegionChangeComplete(e)}}
                 onRegionChange={e => {this._onRegionChange(e)}}
                 showsUserLocation = {true}
                 // toolbarEnabled = {true}
@@ -193,11 +201,8 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     changeCurrentRegion: changeCurrentRegion,
     changeCurrentLocation: changeCurrentLocation,
-    getNearLocation: getNearLocation,
-    handleModalLocation: handleModalLocation,
-    handleTourCarousel: handleTourCarousel,
-    handleCurrentRoute: handleCurrentRoute,
     filterType: filterType,
+    handleCurrentRouteZoom: handleCurrentRouteZoom,
   }, dispatch)
 }
 
