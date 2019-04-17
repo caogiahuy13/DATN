@@ -250,25 +250,28 @@ class HistoryDetail extends Component {
             {passengersList}
         </View>
 
-        { this.isTourStarted() &&
-          <Button
-            title={localized.schedule.toUpperCase()}
-            type="solid"
-            buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
-            containerStyle={{padding: 16, paddingBottom: 20, borderRadius: 0}}
-            titleStyle={{fontSize: 16}}
-            onPress={()=>{this.onSchedulePress()}}
-          />
-        }
+        <View style={{padding: 16}}>
+            { this.isTourStarted() && /*info.status == 'paid' &&*/
+              <Button
+                title={localized.schedule.toUpperCase()}
+                type="solid"
+                buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+                containerStyle={{paddingBottom: 20, borderRadius: 0}}
+                titleStyle={{fontSize: 16}}
+                onPress={()=>{this.onSchedulePress()}}
+              />
+            }
 
-        <Button
-          title={localized.cancelTour.toUpperCase()}
-          type="solid"
-          buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
-          containerStyle={{paddingHorizontal: 16, paddingBottom: 20, borderRadius: 0}}
-          titleStyle={{fontSize: 16}}
-          onPress={()=>{this._showCancelModal(true)}}
-        />
+            <Button
+              title={localized.cancelTour.toUpperCase()}
+              type="solid"
+              buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
+              containerStyle={{paddingBottom: 4, borderRadius: 0}}
+              titleStyle={{fontSize: 16}}
+              onPress={()=>{this._showCancelModal(true)}}
+            />
+        </View>
+
 
       </ScrollView>
     );
