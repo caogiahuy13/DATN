@@ -9,6 +9,7 @@ import { tourDetailChangeRoutes, tourDetailShowMarker } from '../actions/index.j
 import { getRouteByTour, getNearMe } from '../services/api';
 
 import ScheduleMapDirection from './ScheduleMapDirection';
+import TourDetailMapDirection from './TourDetailMapDirection';
 import ScheduleMapMarker from './ScheduleMapMarker';
 import TourDetailMapLocationDetail from './TourDetailMapLocationDetail';
 
@@ -112,7 +113,12 @@ class ScheduleMap extends Component {
               ref={c => this.mapView = c}
           >
               {markers}
-              <ScheduleMapDirection parent={()=>this.mapView}/>
+              { this.props.tourDetail.curRoute == null &&
+                <TourDetailMapDirection parent={()=>this.mapView}/>
+              }
+              { this.props.tourDetail.curRoute != null &&
+                <ScheduleMapDirection parent={()=>this.mapView}/>
+              }
           </MapView>
 
           <View style={{flex: 1, flexDirection: 'row'}}>

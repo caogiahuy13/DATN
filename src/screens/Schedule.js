@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import Moment from 'moment';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -19,14 +20,16 @@ class Schedule extends Component {
     title: localized.schedule,
   };
 
+  watchID = null;
+
   constructor(props){
     super(props);
     this.state = {
       route: [],
       curLocation: null,
+
       watchID: null,
       initialPosition: 'unknown',
-      lastPosition: 'unknown',
     }
   }
 
@@ -40,17 +43,40 @@ class Schedule extends Component {
   }
 
   async callGetCurrentRoute(){
+    const {initialPosition} = this.state;
+    let date = new Date();
+
     let data = {
-      id: 34,
-      lat: 37.948509,
-      lng: 27.368055,
-      cur_time: "2019-04-20T10:10:00.000"
+      // id: this.props.navigation.getParam("id"),
+      // lat: 37.948509,
+      // lng: 27.368055,
+      // cur_time: "2019-04-20T10:10:00.000"
+      id: this.props.navigation.getParam("idTourTurn"),
+      lat: initialPosition.coords.latitude,
+      lng: initialPosition.coords.longitude,
+      cur_time: date,
     }
+    console.log(data);
+
+    let status;
     return getCurrentRoute(data)
-            .then((response) => response.json())
+            .then((response) => {
+                status = response.status;
+                return response.json();
+              })
             .then((responseJson) => {
-              this.setState({curLocation: responseJson.data[0]})
-              this.props.tourDetailCurrentRoute(responseJson.data[0]);
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else if (status == 200){
+                console.log(responseJson);
+                if (responseJson.data != null){
+                  this.setState({curLocation: responseJson.data[0]})
+                  this.props.tourDetailCurrentRoute(responseJson.data[0]);
+                } else {
+                  this.setState({curLcation: null});
+                  this.props.tourDetailCurrentRoute(null);
+                }
+              }
             })
             .catch((error) => console.error(error));
   }
@@ -61,9 +87,10 @@ class Schedule extends Component {
     let curDay = 0;
 
     let scheduleCards = route.map((val,key)=>{
+      let isActive = curLocation ? (curLocation.id == val.id) : false;
       if (val.day > curDay){
         curDay += 1;
-        let isActive = curLocation ? (curLocation.id == val.id) : false;
+
         return(
           <View key={key}>
               <InfoText text={localized.day + " " + val.day}/>
@@ -71,17 +98,45 @@ class Schedule extends Component {
           </View>
         )
       } else {
-        return(<ScheduleCard key={key} data={val}/>)
+        return(<ScheduleCard key={key} data={val} active={isActive}/>)
       }
     })
     return scheduleCards;
   }
 
   componentWillMount(){
-    const id = this.props.navigation.getParam("id");
-    this.callGetCurrentRoute();
-    this.callGetRouteByTour(id);
+    const idTour = this.props.navigation.getParam("idTour");
+    // this.callGetCurrentRoute();
+    this.callGetRouteByTour(idTour);
   }
+
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition(
+      position => {
+          console.log(position);
+          this.setState({initialPosition: position},()=>{
+            this.callGetCurrentRoute();
+          });
+      },
+      (error) => console.log(new Date(), error),
+      {enableHighAccuracy: false, timeout: 10000}
+    );
+
+    this.watchID = navigator.geolocation.watchPosition(
+      (position) => {
+        this.setState({ initialPosition: position },()=>{
+          this.callGetCurrentRoute();
+        });
+        console.log(position);
+      },
+      (error) => console.log(error.message),
+      { enableHighAccuracy: false, timeout: 20000, distanceFilter: 1}
+    );
+  }
+
+  componentWillUnmount(){
+      navigator.geolocation.clearWatch(this.watchID);
+   }
 
   render() {
     return (

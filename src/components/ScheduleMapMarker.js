@@ -179,11 +179,18 @@ class ScheduleMapMarker extends Component{
     let icon = React.createRef();
     icon = this.getImageUrl(val.type.marker);
 
-    if (this._isInRoute(val.id)>=0 && !this.hasGone(val.id, curRoute.id)){
-      icon = require("../assets/images/markers/location.png");
-    } else if (this._isInRoute(val.id)>=0 && this.hasGone(val.id, curRoute.id)){
-      icon = require("../assets/images/markers/location_gone.png");
+    if (curRoute != null){
+      if (this._isInRoute(val.id)>=0 && !this.hasGone(val.id, curRoute.id)){
+        icon = require("../assets/images/markers/location.png");
+      } else if (this._isInRoute(val.id)>=0 && this.hasGone(val.id, curRoute.id)){
+        icon = require("../assets/images/markers/location_gone.png");
+      }
+    } else {
+      if (this._isInRoute(val.id)>=0){
+        icon = require("../assets/images/markers/location.png");
+      }
     }
+
 
     let badge = this.getBadge(val.id);
 

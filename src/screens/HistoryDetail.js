@@ -139,11 +139,16 @@ class HistoryDetail extends Component {
   }
 
   onSchedulePress(){
-    const {id} = this.state.tourInfo.tour;
+    const idTour = this.state.tourInfo.tour.id;
+    const idTourTurn = this.state.tourInfo.id;
 
-    this.props.tourDetailChangeId(id);
+    this.props.tourDetailChangeId(idTour);
     this.props.tourDetailShowMarker(true);
-    this.props.navigation.navigate("Schedule", {id: id});
+
+    this.props.navigation.navigate("Schedule", {
+      idTour: idTour,
+      idTourTurn: idTourTurn,
+    });
   }
 
   getPassengers(){
