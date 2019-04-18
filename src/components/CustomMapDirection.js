@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 
-import {handleCurrentRoute} from '../actions/index.js';
+import { handleCurrentRoute, handleCurrentRouteZoom } from '../actions/index.js';
 import { COLOR_MAIN,
          GOOGLE_MAPS_APIKEY,
          ERR_ALL_FIELD, ERR_CONFIRM_PASSWORD, SUCCESS_CHANGE_PASSWORD } from '../constants/index';
@@ -152,6 +152,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     handleCurrentRoute: handleCurrentRoute,
+    handleCurrentRouteZoom: handleCurrentRouteZoom,
   }, dispatch)
 }
 
