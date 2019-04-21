@@ -18,10 +18,13 @@ class BookingStage extends Component {
                   <Icon raised reverse name='check' type='font-awesome' color={stage>=3 ? COLOR_MAIN : 'gray'} size={20} containerStyle={styles.icon}/>
               </View>
               <View style={styles.line}>
+                  <View style={{flex: 1}}></View>
+                  <View style={stage>1 ? styles.passed : styles.notPass}></View>
                   <View style={stage>1 ? styles.passed : styles.notPass}></View>
                   <View style={stage>2 ? styles.passed : styles.notPass}></View>
+                  <View style={stage>2 ? styles.passed : styles.notPass}></View>
+                  <View style={{flex: 1}}></View>
               </View>
-
           </View>
 
       </View>
@@ -44,7 +47,6 @@ const styles = StyleSheet.create({
     width: deviceWidth,
     position: 'absolute',
     flexDirection: 'row',
-    paddingHorizontal: 60,
   },
   notPass: {
     backgroundColor: 'gray',
