@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Alert, AsyncStorage} from 'react-native';
 import { Button } from 'react-native-elements';
 import Moment from 'moment';
 import Geolocation from 'react-native-geolocation-service';
+import BackgroundTimer from 'react-native-background-timer';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -74,7 +75,7 @@ class Schedule extends Component {
                   this.setState({curLocation: responseJson.data[0]})
                   this.props.tourDetailCurrentRoute(responseJson.data[0]);
                 } else {
-                  this.setState({curLcation: null});
+                  this.setState({curLocation: null});
                   this.props.tourDetailCurrentRoute(null);
                 }
               }
@@ -105,7 +106,34 @@ class Schedule extends Component {
     return scheduleCards;
   }
 
+  updatePositionAndRoute(position){
+    console.log(position);
+    this.setState({initialPosition: position},()=>{
+      this.callGetCurrentRoute();
+    });
+  }
+
   componentWillMount(){
+    Geolocation.getCurrentPosition(
+        (position) => this.updatePositionAndRoute(position),
+        (error) => console.log(error.code, error.message),
+        { enableHighAccuracy: false, timeout: 15000 }
+    );
+
+    BackgroundTimer.runBackgroundTimer(() => {
+        Geolocation.getCurrentPosition(
+            (position) => this.updatePositionAndRoute(position),
+            (error) => console.log(error.code, error.message),
+            { enableHighAccuracy: false, timeout: 15000}
+        );
+        this.watchID = Geolocation.watchPosition(
+          (position) => this.updatePositionAndRoute(position),
+          (error) => console.log(error.code, error.message),
+          { enableHighAccuracy: false, timeout: 20000, distanceFilter: 1}
+        );
+      },
+    2000);
+
     const idTour = this.props.navigation.getParam("idTour");
     // this.callGetCurrentRoute();
     this.callGetRouteByTour(idTour);
@@ -136,29 +164,16 @@ class Schedule extends Component {
   // }
   componentDidMount(){
     Geolocation.getCurrentPosition(
-        (position) => {
-            console.log(position);
-            this.setState({initialPosition: position},()=>{
-              this.callGetCurrentRoute();
-            });
-        },
-        (error) => {
-            // See error code charts below.
-            console.log(error.code, error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      (position) => this.updatePositionAndRoute(position),
+      (error) => console.log(error.code, error.message),
+      { enableHighAccuracy: false, timeout: 15000 }
     );
 
-      this.watchID = Geolocation.watchPosition(
-        (position) => {
-          this.setState({ initialPosition: position },()=>{
-            this.callGetCurrentRoute();
-          });
-          console.log(position);
-        },
-        (error) => console.log(error.message),
-        { enableHighAccuracy: true, timeout: 20000, distanceFilter: 1}
-      );
+    this.watchID = Geolocation.watchPosition(
+      (position) => this.updatePositionAndRoute(position),
+      (error) => console.log(error.message),
+      { enableHighAccuracy: false, timeout: 20000, distanceFilter: 1}
+    );
   }
 
   componentWillUnmount(){
