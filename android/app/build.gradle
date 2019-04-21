@@ -135,6 +135,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-push-notification')
+    implementation project(':react-native-geolocation-service')
     implementation project(':react-native-restart')
     implementation project(':react-native-localization')
     implementation project(':react-native-svg')
