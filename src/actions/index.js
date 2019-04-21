@@ -244,3 +244,13 @@ export function recommendTourNewLocations(locations){
     locations,
   }
 }
+
+
+// current location
+export function currentLocationChange(lat, lng){
+  return {
+    type: types.CURRENT_LOCATION_CHANGE,
+    lat,
+    lng,
+  }
+}

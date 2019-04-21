@@ -14,6 +14,7 @@ import searchFilterReducer from './searchFilterReducer';
 import currentTourTurnReducer from './currentTourTurnReducer';
 import searchInfoReducer from './searchInfoReducer';
 import recommendTourReducer from './recommendTourReducer';
+import currentLocationReducer from './currentLocationReducer';
 
 const allReducers= combineReducers({
   region: regionReducer,
@@ -31,5 +32,6 @@ const allReducers= combineReducers({
   currentTourTurn: currentTourTurnReducer,
   searchInfo: searchInfoReducer,
   recommendTour: recommendTourReducer,
+  currentLocation: currentLocationReducer,
 });
 export default allReducers;
