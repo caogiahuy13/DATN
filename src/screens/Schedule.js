@@ -7,7 +7,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { tourDetailCurrentRoute } from '../actions/index.js';
+import { tourDetailCurrentRoute, currentLocationChange } from '../actions/index.js';
 import { getRouteByTour, getCurrentRoute } from '../services/api';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { } from '../services/function';
@@ -16,6 +16,7 @@ import localized from '../localization/index';
 import ScheduleCard from '../components/ScheduleCard';
 import InfoText from '../components/InfoText';
 import ScheduleMap from '../components/ScheduleMap';
+import PushNotification from '../components/PushNotification';
 
 class Schedule extends Component {
   static navigationOptions = {
@@ -31,7 +32,6 @@ class Schedule extends Component {
       curLocation: null,
 
       watchID: null,
-      initialPosition: 'unknown',
     }
   }
 
@@ -45,7 +45,8 @@ class Schedule extends Component {
   }
 
   async callGetCurrentRoute(){
-    const {initialPosition} = this.state;
+    const {currentLocation} = this.props;
+
     let date = new Date();
 
     let data = {
@@ -54,8 +55,8 @@ class Schedule extends Component {
       // lng: 27.368055,
       // cur_time: "2019-04-20T10:10:00.000"
       id: this.props.navigation.getParam("idTourTurn"),
-      lat: initialPosition.coords.latitude,
-      lng: initialPosition.coords.longitude,
+      lat: currentLocation.lat,
+      lng: currentLocation.lng,
       cur_time: date,
     }
     console.log(data);
@@ -73,9 +74,63 @@ class Schedule extends Component {
                 console.log(responseJson);
                 if (responseJson.data != null){
                   this.setState({curLocation: responseJson.data[0]})
+                  AsyncStorage.setItem("curLocation",JSON.stringify(responseJson.data[0]));
                   this.props.tourDetailCurrentRoute(responseJson.data[0]);
                 } else {
                   this.setState({curLocation: null});
+                  this.props.tourDetailCurrentRoute(null);
+                }
+              }
+            })
+            .catch((error) => console.error(error));
+  }
+
+  async callGetCurrentRouteBackground(){
+    const {currentLocation} = this.props;
+
+    let date = new Date();
+
+    let data = {
+      id: this.props.navigation.getParam("idTourTurn"),
+      lat: currentLocation.lat,
+      lng: currentLocation.lng,
+      cur_time: date,
+    }
+    console.log(data);
+
+    let status;
+    return getCurrentRoute(data)
+            .then((response) => {
+                status = response.status;
+                return response.json();
+              })
+            .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else if (status == 200){
+                console.log(responseJson);
+                if (responseJson.data != null){
+                  // this.setState({curLocation: responseJson.data[0]})
+                  let curLocation;
+                  AsyncStorage.getItem("curLocation")
+                              .then((value)=>{
+                                if (value !== null){
+                                  curLocation = JSON.parse(value);
+                                  if (curLocation.id != responseJson.data[0].id){
+                                    this.pushNotification(responseJson.data[0]);
+                                    console.log("KHAC");
+                                    console.log(curLocation.id + "-" + responseJson.data[0].id);
+                                  } else {
+                                    console.log(curLocation.id + "-" + responseJson.data[0].id);
+                                  }
+                                }
+                              })
+                              .then(()=>{
+                                AsyncStorage.setItem("curLocation",JSON.stringify(responseJson.data[0]));
+                              })
+                  this.props.tourDetailCurrentRoute(responseJson.data[0]);
+                } else {
+                  // this.setState({curLocation: null});
                   this.props.tourDetailCurrentRoute(null);
                 }
               }
@@ -108,8 +163,30 @@ class Schedule extends Component {
 
   updatePositionAndRoute(position){
     console.log(position);
-    this.setState({initialPosition: position},()=>{
-      this.callGetCurrentRoute();
+    this.props.currentLocationChange(position.coords.latitude, position.coords.longitude);
+    this.callGetCurrentRoute();
+  }
+
+  updatePositionAndRouteBackground(position){
+    console.log(position);
+    this.callGetCurrentRouteBackground();
+  }
+
+  pushNotification(data){
+    PushNotification.localNotification({
+      /* Android Only Properties */
+      id: Math.random () * 10000, // (optional) Valid unique 32 bit integer specified as string. default: Autogenerated Unique ID
+      largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+      smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+      bigText: data.location.description, // (optional) default: "message" prop
+      vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
+
+      /* iOS and Android properties */
+      title: localized.newLocation, // (optional)
+      message: data.location.name, // (required)
+      playSound: true, // (optional) default: true
+      soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+      repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
     });
   }
 
@@ -122,17 +199,17 @@ class Schedule extends Component {
 
     BackgroundTimer.runBackgroundTimer(() => {
         Geolocation.getCurrentPosition(
-            (position) => this.updatePositionAndRoute(position),
+            (position) => this.updatePositionAndRouteBackground(position),
             (error) => console.log(error.code, error.message),
             { enableHighAccuracy: false, timeout: 15000}
         );
         this.watchID = Geolocation.watchPosition(
-          (position) => this.updatePositionAndRoute(position),
+          (position) => this.updatePositionAndRouteBackground(position),
           (error) => console.log(error.code, error.message),
           { enableHighAccuracy: false, timeout: 20000, distanceFilter: 1}
         );
       },
-    2000);
+    3000);
 
     const idTour = this.props.navigation.getParam("idTour");
     // this.callGetCurrentRoute();
@@ -202,12 +279,13 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return{
     bookedTour: state.bookedTour,
-
+    currentLocation: state.currentLocation,
   };
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     tourDetailCurrentRoute: tourDetailCurrentRoute,
+    currentLocationChange: currentLocationChange,
   }, dispatch)
 }
 

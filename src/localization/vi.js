@@ -184,6 +184,9 @@ const vi = {
   // Review
   reviewSuccess: "Đánh giá của bạn đã được gửi",
 
+  // Schedule
+  newLocation: "Bạn vừa đến địa điểm mới",
+
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',
   ERR_PASSWORD: 'Vui lòng nhập mật khẩu',
   ERR_FULLNAME: 'Vui lòng nhập họ tên',

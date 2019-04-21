@@ -90,7 +90,7 @@ const en_us = {
   choseLocations: "Chose locations",
   getRecommendedTour: "Get recommended tour",
   recommendedTour: "Recommended tour",
-  
+
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",
@@ -184,6 +184,9 @@ const en_us = {
   // Review
   reviewSuccess: "Your review has been sent",
 
+  // Schedule
+  newLocation: "You have arrived to new location",
+  
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
   ERR_FULLNAME: 'Fullname is required',

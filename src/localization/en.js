@@ -184,7 +184,8 @@ const en = {
   // Review
   reviewSuccess: "Your review has been sent",
 
-
+  // Schedule
+  newLocation: "You have arrived to new location",
 
   ERR_USERNAME: 'Email or Phone number must be in right format',
   ERR_PASSWORD: 'Password is required',
