@@ -90,6 +90,8 @@ class BookingPayment extends Component {
   }
 
   render(){
+    const {payType} = this.state;
+
     return(
       <ScrollView style={styles.container}>
           <BookingStage stage={2}/>
@@ -102,7 +104,7 @@ class BookingPayment extends Component {
                       title={localized.checkout_payment.incash}
                       subTitle={localized.checkout_payment.sub_incash}
                       status={this.state.isPayInCashCollapsed}
-                      payType={this.state.payType}
+                      payType={payType}
                       index={1}
                       onPress={()=>this.togglePayInCash()}/>
             titleStyle={styles.cardTitle}
@@ -127,7 +129,7 @@ class BookingPayment extends Component {
                       title={localized.checkout_payment.transfer}
                       subTitle={localized.checkout_payment.sub_transfer}
                       status={this.state.isPayByTransferCollapsed}
-                      payType={this.state.payType}
+                      payType={payType}
                       index={2}
                       onPress={()=>this.togglePayByTransfer()}/>
             titleStyle={styles.cardTitle}
@@ -157,7 +159,7 @@ class BookingPayment extends Component {
                       title={localized.checkout_payment.online}
                       subTitle={localized.checkout_payment.sub_online}
                       status={this.state.isPayOnlineCollapsed}
-                      payType={this.state.payType}
+                      payType={payType}
                       index={3}
                       onPress={()=>this.togglePayOnline()}/>
             titleStyle={styles.cardTitle}
@@ -178,7 +180,7 @@ class BookingPayment extends Component {
           <Button
             title="NEXT"
             type="solid"
-            disabled = {this.state.payType == 0 ? true : false}
+            disabled = {(payType == 0 || payType == 3) ? true : false}
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
