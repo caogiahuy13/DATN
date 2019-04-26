@@ -25,18 +25,27 @@ class BookingPayment extends Component {
 
       isPayInCashCollapsed: true,
       isPayByTransferCollapsed: true,
+      isPayOnlineCollapsed: true,
     }
   }
 
   togglePayInCash(){
     this.setState({isPayInCashCollapsed: !this.state.isPayInCashCollapsed});
     this.setState({isPayByTransferCollapsed: true});
+    this.setState({isPayOnlineCollapsed: true});
     this.setState({payType: 1});
   }
   togglePayByTransfer(){
     this.setState({isPayByTransferCollapsed: !this.state.isPayByTransferCollapsed});
     this.setState({isPayInCashCollapsed: true});
+    this.setState({isPayOnlineCollapsed: true});
     this.setState({payType: 2});
+  }
+  togglePayOnline(){
+    this.setState({isPayOnlineCollapsed: !this.state.isPayOnlineCollapsed});
+    this.setState({isPayInCashCollapsed: true});
+    this.setState({isPayByTransferCollapsed: true});
+    this.setState({payType: 3});
   }
 
   onNextPress(){
@@ -46,6 +55,9 @@ class BookingPayment extends Component {
         info.payment = 'incash';
         break;
       case 2:
+        info.payment = 'bank';
+        break;
+      case 3:
         info.payment = 'bank';
         break;
     }
@@ -96,6 +108,36 @@ class BookingPayment extends Component {
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayByTransferCollapsed}>
+                <View>
+                  <Text style={{fontWeight: 'bold', marginBottom: 5}}>TRAVELTOUR BANKING ACCOUNT</Text>
+                  <Text style={{fontWeight: 'bold'}}>Note:</Text>
+                  <Text style={{color: 'red'}}>Please contact our staffs to confirm your booking before tranfering</Text>
+                  <Text>When you transfer money, the message should be</Text>
+                  <Text style={{fontWeight: 'bold'}}>"MT TourCode, Fullname, Content"</Text>
+                  <Text>For example: "MT 00001, Williams, Booking tour on website"</Text>
+                  <View style={{marginBottom: 10}}></View>
+                  <Text>Banking account of Travel Tour Company at Vietcombank Hồ Chí Minh City - VCB</Text>
+                  <Text>Account number: <Text style={{fontWeight: 'bold'}}>13422518A41</Text></Text>
+                  <View style={{marginBottom: 10}}></View>
+                  <Text>Thank you very much!</Text>
+                </View>
+              </Collapsible>
+          </Card>
+
+          <Space/>
+
+          <Card
+            containerStyle = {styles.cardContainer}
+            title=<CardTitle
+                      title="Pay by transfer money through banking"
+                      subTitle="After you transfer money successfully, our staff will contact you by email or telephone"
+                      status={this.state.isPayOnlineCollapsed}
+                      payType={this.state.payType}
+                      index={3}
+                      onPress={()=>this.togglePayOnline()}/>
+            titleStyle={styles.cardTitle}
+          >
+              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayOnlineCollapsed}>
                 <View>
                   <Text style={{fontWeight: 'bold', marginBottom: 5}}>TRAVELTOUR BANKING ACCOUNT</Text>
                   <Text style={{fontWeight: 'bold'}}>Note:</Text>
