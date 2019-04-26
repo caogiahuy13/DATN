@@ -11,7 +11,7 @@ import localized from '../localization/index';
 
 class Contact extends Component {
   static navigationOptions = {
-    title: localized.contact,
+    title: localized.contactScreen,
   };
 
   constructor(props){
@@ -107,8 +107,8 @@ class Contact extends Component {
               </MapView>
           </View>
 
-          <Text>Address: 162 Ba Tháng Hai, Phường 12, Quận 10</Text>
-          <Text>City: Hồ Chí Minh - Việt Nam</Text>
+          <Text><Text>{localized.contact.address}</Text>: 162 Ba Tháng Hai, Phường 12, Quận 10</Text>
+          <Text><Text>{localized.contact.city}</Text>: Hồ Chí Minh - Việt Nam</Text>
           <Info firstText={localized.phone} secondText="0963186896"/>
           <Info firstText={localized.email} secondText="traveltour@gmail.com"/>
           <Info firstText={localized.opening} secondText="9:00 AM"/>
@@ -118,34 +118,24 @@ class Contact extends Component {
           <Space/>
 
           <View>
-            <Text style={{fontWeight: 'bold'}}>DROP US A LINE</Text>
-            <Text>
-                Hãy liên hệ với chúng tôi để được tư vấn, giải đáp thắc mắc và đạt được những gì bạn mong đợi về một kì nghỉ mơ ước.
-            </Text>
+            <Text style={{fontWeight: 'bold'}}>{localized.contact.drop}</Text>
+            <Text>{localized.contact.drop_content}</Text>
           </View>
 
           <Space/>
 
           <View>
-            <Text style={{fontWeight: 'bold'}}>LIÊN HỆ TRỰC TIẾP</Text>
-            <Text>
-                Nếu bạn có vấn đề cần được giải đáp hãy liên hệ trực tiếp với chúng tôi, vui lòng xem thông tin bên dưới:
-            </Text>
+            <Text style={{fontWeight: 'bold'}}>{localized.contact.direct}</Text>
+            <Text>{localized.contact.direct_content}</Text>
           </View>
 
           <Space/>
 
           <View>
-            <Text style={{fontWeight: 'bold'}}>LIÊN HỆ QUA HỆ THỐNG WEBSITE</Text>
-            <Text>
-                Chúng tôi luôn đón nhận mọi sự góp ý, những vấn đề của quý khách cần được giải đáp.
-            </Text>
-            <Text>
-                Vui lòng sử dụng diễn đàn để đặt câu hỏi khi quý khách có vấn đề không giải quyết được. Đội ngũ nhân viên của chúng tôi sẽ giải đáp vấn đề của quý khách một cách nhanh chóng.
-            </Text>
-            <Text>
-                Để thực hiện việc liên hệ các bạn vui lòng điền vào theo form bên dưới
-            </Text>
+            <Text style={{fontWeight: 'bold'}}>{localized.contact.website}</Text>
+            <Text>- {localized.contact.website_1}</Text>
+            <Text>- {localized.contact.website_2}</Text>
+            <Text>- {localized.contact.website_3}</Text>
           </View>
 
           <Space/>
@@ -179,7 +169,7 @@ class Contact extends Component {
           { this.state.isError && <Text style={styles.errorText}>{this.state.err}</Text> }
 
           <TouchableOpacity style={styles.buttonLogin} onPress={() => {this.sendPress()}}>
-               <Text style={styles.buttonText}>{localized.sendNow}</Text>
+               <Text style={styles.buttonText}>{localized.sendNow.toUpperCase()}</Text>
           </TouchableOpacity>
 
         </View>

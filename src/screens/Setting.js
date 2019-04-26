@@ -262,7 +262,7 @@ class Setting extends Component {
   getLanguage(){
     return this.state.language;
   }
-  
+
   render() {
     if (this.state.isLogedIn == false){
       return(
@@ -422,7 +422,7 @@ class Setting extends Component {
           // leftIcon=<Icon name='info' type='octicon' color='gray'/>
         />
         <ListItem
-          title={localized.contact}
+          title={localized.contactScreen}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.props.navigation.navigate("Contact")}}
           containerStyle={styles.listItemContainer}
@@ -436,7 +436,7 @@ class Setting extends Component {
           rightIcon={<Chevron/>}
         />
         <ListItem
-          title={localized.faq}
+          title={localized.faqScreen}
           rightTitleStyle={{ fontSize: 15}}
           onPress={() => {this.props.navigation.navigate("Faq")}}
           containerStyle={styles.listItemContainer}
