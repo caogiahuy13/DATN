@@ -6,6 +6,11 @@ export const API_CMS_URL='http://10.0.3.2:8080/wordpress/wp-json/wp/v2/';
 export const GOOGLE_MAPS_APIKEY = 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q';
 export const GOOGLE_MAPS_APIKEY_TWO = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
 
+export const CLIENT_ID_PAYPAL='AYrDxkvR5mFtEM1-cEJLd0DDlgghEBW1Srvh_PCG8sWtGRg3BOBH4_3xfA-vJL9FNDKBEX2aWX7qBCJu';
+export const SECRET_PAYPAL='EGPWpcoAadmvCGr9WWPI_GWIbj9L22KPU8z667Ennma0jtYEXg2-fwZzGik1cj9p7Up5eCytlr4D8eC8';
+export const API_CONVERT_CURRENCY='http://apilayer.net/api/';
+export const KEY_CONVERT_CURRENCY='ae1a0d9d784ff23a851f3502b24eacf2';
+
 export const COLOR_MAIN = '#324a5e';
 export const COLOR_GREEN = '#1BBC9B';
 export const COLOR_LIGHT_BLACK = '#43484D'; // default color for card title 'react-native-elements'

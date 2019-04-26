@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Card, Icon, ListItem, Button, Divider } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
+import PayPal from 'react-native-paypal-wrapper';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE } from '../constants/index';
+import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE,
+         CLIENT_ID_PAYPAL
+} from '../constants/index';
 import { bookingChangeInfo } from '../actions/index';
 import localized from '../localization/index';
+import { getRateCurrency } from '../services/apiWordpress';
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
@@ -58,12 +62,31 @@ class BookingPayment extends Component {
         info.payment = 'bank';
         break;
       case 3:
-        info.payment = 'bank';
+        info.payment = 'online';
         break;
     }
 
     this.props.bookingChangeInfo(info);
     this.props.navigation.navigate("BookingConfirmation");
+  }
+
+  paypalPress(){
+    const {booking} = this.props;
+
+    getRateCurrency().then((res)=>{
+      priceUSD = Math.round(booking.info.total_pay/res.quotes.USDVND * 100)/100;
+
+      PayPal.initialize(PayPal.SANDBOX, CLIENT_ID_PAYPAL);
+      PayPal.pay({
+        price: priceUSD.toString(),
+        currency: 'USD',
+        description: 'Your description goes here',
+      }).then(confirm => {
+          console.log(confirm);
+          this.onNextPress();
+        })
+        .catch(error => console.log(error));
+    })
   }
 
   render(){
@@ -76,8 +99,8 @@ class BookingPayment extends Component {
           <Card
             containerStyle = {styles.cardContainer}
             title=<CardTitle
-                      title="Pay in cash at Travel Tour Office"
-                      subTitle="Please come to Travel Tour Office for payment and receive ticket"
+                      title={localized.checkout_payment.incash}
+                      subTitle={localized.checkout_payment.sub_incash}
                       status={this.state.isPayInCashCollapsed}
                       payType={this.state.payType}
                       index={1}
@@ -86,10 +109,12 @@ class BookingPayment extends Component {
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayInCashCollapsed}>
                 <View>
-                  <Text style={{marginBottom: 5, fontWeight: 'bold'}}>TRAVELTOUR OFFICE</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>Address:</Text> 162 Ba Tháng Hai, Phường 12, Quận 10, TP.HCM</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>Phone number:</Text> 0963186896</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>Email:</Text> traveltour@gmail.com</Text>
+                  <Text style={{marginBottom: 5, fontWeight: 'bold'}}>{localized.checkout_payment.office}</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.address}:</Text> 162 Ba Tháng Hai, Phường 12, Quận 10, TP.HCM</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.phone}:</Text> 0963186896</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.email}:</Text> traveltour@gmail.com</Text>
+                  <Text></Text>
+                  <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.note_pay}</Text>
                 </View>
               </Collapsible>
           </Card>
@@ -99,8 +124,8 @@ class BookingPayment extends Component {
           <Card
             containerStyle = {styles.cardContainer}
             title=<CardTitle
-                      title="Pay by transfer money through banking"
-                      subTitle="After you transfer money successfully, our staff will contact you by email or telephone"
+                      title={localized.checkout_payment.transfer}
+                      subTitle={localized.checkout_payment.sub_transfer}
                       status={this.state.isPayByTransferCollapsed}
                       payType={this.state.payType}
                       index={2}
@@ -109,17 +134,17 @@ class BookingPayment extends Component {
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayByTransferCollapsed}>
                 <View>
-                  <Text style={{fontWeight: 'bold', marginBottom: 5}}>TRAVELTOUR BANKING ACCOUNT</Text>
-                  <Text style={{fontWeight: 'bold'}}>Note:</Text>
-                  <Text style={{color: 'red'}}>Please contact our staffs to confirm your booking before tranfering</Text>
-                  <Text>When you transfer money, the message should be</Text>
-                  <Text style={{fontWeight: 'bold'}}>"MT TourCode, Fullname, Content"</Text>
-                  <Text>For example: "MT 00001, Williams, Booking tour on website"</Text>
+                  <Text style={{fontWeight: 'bold', marginBottom: 5}}>{localized.checkout_payment.account}</Text>
+                  <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.note}:</Text>
+                  <Text style={{color: 'red'}}>{localized.checkout_payment.note_content}</Text>
+                  <Text>{localized.checkout_payment.formula}</Text>
+                  <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.formula_content}</Text>
+                  <Text>{localized.checkout_payment.ex}</Text>
                   <View style={{marginBottom: 10}}></View>
-                  <Text>Banking account of Travel Tour Company at Vietcombank Hồ Chí Minh City - VCB</Text>
-                  <Text>Account number: <Text style={{fontWeight: 'bold'}}>13422518A41</Text></Text>
+                  <Text>{localized.checkout_payment.bank}</Text>
+                  <Text>{localized.checkout_payment.account_number}</Text>
                   <View style={{marginBottom: 10}}></View>
-                  <Text>Thank you very much!</Text>
+                  <Text>{localized.checkout_payment.thank}</Text>
                 </View>
               </Collapsible>
           </Card>
@@ -129,8 +154,8 @@ class BookingPayment extends Component {
           <Card
             containerStyle = {styles.cardContainer}
             title=<CardTitle
-                      title="Pay by transfer money through banking"
-                      subTitle="After you transfer money successfully, our staff will contact you by email or telephone"
+                      title={localized.checkout_payment.online}
+                      subTitle={localized.checkout_payment.sub_online}
                       status={this.state.isPayOnlineCollapsed}
                       payType={this.state.payType}
                       index={3}
@@ -138,19 +163,13 @@ class BookingPayment extends Component {
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayOnlineCollapsed}>
-                <View>
-                  <Text style={{fontWeight: 'bold', marginBottom: 5}}>TRAVELTOUR BANKING ACCOUNT</Text>
-                  <Text style={{fontWeight: 'bold'}}>Note:</Text>
-                  <Text style={{color: 'red'}}>Please contact our staffs to confirm your booking before tranfering</Text>
-                  <Text>When you transfer money, the message should be</Text>
-                  <Text style={{fontWeight: 'bold'}}>"MT TourCode, Fullname, Content"</Text>
-                  <Text>For example: "MT 00001, Williams, Booking tour on website"</Text>
-                  <View style={{marginBottom: 10}}></View>
-                  <Text>Banking account of Travel Tour Company at Vietcombank Hồ Chí Minh City - VCB</Text>
-                  <Text>Account number: <Text style={{fontWeight: 'bold'}}>13422518A41</Text></Text>
-                  <View style={{marginBottom: 10}}></View>
-                  <Text>Thank you very much!</Text>
-                </View>
+                  <Icon
+                    name='cc-paypal'
+                    type='font-awesome'
+                    size={40}
+                    color={COLOR_LIGHT_BLUE}
+                    onPress={()=>{this.paypalPress()}}
+                  />
               </Collapsible>
           </Card>
 

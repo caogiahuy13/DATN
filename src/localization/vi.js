@@ -187,6 +187,38 @@ const vi = {
   // Schedule
   newLocation: "Bạn vừa đến địa điểm mới",
 
+  // Booking payment
+  checkout_payment: {
+    title: "PHƯƠNG THỨC THANH TOÁN",
+    sub_title: "Hãy chọn một trong các phương thức thanh toán dưới đây:",
+    incash: "Thanh toán tiền mặt tại văn phòng Travel Tour",
+    sub_incash: "Hãy đến văn phòng Travel Tour để thanh toán và nhận vé",
+    office: "VĂN PHÒNG TRAVEL TOUR",
+    address: "Địa chỉ",
+    phone: "Số điện thoại",
+    transfer: "Chuyển khoản ngân hàng",
+    sub_transfer: "Sau khi chuyển tiền thành công, nhân viên của chúng tôi sẽ liên lạc với bạn qua điện thoại hoặc email",
+    online: "Thánh toán qua Paypal",
+    sub_online: "Sau khi thanh toán thành công, hệ thống Travel Tour sẽ gửi vé điện tử của quý khách qua email",
+    pay_success: "Quý đã thanh toán thành công, hãy nhấn vào nút \"ĐẶT TOUR\" ở bên dưới để hoàn tất việc đặt tour",
+    pay_fail: "Quý chưa thanh toán qua Paypal thành công, vui lòng thanh toán để hoàn thành việc đặt tour",
+    account: "TÀI KHOẢN NGÂN HÀNG CỦA TRAVEL TOUR",
+    note: "Lưu ý",
+    note_content: "Hãy liên hệ với nhân viên của chúng tôi trước khi thực hiện chuyển khoản",
+    formula: "Khi bạn thực hiện chuyển khoản, cú pháp tin nhắn như sau:",
+    formula_content: "\"MT Mã Tour, Tên đầy đủ, Nội dung\"",
+    ex: "Ví dụ: \"MT 00001, Williams, Đặt tour trên website\"",
+    bank: "Tài khoản ngân hảng của Travel Tour tại Vietcombank, Thành phố Hồ Chí Minh - VCB",
+    account_number: "Số tài khoản: 13422518A41",
+    thank: "Cảm ơn quý khách!",
+    back: "QUAY LẠI",
+    book: "ĐẶT TOUR",
+    choose_method: "Hãy chọn một phương thức thanh toán!",
+    error: "Có lỗi xảy ra, xin hãy đặt tour lại!",
+    full_slot: "Tour này đã hết chỗ, quý khách vui lòng đặt tour khác!",
+    note_pay: "Quý khách vui lòng thanh toán trước 1 tuần tour khởi hành. Nếu đặt tour trong vòng 1 tuần trước khi khởi hành thì hạn chót thanh toán là 3 ngày trước khi tour khởi hành, sau đó nếu chưa thanh toán thì bên công ty sẽ hủy tour của quý khách"
+  },
+
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',
   ERR_PASSWORD: 'Vui lòng nhập mật khẩu',
   ERR_FULLNAME: 'Vui lòng nhập họ tên',

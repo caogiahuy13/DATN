@@ -3,6 +3,7 @@ package com.datn;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.taessina.paypal.RNPaypalWrapperPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
@@ -44,6 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNPaypalWrapperPackage(),
             new BackgroundTimerPackage(),
             new ReactNativePushNotificationPackage(),
             new RNFusedLocationPackage(),

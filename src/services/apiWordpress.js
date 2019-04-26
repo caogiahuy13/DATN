@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { HOST, API_CMS_URL, mainCategoriesList } from '../constants/index';
+import { HOST, API_CMS_URL, API_CONVERT_CURRENCY, KEY_CONVERT_CURRENCY, mainCategoriesList } from '../constants/index';
 
 
 function checkStatus(response) {
@@ -36,6 +36,11 @@ function httpWPGet(url) {
     .then((response) => {
       return response.json()
     })
+}
+
+export function getRateCurrency(){
+  let url = API_CONVERT_CURRENCY + `live?access_key=${KEY_CONVERT_CURRENCY}&currencies=USD,VND&format=1`
+  return httpWPGet(url)
 }
 
 function _getCategory(data) {
