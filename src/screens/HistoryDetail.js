@@ -13,6 +13,7 @@ import { capitalize, priceFormat, dateFormat, getGenderShow,
 import localized from '../localization/index';
 
 import InfoText from '../components/InfoText';
+import CancelTourCondition from '../components/CancelTourCondition';
 
 class HistoryDetail extends Component {
   static navigationOptions = {
@@ -105,8 +106,8 @@ class HistoryDetail extends Component {
 
         <Text></Text>
         <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.termsCondition}</Text>
-        <ScrollView style={{height: 100, padding: 10, borderWidth: 0.5, borderColor: 'gray'}}>
-            <Text>{localized.CANCEL_BOOKING_TERMS_CONDITION}</Text>
+        <ScrollView style={{height: 100, padding: 10, marginBottom: 10, borderWidth: 0.5, borderColor: 'gray'}}>
+            <CancelTourCondition/>
         </ScrollView>
         <CheckBox
           title={localized.agreeCondition}
@@ -179,13 +180,26 @@ class HistoryDetail extends Component {
     return passengerPrice;
   }
 
-  isTourStarted(){
+  isInTour(){
     const {tourInfo} = this.state;
 
+    if (tourInfo) return false;
+
     let startDate = tourInfo ? new Date(tourInfo.start_date) : new Date();
+    let endDate = tourInfo ? new Date(tourInfo.end_date) : new Date();
+
     var curDate = new Date();
 
-    return (curDate >= startDate) ? true : false;
+    return (curDate >= startDate && curDate <= endDate) ? true : false;
+  }
+
+  isTourEnd(){
+    const {tourInfo} = this.state;
+
+    let endDate = tourInfo ? new Date(tourInfo.end_date) : new Date();
+    var curDate = new Date();
+
+    return (curDate <= endDate) ? true : false;
   }
 
   componentWillMount(){
@@ -251,7 +265,7 @@ class HistoryDetail extends Component {
         </View>
 
         <View style={{padding: 16}}>
-            { this.isTourStarted() && /*info.status == 'paid' &&*/
+            { this.isInTour() && /*info.status == 'paid' &&*/
               <Button
                 title={localized.schedule.toUpperCase()}
                 type="solid"
@@ -262,14 +276,17 @@ class HistoryDetail extends Component {
               />
             }
 
-            <Button
-              title={localized.cancelTour.toUpperCase()}
-              type="solid"
-              buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
-              containerStyle={{paddingBottom: 4, borderRadius: 0}}
-              titleStyle={{fontSize: 16}}
-              onPress={()=>{this._showCancelModal(true)}}
-            />
+            { this.isTourEnd() &&
+              <Button
+                title={localized.cancelTour.toUpperCase()}
+                type="solid"
+                buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
+                containerStyle={{paddingBottom: 4, borderRadius: 0}}
+                titleStyle={{fontSize: 16}}
+                onPress={()=>{this._showCancelModal(true)}}
+              />
+            }
+
         </View>
 
 
