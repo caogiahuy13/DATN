@@ -181,6 +181,7 @@ class TourDetail extends Component{
       isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed, isPolicyCollapsed,
     } = this.state;
 
+    console.log(currentTurn);
     return(
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
         <ScrollView>
@@ -286,12 +287,14 @@ class TourDetail extends Component{
 
         </ScrollView>
 
-        <Button
-          buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
-          title={localized.bookTour.toUpperCase()}
-          onPress={()=>{this.onBookNowPress()}}
-          titleStyle={{fontSize: 18, fontWeight: 'bold'}}
-        />
+        { currentTurn.isAllowBooking &&
+          <Button
+            buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
+            title={localized.bookTour.toUpperCase()}
+            onPress={()=>{this.onBookNowPress()}}
+            titleStyle={{fontSize: 18, fontWeight: 'bold'}}
+          />
+        }
       </View>
     );
   }
