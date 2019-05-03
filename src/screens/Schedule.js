@@ -73,9 +73,9 @@ class Schedule extends Component {
               } else if (status == 200){
                 console.log(responseJson);
                 if (responseJson.data != null){
-                  this.setState({curLocation: responseJson.data[0]})
-                  AsyncStorage.setItem("curLocation",JSON.stringify(responseJson.data[0]));
-                  this.props.tourDetailCurrentRoute(responseJson.data[0]);
+                  this.setState({curLocation: responseJson.data})
+                  AsyncStorage.setItem("curLocation",JSON.stringify(responseJson.data));
+                  this.props.tourDetailCurrentRoute(responseJson.data);
                 } else {
                   this.setState({curLocation: null});
                   this.props.tourDetailCurrentRoute(null);
@@ -110,25 +110,25 @@ class Schedule extends Component {
               } else if (status == 200){
                 console.log(responseJson);
                 if (responseJson.data != null){
-                  // this.setState({curLocation: responseJson.data[0]})
+                  // this.setState({curLocation: responseJson.data})
                   let curLocation;
                   AsyncStorage.getItem("curLocation")
                               .then((value)=>{
                                 if (value !== null){
                                   curLocation = JSON.parse(value);
-                                  if (curLocation.id != responseJson.data[0].id){
-                                    this.pushNotification(responseJson.data[0]);
+                                  if (curLocation.id != responseJson.data.id){
+                                    this.pushNotification(responseJson.data);
                                     console.log("KHAC");
-                                    console.log(curLocation.id + "-" + responseJson.data[0].id);
+                                    console.log(curLocation.id + "-" + responseJson.data.id);
                                   } else {
-                                    console.log(curLocation.id + "-" + responseJson.data[0].id);
+                                    console.log(curLocation.id + "-" + responseJson.data.id);
                                   }
                                 }
                               })
                               .then(()=>{
-                                AsyncStorage.setItem("curLocation",JSON.stringify(responseJson.data[0]));
+                                AsyncStorage.setItem("curLocation",JSON.stringify(responseJson.data));
                               })
-                  this.props.tourDetailCurrentRoute(responseJson.data[0]);
+                  this.props.tourDetailCurrentRoute(responseJson.data);
                 } else {
                   // this.setState({curLocation: null});
                   this.props.tourDetailCurrentRoute(null);

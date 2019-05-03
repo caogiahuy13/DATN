@@ -14,8 +14,8 @@ class ScheduleMapDirection extends Component{
     let allCoordinates = [];
     for (let i=0; i<data.length; i++){
       allCoordinates.push({
-        latitude: data[i].location.latitude,
-        longitude: data[i].location.longitude,
+        latitude: parseFloat(data[i].location.latitude),
+        longitude: parseFloat(data[i].location.longitude),
       });
     }
     return allCoordinates;
@@ -59,15 +59,15 @@ class ScheduleMapDirection extends Component{
 
     for (let i=0; i<data.length; i++){
       smallCoordinates.push({
-        latitude: data[i].location.latitude,
-        longitude: data[i].location.longitude,
+        latitude: parseFloat(data[i].location.latitude),
+        longitude: parseFloat(data[i].location.longitude),
       });
       count++;
 
       if (isAfterAirways){
         smallAirways.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
+          latitude: parseFloat(data[i].location.latitude),
+          longitude: parseFloat(data[i].location.longitude),
         });
 
         airways.push(smallAirways);
@@ -77,8 +77,8 @@ class ScheduleMapDirection extends Component{
 
       if (data[i].transport.id == 3){
         smallAirways.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
+          latitude: parseFloat(data[i].location.latitude),
+          longitude: parseFloat(data[i].location.longitude),
         });
 
         coordinates.push(smallCoordinates);
@@ -92,8 +92,8 @@ class ScheduleMapDirection extends Component{
         coordinates.push(smallCoordinates);
         smallCoordinates = [];
         smallCoordinates.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
+          latitude: parseFloat(data[i].location.latitude),
+          longitude: parseFloat(data[i].location.longitude),
         });
       }
     }

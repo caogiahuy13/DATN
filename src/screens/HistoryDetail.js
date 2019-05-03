@@ -183,7 +183,7 @@ class HistoryDetail extends Component {
   isInTour(){
     const {tourInfo} = this.state;
 
-    if (tourInfo) return false;
+    if (!tourInfo) return false;
 
     let startDate = tourInfo ? new Date(tourInfo.start_date) : new Date();
     let endDate = tourInfo ? new Date(tourInfo.end_date) : new Date();
@@ -200,6 +200,15 @@ class HistoryDetail extends Component {
     var curDate = new Date();
 
     return (curDate <= endDate) ? true : false;
+  }
+
+  isTourStarted(){
+    const {tourInfo} = this.state;
+
+    let startDate = tourInfo ? new Date(tourInfo.start_date) : new Date();
+    var curDate = new Date();
+
+    return (curDate < startDate) ? false : true;
   }
 
   componentWillMount(){
@@ -276,7 +285,7 @@ class HistoryDetail extends Component {
               />
             }
 
-            { this.isTourEnd() &&
+            { !this.isTourStarted() &&
               <Button
                 title={localized.cancelTour.toUpperCase()}
                 type="solid"

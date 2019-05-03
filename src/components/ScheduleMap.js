@@ -34,8 +34,8 @@ class ScheduleMap extends Component {
       position => {
         this.setState({
           region: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            latitude: parseFloat(position.coords.latitude),
+            longitude: parseFloat(position.coords.longitude),
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
