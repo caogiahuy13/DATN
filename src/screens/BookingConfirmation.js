@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, TextInput, ScrollView, AsyncStorage, Alert } from 'react-native';
 import { Card, Icon, Button, Divider } from 'react-native-elements';
 import Moment from 'moment';
-import axios from 'axios';
+import { StackActions, NavigationActions } from 'react-navigation';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -45,7 +45,13 @@ class BookingConfirmation extends Component {
                   localized.congratulation,
                   localized.successBooking,
                   [
-                    {text: localized.ok, onPress: () => this.props.navigation.navigate("Tours")},
+                    {
+                      text: localized.ok,
+                      onPress: () => {
+                        this.props.navigation.dispatch(StackActions.popToTop());
+                        // this.props.navigation.navigate("Tours")
+                      }
+                    },
                   ],
                   {cancelable: false},
                 );
