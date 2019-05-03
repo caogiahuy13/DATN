@@ -175,7 +175,10 @@ class TourDetailMapMarker extends Component{
         <View>
           { (this.props.tourDetail.showMarker || this._isInRoute(val.id)>=0 ) &&
             <Marker
-              coordinate={{latitude: val.latitude, longitude: val.longitude}}
+              coordinate={{
+                latitude: parseFloat(val.latitude),
+                longitude: parseFloat(val.longitude)
+              }}
               onPress={() => {this._onMarkerPress()}}
               // tracksViewChanges={{this.state.tracksViewChanges}
               tracksViewChanges={false}

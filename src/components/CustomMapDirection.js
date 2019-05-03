@@ -10,8 +10,8 @@ import { COLOR_MAIN,
          GOOGLE_MAPS_APIKEY,
          ERR_ALL_FIELD, ERR_CONFIRM_PASSWORD, SUCCESS_CHANGE_PASSWORD } from '../constants/index';
 
-const origin = {latitude: 10.762864, longitude: 106.682229};
-const destination = {latitude: 10.773831, longitude: 106.704895};
+// const origin = {latitude: 10.762864, longitude: 106.682229};
+// const destination = {latitude: 10.773831, longitude: 106.704895};
 
 class CustomMapDirection extends Component{
   constructor(props){
@@ -24,8 +24,8 @@ class CustomMapDirection extends Component{
   getCoordinates(){
     return this.props.currentRoute.data.map((val,key)=>{
       return{
-        latitude: val.location.latitude,
-        longitude: val.location.longitude
+        latitude: parseFloat(val.location.latitude),
+        longitude: parseFloat(val.location.longitude)
       }
     });
   }
@@ -42,20 +42,20 @@ class CustomMapDirection extends Component{
 
     for (let i=0; i<data.length; i++){
       allCoordinates.push({
-        latitude: data[i].location.latitude,
-        longitude: data[i].location.longitude,
+        latitude: parseFloat(data[i].location.latitude),
+        longitude: parseFloat(data[i].location.longitude),
       });
 
       smallCoordinates.push({
-        latitude: data[i].location.latitude,
-        longitude: data[i].location.longitude,
+        latitude: parseFloat(data[i].location.latitude),
+        longitude: parseFloat(data[i].location.longitude),
       });
       count++;
 
       if (isAfterAirways){
         smallAirways.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
+          latitude: parseFloat(data[i].location.latitude),
+          longitude: parseFloat(data[i].location.longitude),
         });
 
         airways.push(smallAirways);
@@ -65,8 +65,8 @@ class CustomMapDirection extends Component{
 
       if (data[i].transport.id == 3){
         smallAirways.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
+          latitude: parseFloat(data[i].location.latitude),
+          longitude: parseFloat(data[i].location.longitude),
         });
 
         coordinates.push(smallCoordinates);
@@ -80,8 +80,8 @@ class CustomMapDirection extends Component{
         coordinates.push(smallCoordinates);
         smallCoordinates = [];
         smallCoordinates.push({
-          latitude: data[i].location.latitude,
-          longitude: data[i].location.longitude,
+          latitude: parseFloat(data[i].location.latitude),
+          longitude: parseFloat(data[i].location.longitude),
         });
       }
     }

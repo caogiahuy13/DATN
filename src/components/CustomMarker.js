@@ -195,8 +195,8 @@ class CustomMarker extends Component{
           { filterLocation.filterTypes[val.type.id] &&
             <Marker
               coordinate={{
-                latitude: val.latitude,
-                longitude: val.longitude,
+                latitude: parseFloat(val.latitude),
+                longitude: parseFloat(val.longitude),
               }}
               onPress={() => {this._onMarkerPress()}}
               tracksViewChanges={this.state.tracksViewChanges}
