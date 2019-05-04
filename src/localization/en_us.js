@@ -90,6 +90,7 @@ const en_us = {
   choseLocations: "Chose locations",
   getRecommendedTour: "Get recommended tour",
   recommendedTour: "Recommended tour",
+  noTourFound: "No tour is found",
 
   // Address modal
   addressModalLabel: "Enter address",

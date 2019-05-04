@@ -396,3 +396,17 @@ export async function getTourTurnByType(id, page = 1, limit = 4){
   let URL = HOST + `tour_classification/getTourTurnByType/${id}?page=${page}&per_page=${limit}`
   return await fetch(URL);
 }
+
+export async function getRecommendation(isUniqueTour=false,data={}){
+  let URL = HOST + `tour_turn/getRecommendation?isUniqueTour=${isUniqueTour}`
+  return await fetch(URL, {
+                            method: 'POST',
+                            headers: {
+                              Accept: 'application/json',
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              locations: data.locations,
+                            }),
+                          })
+}

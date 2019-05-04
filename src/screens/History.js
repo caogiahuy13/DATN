@@ -20,6 +20,7 @@ class History extends Component {
     super(props);
     this.state = {
       bookedTour: [],
+      hasLoad: false,
     }
   }
 
@@ -70,7 +71,10 @@ class History extends Component {
   }
 
   componentWillMount(){
-    this.callGetHistoryByUser();
+    this.callGetHistoryByUser()
+        .then(()=>{
+          this.setState({hasLoad: true});
+        })
   }
 
   render() {
@@ -89,7 +93,7 @@ class History extends Component {
       )
     });
 
-    if (index == 0){
+    if (index == 0 && this.state.hasLoad){
       history = this.getNoTourView();
     }
 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, StyleSheet, ActivityIndicator, Image, FlatList} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import { COLOR_GRAY_BACKGROUND, COLOR_MAIN } from '../constants/index';
-import { getAllTourTurn } from '../services/api';
+import { getAllTourTurn, getRecommendation } from '../services/api';
 import localized from '../localization/index';
 
 import TourCard from '../components/TourCard';
@@ -22,6 +24,7 @@ class RecommendedTour extends Component {
       nextPage: 1,
       tours: [],
       isFirstLoad: false,
+      hasLoadTour: false,
     }
   }
 
@@ -33,7 +36,6 @@ class RecommendedTour extends Component {
     return getAllTourTurn(data)
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
             this.setState({
               tours: [...this.state.tours, ...responseJson.data],
               nextPage: responseJson.next_page,
@@ -43,9 +45,27 @@ class RecommendedTour extends Component {
           .catch((error) => console.error(error))
   }
 
+  callGetRecommendation(){
+    let data = {
+      locations: this.props.recommendTour.locations,
+    };
+    return getRecommendation(false,data)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson);
+            this.setState({
+              tours: responseJson.data,
+              nextPage: responseJson.next_page,
+              isLoading: false,
+            })
+          })
+          .catch((error) => console.error(error))
+  }
+
   onLoadMore(){
     this.setState({isLoading: true});
-    this.callGetAllTourTurn();
+    // this.callGetAllTourTurn();
+    this.callGetRecommendation();
   }
 
   tourDetailPress = (id) => {
@@ -60,11 +80,26 @@ class RecommendedTour extends Component {
 
   componentDidMount() {
     this.setState({isFirstLoad: true});
-    this.callGetAllTourTurn();
+    // this.callGetAllTourTurn();
+
+    this.callGetRecommendation()
+        .then(()=>{
+          this.setState({hasLoadTour: true});
+        })
   }
 
   render(){
-    const {isLoading, tours, nextPage } = this.state;
+    const {isLoading, tours, nextPage, hasLoadTour } = this.state;
+
+    if (tours.length <= 0 && hasLoadTour == true){
+      return(
+        <View>
+            <Text style={{padding: 16, color: 'red'}}>
+              {localized.noTourFound}
+            </Text>
+        </View>
+      )
+    }
 
     return(
       <ScrollView style={styles.container}>
@@ -83,7 +118,7 @@ class RecommendedTour extends Component {
                 </View>
               }
 
-              { tours.length > 0 && nextPage != -1 &&
+              {/* tours.length > 0 && nextPage != -1 &&
                 <Button
                   title={localized.showMore.toUpperCase()}
                   type="solid"
@@ -92,7 +127,7 @@ class RecommendedTour extends Component {
                   titleStyle={{fontSize: 16}}
                   onPress={()=>{this.onLoadMore()}}
                 />
-              }
+              */}
           </View>
       </ScrollView>
     )
@@ -106,4 +141,15 @@ const styles = StyleSheet.create({
   },
 })
 
-export default RecommendedTour;
+function mapStateToProps(state){
+  return{
+    recommendTour: state.recommendTour,
+  };
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecommendedTour);

@@ -90,6 +90,7 @@ const vi = {
   choseLocations: "Địa điểm đã chọn",
   getRecommendedTour: "Lấy tour gợi ý",
   recommendedTour: "Tour gợi ý",
+  noTourFound: "Không tìm thấy tour thích hợp",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
