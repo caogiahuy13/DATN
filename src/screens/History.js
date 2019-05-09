@@ -99,7 +99,7 @@ class History extends Component {
 
     return (
       <View style={styles.container}>
-        {history}
+          {history}
       </View>
     );
   }
