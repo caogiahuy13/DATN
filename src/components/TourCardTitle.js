@@ -18,11 +18,12 @@ class TourCardTitle extends Component{
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
               { typeof(rating) != 'undefined' && <TourRating rating={rating} size={14}/>}
+              { rating == 0 && <Text style={{marginLeft: 6}}>{localized.not_rated}</Text>}
               { typeof(view) != 'undefined' &&
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Icon name='eye' type='entypo' color='gray' size={14} containerStyle={{marginLeft: 8}}/>
                   <Text style={{marginLeft: 6}}>{view} {localized.view}</Text>
-                  </View>
+                </View>
               }
           </View>
           { isSale &&

@@ -91,7 +91,8 @@ const vi = {
   getRecommendedTour: "Lấy tour gợi ý",
   recommendedTour: "Tour gợi ý",
   noTourFound: "Không tìm thấy tour thích hợp",
-
+  not_rated: "Chưa đánh giá",
+  
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
   addressModalDescription: "Vui lòng nhập địa chỉ",

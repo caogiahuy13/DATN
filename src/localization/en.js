@@ -91,7 +91,8 @@ const en = {
   getRecommendedTour: "Get recommended tour",
   recommendedTour: "Recommended tour",
   noTourFound: "No tour is found",
-  
+  not_rated: "Not yet rated",
+
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",
