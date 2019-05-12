@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList} from 'react-native';
-import { Divider } from 'react-native-elements';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList, Image} from 'react-native';
+import { Divider, Button } from 'react-native-elements';
+import RNPickerSelect from 'react-native-picker-select';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -8,6 +9,8 @@ import { getHistoryByUser, getPassengerInBookTourHistory, getHistoryBookTourById
 import { bookedTourGetInfo, bookedTourGetPassengers } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 import localized from '../localization/index';
+
+import { historySortBy, placeHolderSortBy } from '../constants/search';
 
 import HistoryCard from '../components/HistoryCard';
 
@@ -21,6 +24,12 @@ class History extends Component {
     this.state = {
       bookedTour: [],
       hasLoad: false,
+
+      sortBy: null,
+      count: 0,
+      per_page: 4,
+      isLoading: false,
+      hasLoadAll: false,
     }
   }
 
@@ -42,6 +51,10 @@ class History extends Component {
           .then((response) => response.json())
           .then((responseJson) => {
             this.setState({bookedTour: responseJson.data});
+            let num = this.state.count + this.state.per_page;
+            if (num >= responseJson.data.length){
+              this.setState({hasLoadAll: true});
+            }
           })
           .catch((error) => console.error(error));
   }
@@ -70,23 +83,67 @@ class History extends Component {
     )
   }
 
-  componentWillMount(){
-    this.callGetHistoryByUser()
-        .then(()=>{
-          this.setState({hasLoad: true});
-        })
+  getData(){
+    let data = this.state.bookedTour;
+    let {sortBy} = this.state;
+
+    if (sortBy == 'bookDayDesc'){
+      data.sort((a, b) => {
+        var aDate = new Date(a.book_time);
+        var bDate = new Date(b.book_time);
+        return aDate - bDate;
+      });
+    } else if (sortBy == 'bookDayAsc'){
+      data.sort((a, b) => {
+        var aDate = new Date(a.book_time);
+        var bDate = new Date(b.book_time);
+        return bDate - aDate;
+      });
+    } else if (sortBy == 'priceDesc'){
+      data.sort((a, b) => b.total_pay - a.total_pay);
+    } else if (sortBy == 'priceAsc'){
+      data.sort((a, b) => a.total_pay - b.total_pay);
+    }
+    return data;
   }
 
-  render() {
-    const {bookedTour} = this.state;
+  onLoadMorePress(){
+
+    var {bookedTour,count, per_page} = this.state;
+
+    this.setState({isLoading: true});
+
+    if (count + per_page + per_page >= bookedTour.length){
+      this.setState({hasLoadAll: true});
+    }
+
+    this.setState({count: count + per_page},()=>{
+        this.setState({isLoading: false});
+    });
+  }
+
+  getShowData(){
+    const {bookedTour, count, per_page} = this.state;
+    let data = [];
+    for (let i=0; i<bookedTour.length; i++){
+      if (i==count+per_page){
+        break;
+      }
+      data.push(bookedTour[i]);
+    }
+    return data;
+  }
+
+  getHistoryCard(){
+    let data = this.getShowData();
 
     let index = 0;
-    let history = bookedTour.map((val,key)=>{
+    let history = data.map((val,key)=>{
       index += 1;
       return(
         <View key={key}>
             <HistoryCard data={val} onPress={this.onPress}/>
-            { index != bookedTour.length &&
+            { index != data.length &&
               <Divider style={{height: 0.5, marginHorizontal: 14}}/>
             }
         </View>
@@ -97,9 +154,65 @@ class History extends Component {
       history = this.getNoTourView();
     }
 
+    return history;
+  }
+
+  onSortByChange(value){
+    this.setState({sortBy: value},()=>{
+      this.setState({count: 0, hasLoadAll: false},()=>{
+        let data = this.getData();
+        this.setState({bookedTour: data});
+      })
+    });
+  }
+
+  componentWillMount(){
+    this.callGetHistoryByUser()
+        .then(()=>{
+          this.setState({hasLoad: true});
+        })
+  }
+
+  render() {
+    const {bookedTour, isLoading, hasLoadAll, hasLoad} = this.state;
+
+    let history = this.getHistoryCard();
+
     return (
       <View style={styles.container}>
+          <View style={{flexDirection: 'row', paddingHorizontal: 6}}>
+              <View style={{flex: 0.5}}>
+              </View>
+              <View style={{flex: 0.5}}>
+                <RNPickerSelect
+                  placeholder={placeHolderSortBy}
+                  items={historySortBy}
+                  onValueChange={value => this.onSortByChange(value)}
+                  value={this.state.sortBy}
+                />
+              </View>
+          </View>
+
           {history}
+
+          { isLoading &&
+            <View style={{alignItems: 'center', padding: 16}}>
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/images/svg/Rolling-1.9s-106px.gif')} />
+            </View>
+          }
+
+          { !hasLoadAll && hasLoad &&
+            <Button
+              title={localized.showMore.toUpperCase()}
+              type="solid"
+              buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+              containerStyle={{padding: 16, borderRadius: 0}}
+              titleStyle={{fontSize: 16}}
+              onPress={()=>{this.onLoadMorePress()}}
+            />
+          }
       </View>
     );
   }

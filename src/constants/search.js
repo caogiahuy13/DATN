@@ -36,6 +36,29 @@ export const sortType = [
   },
 ];
 
+export const historySortBy = [
+  {
+    label: localized.my_booking.bookDayDesc,
+    value: 'bookDayDesc',
+    key: 'bookDayDesc',
+  },
+  {
+    label: localized.my_booking.bookDayAsc,
+    value: 'bookDayAsc',
+    key: 'bookDayAsc',
+  },
+  {
+    label: localized.my_booking.priceDesc,
+    value: 'priceDesc',
+    key: 'priceDesc',
+  },
+  {
+    label: localized.my_booking.priceAsc,
+    value: 'priceAsc',
+    key: 'priceAsc',
+  },
+];
+
 export const placeHolderSortBy = {
   label: localized.sortBy,
   value: null,

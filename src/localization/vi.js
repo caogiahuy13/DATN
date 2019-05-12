@@ -452,7 +452,7 @@ const vi = {
     priceDesc: "Giá cao nhất",
     priceAsc: "Giá thấp nhất",
     no_tour: "Hiện bạn không có tour nào trong lịch sử đặt tour.",
-    search_tour: "Tên tour"
+    search_tour: "Tên tour",
   },
 
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',
