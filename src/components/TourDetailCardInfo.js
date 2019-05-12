@@ -83,7 +83,7 @@ class TourDetailCardInfo extends Component {
           <View style={{marginBottom: 8}}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{flex: 0.36}}>{localized.code}</Text>
-              <Text style={{flex: 0.64}}>{typeof(currentTourTurn.id) != 'undefined' ? getTourCode(currentTourTurn.id) : ''}</Text>
+              <Text style={{flex: 0.64}}>{currentTourTurn.code}</Text>
             </View>
 
             <View style={{flexDirection: 'row'}}>

@@ -287,14 +287,14 @@ class TourDetail extends Component{
 
         </ScrollView>
 
-        { currentTurn.isAllowBooking &&
           <Button
             buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
             title={localized.bookTour.toUpperCase()}
             onPress={()=>{this.onBookNowPress()}}
+            disabled={currentTurn.isAllowBooking == false ? true : false}
             titleStyle={{fontSize: 18, fontWeight: 'bold'}}
           />
-        }
+
       </View>
     );
   }
