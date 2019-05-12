@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { } from '../actions/index.js';
-import { COLOR_MAIN, COLOR_GREEN } from '../constants/index';
+import { COLOR_MAIN, COLOR_GREEN, COLOR_LIGHT_BLUE } from '../constants/index';
 import { capitalize, bookedDateFormat, priceFormat } from '../services/function';
 import localized from '../localization/index';
 
@@ -15,11 +15,11 @@ class HistoryCard extends Component{
       <TouchableOpacity style={styles.container} onPress={()=>this.props.onPress(data)}>
         <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1}}>
-                <Text style={styles.code}>{'0000'+data.id}</Text>
+                <Text style={styles.name}>{data.tour_turn.tour.name}</Text>
                 <InfoText firstTxt={localized.bookingDay+":"} secondTxt={bookedDateFormat(data.book_time)}/>
                 <InfoText firstTxt={localized.totalSlot+":"} secondTxt={data.num_passenger}/>
                 <InfoText firstTxt={localized.totalPrice+":"} secondTxt={priceFormat(data.total_pay)}/>
-                <InfoText firstTxt={localized.status+":"} secondTxt={capitalize(data.status)}/>
+                <InfoText firstTxt={localized.status+":"} secondTxt={capitalize(data.status)} status={true}/>
             </View>
             <View style={{justifyContent: 'center', }}>
                 <Icon
@@ -36,12 +36,14 @@ class HistoryCard extends Component{
 
 class InfoText extends Component {
   render(){
-    const {firstTxt, secondTxt} = this.props;
+    const {firstTxt, secondTxt, status} = this.props;
+
     return(
       <View style={{flexDirection: 'row'}}>
           <Text style={styles.firstTxt}>{firstTxt}</Text>
           <Text> </Text>
-          <Text style={styles.secondTxt}>{secondTxt}</Text>
+          { status != true && <Text style={styles.firstTxt}>{secondTxt}</Text>}
+          { status == true && <Text style={{color: 'red'}}>{localized.my_booking[secondTxt.toLowerCase()]}</Text>}
       </View>
     )
   }
@@ -55,6 +57,12 @@ const styles = StyleSheet.create({
   code : {
     color: 'orange',
     fontSize: 18,
+    fontWeight: 'bold',
+    paddingBottom: 6,
+  },
+  name : {
+    color: COLOR_MAIN,
+    fontSize: 16,
     fontWeight: 'bold',
     paddingBottom: 6,
   },

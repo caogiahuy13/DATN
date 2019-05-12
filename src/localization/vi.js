@@ -92,7 +92,7 @@ const vi = {
   recommendedTour: "Tour gợi ý",
   noTourFound: "Không tìm thấy tour thích hợp",
   not_rated: "Chưa đánh giá",
-  
+
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
   addressModalDescription: "Vui lòng nhập địa chỉ",
@@ -431,6 +431,28 @@ const vi = {
     success_content_2: "Hãy kiểm tra email của bạn trong vài ngày tới.",
     ok: "ĐỒNG Ý",
     error: "Có lỗi xảy ra, hãy thử lại!"
+  },
+
+  my_booking: {
+    title: "LỊCH SỬ ĐẶT TOUR",
+    code: "Mã đặt tour",
+    book_day: "Ngày đặt",
+    total_slot: "Tổng số chỗ",
+    total_money: "Tổng tiền",
+    status: "Trạng thái",
+    detail: "Chi tiết",
+    cancel: "Hủy tour",
+    pending: "Chờ xử lý",
+    solved: "Đã xử lý",
+    booked: "Chưa thanh toán",
+    paid: "Đã thanh toán",
+    cancelled: "Đã hủy",
+    bookDayDesc: "Ngày đặt gần nhất",
+    bookDayAsc: "Ngày đặt xa nhất",
+    priceDesc: "Giá cao nhất",
+    priceAsc: "Giá thấp nhất",
+    no_tour: "Hiện bạn không có tour nào trong lịch sử đặt tour.",
+    search_tour: "Tên tour"
   },
 
   ERR_USERNAME: 'Email hoặc số điện thoại phải đúng định dạng',

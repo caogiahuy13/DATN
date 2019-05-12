@@ -239,11 +239,11 @@ class HistoryDetail extends Component {
         <View style={styles.card}>
             <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 16}}>{localized.code}: </Text>
-                <Text style={{fontSize: 16, color: 'orange', fontWeight: 'bold'}}>{getTourCode(info.id)}</Text>
+                <Text style={{fontSize: 16, color: 'orange', fontWeight: 'bold'}}>{info.code}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 16}}>{localized.status}: </Text>
-                <Text style={{fontSize: 16, color: COLOR_LIGHT_BLUE, fontWeight: 'bold'}}>{capitalize(info.status)}</Text>
+                <Text style={{fontSize: 16, color: COLOR_LIGHT_BLUE, fontWeight: 'bold'}}>{localized.my_booking[info.status]}</Text>
             </View>
         </View>
 
@@ -316,7 +316,6 @@ class TourInfo extends Component {
           </View>
           <View style={{flex: 0.6}}>
               <Text style={{fontWeight: 'bold', paddingVertical: 4}}>{tour.name}</Text>
-              <Text>{localized.code + ": " + getTourCode(data.id)}</Text>
               <Text>{localized.startDate + ": " + dateFormat(data.start_date)}</Text>
               <Text>{localized.endDate + ": " + dateFormat(data.end_date)}</Text>
               <Text>{localized.lasting + ": " + getDaysDiff(data.start_date, data.end_date)}</Text>
