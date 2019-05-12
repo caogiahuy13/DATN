@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList, Image } from 'react-native';
 import { Divider, Button } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { getHistoryByUser, getPassengerInBookTourHistory, getHistoryBookTourById } from '../services/api';
+import { slugify } from '../services/function';
 import { bookedTourGetInfo, bookedTourGetPassengers } from '../actions/index.js';
 import { COLOR_MAIN } from '../constants/index';
 import localized from '../localization/index';
@@ -23,7 +24,10 @@ class History extends Component {
     super(props);
     this.state = {
       bookedTour: [],
+      bookedTourAll: [],
       hasLoad: false,
+
+      search: '',
 
       sortBy: null,
       count: 0,
@@ -50,6 +54,7 @@ class History extends Component {
     return getHistoryByUser()
           .then((response) => response.json())
           .then((responseJson) => {
+            this.setState({bookedTourAll: responseJson.data});
             this.setState({bookedTour: responseJson.data});
             let num = this.state.count + this.state.per_page;
             if (num >= responseJson.data.length){
@@ -84,8 +89,8 @@ class History extends Component {
   }
 
   getData(){
-    let data = this.state.bookedTour;
-    let {sortBy} = this.state;
+    let data = this.state.bookedTourAll;
+    let {sortBy, search} = this.state;
 
     if (sortBy == 'bookDayDesc'){
       data.sort((a, b) => {
@@ -104,11 +109,18 @@ class History extends Component {
     } else if (sortBy == 'priceAsc'){
       data.sort((a, b) => a.total_pay - b.total_pay);
     }
+
+    if (search != null && search != ''){
+      data = data.filter(item => {
+        let name = slugify(item.tour_turn.tour.name);
+        return name.includes(slugify(search));
+      });
+    }
+
     return data;
   }
 
   onLoadMorePress(){
-
     var {bookedTour,count, per_page} = this.state;
 
     this.setState({isLoading: true});
@@ -150,19 +162,35 @@ class History extends Component {
       )
     });
 
-    if (index == 0 && this.state.hasLoad){
+    if (this.state.bookedTourAll.length == 0 && this.state.hasLoad){
       history = this.getNoTourView();
     }
 
     return history;
   }
 
+  onDataChange(){
+    const {bookedTour, count, per_page} = this.state;
+    if (count + per_page >= bookedTour.length){
+      this.setState({hasLoadAll: true});
+    } else {
+      this.setState({hasLoadAll: false});
+    }
+    this.setState({count: 0},()=>{
+      let data = this.getData();
+      this.setState({bookedTour: data});
+    })
+  }
+
   onSortByChange(value){
     this.setState({sortBy: value},()=>{
-      this.setState({count: 0, hasLoadAll: false},()=>{
-        let data = this.getData();
-        this.setState({bookedTour: data});
-      })
+      this.onDataChange();
+    });
+  }
+
+  onSearchChange(value){
+    this.setState({search: value},()=>{
+      this.onDataChange();
     });
   }
 
@@ -182,14 +210,20 @@ class History extends Component {
       <View style={styles.container}>
           <View style={{flexDirection: 'row', paddingHorizontal: 6}}>
               <View style={{flex: 0.5}}>
+                  <TextInput style={styles.input}
+                      placeholder={localized.my_booking.search_tour}
+                      placeholderTextColor='rgba(0,0,0,0.2)'
+                      autoCorrect={false}
+                      onChangeText={(value)=> this.onSearchChange(value)}
+                  />
               </View>
               <View style={{flex: 0.5}}>
-                <RNPickerSelect
-                  placeholder={placeHolderSortBy}
-                  items={historySortBy}
-                  onValueChange={value => this.onSortByChange(value)}
-                  value={this.state.sortBy}
-                />
+                  <RNPickerSelect
+                    placeholder={placeHolderSortBy}
+                    items={historySortBy}
+                    onValueChange={value => this.onSortByChange(value)}
+                    value={this.state.sortBy}
+                  />
               </View>
           </View>
 
@@ -225,6 +259,9 @@ const styles = StyleSheet.create({
     },
     text: {
       fontSize: 20,
+    },
+    input: {
+      fontSize: 16,
     },
 })
 
