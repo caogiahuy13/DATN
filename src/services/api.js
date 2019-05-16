@@ -250,6 +250,7 @@ export async function bookNewTour(info){
                                   address: info.address,
                                   passengers: info.passengers,
                                   total_pay: info.total_pay,
+                                  passport: info.passport,
                                 }),
                               });
                             })

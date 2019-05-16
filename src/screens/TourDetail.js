@@ -181,7 +181,6 @@ class TourDetail extends Component{
       isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed, isPolicyCollapsed,
     } = this.state;
 
-    console.log(currentTurn);
     return(
       <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
         <ScrollView>

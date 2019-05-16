@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity, ScrollView, Keyboard, AsyncStorage} from 'react-native';
-import { Card, Icon, ListItem, Button } from 'react-native-elements';
+import { Card, Icon, ListItem, Button, CheckBox } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
@@ -36,6 +36,7 @@ class BookingInfo extends Component {
         phone: '',
         email: '',
         address: '',
+        passport: '',
       },
 
       number: {
@@ -194,7 +195,7 @@ class BookingInfo extends Component {
     const {contactInfo, adultInfo, childrenInfo, number} = this.state;
 
     if (contactInfo.fullname == '' || contactInfo.phone == '' || contactInfo.email == '' || contactInfo.address == '' ||
-        contactInfo.address == null ){
+        contactInfo.passport == '' || contactInfo.address == null ){
       this.setError(localized.ERR_BOOKING_CONTACT_INFO, true);
       return false;
     }
@@ -261,6 +262,7 @@ class BookingInfo extends Component {
       phone: contactInfo.phone,
       email: contactInfo.email,
       address: contactInfo.address,
+      passport: contactInfo.passport,
       passengers: passengers,
       total_pay: tourTurn.price_passengers[0].price * number.adult + tourTurn.price_passengers[1].price * number.children,
     }
@@ -313,6 +315,7 @@ class BookingInfo extends Component {
     let index = 0;
     let adultCard = this.state.adultInfo.map((val,key)=>{
       index += 1;
+      if (index == 1) return (<BookingPassenger key={key} val={val} index={index} contactInfo={this.state.contactInfo} update={this.update}/>);
       return (<BookingPassenger key={key} val={val} index={index} update={this.update}/>);
     })
     let childrenCard = this.state.childrenInfo.map((val,key)=>{
@@ -382,6 +385,14 @@ class BookingInfo extends Component {
                   autoCorrect={false}
                   onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, address: value}})}
                   value={this.state.contactInfo.address}
+              />
+              <TextInput
+                  style={styles.input}
+                  placeholder={localized.passport+" *"}
+                  placeholderTextColor={COLOR_PLACEHOLDER}
+                  autoCorrect={false}
+                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, passport: value}})}
+                  value={this.state.contactInfo.passport}
               />
           </View>
 

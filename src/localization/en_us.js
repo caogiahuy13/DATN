@@ -93,6 +93,7 @@ const en_us = {
   noTourFound: "No tour is found",
   not_rated: "Not yet rated",
   passport: "Identity number",
+  bookForYou: "Book tour for you",
 
   // Address modal
   addressModalLabel: "Enter address",

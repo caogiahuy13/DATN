@@ -93,7 +93,8 @@ const vi = {
   noTourFound: "Không tìm thấy tour thích hợp",
   not_rated: "Chưa đánh giá",
   passport: "Chứng minh nhân dân",
-
+  bookForYou: "Bạn là người đi tour",
+  
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
   addressModalDescription: "Vui lòng nhập địa chỉ",

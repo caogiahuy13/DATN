@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
-import { Card, Icon, ListItem } from 'react-native-elements';
+import { Card, Icon, ListItem, CheckBox } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import Modal from 'react-native-modal';
@@ -23,6 +23,8 @@ class BookingPassenger extends Component {
         phone: '',
         passport: '',
       },
+
+      bookForYou: false,
 
       isDateTimePickerVisible: false,
       isGenderModalVisible: false,
@@ -171,6 +173,36 @@ class BookingPassenger extends Component {
     );
   }
 
+  handleBookForYou(){
+    const {contactInfo} = this.props;
+    this.setState({bookForYou: !this.state.bookForYou},()=>{
+      if (this.state.bookForYou){
+        this.setState({
+          passenger: {
+            ...contactInfo,
+            type: this.state.passenger.type,
+          }
+        }, ()=>{
+          this.props.update(this.state.passenger, this.props.index);
+        });
+      } else {
+        this.setState({
+            passenger: {
+              ...this.state.passenger,
+              fullname: '',
+              birthdate: '',
+              sex: '',
+              phone: '',
+              passport: '',
+            }
+        }, ()=>{
+          this.props.update(this.state.passenger, this.props.index);
+        });
+      }
+    });
+
+  }
+
   componentWillMount(){
     const {val} = this.props;
     this.setState({passenger: val});
@@ -204,6 +236,7 @@ class BookingPassenger extends Component {
                   placeholderTextColor={COLOR_PLACEHOLDER}
                   returnKeyType='next'
                   autoCorrect={false}
+                  value={passenger.fullname == '' ? null : passenger.fullname}
                   onChangeText={(value)=> this.changeFullname(value)}
               />
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
@@ -246,6 +279,7 @@ class BookingPassenger extends Component {
                   keyboardType='phone-pad'
                   returnKeyType='next'
                   autoCorrect={false}
+                  value={passenger.phone == '' ? null : passenger.phone}
                   onChangeText={(value)=> this.changePhone(value)}
               />
               <TextInput
@@ -255,8 +289,20 @@ class BookingPassenger extends Component {
                   keyboardType='numeric'
                   returnKeyType='next'
                   autoCorrect={false}
+                  value={passenger.passport == '' ? null : passenger.passport}
                   onChangeText={(value)=> this.changeIdentity(value)}
               />
+              { this.props.index == 1 &&
+                <CheckBox
+                    title={localized.bookForYou}
+                    checked={this.state.bookForYou}
+                    checkedIcon='dot-circle-o'
+                    uncheckedIcon='circle-o'
+                    containerStyle={{padding: 0, backgroundColor: 'white', borderWidth: 0}}
+                    onPress={()=>{this.handleBookForYou()}}
+                />
+              }
+
           </View>
       </View>
     )
