@@ -24,7 +24,7 @@ class TourCard extends Component{
   _onDetailPress = () => {
     this.props.onPress(this.props.data.id);
     this.props.tourDetailChangeId(this.props.data.tour.id);
-    this.props.tourDetailShowMarker(true);
+    this.props.tourDetailShowMarker(false);
   }
 
   _onBookNowPress = () => {

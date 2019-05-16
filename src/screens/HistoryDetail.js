@@ -144,7 +144,7 @@ class HistoryDetail extends Component {
     const idTourTurn = this.state.tourInfo.id;
 
     this.props.tourDetailChangeId(idTour);
-    this.props.tourDetailShowMarker(true);
+    this.props.tourDetailShowMarker(false);
 
     this.props.navigation.navigate("Schedule", {
       idTour: idTour,

@@ -156,7 +156,8 @@ class Map extends Component {
         <View style={styles.container}>
             <MapView style={styles.map}
                 onRegionChangeComplete={e => {this._onRegionChangeComplete(e)}}
-                onRegionChange={e => {this._onRegionChange(e)}}
+                //onRegionChange={e => {this._onRegionChange(e)}}
+                onRegionChange={e => {this._onRegionChangeComplete(e)}} // khi chay tren device
                 showsUserLocation = {true}
                 // toolbarEnabled = {true}
                 moveOnMarkerPress = {true}

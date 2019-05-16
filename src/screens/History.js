@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions, FlatList, Image, ScrollView } from 'react-native';
 import { Divider, Button } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import {bindActionCreators} from 'redux';
@@ -170,15 +170,16 @@ class History extends Component {
   }
 
   onDataChange(){
-    const {bookedTour, count, per_page} = this.state;
-    if (count + per_page >= bookedTour.length){
-      this.setState({hasLoadAll: true});
-    } else {
-      this.setState({hasLoadAll: false});
-    }
     this.setState({count: 0},()=>{
       let data = this.getData();
-      this.setState({bookedTour: data});
+      this.setState({bookedTour: data}, ()=>{
+        const {bookedTour, count, per_page} = this.state;
+        if (count + per_page >= bookedTour.length){
+          this.setState({hasLoadAll: true});
+        } else {
+          this.setState({hasLoadAll: false});
+        }
+      });
     })
   }
 
@@ -207,7 +208,7 @@ class History extends Component {
     let history = this.getHistoryCard();
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
           <View style={{flexDirection: 'row', paddingHorizontal: 6}}>
               <View style={{flex: 0.5}}>
                   <TextInput style={styles.input}
@@ -247,7 +248,7 @@ class History extends Component {
               onPress={()=>{this.onLoadMorePress()}}
             />
           }
-      </View>
+      </ScrollView>
     );
   }
 }
