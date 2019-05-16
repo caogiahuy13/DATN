@@ -243,7 +243,7 @@ class HistoryDetail extends Component {
             </View>
             <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 16}}>{localized.status}: </Text>
-                <Text style={{fontSize: 16, color: COLOR_LIGHT_BLUE, fontWeight: 'bold'}}>{localized.my_booking[info.status]}</Text>
+                <Text style={{fontSize: 16, color: COLOR_LIGHT_BLUE, fontWeight: 'bold'}}>{localized.detail_booked_tour[info.status]}</Text>
             </View>
         </View>
 

@@ -239,12 +239,12 @@ class Tours extends Component {
 
             {
               maxCount < count &&
-              <View style={{alignItems: 'center', paddingTop: 16}}>
+              <View style={{alignItems: 'center', paddingTop: 16, paddingBottom: 16}}>
                   <Text style={{color: 'red'}}>{localized.allTourLoaded}</Text>
               </View>
             }
 
-            { tours != null &&
+            { tours != null  && maxCount >= count &&
               <Button
                 title={localized.showMore.toUpperCase()}
                 type="solid"

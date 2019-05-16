@@ -29,11 +29,13 @@ class Setting extends Component {
       isDateTimePickerVisible: false,
       isAddressModalVisible: false,
       isFullnameModalVisible: false,
+      isIdentityModalVisible: false,
 
-      isLogedIn: false,
+      isLogedIn: true,
 
       tmpAddress: '',
       tmpFullname: '',
+      tmpIdentity: '',
 
       language: "vi",
     }
@@ -57,6 +59,14 @@ class Setting extends Component {
       this._showAddressModal(false);
     })
   };
+
+  //Các hàm quản lý CMND Modal
+  _showIdentityModal = (visible) => this.setState({ isIdentityModalVisible: visible});
+  _handleIdentityModal = (identity) => {
+    this.callUpdateIdentity(identity).then(()=>{
+      this._showIdentityModal(false);
+    })
+  }
 
   //Các hàm quản lý Fullname Modal
   _showFullnameModal = (visible) => this.setState({ isFullnameModalVisible: visible });
@@ -230,6 +240,25 @@ class Setting extends Component {
            .catch((error) => console.error(error));
   }
 
+  async callUpdateIdentity(identity){
+    const data = new FormData();
+    data.append('passport',identity);
+
+    return userUpdate(data)
+          .then((response) => {
+              status = response.status;
+              return response.json();
+            })
+           .then((responseJson) => {
+              if (status != 200){
+                Alert.alert(responseJson.msg);
+              } else {
+                this.props.changeProfile(responseJson.profile);
+              }
+           })
+           .catch((error) => console.error(error));
+  }
+
   async callUpdateFullname(fullname){
     const data = new FormData();
     data.append('fullname',fullname);
@@ -273,8 +302,8 @@ class Setting extends Component {
     }
 
     const {profile} = this.props.access;
-    const {tmpAddress, tmpFullname} = this.state;
-
+    const {tmpAddress, tmpFullname, tmpIdentity} = this.state;
+    console.log(profile);
     Moment.locale('en');
     let tmpEmail = "";
 
@@ -310,6 +339,15 @@ class Setting extends Component {
             </Dialog.Input>
             <Dialog.Button label={localized.cancel} onPress={()=>this._showFullnameModal(false)} />
             <Dialog.Button label={localized.ok} onPress={()=>this._handleFullnameModal(tmpFullname)} />
+        </Dialog.Container>
+
+        <Dialog.Container visible={this.state.isIdentityModalVisible}>
+            <Dialog.Title>{localized.identityModalLabel}</Dialog.Title>
+            <Dialog.Description>{localized.identityModalDescription}</Dialog.Description>
+            <Dialog.Input placeholder={localized.passport} style={{borderBottomWidth: 0.5}} value={tmpIdentity} onChangeText={(value) => this.setState({tmpIdentity: value})}>
+            </Dialog.Input>
+            <Dialog.Button label={localized.cancel} onPress={()=>this._showIdentityModal(false)} />
+            <Dialog.Button label={localized.ok} onPress={()=>this._handleIdentityModal(tmpIdentity)} />
         </Dialog.Container>
 
         <View style={styles.userRow}>
@@ -372,6 +410,15 @@ class Setting extends Component {
           containerStyle={styles.listItemContainer}
           rightIcon={<Chevron />}
           leftIcon=<Icon name='address' type='entypo' color='gray' size={20}/>
+        />
+        <ListItem
+          title={localized.passport}
+          rightTitle={profile.passport ? profile.passport : ''}
+          rightTitleStyle={{fontSize: 15}}
+          onPress={() => {this._showIdentityModal(true)}}
+          containerStyle={styles.listItemContainer}
+          rightIcon={<Chevron />}
+          leftIcon=<Icon name='idcard' type='antdesign' color='gray' size={20}/>
         />
 
         <Space/>

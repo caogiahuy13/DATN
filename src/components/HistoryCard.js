@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { } from '../actions/index.js';
-import { COLOR_MAIN, COLOR_GREEN, COLOR_LIGHT_BLUE } from '../constants/index';
+import { COLOR_MAIN, COLOR_GREEN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
 import { capitalize, bookedDateFormat, priceFormat } from '../services/function';
 import localized from '../localization/index';
 
@@ -43,7 +43,7 @@ class InfoText extends Component {
           <Text style={styles.firstTxt}>{firstTxt}</Text>
           <Text> </Text>
           { status != true && <Text style={styles.firstTxt}>{secondTxt}</Text>}
-          { status == true && <Text style={{color: 'red'}}>{localized.my_booking[secondTxt.toLowerCase()]}</Text>}
+          { status == true && <Text style={{color: COLOR_HARD_RED}}>{localized.detail_booked_tour[secondTxt.toLowerCase()]}</Text>}
       </View>
     )
   }
