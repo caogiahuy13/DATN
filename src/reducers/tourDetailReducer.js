@@ -5,7 +5,7 @@ let tourDetail = {
   routes: [],
   location: {},
   showLocation: false,
-  showMarker: true,
+  showMarker: false,
   curRoute: {},
 }
 
