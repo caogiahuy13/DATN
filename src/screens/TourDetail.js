@@ -19,6 +19,8 @@ import TourDetailReview from '../components/TourDetailReview';
 import TourCardTitle from '../components/TourCardTitle';
 import CollapsibleCardTitle from '../components/CollapsibleCardTitle';
 import TourDetailCardInfo from '../components/TourDetailCardInfo';
+import ScheduleCard from '../components/ScheduleCard';
+import InfoText from '../components/InfoText';
 
 class TourDetail extends Component{
   static navigationOptions = ({navigation}) => ({
@@ -32,6 +34,7 @@ class TourDetail extends Component{
       currentTurn: {},
       images: [],
       reviews: [],
+      route: [],
 
       isDescriptionCollapsed: true,
       isDetailCollapsed: true,
@@ -89,6 +92,14 @@ class TourDetail extends Component{
     return increaseView(id)
             .then((response) => response.json())
             .then((responseJson) => responseJson)
+            .catch((error) => console.error(error));
+  }
+  async callGetRouteByTour(id){
+    return getRouteByTour(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              this.setState({route: responseJson.data})
+            })
             .catch((error) => console.error(error));
   }
 
@@ -160,6 +171,26 @@ class TourDetail extends Component{
     );
   }
 
+  getScheduleCard(){
+    const {route} = this.state;
+
+    let curDay = 0;
+    let scheduleCards = route.map((val,key)=>{
+      if (val.day > curDay){
+        curDay += 1;
+        return(
+          <View key={key}>
+              <InfoText text={localized.day + " " + val.day}/>
+              <ScheduleCard data={val} active={false}/>
+          </View>
+        )
+      } else {
+        return(<ScheduleCard key={key} data={val} active={false}/>)
+      }
+    })
+    return scheduleCards;
+  }
+
   componentWillMount(){
     const id = this.props.navigation.getParam("id");
     this.callIncreaseView(id);
@@ -168,6 +199,7 @@ class TourDetail extends Component{
           this.callGetImageByTourId(this.state.tour.id);
           this.callGetReviewByTour(this.state.tour.id);
           this.props.tourDetailChangeId(this.state.tour.id);
+          this.callGetRouteByTour(this.state.tour.id);
         });
   }
 
@@ -218,7 +250,7 @@ class TourDetail extends Component{
                       <TourDetailMap/>
                   </View>
                 }
-                <Text>{tour.detail}</Text>
+                {this.getScheduleCard()}
               </Collapsible>
 
           </Card>
