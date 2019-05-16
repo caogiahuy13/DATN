@@ -508,7 +508,12 @@ const en_us = {
     refund_money: "Refund money:",
     refund_note: "After three working day (except Saturday and Sunday) since confirm cancel time, you can come to TRAVEL TOUR Office to receive refunds",
     refund_period: "Deadline to receive refunds:",
-    refund_time: "Received refunds in:"
+    refund_time: "Received refunds in:",
+    people_pay: "People paying:",
+    people_pay_help: "People help pay:",
+    people_cancel: "People cancel tour directly:",
+    people_refund: "People receive refunds:",
+    people_refund_help: "People help receive refunds:"
   },
 
   ERR_USERNAME: 'Email or Phone number must be in right format',

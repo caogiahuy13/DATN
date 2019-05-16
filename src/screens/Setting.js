@@ -303,7 +303,7 @@ class Setting extends Component {
 
     const {profile} = this.props.access;
     const {tmpAddress, tmpFullname, tmpIdentity} = this.state;
-    console.log(profile);
+
     Moment.locale('en');
     let tmpEmail = "";
 

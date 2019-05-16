@@ -227,6 +227,26 @@ class HistoryDetail extends Component {
     let passengersList = this.getPassengers();
     let passengerPrice = this.getPassengerPrice();
 
+    const cancel_info = this.props.bookedTour.info.cancel_bookings[0];
+    let requestOfflinePerson = null;
+    let refundMessage = null;
+    if (cancel_info){
+      if (cancel_info.request_offline_person != null){
+        requestOfflinePerson = JSON.parse(cancel_info.request_offline_person);
+      }
+      if (cancel_info.refund_message != null){
+        refundMessage = JSON.parse(cancel_info.refund_message);
+      }
+    }
+
+    let messagePay = null;
+    if (info.message_pay){
+      messagePay = JSON.parse(info.message_pay);
+    }
+
+    console.log(info);
+    console.log(cancel_info);
+
     return (
       <ScrollView style={styles.container}>
         <Modal
@@ -245,6 +265,46 @@ class HistoryDetail extends Component {
                 <Text style={{fontSize: 16}}>{localized.status}: </Text>
                 <Text style={{fontSize: 16, color: COLOR_LIGHT_BLUE, fontWeight: 'bold'}}>{localized.detail_booked_tour[info.status]}</Text>
             </View>
+
+            { cancel_info &&
+              <View>
+                  { cancel_info.confirm_time && !!cancel_info.money_refunded &&
+                    cancel_info.refund_period && info.status == 'confirm_cancel' &&
+                    <View>
+                        <Text></Text>
+                        { cancel_info.request_offline_person &&
+                            <View>
+                                <ExtraInfo first={localized.detail_booked_tour.people_cancel} second={requestOfflinePerson.name}/>
+                                <ExtraInfo first={localized.detail_booked_tour.passport + ":"} second={requestOfflinePerson.passport}/>
+                            </View>
+                        }
+                        <ExtraInfo first={localized.detail_booked_tour.confirm_cancel_content} second={bookedDateFormat(cancel_info.confirm_time)}/>
+                        <ExtraInfo first={localized.detail_booked_tour.refund_money} second={priceFormat(cancel_info.money_refunded)}/>
+                        <Text></Text>
+                        <ExtraInfo first={localized.detail_booked_tour.refund_note} second=""/>
+                        <ExtraInfo first={localized.detail_booked_tour.refund_period} second={dateFormat(cancel_info.refund_period)}/>
+                    </View>
+                  }
+
+                  { cancel_info.refunded_time && !!cancel_info.money_refunded &&
+                    info.status === 'refunded' &&
+                    <View>
+                        <Text></Text>
+                        { cancel_info.refund_message &&
+                          <View>
+                              <ExtraInfo
+                                  first={refundMessage.helper == true ? localized.detail_booked_tour.people_refund_help : localized.detail_booked_tour.people_refund}
+                                  second={refundMessage.name}
+                              />
+                              <ExtraInfo first={localized.detail_booked_tour.passport + ":"} second={refundMessage.passport}/>
+                          </View>
+                        }
+                        <ExtraInfo first={localized.detail_booked_tour.refund_time} second={dateFormat(cancel_info.refunded_time)}/>
+                        <ExtraInfo first={localized.detail_booked_tour.refund_money} second={priceFormat(cancel_info.money_refunded)}/>
+                    </View>
+                  }
+              </View>
+            }
         </View>
 
         <InfoText text={localized.tourInfo}/>
@@ -255,6 +315,17 @@ class HistoryDetail extends Component {
         <InfoText text={localized.checkoutInfo}/>
 
         <View style={styles.card}>
+            <DetailInfo firstTxt={localized.detail_booked_tour.method} secondTxt={localized.detail_booked_tour[info.payment_method.name]}/>
+            { info.message_pay && info.status !== 'booked' && info.status !== 'cancelled' &&
+              <View>
+                  <DetailInfo
+                      firstTxt={messagePay.helper == true ? localized.detail_booked_tour.people_pay_help : localized.detail_booked_tour.people_pay}
+                      secondTxt={messagePay.name}
+                  />
+                  <DetailInfo firstTxt={localized.detail_booked_tour.passport} secondTxt={messagePay.passport}/>
+              </View>
+            }
+            <Text></Text>
             {passengerPrice}
             <DetailInfo firstTxt={localized.totalPrice} secondTxt={priceFormat(info.total_pay)}/>
         </View>
@@ -363,6 +434,18 @@ class PassengerInfo extends Component {
           <Text>{getGenderShow(data.sex)}</Text>
           <Text>{getAgeShow(data.type_passenger.name)}</Text>
           { data.passport != null && <Text>{data.passport}</Text>}
+      </View>
+    )
+  }
+}
+
+class ExtraInfo extends Component {
+  render(){
+    const {first, second} = this.props;
+    return(
+      <View style={{flexDirection: 'row'}}>
+          <Text>{first } </Text>
+          <Text style={{fontWeight: 'bold'}}>{second}</Text>
       </View>
     )
   }
