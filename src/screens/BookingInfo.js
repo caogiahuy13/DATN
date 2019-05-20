@@ -324,7 +324,7 @@ class BookingInfo extends Component {
     })
 
     return(
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="handle">
 
           <BookingStage stage={1}/>
 
@@ -348,52 +348,83 @@ class BookingInfo extends Component {
           <InfoText text={localized.contactInfo}/>
 
           <View style={styles.card}>
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.fullname+" *"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, fullname: value}})}
-                  value={this.state.contactInfo.fullname}
-              />
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.phone+" *"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  keyboardType='phone-pad'
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, phone: value}})}
-                  value={this.state.contactInfo.phone}
-              />
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.email+" *"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  keyboardType='email-address'
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, email: value}})}
-                  value={this.state.contactInfo.email}
-              />
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.address+" *"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, address: value}})}
-                  value={this.state.contactInfo.address}
-              />
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.passport+" *"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  autoCorrect={false}
-                  onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, passport: value}})}
-                  value={this.state.contactInfo.passport}
-              />
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.fullname.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.fullname+" *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, fullname: value}})}
+                          value={this.state.contactInfo.fullname}
+                          ref = {(fullname) => this.fullname = fullname}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.phone.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.phone+" *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          keyboardType='phone-pad'
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, phone: value}})}
+                          value={this.state.contactInfo.phone}
+                          ref = {(phone) => this.phone = phone}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.email.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.email+" *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          keyboardType='email-address'
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, email: value}})}
+                          value={this.state.contactInfo.email}
+                          ref = {(email) => this.email = email}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.address.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.address+" *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, address: value}})}
+                          value={this.state.contactInfo.address}
+                          ref = {(address) => this.address = address}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.passport.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.passport+" *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.setState({contactInfo: {...this.state.contactInfo, passport: value}})}
+                          value={this.state.contactInfo.passport}
+                          ref = {(passport) => this.passport = passport}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+
           </View>
 
           {adultCard}
@@ -413,6 +444,7 @@ class BookingInfo extends Component {
           />
 
           <Space/>
+
       </ScrollView>
     )
   }

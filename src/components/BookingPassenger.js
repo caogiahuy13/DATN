@@ -230,68 +230,98 @@ class BookingPassenger extends Component {
           <InfoText text={infoText}/>
 
           <View style={styles.card}>
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.fullname + " *"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  value={passenger.fullname == '' ? null : passenger.fullname}
-                  onChangeText={(value)=> this.changeFullname(value)}
-              />
-              <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
-                <TextInput
-                    style={styles.input}
-                    placeholder={localized.birthdate + " *"}
-                    placeholderTextColor={COLOR_PLACEHOLDER}
-                    returnKeyType='next'
-                    autoCorrect={false}
-                    onChangeText={(value)=> this.changeBirthdate(value)}
-                    editable={false} selectTextOnFocus={false}
-                    value={passenger.birthdate == '' ? null : Moment(this.state.passenger.birthdate).format('DD/MM/YYYY')}
-                />
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.fullname.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.fullname + " *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          value={passenger.fullname == '' ? null : passenger.fullname}
+                          onChangeText={(value)=> this.changeFullname(value)}
+                          ref = {(fullname) => this.fullname = fullname}
+                      />
+                  </View>
               </TouchableOpacity>
-              <TextInput
-                  style={styles.input}
-                  placeholder="Age *"
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  onChangeText={(value)=> this.changeAge(value)}
-                  editable={false} selectTextOnFocus={false}
-                  value={passenger.type == '' ? null : getAgeShow(passenger.type)}
-              />
+
+              <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showDateTimePicker(true)}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.birthdate + " *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.changeBirthdate(value)}
+                          editable={false} selectTextOnFocus={false}
+                          value={passenger.birthdate == '' ? null : Moment(this.state.passenger.birthdate).format('DD/MM/YYYY')}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={1}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder="Age *"
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          onChangeText={(value)=> this.changeAge(value)}
+                          editable={false} selectTextOnFocus={false}
+                          value={passenger.type == '' ? null : getAgeShow(passenger.type)}
+                      />
+                  </View>
+              </TouchableOpacity>
+
 
               <TouchableOpacity activeOpacity={0.8} onPress={()=>this._showGenderModal(true)}>
-                <TextInput
-                    style={styles.input}
-                    placeholder={localized.gender + " *"}
-                    placeholderTextColor={COLOR_PLACEHOLDER}
-                    returnKeyType='next'
-                    autoCorrect={false}
-                    onChangeText={(value)=> this.changeGender(value)}
-                    editable={false} selectTextOnFocus={false}
-                    value={passenger.sex == '' ? null : getGenderShow(passenger.sex)}
-                />
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.gender + " *"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          onChangeText={(value)=> this.changeGender(value)}
+                          editable={false} selectTextOnFocus={false}
+                          value={passenger.sex == '' ? null : getGenderShow(passenger.sex)}
+                      />
+                  </View>
               </TouchableOpacity>
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.phone}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  keyboardType='phone-pad'
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  value={passenger.phone == '' ? null : passenger.phone}
-                  onChangeText={(value)=> this.changePhone(value)}
-              />
-              <TextInput
-                  style={styles.input}
-                  placeholder={localized.identity + "/ Passport"}
-                  placeholderTextColor={COLOR_PLACEHOLDER}
-                  keyboardType='numeric'
-                  returnKeyType='next'
-                  autoCorrect={false}
-                  value={passenger.passport == '' ? null : passenger.passport}
-                  onChangeText={(value)=> this.changeIdentity(value)}
-              />
+
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.phone.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.phone}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          keyboardType='phone-pad'
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          value={passenger.phone == '' ? null : passenger.phone}
+                          onChangeText={(value)=> this.changePhone(value)}
+                          ref = {(phone) => this.phone = phone}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={1} onPress={()=>this.passport.focus()}>
+                  <View pointerEvents="none">
+                      <TextInput
+                          style={styles.input}
+                          placeholder={localized.identity + "/ Passport"}
+                          placeholderTextColor={COLOR_PLACEHOLDER}
+                          keyboardType='numeric'
+                          returnKeyType='next'
+                          autoCorrect={false}
+                          value={passenger.passport == '' ? null : passenger.passport}
+                          onChangeText={(value)=> this.changeIdentity(value)}
+                          ref = {(passport) => this.passport = passport}
+                      />
+                  </View>
+              </TouchableOpacity>
+
+
               { this.props.index == 1 &&
                 <CheckBox
                     title={localized.bookForYou}
