@@ -52,10 +52,17 @@ class BookingInfo extends Component {
 
       isLogedIn: false,
       profile: {},
+
+      allowPress: true,
     }
   }
 
   increaseChildren(){
+    if (!this.state.allowPress){
+      return;
+    } else {
+      this.setState({allowPress: false});
+    }
     let changeValue = this.state.number.children + 1;
     this.setState(
       {
@@ -70,6 +77,11 @@ class BookingInfo extends Component {
     );
   }
   decreaseChildren(){
+    if (!this.state.allowPress){
+      return;
+    } else {
+      this.setState({allowPress: false});
+    }
     let changeValue = this.state.number.children - 1;
     if (changeValue < 0){
       changeValue = 0
@@ -87,6 +99,11 @@ class BookingInfo extends Component {
     );
   }
   increaseAdult(){
+    if (!this.state.allowPress){
+      return;
+    } else {
+      this.setState({allowPress: false});
+    }
     let changeValue = this.state.number.adult + 1;
     this.setState(
       {
@@ -101,6 +118,11 @@ class BookingInfo extends Component {
     );
   }
   decreaseAdult(){
+    if (!this.state.allowPress){
+      return;
+    } else {
+      this.setState({allowPress: false});
+    }
     let changeValue = this.state.number.adult - 1;
     if (changeValue < 1){
       changeValue = 1
@@ -144,7 +166,7 @@ class BookingInfo extends Component {
       }
     }
 
-    this.setState({adultInfo: newAdultInfo});
+    this.setState({adultInfo: newAdultInfo, allowPress: true});
   }
   changeChildrenNumber(){
     let number = this.state.number.children;
@@ -172,7 +194,7 @@ class BookingInfo extends Component {
       }
     }
 
-    this.setState({childrenInfo: newChildrenInfo});
+    this.setState({childrenInfo: newChildrenInfo, allowPress: true});
   }
 
   update = (passenger, index) => {

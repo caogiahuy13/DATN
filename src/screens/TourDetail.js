@@ -242,7 +242,7 @@ class TourDetail extends Component{
 
           <Card
             containerStyle = {styles.cardContainer}
-            title=<CollapsibleCardTitle title={localized.review} status={isReviewCollapsed} onPress={()=>this.toggleReview()}/>
+            title=<CollapsibleCardTitle title={localized.review + " (" + this.state.reviews.length + ")"} status={isReviewCollapsed} onPress={()=>this.toggleReview()}/>
             titleStyle={styles.cardTitle}
           >
               <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isReviewCollapsed}>
@@ -284,13 +284,13 @@ class TourDetail extends Component{
 
         </ScrollView>
 
-          <Button
-            buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
-            title={localized.bookTour.toUpperCase()}
-            onPress={()=>{this.onBookNowPress()}}
-            disabled={currentTurn.isAllowBooking == false ? true : false}
-            titleStyle={{fontSize: 18, fontWeight: 'bold'}}
-          />
+        <Button
+          buttonStyle={{backgroundColor: COLOR_HARD_RED, borderRadius: 0}}
+          title={localized.bookTour.toUpperCase()}
+          onPress={()=>{this.onBookNowPress()}}
+          disabled={currentTurn.isAllowBooking == false ? true : false}
+          titleStyle={{fontSize: 18, fontWeight: 'bold'}}
+        />
 
       </View>
     );
