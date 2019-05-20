@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { Card, Icon, Button, Rating } from 'react-native-elements';
 
 import { COLOR_LIGHT_BLACK, COLOR_GREEN, COLOR_MAIN} from '../constants/index';
@@ -30,7 +30,7 @@ class TourCardTitle extends Component{
             <View style={styles.saleContainer}>
               <Button buttonStyle={styles.sale} title='SALE!' titleStyle={{fontSize: 14}}/>
             </View>
-          }
+          }    
       </View>
     );
   }
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     color: COLOR_LIGHT_BLACK
-  }
+  },
 })
 
 export default TourCardTitle;

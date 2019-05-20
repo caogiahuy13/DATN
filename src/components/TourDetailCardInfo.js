@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Button, Icon, Divider } from 'react-native-elements';
+import {ShareDialog} from 'react-native-fbsdk';
 import { differenceInCalendarDays } from 'date-fns';
 
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode } from '../services/function';
@@ -76,6 +77,34 @@ class TourDetailCardInfo extends Component {
     )
   }
 
+  onShareFacebook(){
+    const shareLinkContent = {
+      contentTitle: 'test',
+      contentType: 'link',
+      contentUrl: 'https://facebook.com',
+      contentDescription: 'Facebook sharing is easy!'
+    };
+
+    ShareDialog.canShow(shareLinkContent).then(
+      function(canShow) {
+        if (canShow) {
+          return ShareDialog.show(shareLinkContent);
+        }
+      }
+    ).then(
+      function(result) {
+        if (result.isCancelled) {
+          console.log('Share cancelled');
+        } else {
+          console.log('Share success with postId: ' + result.postId);
+        }
+      },
+      function(error) {
+        alert('Share fail with error: ' + error);
+      }
+    );
+  }
+
   render(){
     const {currentTourTurn} = this.props;
 
@@ -126,6 +155,14 @@ class TourDetailCardInfo extends Component {
                       {this.getProvinces()}
                   </ScrollView>
               </View>
+          </View>
+
+          <Divider style={{height: 1}}/>
+
+          <View style={{paddingVertical: 4}}>
+              <Icon name='facebook-square' type='font-awesome' color='#3B5998' onPress={()=>{this.onShareFacebook()}}
+                containerStyle={{justifyContent: 'flex-start', alignSelf: 'flex-start'}}
+              />
           </View>
 
           <Divider style={{height: 1}}/>

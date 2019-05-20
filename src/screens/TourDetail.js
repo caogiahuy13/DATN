@@ -3,7 +3,6 @@ import { ScrollView, View, Text, StyleSheet, Alert, TouchableOpacity } from 'rea
 import { Card, Button, Icon, Divider, Rating, AirbnbRating, Avatar } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
 import Slideshow from 'react-native-image-slider-show';
-import {ShareDialog} from 'react-native-fbsdk';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -143,34 +142,6 @@ class TourDetail extends Component{
     this.props.navigation.navigate("BookingInfo");
   }
 
-  onShareFacebook(){
-    const shareLinkContent = {
-      contentTitle: 'test',
-      contentType: 'link',
-      contentUrl: 'https://facebook.com',
-      contentDescription: 'Facebook sharing is easy!'
-    };
-
-    ShareDialog.canShow(shareLinkContent).then(
-      function(canShow) {
-        if (canShow) {
-          return ShareDialog.show(shareLinkContent);
-        }
-      }
-    ).then(
-      function(result) {
-        if (result.isCancelled) {
-          console.log('Share cancelled');
-        } else {
-          console.log('Share success with postId: ' + result.postId);
-        }
-      },
-      function(error) {
-        alert('Share fail with error: ' + error);
-      }
-    );
-  }
-
   getScheduleCard(){
     const {route} = this.state;
 
@@ -308,13 +279,8 @@ class TourDetail extends Component{
               </Collapsible>
           </Card>
 
-          <TouchableOpacity style={styles.buttonFacebook} onPress={() => {this.onShareFacebook()}}>
-              <Text style={styles.buttonText}>
-                  <FontAwesome name="facebook" size={20} />
-                  <Text>{"   "}</Text>
-                  {localized.shareFB.toUpperCase()}
-              </Text>
-          </TouchableOpacity>
+          <TourDetailDivider/>
+
 
         </ScrollView>
 
@@ -358,11 +324,6 @@ const styles = StyleSheet.create({
   cardTitle: {
     alignSelf: 'flex-start',
     marginHorizontal: 8,
-  },
-  buttonFacebook: {
-    backgroundColor: '#3B5998',
-    paddingVertical: 10,
-    margin: 18,
   },
   buttonText: {
     textAlign: 'center',
