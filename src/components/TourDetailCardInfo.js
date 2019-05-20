@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Button, Icon, Divider } from 'react-native-elements';
+import { differenceInCalendarDays } from 'date-fns';
 
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode } from '../services/function';
 import { COLOR_MAIN, COLOR_HARD_RED } from '../constants/index';
@@ -102,7 +103,7 @@ class TourDetailCardInfo extends Component {
                   {localized.lastIn} {getDaysDiff(currentTourTurn.start_date, currentTourTurn.end_date)} {localized.days.toLowerCase()}
               </Text>
               <Text style={{flex: 0.32}}>
-                  {getDaysLeft(currentTourTurn.start_date)} {localized.daysLeft.toLowerCase()}
+                  {differenceInCalendarDays(currentTourTurn.start_date, new Date())} {localized.daysLeft.toLowerCase()}
               </Text>
               <Text style={{flex: 0.32}}>
                   {currentTourTurn.num_max_people - currentTourTurn.num_current_people} {localized.slotsLeft.toLowerCase()}
