@@ -15,6 +15,7 @@ import HistoryDetail from '../screens/HistoryDetail';
 import TermsCondition from '../screens/TermsCondition';
 import Faq from '../screens/Faq';
 import Schedule from '../screens/Schedule';
+import CancelBooking from '../screens/CancelBooking';
 
 const SettingStack = createStackNavigator(
   {
@@ -28,6 +29,7 @@ const SettingStack = createStackNavigator(
     TermsCondition,
     Faq,
     Schedule,
+    CancelBooking,
   },
   {
     defaultNavigationOptions: {
@@ -56,7 +58,8 @@ SettingStack.navigationOptions = ({ navigation }) => {
             route.routeName === "HistoryDetail" ||
             route.routeName === "TermsCondition" ||
             route.routeName === "Faq" ||
-            route.routeName === "Schedule") {
+            route.routeName === "Schedule" ||
+            route.routeName === "CancelBooking") {
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

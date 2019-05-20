@@ -302,7 +302,7 @@ export async function getHistoryBookTourById(id){
 }
 
 export async function createCancelBookingRequest(idBookTour, message){
-  let URL = HOST + 'request_cancel_booking/create';
+  let URL = HOST + 'cancel_booking/requestCancel';
   return await AsyncStorage.getItem('userToken')
                             .then((auth) => {
                               return fetch(URL, {
@@ -314,7 +314,7 @@ export async function createCancelBookingRequest(idBookTour, message){
                                 },
                                 body: JSON.stringify({
                                   idBookTour: idBookTour,
-                                  message: message,
+                                  request_message: message,
                                 }),
                               });
                             })

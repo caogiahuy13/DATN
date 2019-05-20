@@ -2,6 +2,7 @@ import Moment from 'moment';
 import { View, Text } from 'react-native';;
 import NumberFormat from 'react-number-format';
 import React, { Component } from 'react';
+import { differenceInCalendarDays } from 'date-fns';
 import localized from '../localization/index';
 
 // Viết hoa chữ cái đầu tiên
@@ -146,4 +147,49 @@ export function slugify(str) {
     return 'u';
   }
   return str;
+}
+
+export function caculateRefund(money, startDay, isHoliday){
+  let numDay = distanceFromDays(new Date(), new Date(startDay))
+  return money * percentMoneyRefund(numDay, isHoliday) / 100
+}
+
+function distanceFromDays(dateEarlier, dateLater){
+	return differenceInCalendarDays(dateLater, new Date(dateEarlier))
+}
+
+function percentMoneyRefund(numDay, holiday) {
+    if (!holiday) {
+        if (numDay >= 20) {
+            return 100;
+        } else if (15 <= numDay && numDay <= 19) {
+            return 85;
+        } else if (12 <= numDay && numDay <= 14) {
+            return 70;
+        } else if (8 <= numDay && numDay <= 11) {
+            return 50;
+        } else if (5 <= numDay && numDay <= 7) {
+            return 30;
+        } else if (2 <= numDay && numDay <= 4) {
+            return 10;
+        } else {
+            return 0;
+        }
+    } else {
+        if (numDay >= 30) {
+            return 100;
+        } else if (25 <= numDay && numDay <= 29) {
+            return 85;
+        } else if (22 <= numDay && numDay <= 24) {
+            return 70;
+        } else if (17 <= numDay && numDay <= 19) {
+            return 50;
+        } else if (8 <= numDay && numDay <= 16) {
+            return 30;
+        } else if (2 <= numDay && numDay <= 7) {
+            return 10;
+        } else {
+            return 0;
+        }
+    }
 }

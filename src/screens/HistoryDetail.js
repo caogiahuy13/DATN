@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TextInput, Alert } from 'react-native';
-import { Divider, Button, CheckBox } from 'react-native-elements';
+import { View, Text, StyleSheet, ScrollView, Image, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { Divider, Button, CheckBox, Icon } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -9,7 +9,7 @@ import { tourDetailChangeId, tourDetailShowMarker } from '../actions/index.js';
 import { getTourTurnById, createCancelBookingRequest } from '../services/api';
 import { COLOR_MAIN, COLOR_LIGHT_BLUE, COLOR_HARD_RED } from '../constants/index';
 import { capitalize, priceFormat, dateFormat, getGenderShow,
-         getAgeShow, getAgePriceShow, getDaysDiff, getTourCode, bookedDateFormat } from '../services/function';
+         getAgeShow, getAgePriceShow, getDaysDiff, getTourCode, bookedDateFormat, caculateRefund } from '../services/function';
 import localized from '../localization/index';
 
 import InfoText from '../components/InfoText';
@@ -27,7 +27,10 @@ class HistoryDetail extends Component {
       cancel: {
         reason: '',
         isChecked: false,
+        radio: 0,
       },
+
+      showCondition: false,
 
       isCancelModalVisible: false,
     }
@@ -42,7 +45,7 @@ class HistoryDetail extends Component {
   async callCreateCancelBookingRequest(idBookTour, message){
     return createCancelBookingRequest(idBookTour, message)
             .then((response) => response.json())
-            .then((responseJson) => responseJson)
+            .then((responseJson) => {console.log(responseJson); return responseJson})
             .catch((error) => console.error(error));
   }
 
@@ -72,8 +75,10 @@ class HistoryDetail extends Component {
     const {info} = this.props.bookedTour;
     const {cancel} = this.state;
 
-    if (!cancel.isChecked){
-      Alert.alert(localized.agreeAlert);
+    if (cancel.radio == 0 || (cancel.radio == 3 && cancel.reason == '')){
+      Alert.alert("Error",localized.cancel_tour.reason_required)
+    } else if (!cancel.isChecked) {
+      Alert.alert("Error",localized.cancel_tour.not_agree);
     } else {
       this.callCreateCancelBookingRequest(info.id, cancel.reason)
           .then((res)=>{
@@ -92,23 +97,78 @@ class HistoryDetail extends Component {
     }
   }
 
+  reasonRadioBox(text, index){
+    let curReason = "";
+    if (index == 1){
+      curReason = localized.cancel_tour.busy;
+    } else if (index == 2){
+      curReason = localized.cancel_tour.sick;
+    }
+    return (
+      <CheckBox
+          title={text} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' checked={this.state.cancel.radio == index}
+          containerStyle={{margin: 0, padding: 0, borderRadius: 0, borderWidth: 0, backgroundColor: 'white'}}
+          textStyle={{fontSize: 14, fontWeight: 'normal', color: 'gray'}}
+          onPress={()=>{
+            this.setState({
+              cancel: {
+                ...this.state.cancel,
+                radio: index,
+                reason: curReason,
+              }
+            })
+          }}
+      />
+    )
+  }
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
     const {info} = this.props.bookedTour;
     const {tourInfo, cancel} = this.state;
     // console.log(this.props.bookedTour);
+
     return(
       <View style={styles.modalCancel}>
         <Text style={styles.cancelTitle}>{localized.cancelTour.toUpperCase()}</Text>
 
+        { info.status == 'paid' &&
+          <View>
+            <View style={{flexDirection: 'row'}}>
+                <Text>{localized.cancel_tour.refund_money}: </Text>
+                { tourInfo &&
+                  <Text style={{fontWeight: 'bold'}}>
+                    {priceFormat(caculateRefund(info.total_pay, tourInfo.start_date, tourInfo.isHoliday))}
+                  </Text>
+                }
+            </View>
+            <Text></Text>
+          </View>
+        }
+
         <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.yourReason}</Text>
-        <TextInput onChangeText={(val)=>{this.changeReason(val)}} value={cancel.reason} multiline style={styles.reason}/>
+        {this.reasonRadioBox(localized.cancel_tour.busy, 1)}
+        {this.reasonRadioBox(localized.cancel_tour.sick, 2)}
+        {this.reasonRadioBox(localized.cancel_tour.other, 3)}
+
+        { this.state.cancel.radio == 3 &&
+          <View>
+              <Text></Text>
+              <TextInput onChangeText={(val)=>{this.changeReason(val)}} value={cancel.reason} multiline style={styles.reason}/>
+          </View>
+        }
 
         <Text></Text>
-        <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.termsCondition}</Text>
-        <ScrollView style={{height: 100, padding: 10, marginBottom: 10, borderWidth: 0.5, borderColor: 'gray'}}>
-            <CancelTourCondition/>
-        </ScrollView>
+
+        <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>{this.setState({showCondition: !this.state.showCondition})}}>
+            <Text style={{fontSize: 16, paddingVertical: 6}}>{localized.termsCondition}</Text>
+            <Icon name='caret-down' type='font-awesome' color='gray' size={20} containerStyle={{justifyContent: 'center', marginLeft: 8, padding: 0}}/>
+        </TouchableOpacity>
+
+        { this.state.showCondition &&
+          <ScrollView style={{height: 200, padding: 10, marginBottom: 10, borderWidth: 0.5, borderColor: 'gray'}}>
+              <CancelTourCondition/>
+          </ScrollView>
+        }
         <CheckBox
           title={localized.agreeCondition}
           checked={cancel.isChecked}
@@ -244,7 +304,7 @@ class HistoryDetail extends Component {
       messagePay = JSON.parse(info.message_pay);
     }
 
-    console.log(info);
+    console.log(this.props.bookedTour);
     console.log(cancel_info);
 
     return (
@@ -356,7 +416,8 @@ class HistoryDetail extends Component {
               />
             }
 
-            { !this.isTourStarted() &&
+            { !this.isTourStarted() && info.cancel_bookings.length == 0 &&
+              (info.status == 'booked' || info.status == 'paid') &&
               <Button
                 title={localized.cancelTour.toUpperCase()}
                 type="solid"
@@ -364,6 +425,7 @@ class HistoryDetail extends Component {
                 containerStyle={{paddingBottom: 4, borderRadius: 0}}
                 titleStyle={{fontSize: 16}}
                 onPress={()=>{this._showCancelModal(true)}}
+                //onPress={()=>{this.props.navigation.navigate("CancelBooking")}}
               />
             }
 
@@ -503,7 +565,7 @@ const styles = StyleSheet.create({
       padding: 0,
     },
     reason: {
-      minHeight: 150,
+      minHeight: 50,
       height: 'auto',
       borderWidth: 0.5,
       borderColor: 'gray',
