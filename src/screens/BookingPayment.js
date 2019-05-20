@@ -3,6 +3,8 @@ import { View, StyleSheet, Text, TextInput, ScrollView, TouchableOpacity, Alert 
 import { Card, Icon, ListItem, Button, Divider } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
 import PayPal from 'react-native-paypal-wrapper';
+import { subDays } from 'date-fns';
+
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -12,6 +14,7 @@ import { COLOR_MAIN, COLOR_GRAY_BACKGROUND, COLOR_LIGHT_BLACK, COLOR_LIGHT_BLUE,
 import { bookingChangeInfo } from '../actions/index';
 import localized from '../localization/index';
 import { getRateCurrency } from '../services/apiWordpress';
+import { dateFormat } from '../services/function';
 
 import BookingStage from '../components/BookingStage';
 import InfoText from '../components/InfoText';
@@ -89,6 +92,18 @@ class BookingPayment extends Component {
     })
   }
 
+  getPayNote(){
+    const {booking} = this.props;
+    const checkout_days = 3;
+    return (
+      <Text style={{fontWeight: 'bold'}}>
+          {localized.checkout_payment.note_pay_1 + " "}
+          <Text style={{color: 'red'}}>{dateFormat(subDays(new Date(booking.tourTurn.start_date),checkout_days))}</Text>
+          {". " + localized.checkout_payment.note_pay_2}
+      </Text>
+    )
+  }
+
   render(){
     const {payType} = this.state;
 
@@ -114,9 +129,9 @@ class BookingPayment extends Component {
                   <Text style={{marginBottom: 5, fontWeight: 'bold'}}>{localized.checkout_payment.office}</Text>
                   <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.address}:</Text> 162 Ba Tháng Hai, Phường 12, Quận 10, TP.HCM</Text>
                   <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.phone}:</Text> 0963186896</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.email}:</Text> traveltour@gmail.com</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>Email:</Text> traveltour@gmail.com</Text>
                   <Text></Text>
-                  <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.note_pay}</Text>
+                  {this.getPayNote()}
                 </View>
               </Collapsible>
           </Card>
@@ -144,7 +159,10 @@ class BookingPayment extends Component {
                   <Text>{localized.checkout_payment.ex}</Text>
                   <View style={{marginBottom: 10}}></View>
                   <Text>{localized.checkout_payment.bank}</Text>
-                  <Text>{localized.checkout_payment.account_number}</Text>
+                  <Text>{localized.checkout_payment.account_number}: <Text style={{fontWeight: 'bold'}}>13422518A41</Text></Text>
+                  <Text>{localized.checkout_payment.account_name}: <Text style={{fontWeight: 'bold'}}>TRAVEL TOUR</Text></Text>
+                  <View style={{marginBottom: 10}}></View>
+                  {this.getPayNote()}
                   <View style={{marginBottom: 10}}></View>
                   <Text>{localized.checkout_payment.thank}</Text>
                 </View>
