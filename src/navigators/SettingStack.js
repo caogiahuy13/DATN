@@ -28,7 +28,6 @@ const SettingStack = createStackNavigator(
     TermsCondition,
     Faq,
     Schedule,
-    CancelBooking,
   },
   {
     defaultNavigationOptions: {
