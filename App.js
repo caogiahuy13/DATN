@@ -15,23 +15,12 @@ import {Provider} from 'react-redux';
 import BackgroundTimer from 'react-native-background-timer';
 import Geolocation from 'react-native-geolocation-service';
 
+// Bo qua yellow error
 console.ignoredYellowBox = ['Remote debugger'];
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings([
     'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
 ]);
-
-var socket = require('socket.io-client')('http://10.0.3.2:5000/', {
-  transports: ['websocket'] // you need to explicitly tell it to use websockets
-});
-
-socket.on('connect', function(){
-  console.log('Day la chuoi test!')
-  socket.emit("test","day la chuoi test");
-});
-socket.on('test-01',function(data){
-  console.log(data);
-})
 
 import AppNavigator from './src/navigators/AppNavigator';
 import allReducers from './src/reducers/index';
