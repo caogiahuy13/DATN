@@ -84,6 +84,7 @@
 		72488B5F85A3453BAEA0DDFF /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 540D59CAB8A74CCEB0B0BE50 /* libRCTRestart.a */; };
 		61814898A7074792B7E65118 /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F033BB3C31466D86B0788B /* libRNBackgroundTimer.a */; };
 		39E7703778AC433FA4EE988F /* libRNPaypalWrapper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA9E209D06E48BBA255DD01 /* libRNPaypalWrapper.a */; };
+		476987E2F39845FCA27C9E30 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CE10F23180D4357BBB66EBB /* libRNFirebase.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -446,6 +447,8 @@
 		82F033BB3C31466D86B0788B /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; name = "libRNBackgroundTimer.a"; path = "libRNBackgroundTimer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		2E1055DBC47B49359C6EF441 /* RNPaypalWrapper.xcodeproj */ = {isa = PBXFileReference; name = "RNPaypalWrapper.xcodeproj"; path = "../node_modules/react-native-paypal-wrapper/ios/RNPaypalWrapper.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		BAA9E209D06E48BBA255DD01 /* libRNPaypalWrapper.a */ = {isa = PBXFileReference; name = "libRNPaypalWrapper.a"; path = "libRNPaypalWrapper.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D84C94E2C5194A208411AB80 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; name = "RNFirebase.xcodeproj"; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5CE10F23180D4357BBB66EBB /* libRNFirebase.a */ = {isa = PBXFileReference; name = "libRNFirebase.a"; path = "libRNFirebase.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,6 +487,7 @@
 				72488B5F85A3453BAEA0DDFF /* libRCTRestart.a in Frameworks */,
 				61814898A7074792B7E65118 /* libRNBackgroundTimer.a in Frameworks */,
 				39E7703778AC433FA4EE988F /* libRNPaypalWrapper.a in Frameworks */,
+				476987E2F39845FCA27C9E30 /* libRNFirebase.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +689,7 @@
 				46B92621B25C40BDA305BCA0 /* RCTRestart.xcodeproj */,
 				577FFFB2105147E49C9F51AC /* RNBackgroundTimer.xcodeproj */,
 				2E1055DBC47B49359C6EF441 /* RNPaypalWrapper.xcodeproj */,
+				D84C94E2C5194A208411AB80 /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1399,6 +1404,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1412,6 +1418,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1445,6 +1452,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1458,6 +1466,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;
@@ -1490,6 +1499,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1521,6 +1531,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;
@@ -1562,6 +1573,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1575,6 +1587,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1616,6 +1629,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1629,6 +1643,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;
@@ -1669,6 +1684,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1682,6 +1698,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1722,6 +1739,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1735,6 +1753,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 					"$(SRCROOT)\..\node_modules\react-native-paypal-wrapper\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;

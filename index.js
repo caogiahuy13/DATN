@@ -6,12 +6,7 @@
 import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
-
-import TourDetailMap from './src/components/TourDetailMap';
-import BookingInfo from './src/screens/BookingInfo';
-import HistoryDetail from './src/screens/HistoryDetail';
-import TopTours from './src/screens/TopTours';
-import SmallTourCard from './src/components/SmallTourCard';
-import Review from './src/screens/Review';
+import bgMessaging from './src/services/bgMessaging';
 
 AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerHeadlessTask('RNFirebaseBackgroundMessage', () => bgMessaging);
