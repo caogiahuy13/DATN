@@ -2,6 +2,8 @@ package com.datn;
 
 import android.app.Application;
 
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.facebook.react.ReactApplication;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -47,6 +49,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebaseMessagingPackage(), //add this
+            new RNFirebaseNotificationsPackage(), //add this
             new ReactNativeOneSignalPackage(),
             new RNFirebasePackage(),
             new RNPaypalWrapperPackage(),
