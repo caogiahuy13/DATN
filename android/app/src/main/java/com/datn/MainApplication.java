@@ -3,6 +3,7 @@ package com.datn;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.taessina.paypal.RNPaypalWrapperPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
@@ -46,6 +47,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeOneSignalPackage(),
             new RNFirebasePackage(),
             new RNPaypalWrapperPackage(),
             new BackgroundTimerPackage(),

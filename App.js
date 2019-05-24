@@ -14,6 +14,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import BackgroundTimer from 'react-native-background-timer';
 import Geolocation from 'react-native-geolocation-service';
+import OneSignal from 'react-native-onesignal';
 
 // Bo qua yellow error
 console.ignoredYellowBox = ['Remote debugger'];
@@ -31,6 +32,38 @@ const AppContainer = createAppContainer(AppNavigator);
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props){
+      super(props);
+      OneSignal.init("615afc3e-6d71-4e08-a4a7-7faeb8e42d0b");
+      OneSignal.inFocusDisplaying(2);
+      
+      OneSignal.addEventListener('received', this.onReceived);
+      OneSignal.addEventListener('opened', this.onOpened);
+      OneSignal.addEventListener('ids', this.onIds);
+      OneSignal.configure(); 	// triggers the ids event
+  }
+
+  componentWillUnmount() {
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+
+  onReceived(notification) {
+    console.log("Notification received: ", notification);
+  }
+
+  onOpened(openResult) {
+    console.log('Message: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+  }
+
+  onIds(device) {
+    console.log('Device info: ', device);
+  }
+
   // watchID = null;
   //
   // async requestLocationPermission() {

@@ -9,4 +9,4 @@ import {name as appName} from './app.json';
 import bgMessaging from './src/services/bgMessaging';
 
 AppRegistry.registerComponent(appName, () => App);
-AppRegistry.registerHeadlessTask('RNFirebaseBackgroundMessage', () => bgMessaging);
+AppRegistry.registerComponent('OneSignalExample', () => App);

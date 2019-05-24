@@ -104,6 +104,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [onesignal_app_id: "615afc3e-6d71-4e08-a4a7-7faeb8e42d0b",
+                                onesignal_google_project_number: "REMOTE"]
     }
     splits {
         abi {
@@ -135,6 +137,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-onesignal')
     implementation project(':react-native-firebase')
     implementation project(':react-native-paypal-wrapper')
     implementation project(':react-native-background-timer')
@@ -167,3 +170,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
