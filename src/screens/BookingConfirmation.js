@@ -87,6 +87,7 @@ class BookingConfirmation extends Component {
 
   render(){
     const {info, tourTurn, number} = this.props.booking;
+    console.log(this.props.booking);
 
     let index = 0;
     let passengers = info.passengers.map((val,key)=>{
@@ -109,7 +110,13 @@ class BookingConfirmation extends Component {
 
           <BookingTourCard data={tourTurn} number={number}/>
 
-          <InfoText text={localized.contactInfo}/>
+          <InfoText text={localized.detail_booked_tour.method}/>
+
+          <View style={styles.card}>
+              <ContactInfo firstTxt={localized.detail_booked_tour[info.payment]} secondTxt={""}/>
+          </View>
+
+          <InfoText text={localized.contactInfo+":"}/>
 
           <View style={styles.card}>
               <ContactInfo firstTxt={localized.fullname+":"} secondTxt={info.fullname}/>
