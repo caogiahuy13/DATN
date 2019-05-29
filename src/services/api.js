@@ -213,6 +213,12 @@ export async function searchTourTurn(data={}){
   return await fetch(URL);
 }
 
+export async function searchTourTurn_v2(data={}){
+  const queryString = objToQueryString(data);
+  let URL = HOST + 'tour_turn/search_v2?' + queryString;
+  return await fetch(URL);
+}
+
 export async function createRequest(name, email, message){
   let URL = HOST + 'request/create';
   return await fetch(URL, {

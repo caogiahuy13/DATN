@@ -9,7 +9,7 @@ import { NavigationEvents } from 'react-navigation';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { searchTourTurn } from '../services/api';
+import { searchTourTurn, searchTourTurn_v2 } from '../services/api';
 import { searchNameChange } from '../actions/index.js';
 import { COLOR_MAIN, COLOR_GRAY_BACKGROUND } from '../constants/index';
 import { sortBy, placeHolderSortBy, sortType, placeHolderSortType } from '../constants/search';
@@ -43,10 +43,14 @@ class Tours extends Component {
   }
 
   async callSearchTourTurn(data){
-    return searchTourTurn(data)
-            .then((response) => response.json())
-            .then((responseJson) => responseJson)
-            .catch((error) => console.error(error));
+    return searchTourTurn_v2(data)
+          .then((response) => response.json())
+          .then((responseJson) => responseJson)
+          .catch((error) => console.error(error));
+    // return searchTourTurn(data)
+    //         .then((response) => response.json())
+    //         .then((responseJson) => responseJson)
+    //         .catch((error) => console.error(error));
   }
 
   tourDetailPress = (id) => {
