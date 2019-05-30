@@ -5,17 +5,17 @@ import { COLOR_GRAY_BACKGROUND } from '../constants/index';
 
 class NumberPicker extends Component {
   render(){
-    const {value} = this.props;
+    const {value, allowPress} = this.props;
 
     return(
       <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={this.props.decrease} style={styles.button}>
+          <TouchableOpacity onPress={this.props.decrease} style={styles.button} disabled={ allowPress ? !allowPress : false}>
               <Text style={styles.text}>-</Text>
           </TouchableOpacity>
           <View style={{paddingVertical: 4, paddingHorizontal: 10}}>
               <Text style={styles.text}>{this.props.value}</Text>
           </View>
-          <TouchableOpacity onPress={this.props.increase} style={styles.button}>
+          <TouchableOpacity onPress={this.props.increase} style={styles.button} disabled={ allowPress ? !allowPress : false}>
               <Text style={styles.text}>+</Text>
           </TouchableOpacity>
       </View>

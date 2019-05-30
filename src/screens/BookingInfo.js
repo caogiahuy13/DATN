@@ -359,11 +359,11 @@ class BookingInfo extends Component {
           <View style={styles.card}>
               <View style={styles.numberPicker}>
                   <Text style={styles.numberPickerText}>{localized.adult} *</Text>
-                  <NumberPicker value={this.state.number.adult} increase={()=>this.increaseAdult()} decrease={()=>this.decreaseAdult()}/>
+                  <NumberPicker value={this.state.number.adult} increase={()=>this.increaseAdult()} decrease={()=>this.decreaseAdult()} allowPress={this.state.allowPress}/>
               </View>
               <View style={styles.numberPicker}>
                   <Text style={styles.numberPickerText}>{localized.children}</Text>
-                  <NumberPicker value={this.state.number.children} increase={()=>this.increaseChildren()} decrease={()=>this.decreaseChildren()}/>
+                  <NumberPicker value={this.state.number.children} increase={()=>this.increaseChildren()} decrease={()=>this.decreaseChildren()} allowPress={this.state.allowPress}/>
               </View>
           </View>
 
