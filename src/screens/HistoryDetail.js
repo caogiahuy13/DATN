@@ -45,7 +45,7 @@ class HistoryDetail extends Component {
   async callCreateCancelBookingRequest(idBookTour, message){
     return createCancelBookingRequest(idBookTour, message)
             .then((response) => response.json())
-            .then((responseJson) => {console.log(responseJson); return responseJson})
+            .then((responseJson) => responseJson)
             .catch((error) => console.error(error));
   }
 
@@ -303,9 +303,6 @@ class HistoryDetail extends Component {
     if (info.message_pay){
       messagePay = JSON.parse(info.message_pay);
     }
-
-    console.log(this.props.bookedTour);
-    console.log(cancel_info);
 
     return (
       <ScrollView style={styles.container}>
