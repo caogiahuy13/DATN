@@ -274,6 +274,7 @@ const vi = {
     foreign_holiday_3: "Hủy tour từ 16 – 29 ngày trước ngày khởi hành: Phí huỷ tour là 60% trên tổng giá tour.",
     foreign_holiday_4: "Hủy tour từ 08 – 15 ngày trước ngày khởi hành: Phí huỷ tour là 90% trên tổng giá tour.",
     foreign_holiday_5: "Hủy tour từ 01 – 07 ngày trước ngày khởi hành: Phí huỷ tour là 100% trên tổng giá tour.",
+    foreign_holiday_6: "Tour trong ngày lễ hoặc năm mới",
     success: "Yêu cầu của bạn đã được gửi thành công!",
     reply: "Chúng tôi sẽ liên lạc lại với bạn qua điện thoại và email sau khi xem xét yêu cầu của bạn!",
     thank: "Xin cảm ơn!",
