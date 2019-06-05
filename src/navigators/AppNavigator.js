@@ -3,9 +3,11 @@ import {createSwitchNavigator, createStackNavigator} from "react-navigation";
 
 import TabNavigator from './TabNavigator';
 import AuthStack from './AuthStack';
+import Splash from '../screens/Splash';
 
 const AppNavigator = createSwitchNavigator(
   {
+    Splash,
     TabNavigator,
     AuthStack,
   },
