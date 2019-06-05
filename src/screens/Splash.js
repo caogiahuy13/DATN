@@ -3,8 +3,22 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 
 import localized from '../localization/index';
+import NetInfo from "@react-native-community/netinfo";
 
 class Splash extends Component {
+
+  checkNetwork(state){
+    // console.log("Connection type", state.type);
+    // console.log("Is connected?", state.isConnected);
+    if (state.isConnected){
+      this.props.navigation.navigate("TabNavigator");
+    }
+  }
+  componentDidMount(){
+    NetInfo.fetch().then(state => this.checkNetwork(state));
+    NetInfo.addEventListener(state => this.checkNetwork(state));
+  }
+
   render() {
     return (
       <View style={styles.container}>

@@ -5,6 +5,7 @@ import android.app.Application;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.taessina.paypal.RNPaypalWrapperPackage;
@@ -49,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new NetInfoPackage(),
             new RNFirebaseMessagingPackage(), //add this
             new RNFirebaseNotificationsPackage(), //add this
             new ReactNativeOneSignalPackage(),
