@@ -94,7 +94,9 @@ const en = {
   not_rated: "Not yet rated",
   passport: "Identity number",
   bookForYou: "Book tour for you",
-
+  connectInternet: "Please connect to the internet",
+  error: "Error",
+  
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",

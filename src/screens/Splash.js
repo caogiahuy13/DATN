@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 
 import localized from '../localization/index';
@@ -12,6 +12,16 @@ class Splash extends Component {
     // console.log("Is connected?", state.isConnected);
     if (state.isConnected){
       this.props.navigation.navigate("TabNavigator");
+    } else {
+      Alert.alert(
+        localized.error,
+        localized.connectInternet,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
+      this.props.navigation.navigate("Splash");
     }
   }
   componentDidMount(){

@@ -87,7 +87,7 @@ class Setting extends Component {
 
   // Hiển thị modal chọn giới tính
   _renderModalContent = () => {
-    const {sex} = this.props.access.profile;
+    const {sex} = this.props.access.profile ? this.props.access.profile : '' ;
 
     return(
       <View style={styles.modalGender}>

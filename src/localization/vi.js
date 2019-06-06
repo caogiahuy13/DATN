@@ -94,7 +94,9 @@ const vi = {
   not_rated: "Chưa đánh giá",
   passport: "Chứng minh nhân dân",
   bookForYou: "Bạn là người đi tour",
-
+  connectInternet: "Vui lòng kết nối Internet",
+  error: "Lỗi",
+  
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
   addressModalDescription: "Vui lòng nhập địa chỉ",

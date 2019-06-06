@@ -1,8 +1,9 @@
 import PushNotification from '../components/PushNotification';
 import { me } from '../services/api';
+import { HOST } from '../constants/index';
 
 // SOCKET
-var socket = require('socket.io-client')('http://10.0.3.2:5000/', {
+var socket = require('socket.io-client')(HOST, {
   transports: ['websocket'] // you need to explicitly tell it to use websockets
 });
 var profile;

@@ -19,6 +19,7 @@ import firebase from 'react-native-firebase';
 import type { Notification, NotificationOpen } from 'react-native-firebase';
 import type { RemoteMessage } from 'react-native-firebase';
 
+
 // Bo qua yellow error
 console.ignoredYellowBox = ['Remote debugger'];
 import { YellowBox } from 'react-native';
@@ -28,6 +29,7 @@ YellowBox.ignoreWarnings([
 
 import AppNavigator from './src/navigators/AppNavigator';
 import allReducers from './src/reducers/index';
+import socket from './src/services/socket';
 
 const store = createStore(allReducers);
 
