@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { } from 'react-native-elements';
 
 import { priceFormat, shortenString } from '../services/function';
-import { COLOR_HARD_RED, COLOR_GREEN } from '../constants/index';
+import { COLOR_HARD_RED, COLOR_MAIN, COLOR_GREEN } from '../constants/index';
 
 import Sale from './Sale';
 
@@ -14,6 +14,7 @@ class SmallTourCard extends Component{
 
   render(){
     const {data} = this.props;
+    console.log(data);
 
     if (typeof(data) == 'undefined'){
       return(<View></View>)
@@ -30,7 +31,13 @@ class SmallTourCard extends Component{
             }
         </View>
         <Text style={styles.name}>{shortenString(data.tour.name,40)}</Text>
-        <Text style={styles.price}>{priceFormat(data.end_price)}</Text>
+        <View style={{paddingHorizontal: 4, paddingTop: 4, paddingBottom: 6, flex: 0.1}}>
+            { data.discount > 0 &&
+              <Text style={styles.old_price}>{priceFormat(data.original_price)}</Text>
+            }
+            <Text style={styles.price}>{priceFormat(data.end_price)}</Text>
+        </View>
+
       </TouchableOpacity>
     );
   }
@@ -45,16 +52,19 @@ const styles = StyleSheet.create({
     height: 260,
   },
   name: {
-    padding: 4,
+    paddingHorizontal: 4,
+    paddingTop: 4,
     fontSize: 16,
-    flex: 0.2,
+    flex: 0.18,
   },
   price: {
-    padding: 4,
-    color: COLOR_HARD_RED,
+    color: COLOR_MAIN,
     fontWeight: 'bold',
     fontSize: 18,
-    flex: 0.1
+  },
+  old_price: {
+    fontSize: 14,
+    textDecorationLine: 'line-through',
   },
   image: {
     flex: 1,
