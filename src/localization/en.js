@@ -96,6 +96,8 @@ const en = {
   bookForYou: "Book tour for you",
   connectInternet: "Please connect to the internet",
   error: "Error",
+  next: "Next",
+  ageType: "Age",
   
   // Address modal
   addressModalLabel: "Enter address",

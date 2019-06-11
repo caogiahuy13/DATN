@@ -1,6 +1,8 @@
 export const LOCALHOST = '10.0.3.2';
+// export const LOCALHOST = '172.16.246';
+
 export const HOST = 'http://'+LOCALHOST+':5000/';
-export const API_CMS_URL='http://10.0.3.2:8080/wordpress/wp-json/wp/v2/';
+export const API_CMS_URL='http://'+LOCALHOST+':8080/wordpress/wp-json/wp/v2/';
 
 // Cac buoc chay localhost tren device:
 // 1. Doi URL o day, dia chi ip dung ipconfig lay ipv4 cua Wireless LAN adapter Wi-Fi

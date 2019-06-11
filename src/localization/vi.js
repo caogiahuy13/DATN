@@ -92,11 +92,13 @@ const vi = {
   recommendedTour: "Tour gợi ý",
   noTourFound: "Không tìm thấy tour thích hợp",
   not_rated: "Chưa đánh giá",
-  passport: "Chứng minh nhân dân",
+  passport: "CMND/CCCD",
   bookForYou: "Bạn là người đi tour",
   connectInternet: "Vui lòng kết nối Internet",
   error: "Lỗi",
-  
+  next: "Tiếp theo",
+  ageType: "Độ tuổi",
+
   // Address modal
   addressModalLabel: "Nhập địa chỉ",
   addressModalDescription: "Vui lòng nhập địa chỉ",

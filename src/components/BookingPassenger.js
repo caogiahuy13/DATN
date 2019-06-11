@@ -206,6 +206,7 @@ class BookingPassenger extends Component {
   componentWillMount(){
     const {val} = this.props;
     this.setState({passenger: val});
+
   }
 
   render(){
@@ -230,6 +231,17 @@ class BookingPassenger extends Component {
           <InfoText text={infoText}/>
 
           <View style={styles.card}>
+              { this.props.index == 1 &&
+                <CheckBox
+                    title={localized.bookForYou}
+                    checked={this.state.bookForYou}
+                    checkedIcon='dot-circle-o'
+                    uncheckedIcon='circle-o'
+                    containerStyle={{paddingHorizontal: 0, paddingTop: 0, paddingBottom: 10, backgroundColor: 'white', borderWidth: 0}}
+                    onPress={()=>{this.handleBookForYou()}}
+                />
+              }
+
               <TouchableOpacity activeOpacity={1} onPress={()=>this.fullname.focus()}>
                   <View pointerEvents="none">
                       <TextInput
@@ -320,19 +332,6 @@ class BookingPassenger extends Component {
                       />
                   </View>
               </TouchableOpacity>
-
-
-              { this.props.index == 1 &&
-                <CheckBox
-                    title={localized.bookForYou}
-                    checked={this.state.bookForYou}
-                    checkedIcon='dot-circle-o'
-                    uncheckedIcon='circle-o'
-                    containerStyle={{padding: 0, backgroundColor: 'white', borderWidth: 0}}
-                    onPress={()=>{this.handleBookForYou()}}
-                />
-              }
-
           </View>
       </View>
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Button, Icon, Divider } from 'react-native-elements';
 import {ShareDialog} from 'react-native-fbsdk';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { differenceInCalendarDays } from 'date-fns';
 
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode } from '../services/function';
@@ -159,8 +160,8 @@ class TourDetailCardInfo extends Component {
 
           <Divider style={{height: 1}}/>
 
-          <View style={{paddingVertical: 4}}>
-              <Icon name='facebook-square' type='font-awesome' color='#3B5998' onPress={()=>{this.onShareFacebook()}}
+          <View style={{paddingVertical: 6}}>
+              <Icon name='facebook-square' type='font-awesome' color='#3B5998' size={28} onPress={()=>{this.onShareFacebook()}}
                 containerStyle={{justifyContent: 'flex-start', alignSelf: 'flex-start'}}
               />
           </View>
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
   tags: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
 });
 
 export default TourDetailCardInfo;

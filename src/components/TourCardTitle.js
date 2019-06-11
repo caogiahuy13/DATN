@@ -30,7 +30,7 @@ class TourCardTitle extends Component{
             <View style={styles.saleContainer}>
               <Button buttonStyle={styles.sale} title='SALE!' titleStyle={{fontSize: 14}}/>
             </View>
-          }    
+          }
       </View>
     );
   }

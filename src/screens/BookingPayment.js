@@ -196,12 +196,12 @@ class BookingPayment extends Component {
           <Space/>
 
           <Button
-            title="NEXT"
+            title={localized.next.toUpperCase()}
             type="solid"
             disabled = {(payType == 0 || payType == 3) ? true : false}
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
-            titleStyle={{fontSize: 16}}
+            titleStyle={{fontSize: 16, fontWeight: 'bold'}}
             onPress={()=>{this.onNextPress()}}
           />
 

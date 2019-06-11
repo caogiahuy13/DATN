@@ -457,11 +457,11 @@ class BookingInfo extends Component {
           <Space/>
 
           <Button
-            title="NEXT"
+            title={localized.next.toUpperCase()}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
             containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
-            titleStyle={{fontSize: 16}}
+            titleStyle={{fontSize: 16, fontWeight: 'bold'}}
             onPress={()=>{this.onNextPress()}}
           />
 

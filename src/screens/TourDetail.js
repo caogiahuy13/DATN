@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { Card, Button, Icon, Divider, Rating, AirbnbRating, Avatar } from 'react-native-elements';
+import { Card, Button, Icon, Divider, Rating, AirbnbRating, Avatar, ButtonGroup } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
 import Slideshow from 'react-native-image-slider-show';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -39,7 +39,6 @@ class TourDetail extends Component{
       isDetailCollapsed: true,
       isReviewCollapsed: true,
       isAdditionCollapsed: true,
-      isPolicyCollapsed: true,
     }
   }
 
@@ -48,9 +47,6 @@ class TourDetail extends Component{
   }
   toggleDetail(){
     this.setState({isDetailCollapsed: !this.state.isDetailCollapsed});
-  }
-  togglePolicy(){
-    this.setState({isPolicyCollapsed: !this.state.isPolicyCollapsed});
   }
   toggleReview(){
     this.setState({isReviewCollapsed: !this.state.isReviewCollapsed});
@@ -181,7 +177,7 @@ class TourDetail extends Component{
   render(){
     const {
       tour, currentTurn,
-      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed, isPolicyCollapsed,
+      isDescriptionCollapsed, isDetailCollapsed, isReviewCollapsed, isAdditionCollapsed,
     } = this.state;
 
     return(
@@ -210,6 +206,8 @@ class TourDetail extends Component{
 
           <TourDetailDivider/>
 
+
+
           <Card
             containerStyle = {styles.cardContainer}
             title=<CollapsibleCardTitle title={localized.detail} status={isDetailCollapsed} onPress={()=>this.toggleDetail()}/>
@@ -224,18 +222,6 @@ class TourDetail extends Component{
                 {this.getScheduleCard()}
               </Collapsible>
 
-          </Card>
-
-          <TourDetailDivider/>
-
-          <Card
-            containerStyle = {styles.cardContainer}
-            title=<CollapsibleCardTitle title={localized.policy} status={isPolicyCollapsed} onPress={()=>this.togglePolicy()}/>
-            titleStyle={styles.cardTitle}
-          >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={isPolicyCollapsed}>
-                <Text>{tour.policy}</Text>
-              </Collapsible>
           </Card>
 
           <TourDetailDivider/>
@@ -324,12 +310,6 @@ const styles = StyleSheet.create({
   cardTitle: {
     alignSelf: 'flex-start',
     marginHorizontal: 8,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color :'#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 })
 

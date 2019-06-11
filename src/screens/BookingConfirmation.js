@@ -113,7 +113,7 @@ class BookingConfirmation extends Component {
           <InfoText text={localized.detail_booked_tour.method}/>
 
           <View style={styles.card}>
-              <ContactInfo firstTxt={localized.detail_booked_tour[info.payment]} secondTxt={""}/>
+              <Text>{localized.detail_booked_tour[info.payment]}</Text>
           </View>
 
           <InfoText text={localized.contactInfo+":"}/>
@@ -172,12 +172,12 @@ class PassengerInfo extends Component {
 
     return(
       <View style={{paddingVertical: 10}}>
-          <Text style={{fontWeight: 'bold'}}>{fullname}</Text>
-          <Text>{Moment(birthdate).format('DD/MM/YYYY')}</Text>
-          <Text>{getGenderShow(sex)}</Text>
-          <Text>{getAgeShow(type)}</Text>
-          { phone != '' && <Text>{phone}</Text> }
-          { passport != '' && <Text>{passport}</Text> }
+          <ContactInfo firstTxt={localized.fullname+":"} secondTxt={fullname}/>
+          <ContactInfo firstTxt={localized.birthdate+":"} secondTxt={Moment(birthdate).format('DD/MM/YYYY')}/>
+          <ContactInfo firstTxt={localized.gender+":"} secondTxt={getGenderShow(sex)}/>
+          <ContactInfo firstTxt={localized.ageType+":"} secondTxt={getAgeShow(type)}/>
+          { phone != '' && <ContactInfo firstTxt={localized.phone+":"} secondTxt={phone}/> }
+          { passport != '' && <ContactInfo firstTxt={localized.passport+":"} secondTxt={passport}/> }
       </View>
     )
   }
