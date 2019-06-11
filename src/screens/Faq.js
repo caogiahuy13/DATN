@@ -14,18 +14,6 @@ class Faq extends Component {
     return (
       <ScrollView style={styles.container}>
         <Card containerStyle = {styles.card}>
-          <Text style={{fontWeight: 'bold'}}>{localized.faq.sub_part}</Text>
-          <Text>{localized.faq.sub_part_title_1}</Text>
-          <Text>{localized.faq.sub_part_1}</Text>
-
-          <Space/>
-
-          <Text>{localized.faq.sub_part_title_2}</Text>
-          <Text>{localized.faq.sub_part_2}</Text>
-
-          <Space/>
-          <Space/>
-
           <Text style={{fontWeight: 'bold'}}>{localized.faq.question}</Text>
 
           <Space/>

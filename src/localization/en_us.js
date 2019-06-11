@@ -60,7 +60,7 @@ const en_us = {
   aboutUs: "About Us",
   contactScreen: "Contact",
   termsCondition: "Terms Condition",
-  faqScreen: "Faq",
+  faqScreen: "FAQ",
   writeComment: "Write comment",
   send: "Send",
   rating: "Rating",

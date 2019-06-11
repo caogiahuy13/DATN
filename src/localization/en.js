@@ -60,7 +60,7 @@ const en = {
   aboutUs: "About Us",
   contactScreen: "Contact",
   termsCondition: "Terms Condition",
-  faqScreen: "Faq",
+  faqScreen: "FAQ",
   writeComment: "Write comment",
   send: "Send",
   rating: "Rating",
@@ -98,7 +98,7 @@ const en = {
   error: "Error",
   next: "Next",
   ageType: "Age",
-  
+
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",

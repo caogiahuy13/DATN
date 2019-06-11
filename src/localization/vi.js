@@ -60,7 +60,7 @@ const vi = {
   aboutUs: "Về chúng tôi",
   contactScreen: "Liên hệ",
   termsCondition: "Điều khoản sử dụng",
-  faqScreen: "Faq",
+  faqScreen: "FAQ",
   writeComment: "Viết nhận xét",
   send: "Gửi",
   rating: "Đánh giá",
