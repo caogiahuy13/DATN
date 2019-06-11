@@ -13,6 +13,7 @@ import BookingPayment from '../screens/BookingPayment';
 import BookingConfirmation from '../screens/BookingConfirmation';
 import Review from '../screens/Review';
 import ListTours from '../screens/ListTours';
+import Policy from '../screens/Policy';
 
 const ToursStack = createStackNavigator(
   {
@@ -23,6 +24,7 @@ const ToursStack = createStackNavigator(
     BookingConfirmation,
     Review,
     ListTours,
+    Policy,
   },
   {
     defaultNavigationOptions: {
@@ -48,7 +50,8 @@ ToursStack.navigationOptions = ({ navigation }) => {
             route.routeName === "BookingPayment" ||
             route.routeName === "BookingConfirmation" ||
             route.routeName === "Review" ||
-            route.routeName === "ListTours") {
+            route.routeName === "ListTours" ||
+            route.routeName === "Policy"){
           tabBarVisible = false;
         } else {
           tabBarVisible = true;

@@ -260,6 +260,14 @@ class TourDetail extends Component{
                     <View>
                         <Text style={{fontWeight: 'bold', paddingVertical: 4}}>{localized.detailPrice}</Text>
                         {this.getDetailPrice()}
+                        <Button
+                          title={localized.policy.toUpperCase()}
+                          type="solid"
+                          buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
+                          containerStyle={{padding: 16, borderRadius: 0}}
+                          titleStyle={{fontSize: 16}}
+                          onPress={()=>{this.props.navigation.navigate("Policy")}}
+                        />
                     </View>
                   }
               </Collapsible>
