@@ -62,7 +62,7 @@ class BookingPayment extends Component {
         info.payment = 'incash';
         break;
       case 2:
-        info.payment = 'bank';
+        info.payment = 'transfer';
         break;
       case 3:
         info.payment = 'online';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-import { COLOR_GRAY_BACKGROUND } from '../constants/index';
+import { LOCALHOST, COLOR_GRAY_BACKGROUND } from '../constants/index';
 
 class NewsCard extends Component {
 
@@ -11,11 +11,15 @@ class NewsCard extends Component {
 
   render(){
     const {data} = this.props;
+    console.log(data);
 
     return(
       <TouchableOpacity style={styles.container} onPress={this.onPress}>
           <View style={{flex: 1}}>
-              <Image style={{flex: 1, width: undefined, height: 200}} source={{uri: data.thumnail.replace("localhost","10.0.3.2")}}/>
+              <Image
+                  style={{flex: 1, width: undefined, height: 200}}
+                  source={{uri: data.thumnail.replace("localhost",LOCALHOST)}}
+              />
           </View>
           <View style={{padding: 10}}>
               <Text style={styles.title}>

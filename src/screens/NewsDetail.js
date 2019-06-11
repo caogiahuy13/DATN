@@ -39,9 +39,9 @@ class NewsDetail extends Component {
           key={key}
           title={val.name}
           type="outline"
-          buttonStyle={{borderWidth: 1, borderColor: 'gray'}}
-          containerStyle={{margin: 4}}
-          titleStyle={{color: 'gray'}}
+          buttonStyle={{borderWidth: 1, borderColor: 'gray', padding: 4}}
+          containerStyle={{margin: 2, padding: 0}}
+          titleStyle={{color: 'gray', fontSize: 12}}
           onPress={()=>{this.onTagPress(val.id, val.name)}}
         />
       )
