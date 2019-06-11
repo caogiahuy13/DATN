@@ -103,48 +103,48 @@ class BookingConfirmation extends Component {
     })
 
     return(
-      <ScrollView style={styles.container}>
-          <BookingStage stage={3}/>
+      <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
+          <ScrollView style={styles.container}>
+              <BookingStage stage={3}/>
 
-          <Space/>
+              <Space/>
 
-          <BookingTourCard data={tourTurn} number={number}/>
+              <BookingTourCard data={tourTurn} number={number}/>
 
-          <InfoText text={localized.detail_booked_tour.method}/>
+              <InfoText text={localized.detail_booked_tour.method}/>
 
-          <View style={styles.card}>
-              <Text>{localized.detail_booked_tour[info.payment]}</Text>
-          </View>
+              <View style={styles.card}>
+                  <Text>{localized.detail_booked_tour[info.payment]}</Text>
+              </View>
 
-          <InfoText text={localized.contactInfo+":"}/>
+              <InfoText text={localized.contactInfo+":"}/>
 
-          <View style={styles.card}>
-              <ContactInfo firstTxt={localized.fullname+":"} secondTxt={info.fullname}/>
-              <ContactInfo firstTxt={localized.phone+":"} secondTxt={info.phone}/>
-              <ContactInfo firstTxt={localized.email+":"} secondTxt={info.email}/>
-              <ContactInfo firstTxt={localized.address+":"} secondTxt={info.address}/>
-          </View>
+              <View style={styles.card}>
+                  <ContactInfo firstTxt={localized.fullname+":"} secondTxt={info.fullname}/>
+                  <ContactInfo firstTxt={localized.phone+":"} secondTxt={info.phone}/>
+                  <ContactInfo firstTxt={localized.email+":"} secondTxt={info.email}/>
+                  <ContactInfo firstTxt={localized.address+":"} secondTxt={info.address}/>
+              </View>
 
-          <InfoText text={localized.passengerInfo+":"}/>
+              <InfoText text={localized.passengerInfo+":"}/>
 
-          <View style={styles.card}>
-              {passengers}
-          </View>
+              <View style={styles.card}>
+                  {passengers}
+              </View>
 
-          <Space/>
+              <Space/>
+
+          </ScrollView>
 
           <Button
             title={localized.bookTour.toUpperCase()}
             type="solid"
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
-            containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
+            containerStyle={{padding: 0, borderRadius: 0}}
             titleStyle={{fontSize: 16}}
             onPress={()=>{this.onButtonPress()}}
           />
-
-          <Space/>
-
-      </ScrollView>
+      </View>
     )
   }
 }

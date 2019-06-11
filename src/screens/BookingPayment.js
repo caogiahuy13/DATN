@@ -108,105 +108,106 @@ class BookingPayment extends Component {
     const {payType} = this.state;
 
     return(
-      <ScrollView style={styles.container}>
-          <BookingStage stage={2}/>
+      <View style={{flex: 1, backgroundColor: '#F4F5F4'}}>
+          <ScrollView style={styles.container}>
+              <BookingStage stage={2}/>
 
-          <Space/>
+              <Space/>
 
-          <Card
-            containerStyle = {styles.cardContainer}
-            title=<CardTitle
-                      title={localized.checkout_payment.incash}
-                      subTitle={localized.checkout_payment.sub_incash}
-                      status={this.state.isPayInCashCollapsed}
-                      payType={payType}
-                      index={1}
-                      onPress={()=>this.togglePayInCash()}/>
-            titleStyle={styles.cardTitle}
-          >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayInCashCollapsed}>
-                <View>
-                  <Text style={{marginBottom: 5, fontWeight: 'bold'}}>{localized.checkout_payment.office}</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.address}:</Text> 162 Ba Tháng Hai, Phường 12, Quận 10, TP.HCM</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.phone}:</Text> 0963186896</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>Email:</Text> traveltour@gmail.com</Text>
-                  <Text></Text>
-                  {this.getPayNote()}
-                </View>
-              </Collapsible>
-          </Card>
+              <Card
+                containerStyle = {styles.cardContainer}
+                title=<CardTitle
+                          title={localized.checkout_payment.incash}
+                          subTitle={localized.checkout_payment.sub_incash}
+                          status={this.state.isPayInCashCollapsed}
+                          payType={payType}
+                          index={1}
+                          onPress={()=>this.togglePayInCash()}/>
+                titleStyle={styles.cardTitle}
+              >
+                  <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayInCashCollapsed}>
+                    <View>
+                      <Text style={{marginBottom: 5, fontWeight: 'bold'}}>{localized.checkout_payment.office}</Text>
+                      <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.address}:</Text> 162 Ba Tháng Hai, Phường 12, Quận 10, TP.HCM</Text>
+                      <Text><Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.phone}:</Text> 0963186896</Text>
+                      <Text><Text style={{fontWeight: 'bold'}}>Email:</Text> traveltour@gmail.com</Text>
+                      <Text></Text>
+                      {this.getPayNote()}
+                    </View>
+                  </Collapsible>
+              </Card>
 
-          <Space/>
+              <Space/>
 
-          <Card
-            containerStyle = {styles.cardContainer}
-            title=<CardTitle
-                      title={localized.checkout_payment.transfer}
-                      subTitle={localized.checkout_payment.sub_transfer}
-                      status={this.state.isPayByTransferCollapsed}
-                      payType={payType}
-                      index={2}
-                      onPress={()=>this.togglePayByTransfer()}/>
-            titleStyle={styles.cardTitle}
-          >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayByTransferCollapsed}>
-                <View>
-                  <Text style={{fontWeight: 'bold', marginBottom: 5}}>{localized.checkout_payment.account}</Text>
-                  <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.note}:</Text>
-                  <Text style={{color: 'red'}}>{localized.checkout_payment.note_content}</Text>
-                  <Text>{localized.checkout_payment.formula}</Text>
-                  <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.formula_content}</Text>
-                  <Text>{localized.checkout_payment.ex}</Text>
-                  <View style={{marginBottom: 10}}></View>
-                  <Text>{localized.checkout_payment.bank}</Text>
-                  <Text>{localized.checkout_payment.account_number}: <Text style={{fontWeight: 'bold'}}>13422518A41</Text></Text>
-                  <Text>{localized.checkout_payment.account_name}: <Text style={{fontWeight: 'bold'}}>TRAVEL TOUR</Text></Text>
-                  <View style={{marginBottom: 10}}></View>
-                  {this.getPayNote()}
-                  <View style={{marginBottom: 10}}></View>
-                  <Text>{localized.checkout_payment.thank}</Text>
-                </View>
-              </Collapsible>
-          </Card>
+              <Card
+                containerStyle = {styles.cardContainer}
+                title=<CardTitle
+                          title={localized.checkout_payment.transfer}
+                          subTitle={localized.checkout_payment.sub_transfer}
+                          status={this.state.isPayByTransferCollapsed}
+                          payType={payType}
+                          index={2}
+                          onPress={()=>this.togglePayByTransfer()}/>
+                titleStyle={styles.cardTitle}
+              >
+                  <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayByTransferCollapsed}>
+                    <View>
+                      <Text style={{fontWeight: 'bold', marginBottom: 5}}>{localized.checkout_payment.account}</Text>
+                      <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.note}:</Text>
+                      <Text style={{color: 'red'}}>{localized.checkout_payment.note_content}</Text>
+                      <Text>{localized.checkout_payment.formula}</Text>
+                      <Text style={{fontWeight: 'bold'}}>{localized.checkout_payment.formula_content}</Text>
+                      <Text>{localized.checkout_payment.ex}</Text>
+                      <View style={{marginBottom: 10}}></View>
+                      <Text>{localized.checkout_payment.bank}</Text>
+                      <Text>{localized.checkout_payment.account_number}: <Text style={{fontWeight: 'bold'}}>13422518A41</Text></Text>
+                      <Text>{localized.checkout_payment.account_name}: <Text style={{fontWeight: 'bold'}}>TRAVEL TOUR</Text></Text>
+                      <View style={{marginBottom: 10}}></View>
+                      {this.getPayNote()}
+                      <View style={{marginBottom: 10}}></View>
+                      <Text>{localized.checkout_payment.thank}</Text>
+                    </View>
+                  </Collapsible>
+              </Card>
 
-          <Space/>
+              <Space/>
 
-          <Card
-            containerStyle = {styles.cardContainer}
-            title=<CardTitle
-                      title={localized.checkout_payment.online}
-                      subTitle={localized.checkout_payment.sub_online}
-                      status={this.state.isPayOnlineCollapsed}
-                      payType={payType}
-                      index={3}
-                      onPress={()=>this.togglePayOnline()}/>
-            titleStyle={styles.cardTitle}
-          >
-              <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayOnlineCollapsed}>
-                  <Icon
-                    name='cc-paypal'
-                    type='font-awesome'
-                    size={40}
-                    color={COLOR_LIGHT_BLUE}
-                    onPress={()=>{this.paypalPress()}}
-                  />
-              </Collapsible>
-          </Card>
+              <Card
+                containerStyle = {styles.cardContainer}
+                title=<CardTitle
+                          title={localized.checkout_payment.online}
+                          subTitle={localized.checkout_payment.sub_online}
+                          status={this.state.isPayOnlineCollapsed}
+                          payType={payType}
+                          index={3}
+                          onPress={()=>this.togglePayOnline()}/>
+                titleStyle={styles.cardTitle}
+              >
+                  <Collapsible style={{flex: 1, paddingVertical: 10}} collapsed={this.state.isPayOnlineCollapsed}>
+                      <Icon
+                        name='cc-paypal'
+                        type='font-awesome'
+                        size={40}
+                        color={COLOR_LIGHT_BLUE}
+                        onPress={()=>{this.paypalPress()}}
+                      />
+                  </Collapsible>
+              </Card>
 
-          <Space/>
+              <Space/>
+
+          </ScrollView>
 
           <Button
             title={localized.next.toUpperCase()}
             type="solid"
             disabled = {(payType == 0 || payType == 3) ? true : false}
             buttonStyle={{backgroundColor: COLOR_MAIN, borderRadius: 0}}
-            containerStyle={{paddingHorizontal: 16, borderRadius: 0}}
+            containerStyle={{padding: 0, borderRadius: 0}}
             titleStyle={{fontSize: 16, fontWeight: 'bold'}}
             onPress={()=>{this.onNextPress()}}
           />
-
-          <Space/>
-      </ScrollView>
+      </View>
     )
   }
 }
