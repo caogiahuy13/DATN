@@ -33,11 +33,10 @@ NewsStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "NewsDetail" ||
-            route.routeName === "NewsTag") {
-          tabBarVisible = false;
-        } else {
+        if (route.routeName === "News") {
           tabBarVisible = true;
+        } else {
+          tabBarVisible = false;
         }
       });
     }

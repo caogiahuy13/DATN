@@ -48,17 +48,11 @@ SearchStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "TourDetail" ||
-            route.routeName === "BookingInfo" ||
-            route.routeName === "BookingPayment" ||
-            route.routeName === "BookingConfirmation" ||
-            route.routeName === "SearchFilter" ||
-            route.routeName === "Review" ||
-            route.routeName === "ListTours" ||
-            route.routeName === "Policy") {
-          tabBarVisible = false;
-        } else {
+        if (route.routeName === "Tours" ||
+            route.routeName === "TourCard") {
           tabBarVisible = true;
+        } else {
+          tabBarVisible = false;
         }
       });
     }

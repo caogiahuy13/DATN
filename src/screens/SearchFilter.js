@@ -141,8 +141,9 @@ class SearchFilter extends Component {
 
           <Text style={styles.inputText}>{localized.lasting}</Text>
           <NumberPicker value={typeof(lasting) == 'undefined' ? 0 : lasting} increase={()=>this.increaseLasting()} decrease={()=>this.decreaseLasting()}/>
+          <View style={{padding: 6}}></View>
 
-          <Text style={styles.inputText}>Min Rating</Text>
+          <Text style={styles.inputText}>{localized.minRating}</Text>
           <View style={{alignItems: 'flex-start'}}>
               <AirbnbRating
                 count={5}
@@ -180,8 +181,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       padding: 10,
   },
-  inputText:
-  {
+  inputText: {
       fontSize: 18,
       paddingVertical: 6,
   },

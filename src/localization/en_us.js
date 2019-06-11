@@ -150,6 +150,7 @@ const en_us = {
   selectDate: "Select date",
   maxPrice: "Max price",
   searchReset: "Reset",
+  minRating: "Min Rating",
 
   // Search Location
   searchLocation: "Search Location",

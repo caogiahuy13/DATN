@@ -48,18 +48,10 @@ SettingStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "ChangePassword" ||
-            route.routeName === "AboutUs" ||
-            route.routeName === "Contact" ||
-            route.routeName === "ChangeAvatar" ||
-            route.routeName === "History" ||
-            route.routeName === "HistoryDetail" ||
-            route.routeName === "TermsCondition" ||
-            route.routeName === "Faq" ||
-            route.routeName === "Schedule") {
-          tabBarVisible = false;
-        } else {
+        if (route.routeName === "Setting") {
           tabBarVisible = true;
+        } else {
+          tabBarVisible = false;
         }
       });
     }

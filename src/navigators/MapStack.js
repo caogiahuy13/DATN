@@ -53,16 +53,10 @@ MapStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.routes.length > 1) {
       navigation.state.routes.map(route => {
-        if (route.routeName === "TourDetail" ||
-            route.routeName === "Filter" ||
-            route.routeName === "FindGooglePlaces" ||
-            route.routeName === "ChoseLocation" ||
-            route.routeName === "RecommendedTour" ||
-            route.routeName === "ListTours" ||
-            route.routeName === "Policy") {
-          tabBarVisible = false;
-        } else {
+        if (route.routeName === "Map"){
           tabBarVisible = true;
+        } else {
+          tabBarVisible = false;
         }
       });
     }

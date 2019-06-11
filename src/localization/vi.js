@@ -150,6 +150,7 @@ const vi = {
   selectDate: "Chọn ngày",
   maxPrice: "Giá cao nhất",
   searchReset: "Bỏ lọc",
+  minRating: "Đánh giá",
 
   // Search Location
   searchLocation: "Tìm địa điểm",
