@@ -166,6 +166,10 @@ export async function getRouteByTour(id){
   let URL = HOST + 'route/getByTour/' + id;
   return await fetch(URL);
 }
+export async function getRouteByTour_v2(id){
+  let URL = HOST + 'route/getByTour/' + id + '?_vs=2';
+  return await fetch(URL);
+}
 
 export async function getCurrentRoute(data={}){
   let URL = HOST + 'route/getCurrentRoute';

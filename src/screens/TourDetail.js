@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import { bookingChangeTourTurn, searchNameChange, tourDetailChangeId } from '../actions/index.js';
-import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getReviewByTour, increaseView } from '../services/api';
+import { getImageByTourId, getTourTurnById, getNearMe, getRouteByTour, getRouteByTour_v2, getReviewByTour, increaseView } from '../services/api';
 import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, getAgeShow } from '../services/function';
 import { COLOR_HARD_RED, COLOR_MAIN } from '../constants/index';
 import localized from '../localization/index';
@@ -34,6 +34,7 @@ class TourDetail extends Component{
       images: [],
       reviews: [],
       route: [],
+      provinces: [],
 
       isDescriptionCollapsed: true,
       isDetailCollapsed: true,
@@ -97,6 +98,17 @@ class TourDetail extends Component{
             })
             .catch((error) => console.error(error));
   }
+  async callGetRouteByTour_v2(id){
+    return getRouteByTour_v2(id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              let provinces = responseJson.data.map((val)=>{
+                return val.list_province;
+              })
+              this.setState({provinces: provinces});
+            })
+            .catch((error) => console.error(error));
+  }
 
   getReviews(){
     let reviews = this.state.reviews.map((val,key)=>{
@@ -138,16 +150,36 @@ class TourDetail extends Component{
     this.props.navigation.navigate("BookingInfo");
   }
 
+  getProvinceString(array){
+    let ret = '';
+    for (let i=0; i<array.length; i++){
+      ret += array[i];
+      if (i != array.length - 1){
+        ret += ", ";
+      }
+    }
+    return ret;
+  }
+
   getScheduleCard(){
-    const {route} = this.state;
+    const {route, provinces} = this.state;
+
+    for (let i=0; i<provinces.length; i++){
+      this.getProvinceString(provinces[i]);
+    }
+
 
     let curDay = 0;
     let scheduleCards = route.map((val,key)=>{
       if (val.day > curDay){
         curDay += 1;
+        let dayProvince = ' : ';
+        if (provinces.length > 0){
+          dayProvince += this.getProvinceString(provinces[curDay - 1]);
+        }
         return(
           <View key={key}>
-              <InfoText text={localized.day + " " + val.day}/>
+              <InfoText text={localized.day + " " + val.day + dayProvince}/>
               <ScheduleCard data={val} active={false}/>
           </View>
         )
@@ -167,6 +199,7 @@ class TourDetail extends Component{
           this.callGetReviewByTour(this.state.tour.id);
           this.props.tourDetailChangeId(this.state.tour.id);
           this.callGetRouteByTour(this.state.tour.id);
+          this.callGetRouteByTour_v2(this.state.tour.id);
         });
   }
 
