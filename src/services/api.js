@@ -293,7 +293,7 @@ export async function getPassengerInBookTourHistory(id){
 }
 
 export async function getHistoryBookTourById(id){
-  let URL = HOST + 'book_tour/getHistoryBookTourById/' + id;
+  let URL = HOST + 'book_tour/getHistoryBookTourById/' + id + '?tour=true';
   return await AsyncStorage.getItem('userToken')
                             .then((auth) => {
                               return fetch(URL, {

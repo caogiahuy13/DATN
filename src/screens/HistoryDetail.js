@@ -283,7 +283,7 @@ class HistoryDetail extends Component {
     const {info, passengers} = this.props.bookedTour;
     const {book_tour_contact_info} = this.props.bookedTour.info;
     const {tourInfo} = this.state;
-
+    console.log(info);
     let passengersList = this.getPassengers();
     let passengerPrice = this.getPassengerPrice();
 

@@ -14,7 +14,6 @@ class SmallTourCard extends Component{
 
   render(){
     const {data} = this.props;
-    console.log(data);
 
     if (typeof(data) == 'undefined'){
       return(<View></View>)
