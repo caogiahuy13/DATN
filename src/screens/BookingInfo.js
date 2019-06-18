@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity, ScrollView, Keyboard, AsyncStorage} from 'react-native';
+import { View, StyleSheet, Text, Dimensions, TextInput, Touch, TouchableOpacity, ScrollView, KeyboardAvoidingView, AsyncStorage} from 'react-native';
 import { Card, Icon, ListItem, Button, CheckBox } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
@@ -467,6 +467,7 @@ class BookingInfo extends Component {
 
           </ScrollView>
 
+
           <Button
             title={localized.next.toUpperCase()}
             type="solid"
@@ -475,6 +476,7 @@ class BookingInfo extends Component {
             titleStyle={{fontSize: 16, fontWeight: 'bold'}}
             onPress={()=>{this.onNextPress()}}
           />
+
       </View>
     )
   }
@@ -486,7 +488,6 @@ const Space = () => (
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: COLOR_GRAY_BACKGROUND,
         paddingVertical: 10,
     },
