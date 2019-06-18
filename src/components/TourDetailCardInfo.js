@@ -161,7 +161,7 @@ class TourDetailCardInfo extends Component {
           <Divider style={{height: 1}}/>
 
           <View style={{paddingVertical: 6}}>
-              <Icon name='facebook-square' type='font-awesome' color='#3B5998' size={28} onPress={()=>{this.onShareFacebook()}}
+              <Icon name='facebook-square' type='font-awesome' color='#3B5998' size={32} onPress={()=>{this.onShareFacebook()}}
                 containerStyle={{justifyContent: 'flex-start', alignSelf: 'flex-start'}}
               />
           </View>

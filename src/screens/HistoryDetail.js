@@ -487,12 +487,12 @@ class PassengerInfo extends Component {
 
     return(
       <View style={{paddingVertical: 10}}>
-          <Text style={{fontWeight: 'bold'}}>{data.fullname}</Text>
-          { data.phone != null && <Text>{data.phone}</Text>}
-          <Text>{dateFormat(data.birthdate)}</Text>
-          <Text>{getGenderShow(data.sex)}</Text>
-          <Text>{getAgeShow(data.type_passenger.name)}</Text>
-          { data.passport != null && <Text>{data.passport}</Text>}
+          <DetailInfo firstTxt={localized.name} secondTxt={data.fullname}/>
+          { data.phone != null && <DetailInfo firstTxt={localized.phone} secondTxt={data.phone}/>}
+          <DetailInfo firstTxt={localized.birthdate} secondTxt={dateFormat(data.birthdate)}/>
+          <DetailInfo firstTxt={localized.gender} secondTxt={getGenderShow(data.sex)}/>
+          <DetailInfo firstTxt={localized.ageType} secondTxt={getAgeShow(data.type_passenger.name)}/>
+          { data.passport != null && <DetailInfo firstTxt={localized.passport} secondTxt={data.passport}/>}
       </View>
     )
   }

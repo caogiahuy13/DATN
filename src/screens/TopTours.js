@@ -77,7 +77,7 @@ class TopTours extends Component {
             horizontal={true}
             style={styles.list}
           />
-
+          <View style={{height: 20}}></View>
           <InfoText text={localized.internationalTours.toUpperCase()} onPress={()=>this.morePress(2)}/>
           <FlatList
             data={international}
