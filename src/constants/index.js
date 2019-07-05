@@ -1,17 +1,16 @@
-export const LOCALHOST = '10.0.3.2';
-// export const LOCALHOST = '172.16.246';
+// export const LOCALHOST = '10.0.3.2';
+// export const LOCALHOST = '10.10.223.110';
 
-export const HOST = 'http://'+LOCALHOST+':5000/';
-export const API_CMS_URL='http://'+LOCALHOST+':8080/wordpress/wp-json/wp/v2/';
+// export const HOST = 'http://'+LOCALHOST+':5000/';
+// export const API_CMS_URL='http://'+LOCALHOST+':8080/wordpress/wp-json/wp/v2/';
+
+export const HOST = 'http://ec2-13-229-230-74.ap-southeast-1.compute.amazonaws.com/api/';
+export const API_CMS_URL='https://travel-tour-api.000webhostapp.com/wp-json/wp/v2/';
 
 // Cac buoc chay localhost tren device:
 // 1. Doi URL o day, dia chi ip dung ipconfig lay ipv4 cua Wireless LAN adapter Wi-Fi
 // 2. Dung extension ADB o google chrome, doi port forwarding
 // 3. Chay dong lenh: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-
-// export const LOCALHOST = '172.16.246';
-// export const HOST = 'http://172.16.246.210:5000/';
-// export const API_CMS_URL='http://172.16.246.210:8080/wordpress/wp-json/wp/v2/';
 
 export const GOOGLE_MAPS_APIKEY = 'AIzaSyDL7sUf9bCXYdpq5RGDBvnxD1VG9C1619Q';
 export const GOOGLE_MAPS_APIKEY_TWO = 'AIzaSyAwixBpyJe3b4Xo1xg74UUa3LyHPN8OnXY';
