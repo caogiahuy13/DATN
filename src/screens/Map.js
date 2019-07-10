@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator, Dimensions, AsyncStorage, Image, TouchableOpacity, PermissionsAndroid } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { Icon, Badge } from 'react-native-elements';
@@ -49,6 +49,21 @@ class Map extends Component {
                 .catch((error) => {
                   console.error(error);
                 });
+  }
+
+  async requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the location');
+      } else {
+        console.log('Camera permission location');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   // Lay toa do cua vi tri hien tai
@@ -129,6 +144,7 @@ class Map extends Component {
   }
 
   componentWillMount(){
+    this.requestLocationPermission();
     return this.getCurrentLocation();
   }
 
