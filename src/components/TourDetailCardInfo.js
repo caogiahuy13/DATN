@@ -5,7 +5,7 @@ import {ShareDialog} from 'react-native-fbsdk';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { differenceInCalendarDays } from 'date-fns';
 
-import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode } from '../services/function';
+import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode, slugify } from '../services/function';
 import { COLOR_MAIN, COLOR_HARD_RED } from '../constants/index';
 import localized from '../localization/index';
 
@@ -79,11 +79,14 @@ class TourDetailCardInfo extends Component {
   }
 
   onShareFacebook(){
+    let {currentTourTurn, tour} = this.props;
+    let url = 'https://itraveltour.top/tour/'+this.props.currentTourTurn.code+'/'+slugify(this.props.tour.name);
+
     const shareLinkContent = {
-      contentTitle: 'test',
+      contentTitle: tour.name,
       contentType: 'link',
-      contentUrl: 'https://facebook.com',
-      contentDescription: 'Facebook sharing is easy!'
+      contentUrl: url,
+      contentDescription: tour.description
     };
 
     ShareDialog.canShow(shareLinkContent).then(

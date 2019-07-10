@@ -94,7 +94,7 @@ export function bookedDateFormat(date){
 export function priceFormat(price){
   return (
     <NumberFormat
-      value={price}
+      value={Math.floor(price)}
       displayType={'text'}
       thousandSeparator={true}
       suffix={' VNĐ'}

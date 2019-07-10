@@ -19,10 +19,10 @@ class Filter extends Component {
         { name: 'Restaurant', id: 1 },
         { name: 'Amusement', id: 2 },
         { name: 'Market', id: 3 },
-        { name: 'Night Marker', id: 4 },
-        { name: 'Cafe and Milk, Tea', id: 5 },
-        { name: 'Bus Stop', id: 6 },
-        { name: 'Gas Station', id: 7 },
+        { name: 'Night_Market', id: 4 },
+        { name: 'Cafe_Milk_Tea', id: 5 },
+        { name: 'Bus_Stop', id: 6 },
+        { name: 'Gas_Station', id: 7 },
         { name: 'Mall', id: 8 },
         { name: 'Sport', id: 9 },
         { name: 'Police', id: 10 },
@@ -32,8 +32,8 @@ class Filter extends Component {
         { name: 'Hotel', id: 14 },
         { name: 'Museum', id: 15 },
         { name: 'Park', id: 16 },
-        { name: 'Tourist Area', id: 17 },
-        { name: 'Start End', id: 18 },
+        { name: 'Tourist_Area', id: 17 },
+        { name: 'Start_End', id: 18 },
         { name: 'Temple', id: 19 },
         { name: 'Airport', id: 20 },
       ],
@@ -64,7 +64,7 @@ class Filter extends Component {
 
     let checkBoxes = this.state.types.map((val,key)=>{
         return (<CheckBox
-                    title={val.name}
+                    title={localized.map_filter[val.name]}
                     key={key}
                     checked={filterTypes[val.id]}
                     onPress={()=>{onCheck(val.id)}}
