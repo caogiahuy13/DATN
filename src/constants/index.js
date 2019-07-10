@@ -1,10 +1,10 @@
 // export const LOCALHOST = '10.0.3.2';
-// export const LOCALHOST = '10.10.223.110';
+// export const LOCALHOST = '172.29.66.117';
 
 // export const HOST = 'http://'+LOCALHOST+':5000/';
 // export const API_CMS_URL='http://'+LOCALHOST+':8080/wordpress/wp-json/wp/v2/';
 
-export const HOST = 'http://ec2-13-229-230-74.ap-southeast-1.compute.amazonaws.com/api/';
+export const HOST = 'https://itraveltour.top/api/';
 export const API_CMS_URL='https://travel-tour-api.000webhostapp.com/wp-json/wp/v2/';
 
 // Cac buoc chay localhost tren device:
