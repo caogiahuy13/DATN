@@ -207,7 +207,7 @@ class Register extends Component {
             <View style={styles.container}>
                  <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <View style={styles.imageBackground}>
-                        <Text style={styles.title}>REGISTER</Text>
+                        <Text style={styles.title}>{localized.register.toUpperCase()}</Text>
                         <View style={styles.line}/>
                     </View>
                     <View style={styles.infoContainer}>
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     },
     imageBackground: {
         backgroundColor: '#292929',
-        height: '26%',
+        flex: 1,
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -312,6 +312,7 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         paddingTop: 10,
+        paddingBottom: 20,
         marginHorizontal: 20,
     },
     inputText:

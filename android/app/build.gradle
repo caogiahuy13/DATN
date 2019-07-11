@@ -102,8 +102,8 @@ android {
         applicationId "com.datn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         manifestPlaceholders = [onesignal_app_id: "615afc3e-6d71-4e08-a4a7-7faeb8e42d0b",
                                 onesignal_google_project_number: "REMOTE"]
     }

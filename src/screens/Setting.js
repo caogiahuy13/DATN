@@ -32,6 +32,7 @@ class Setting extends Component {
       isIdentityModalVisible: false,
 
       isLogedIn: true,
+      isMounted: false,
 
       tmpAddress: '',
       tmpFullname: '',
@@ -154,7 +155,9 @@ class Setting extends Component {
     await AsyncStorage.getItem('userToken')
                       .then((data)=>{
                         if (data != null){
-                          this.setState({isLogedIn: true})
+                          if (this.state.isMounted){
+                            this.setState({isLogedIn: true})
+                          }
                         }
                       });
   }
@@ -281,11 +284,23 @@ class Setting extends Component {
   componentWillMount(){
     if (this.state.isLogedIn == true){
       this.callMeAPI().then((data)=>{
+        if (data.msg == "Auth failed"){
+          return;
+        }
+
         this.props.changeProfile(data.profile);
         this.setState({tmpAddress: data.profile.address});
         this.setState({tmpFullname: data.profile.fullname});
       })
     }
+  }
+
+  componentDidMount(){
+    this.setState({isMounted: true});
+  }
+
+  componentWillUnmount() {
+    this.setState({isMounted: false});
   }
 
   getLanguage(){

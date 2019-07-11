@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     },
     imageBackground: {
         backgroundColor: '#292929',
-        height: '40%',
+        flex: 1,
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -266,6 +266,7 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         paddingTop: 10,
+        paddingBottom: 20,
         marginHorizontal: 20,
     },
     inputText:
@@ -296,6 +297,7 @@ const styles = StyleSheet.create({
     },
     lostPassword: {
         fontSize: 18,
+        color: '#5375D8',
     },
     ORText:{
         fontSize: 17,
