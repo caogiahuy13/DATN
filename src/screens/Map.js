@@ -185,7 +185,7 @@ class Map extends Component {
             </MapView>
 
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={{marginTop: 5}}>
+                <View style={{marginTop: 40}}>
                     <Icon raised containerStyle={styles.search} size={18} name='search' type='font-awesome' onPress={()=>{navigation.navigate("FindGooglePlaces",{move: this.moveToLocation.bind(this)})}}/>
                     <Icon raised containerStyle={styles.filter} size={18} name='filter' type='font-awesome' onPress={()=>{navigation.navigate("Filter")}}/>
                     <TouchableOpacity style={styles.luggage} onPress={()=>{this.onLuggagePress()}}>
