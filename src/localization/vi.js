@@ -98,6 +98,7 @@ const vi = {
   error: "Lỗi",
   next: "Tiếp theo",
   ageType: "Độ tuổi",
+  booking_term: "Hạn đặt tour",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",

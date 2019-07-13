@@ -2,7 +2,7 @@ import Moment from 'moment';
 import { View, Text } from 'react-native';;
 import NumberFormat from 'react-number-format';
 import React, { Component } from 'react';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, subDays } from 'date-fns';
 import localized from '../localization/index';
 
 // Viết hoa chữ cái đầu tiên
@@ -192,4 +192,8 @@ function percentMoneyRefund(numDay, holiday) {
             return 0;
         }
     }
+}
+
+export function subDay(date, amount){
+  return subDays(new Date(date), amount)
 }

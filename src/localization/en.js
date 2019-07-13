@@ -98,6 +98,7 @@ const en = {
   error: "Error",
   next: "Next",
   ageType: "Age",
+  booking_term: "Booking term",
 
   // Address modal
   addressModalLabel: "Enter address",

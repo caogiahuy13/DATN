@@ -5,7 +5,7 @@ import {ShareDialog} from 'react-native-fbsdk';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { differenceInCalendarDays } from 'date-fns';
 
-import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode, slugify } from '../services/function';
+import { getDaysDiff, getDaysLeft, priceFormat, getDiscountPrice, dateFormat, getTourCode, slugify, subDay } from '../services/function';
 import { COLOR_MAIN, COLOR_HARD_RED } from '../constants/index';
 import localized from '../localization/index';
 
@@ -136,10 +136,15 @@ class TourDetailCardInfo extends Component {
                   {localized.lastIn} {getDaysDiff(currentTourTurn.start_date, currentTourTurn.end_date)} {localized.days.toLowerCase()}
               </Text>
               <Text style={{flex: 0.32}}>
-                  {differenceInCalendarDays(currentTourTurn.start_date, new Date())} {localized.daysLeft.toLowerCase()}
+                  {currentTourTurn.num_max_people - currentTourTurn.num_current_people} {localized.slotsLeft.toLowerCase()}
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{flex: 0.36}}>
+                {localized.booking_term}:
               </Text>
               <Text style={{flex: 0.32}}>
-                  {currentTourTurn.num_max_people - currentTourTurn.num_current_people} {localized.slotsLeft.toLowerCase()}
+                {dateFormat(subDay(new Date(currentTourTurn.start_date), currentTourTurn.booking_term))}
               </Text>
             </View>
           </View>

@@ -95,6 +95,13 @@ class News extends Component {
   render(){
     const {isLoading, isFirstLoad, news, nextPage, keyword} = this.state;
 
+    if (news.length==0){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
     let newsCard = this.getNewsCard();
 
     return(

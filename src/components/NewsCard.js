@@ -11,7 +11,6 @@ class NewsCard extends Component {
 
   render(){
     const {data} = this.props;
-    console.log(data);
 
     return(
       <TouchableOpacity style={styles.container} onPress={this.onPress}>
