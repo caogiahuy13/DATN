@@ -1,5 +1,5 @@
 // export const LOCALHOST = '10.0.3.2';
-// export const LOCALHOST = '172.29.66.117';
+// export const LOCALHOST = '192.168.1.106';
 
 // export const HOST = 'http://'+LOCALHOST+':5000/';
 // export const API_CMS_URL='http://'+LOCALHOST+':8080/wordpress/wp-json/wp/v2/';

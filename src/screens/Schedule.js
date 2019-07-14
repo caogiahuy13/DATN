@@ -110,12 +110,13 @@ class Schedule extends Component {
               } else if (status == 200){
                 console.log(responseJson);
                 if (responseJson.data != null){
-                  // this.setState({curLocation: responseJson.data})
+                  this.setState({curLocation: responseJson.data})
                   let curLocation;
                   AsyncStorage.getItem("curLocation")
                               .then((value)=>{
                                 if (value !== null){
                                   curLocation = JSON.parse(value);
+
                                   if (curLocation.id != responseJson.data.id){
                                     this.pushNotification(responseJson.data);
                                     console.log("KHAC");

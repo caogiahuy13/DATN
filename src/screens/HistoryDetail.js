@@ -246,17 +246,22 @@ class HistoryDetail extends Component {
     if (!tourInfo) return false;
 
     let startDate = tourInfo ? new Date(tourInfo.start_date) : new Date();
+    startDate.setHours(0,0,0,0);
     let endDate = tourInfo ? new Date(tourInfo.end_date) : new Date();
-
+    endDate.setHours(24,0,0,0);
     var curDate = new Date();
-
+    console.log(curDate);
+    console.log(startDate);
+    console.log(endDate);
     return (curDate >= startDate && curDate <= endDate) ? true : false;
+    // return (curDate >= startDate) ? true : false;
   }
 
   isTourEnd(){
     const {tourInfo} = this.state;
 
     let endDate = tourInfo ? new Date(tourInfo.end_date) : new Date();
+    endDate.setHours(24,0,0,0);
     var curDate = new Date();
 
     return (curDate <= endDate) ? true : false;
@@ -266,6 +271,7 @@ class HistoryDetail extends Component {
     const {tourInfo} = this.state;
 
     let startDate = tourInfo ? new Date(tourInfo.start_date) : new Date();
+    startDate.setHours(0,0,0,0);
     var curDate = new Date();
 
     return (curDate < startDate) ? false : true;
@@ -283,7 +289,7 @@ class HistoryDetail extends Component {
     const {info, passengers} = this.props.bookedTour;
     const {book_tour_contact_info} = this.props.bookedTour.info;
     const {tourInfo} = this.state;
-    console.log(info);
+
     let passengersList = this.getPassengers();
     let passengerPrice = this.getPassengerPrice();
 
@@ -402,7 +408,7 @@ class HistoryDetail extends Component {
         </View>
 
         <View style={{padding: 16}}>
-            { this.isInTour() && /*info.status == 'paid' &&*/
+            { this.isInTour() && info.status == 'paid' &&
               <Button
                 title={localized.schedule.toUpperCase()}
                 type="solid"
