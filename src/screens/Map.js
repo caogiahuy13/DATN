@@ -139,6 +139,7 @@ class Map extends Component {
       modalLocation: {
         isVisible: false,
       },
+      regionChangeCount: 0,
     }
     this.mapView = React.createRef();
   }

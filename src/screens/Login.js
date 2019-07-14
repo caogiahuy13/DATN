@@ -222,6 +222,9 @@ class Login extends Component {
                             <Text style={styles.registerText1}>{localized.notHaveAccount}? </Text>
                             <Text style={styles.registerText2} onPress={()=>{navigation.navigate('Register')}}>{localized.register}</Text>
                         </View>
+                        <View>
+                            <Text style={styles.return} onPress={()=>{navigation.navigate('Map')}}>{localized.returnToMap}</Text>
+                        </View>
                     </View>
                 </KeyboardAvoidingView>
             </View>
@@ -331,6 +334,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#5375D8',
     },
+    return: {
+        fontSize: 18,
+        color: '#5375D8',
+    }
 })
 
 function mapStateToProps(state){

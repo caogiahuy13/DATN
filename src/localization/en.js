@@ -99,7 +99,8 @@ const en = {
   next: "Next",
   ageType: "Age",
   booking_term: "Booking term",
-
+  returnToMap: "Return to Map",
+  
   // Address modal
   addressModalLabel: "Enter address",
   addressModalDescription: "Please enter your address",

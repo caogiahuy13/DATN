@@ -99,6 +99,7 @@ const vi = {
   next: "Tiếp theo",
   ageType: "Độ tuổi",
   booking_term: "Hạn đặt tour",
+  returnToMap: "Trở về Bản Đồ",
 
   // Address modal
   addressModalLabel: "Nhập địa chỉ",

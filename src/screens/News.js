@@ -95,13 +95,6 @@ class News extends Component {
   render(){
     const {isLoading, isFirstLoad, news, nextPage, keyword} = this.state;
 
-    if (news.length==0){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
     let newsCard = this.getNewsCard();
 
     return(
@@ -119,6 +112,12 @@ class News extends Component {
           </View>
 
           <View style={styles.content}>
+              { news.length==0 &&
+                <View style={{flex: 1, padding: 20}}>
+                  <ActivityIndicator/>
+                </View>
+              }
+              
               <View>
                   {newsCard}
               </View>
